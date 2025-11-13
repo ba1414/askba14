@@ -61,7 +61,7 @@ export default function App() {
 
 
   return (
-    <div className="flex flex-col min-h-[100svh] w-screen overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
+    <div className="flex flex-col min-h-[100svh] w-full bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
       
       {/* Mobile Top Nav (Sticky) */}
       <nav
@@ -113,9 +113,9 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden md:overflow-visible">
         {/* Sidebar - Desktop Only */}
-        <aside className="hidden md:flex md:w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex-col shadow-sm flex-shrink-0">
+        <aside className="hidden md:flex md:w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex-col shadow-sm flex-shrink-0 overflow-hidden">
         {/* Logo/Brand */}
         <div className="px-6 py-5 border-b border-[#E8E8E8] dark:border-[#2F2F2F]">
           <h1 className="text-xl font-semibold tracking-tight text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</h1>
@@ -161,19 +161,19 @@ export default function App() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 w-full overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
+      <main className="flex-1 w-full bg-[#FAFAFA] dark:bg-[#1A1A1A] md:overflow-hidden">
         {activeView === "gpa" && (
-          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6">
+          <div className="w-full h-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6 pb-12">
             <GPACalculatorMinimal lang={lang} />
           </div>
         )}
         {activeView === "calendar" && (
-          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6">
+          <div className="w-full h-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6 pb-12">
             <CalendarMinimal lang={lang} />
           </div>
         )}
         {activeView === "flashcards" && (
-          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6">
+          <div className="w-full h-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6 pb-12">
             <FlashcardsMinimal lang={lang} />
           </div>
         )}
