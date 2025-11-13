@@ -59,9 +59,6 @@ export default function App() {
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
   ];
 
-  const mobileNavHeight = 120; // Increased for more visible navigation
-  const contentPaddingBottom = `calc(${mobileNavHeight}px + 40px)`;
-  const navBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + 12px)`;
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
@@ -136,24 +133,21 @@ export default function App() {
       <main className="flex-1 w-full overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
         {activeView === "gpa" && (
           <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 md:pb-6"
-            style={{ paddingBottom: contentPaddingBottom }}
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[260px] pb-16 md:pt-6 md:pb-6"
           >
             <GPACalculatorMinimal lang={lang} />
           </div>
         )}
         {activeView === "calendar" && (
           <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 md:pb-6"
-            style={{ paddingBottom: contentPaddingBottom }}
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[260px] pb-16 md:pt-6 md:pb-6"
           >
             <CalendarMinimal lang={lang} />
           </div>
         )}
         {activeView === "flashcards" && (
           <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 md:pb-6"
-            style={{ paddingBottom: contentPaddingBottom }}
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[260px] pb-16 md:pt-6 md:pb-6"
           >
             <FlashcardsMinimal lang={lang} />
           </div>
@@ -161,16 +155,12 @@ export default function App() {
       </main>
       </div>
 
-      {/* Mobile Bottom Navigation - POSITIONED IN MIDDLE OF SCREEN */}
+      {/* Mobile Navigation - Elevated Position */}
       <nav
-        className="md:hidden fixed left-0 right-0 z-[99999] border-t-4 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-2xl"
-        style={{ 
-          bottom: "200px",
-          paddingBottom: "16px",
-          paddingTop: "16px",
-          paddingLeft: "20px",
-          paddingRight: "20px",
-          minHeight: "80px"
+        className="md:hidden fixed left-4 right-4 z-[99999] border-2 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-2xl rounded-3xl"
+        style={{
+          top: "120px",
+          padding: "18px 20px"
         }}
       >
         <div className="mx-auto flex max-w-md items-center justify-around gap-5">
