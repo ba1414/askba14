@@ -81,6 +81,8 @@ const STR = {
   },
 } as const;
 
+const BASE = (import.meta as any).env?.BASE_URL ?? "/";
+
 // ---- Card component ---------------------------------------------------------
 function Tile({
   title,
@@ -244,7 +246,7 @@ export default function BA14GridPage() {
     e.preventDefault();
     setIsLeavingPage(true);
     setTimeout(() => {
-      window.location.href = '/index.html';
+      window.location.href = BASE;
     }, 300);
   };
 
@@ -255,17 +257,28 @@ export default function BA14GridPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-white text-black dark:bg-[#0B0B0D] dark:text-white transition-colors duration-200">
+    <main
+      className="min-h-[100svh] bg-white text-black dark:bg-[#0B0B0D] dark:text-white transition-colors duration-200"
+      style={{
+        paddingTop: "max(12px, env(safe-area-inset-top))",
+        paddingBottom: "max(12px, env(safe-area-inset-bottom))"
+      }}
+    >
       {/* Page Transition Overlay */}
       {isLeavingPage && (
         <div className="fixed inset-0 bg-white dark:bg-[#0B0B0D] z-50 animate-fadeIn" />
       )}
 
-      {/* Header */}
-      <header className={`sticky top-0 z-10 bg-white/80 dark:bg-[#0B0B0D]/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 transition-all duration-300 ${isTransitioning || isLeavingPage ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}>
+      {/* Header - Fixed */}
+      <header
+        className={`fixed left-0 right-0 z-10 bg-white/80 dark:bg-[#0B0B0D]/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 transition-all duration-300 ${isTransitioning || isLeavingPage ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}
+        style={{
+          top: "max(0px, env(safe-area-inset-top))"
+        }}
+      >
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 py-4 sm:py-5 flex items-center justify-between gap-4">
           {/* Left: clickable BA14 label */}
-          <a href="/index.html" onClick={handleBackToLanding} className="min-w-0 group touch-manipulation">
+          <a href={BASE} onClick={handleBackToLanding} className="min-w-0 group touch-manipulation">
             <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-[#86868B] dark:text-white/60 group-hover:text-[#1D1D1F] dark:group-hover:text-white transition-colors">BA14</div>
           </a>
 
@@ -282,6 +295,14 @@ export default function BA14GridPage() {
           </div>
         </div>
       </header>
+
+      {/* Header Spacer */}
+      <div 
+        style={{ 
+          height: "calc(72px + max(0px, env(safe-area-inset-top)))" 
+        }} 
+        aria-hidden="true" 
+      />
 
       {/* Grid */}
       <section className={`mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 transition-all duration-300 ${isTransitioning || isLeavingPage ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
