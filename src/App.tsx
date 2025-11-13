@@ -60,9 +60,9 @@ export default function App() {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
       {/* Mobile Header */}
-      <header className="md:hidden bg-white dark:bg-[#212121] border-b border-[#E8E8E8] dark:border-[#2F2F2F] px-4 py-3 flex items-center justify-between">
+      <header className="md:hidden bg-white dark:bg-[#212121] border-b border-[#E8E8E8] dark:border-[#2F2F2F] px-4 py-3 flex items-center justify-between flex-shrink-0 z-10">
         <h1 className="text-lg font-semibold tracking-tight text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</h1>
         <div className="flex items-center gap-2">
           <button
@@ -80,8 +80,10 @@ export default function App() {
         </div>
       </header>
 
-      {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex-col shadow-sm">
+      {/* Main Container - Desktop has sidebar, Mobile doesn't */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar - Desktop Only */}
+        <aside className="hidden md:flex md:w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex-col shadow-sm flex-shrink-0">
         {/* Logo/Brand */}
         <div className="px-6 py-5 border-b border-[#E8E8E8] dark:border-[#2F2F2F]">
           <h1 className="text-xl font-semibold tracking-tight text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</h1>
@@ -127,26 +129,27 @@ export default function App() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
+      <main className="flex-1 w-full overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
         {activeView === "gpa" && (
-          <div className="h-full overflow-y-auto px-4 md:px-8 py-4 md:py-6">
+          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 pb-24 md:pb-6">
             <GPACalculatorMinimal lang={lang} />
           </div>
         )}
         {activeView === "calendar" && (
-          <div className="h-full overflow-y-auto px-4 md:px-8 py-4 md:py-6">
+          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 pb-24 md:pb-6">
             <CalendarMinimal lang={lang} />
           </div>
         )}
         {activeView === "flashcards" && (
-          <div className="h-full overflow-y-auto px-4 md:px-8 py-4 md:py-6">
+          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 pb-24 md:pb-6">
             <FlashcardsMinimal lang={lang} />
           </div>
         )}
       </main>
+      </div>
 
-      {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden bg-white dark:bg-[#212121] border-t border-[#E8E8E8] dark:border-[#2F2F2F] px-2 py-2 flex items-center justify-around shadow-lg">
+      {/* Mobile Bottom Navigation - FIXED at bottom of screen */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#212121] border-t-2 border-[#E8E8E8] dark:border-[#2F2F2F] px-2 py-3 flex items-center justify-around shadow-2xl z-[999] w-full">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeView === item.id;
@@ -154,14 +157,14 @@ export default function App() {
             <button
               key={item.id}
               onClick={() => setActiveView(item.id)}
-              className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-all duration-200 ${
+              className={`flex flex-col items-center gap-1.5 px-5 py-3 rounded-xl transition-all duration-200 ${
                 isActive
-                  ? "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#0F0F0F] dark:text-[#FFFFFF]"
-                  : "text-[#6B6B6B] dark:text-[#9B9B9B]"
+                  ? "bg-[#007AFF] text-white"
+                  : "text-[#6B6B6B] dark:text-[#9B9B9B] active:scale-95"
               }`}
             >
-              <Icon size={20} strokeWidth={2} />
-              <span className="text-[10px] font-medium">{item.label.split(' ')[0]}</span>
+              <Icon size={24} strokeWidth={2.5} />
+              <span className="text-[10px] font-semibold whitespace-nowrap">{item.label.split(' ')[0]}</span>
             </button>
           );
         })}

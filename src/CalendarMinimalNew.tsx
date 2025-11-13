@@ -97,7 +97,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const completedCount = dayTasks.filter((t) => t.completed).length;
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-8">
+    <div className="w-full max-w-7xl mx-auto p-2 md:p-4 lg:p-8">
       {/* Header */}
       <div className="mb-10">
         <h1 className="text-3xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2 tracking-tight">
@@ -109,7 +109,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
       </div>
 
       {/* Bento Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-6">
         {/* Calendar Card - Larger bento box */}
         <div className="lg:col-span-2 bg-gradient-to-br from-white to-[#F9FAFB] dark:from-[#252525] dark:to-[#1E1E1E] border border-[#E5E7EB] dark:border-[#323232] rounded-2xl p-6 shadow-sm">
           {/* Month Navigation */}
@@ -137,7 +137,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
           </div>
 
           {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-7 gap-1 md:gap-2">
             {/* Day Headers */}
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
               <div key={day} className="text-center text-xs font-semibold text-[#9B9B9B] dark:text-[#6B6B6B] pb-2 uppercase tracking-wider">

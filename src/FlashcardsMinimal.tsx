@@ -431,7 +431,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
+    <div className="w-full max-w-6xl mx-auto p-2 md:p-4 lg:p-8">
       {/* Study Mode Modal */}
       {studyingDeck && (
         <div className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -585,7 +585,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       </div>
 
       {/* Bento Grid Layout for Decks */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
         {decks.map((deck) => (
           <div 
             key={deck.id} 
