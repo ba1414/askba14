@@ -63,7 +63,7 @@ export default function App() {
   return (
     <>
       {/* Mobile Layout */}
-      <div className="md:hidden min-h-[100svh] flex flex-col bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
+  <div className="md:hidden min-h-[100svh] flex min-h-0 flex-col bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
         {/* Mobile Top Nav (Sticky) */}
         <nav
           className="sticky top-0 z-40 bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur border-b border-[#E8E8E8] dark:border-[#2F2F2F]"
@@ -116,7 +116,7 @@ export default function App() {
 
         {/* Mobile Content - Scrollable */}
         <main 
-          className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-6 pb-12"
+          className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 py-6 pb-12"
           style={{ WebkitOverflowScrolling: 'touch' }}
         >
           {activeView === "gpa" && <GPACalculatorMinimal lang={lang} />}
