@@ -115,7 +115,7 @@ export default function App() {
       <main className="flex-1 w-full overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
         {activeView === "gpa" && (
           <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[120px] pb-16 md:pt-6 md:pb-6"
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[180px] pb-16 md:pt-6 md:pb-6"
           >
             <GPACalculatorMinimal lang={lang} />
           </div>
@@ -139,9 +139,13 @@ export default function App() {
 
       {/* Mobile Navigation - STICKY AT TOP */}
       <nav
-        className="md:hidden fixed left-0 right-0 top-0 z-[99999] border-b-4 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-lg"
+        className="md:hidden fixed left-0 right-0 z-[99999] border-b-4 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-lg"
         style={{
-          padding: "12px 16px"
+          top: "0",
+          paddingTop: "max(env(safe-area-inset-top, 0px), 110px)",
+          paddingBottom: "12px",
+          paddingLeft: "16px",
+          paddingRight: "16px"
         }}
       >
         <div className="mx-auto flex max-w-md items-center justify-around gap-5">
