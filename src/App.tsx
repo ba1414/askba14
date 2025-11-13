@@ -163,10 +163,10 @@ export default function App() {
 
       {/* Mobile Bottom Navigation */}
       <nav
-        className="md:hidden fixed inset-x-0 flex justify-center items-end pointer-events-none z-[999]"
-        style={{ bottom: navBottomOffset }}
+        className="md:hidden fixed left-0 right-0 bottom-0 z-[999] border-t border-[#E8E8E8] dark:border-[#2F2F2F] bg-white/95 dark:bg-[#111111]/95 backdrop-blur-sm"
+        style={{ paddingBottom: `calc(env(safe-area-inset-bottom, 0px) + 12px)`, paddingTop: "10px" }}
       >
-        <div className="pointer-events-auto mx-auto flex items-center gap-3 rounded-full bg-white/90 dark:bg-[#1F1F1F]/90 border border-black/5 dark:border-white/10 backdrop-blur-md px-4 py-2 shadow-lg">
+        <div className="mx-auto flex w-[min(480px,92vw)] items-center justify-around gap-3">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeView === item.id;
@@ -174,14 +174,14 @@ export default function App() {
               <button
                 key={item.id}
                 onClick={() => setActiveView(item.id)}
-                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 min-w-[64px] ${
+                className={`flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-all duration-200 ${
                   isActive
-                    ? "bg-[#0A84FF] text-white shadow-md"
-                    : "text-[#4B5563] dark:text-[#D1D5DB] hover:bg-black/5 dark:hover:bg-white/10"
+                    ? "bg-[#007AFF] text-white shadow"
+                    : "text-[#4B5563] dark:text-[#D1D5DB]"
                 }`}
               >
-                <Icon size={20} strokeWidth={2.5} />
-                <span className="text-[10px] font-semibold whitespace-nowrap leading-none">
+                <Icon size={20} strokeWidth={2.2} />
+                <span className="text-[11px] font-semibold whitespace-nowrap leading-none">
                   {item.label.split(' ')[0]}
                 </span>
               </button>
