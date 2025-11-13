@@ -63,7 +63,7 @@ export default function App() {
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
       {/* Mobile Header */}
-      <header className="md:hidden bg-white dark:bg-[#212121] border-b border-[#E8E8E8] dark:border-[#2F2F2F] px-4 py-3 flex items-center justify-between flex-shrink-0 z-10">
+  <header className="md:hidden mt-[120px] bg-white dark:bg-[#212121] border-b border-[#E8E8E8] dark:border-[#2F2F2F] px-4 py-3 flex items-center justify-between flex-shrink-0 z-10">
         <h1 className="text-lg font-semibold tracking-tight text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</h1>
         <div className="flex items-center gap-2">
           <button
@@ -133,21 +133,21 @@ export default function App() {
       <main className="flex-1 w-full overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
         {activeView === "gpa" && (
           <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[200px] pb-16 md:pt-6 md:pb-6"
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[160px] pb-16 md:pt-6 md:pb-6"
           >
             <GPACalculatorMinimal lang={lang} />
           </div>
         )}
         {activeView === "calendar" && (
           <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[200px] pb-16 md:pt-6 md:pb-6"
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[160px] pb-16 md:pt-6 md:pb-6"
           >
             <CalendarMinimal lang={lang} />
           </div>
         )}
         {activeView === "flashcards" && (
           <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[200px] pb-16 md:pt-6 md:pb-6"
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[160px] pb-16 md:pt-6 md:pb-6"
           >
             <FlashcardsMinimal lang={lang} />
           </div>
@@ -155,12 +155,12 @@ export default function App() {
       </main>
       </div>
 
-      {/* Mobile Navigation - RIGHT BELOW HEADER */}
+      {/* Mobile Navigation - Just under status bar */}
       <nav
-        className="md:hidden fixed left-4 right-4 z-[99999] border-2 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-2xl rounded-3xl"
+        className="md:hidden fixed left-3 right-3 z-[99999] border-2 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-2xl rounded-3xl"
         style={{
-          top: "70px",
-          padding: "18px 20px"
+          top: "16px",
+          padding: "16px 18px"
         }}
       >
         <div className="mx-auto flex max-w-md items-center justify-around gap-5">
