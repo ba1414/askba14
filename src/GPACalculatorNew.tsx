@@ -51,6 +51,27 @@ interface Course {
   credits: number;
 }
 
+// Scale Toggle Component
+function ScaleToggle({ value, onChange }: { value: GPAScale; onChange: (scale: GPAScale) => void }) {
+  return (
+    <div className="inline-flex flex-col gap-3">
+      {(["4.3", "4.0"] as GPAScale[]).map((s) => (
+        <button
+          key={s}
+          onClick={() => onChange(s)}
+          className={`px-8 py-4 rounded-xl text-lg font-bold transition-all duration-200 ${
+            value === s
+              ? "bg-[#007AFF] dark:bg-[#0A84FF] text-white shadow-lg scale-105"
+              : "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#E5E7EB] dark:hover:bg-[#323232]"
+          }`}
+        >
+          {s}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 const GRADES_4_0 = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
 const GRADES_4_3 = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
 
@@ -230,17 +251,33 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
 
   return (
     <div className="w-full max-w-5xl mx-auto p-2 md:p-4 lg:p-8">
-      {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-3xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2 tracking-tight">
-          {t.title}
-        </h1>
+      {/* Header with Scale Toggle */}
+      <header className="mx-auto max-w-[1600px] mb-10">
+        {/* Desktop/Tablet: Title left, Toggle right */}
+        <div className="hidden sm:flex items-center justify-between gap-4 mb-2">
+          <h1 className="text-3xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] tracking-tight">
+            {t.title}
+          </h1>
+          <ScaleToggle value={scale} onChange={setScale} />
+        </div>
+
+        {/* Mobile: Toggle above Title */}
+        <div className="sm:hidden space-y-4 mb-4">
+          <div className="flex justify-center">
+            <ScaleToggle value={scale} onChange={setScale} />
+          </div>
+          <h1 className="text-2xl font-bold text-center text-[#0F0F0F] dark:text-[#F0F0F0]">
+            {t.title}
+          </h1>
+        </div>
+
+        {/* Subtitle (all screens) */}
         <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B]">
           {lang === "EN" ? "Calculate and forecast your grade point average" : "計算同預測你嘅平均績點"}
         </p>
-      </div>
+      </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Current GPA Card */}
         <div className="bg-gradient-to-br from-white to-[#F9FAFB] dark:from-[#252525] dark:to-[#1E1E1E] border border-[#E5E7EB] dark:border-[#323232] rounded-2xl p-6 shadow-sm flex flex-col items-center">
           <h3 className="text-sm font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] mb-6 uppercase tracking-wider">
@@ -251,28 +288,6 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
             <p className="text-xs text-[#9B9B9B] dark:text-[#6B6B6B]">
               {totalCredits} {t.credits}
             </p>
-          </div>
-        </div>
-
-        {/* Scale Toggle */}
-        <div className="bg-white dark:bg-[#212121] border border-[#E5E7EB] dark:border-[#2F2F2F] rounded-2xl p-6 shadow-sm">
-          <h3 className="text-sm font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] mb-4 uppercase tracking-wider">
-            {t.scale}
-          </h3>
-          <div className="flex flex-col gap-3">
-            {(["4.3", "4.0"] as GPAScale[]).map((s) => (
-              <button
-                key={s}
-                onClick={() => setScale(s)}
-                className={`w-full px-8 py-4 rounded-xl text-lg font-bold transition-all duration-200 ${
-                  scale === s
-                    ? "bg-[#007AFF] dark:bg-[#0A84FF] text-white shadow-lg scale-105"
-                    : "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#E5E7EB] dark:hover:bg-[#323232]"
-                }`}
-              >
-                {s}
-              </button>
-            ))}
           </div>
         </div>
 
