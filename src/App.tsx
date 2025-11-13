@@ -59,8 +59,8 @@ export default function App() {
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
   ];
 
-  const mobileNavHeight = 72;
-  const contentPaddingBottom = `calc(${mobileNavHeight}px + env(safe-area-inset-bottom, 0px) + 16px)`;
+  const mobileNavHeight = 120; // Increased for more visible navigation
+  const contentPaddingBottom = `calc(${mobileNavHeight}px + 40px)`;
   const navBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + 12px)`;
 
   return (
@@ -161,12 +161,18 @@ export default function App() {
       </main>
       </div>
 
-      {/* Mobile Bottom Navigation */}
+      {/* Mobile Bottom Navigation - HIGHLY VISIBLE VERSION */}
       <nav
-        className="md:hidden fixed left-0 right-0 bottom-0 z-[999] border-t border-[#E8E8E8] dark:border-[#2F2F2F] bg-white/95 dark:bg-[#111111]/95 backdrop-blur-sm"
-        style={{ paddingBottom: `calc(env(safe-area-inset-bottom, 0px) + 12px)`, paddingTop: "10px" }}
+        className="md:hidden fixed left-0 right-0 bottom-0 z-[99999] border-t-4 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-2xl"
+        style={{ 
+          paddingBottom: "30px",
+          paddingTop: "20px",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+          minHeight: "80px"
+        }}
       >
-        <div className="mx-auto flex w-[min(480px,92vw)] items-center justify-around gap-3">
+        <div className="mx-auto flex max-w-md items-center justify-around gap-5">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeView === item.id;
@@ -174,14 +180,15 @@ export default function App() {
               <button
                 key={item.id}
                 onClick={() => setActiveView(item.id)}
-                className={`flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-all duration-200 ${
+                className={`flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl px-5 py-4 transition-all ${
                   isActive
-                    ? "bg-[#007AFF] text-white shadow"
-                    : "text-[#4B5563] dark:text-[#D1D5DB]"
+                    ? "bg-[#007AFF] text-white shadow-xl scale-105"
+                    : "bg-[#F3F4F6] dark:bg-[#2C2C2C] text-[#3F3F3F] dark:text-[#D1D5DB]"
                 }`}
+                style={{ minWidth: "80px", minHeight: "70px" }}
               >
-                <Icon size={20} strokeWidth={2.2} />
-                <span className="text-[11px] font-semibold whitespace-nowrap leading-none">
+                <Icon size={28} strokeWidth={2.5} />
+                <span className="text-xs font-bold leading-tight text-center">
                   {item.label.split(' ')[0]}
                 </span>
               </button>
