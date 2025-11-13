@@ -59,6 +59,10 @@ export default function App() {
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
   ];
 
+  const mobileNavHeight = 72;
+  const contentPaddingBottom = `calc(${mobileNavHeight}px + env(safe-area-inset-bottom, 0px) + 16px)`;
+  const navBottomOffset = `calc(env(safe-area-inset-bottom, 0px) + 12px)`;
+
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
       {/* Mobile Header */}
@@ -131,43 +135,59 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 w-full overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
         {activeView === "gpa" && (
-          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 pb-24 md:pb-6">
+          <div
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 md:pb-6"
+            style={{ paddingBottom: contentPaddingBottom }}
+          >
             <GPACalculatorMinimal lang={lang} />
           </div>
         )}
         {activeView === "calendar" && (
-          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 pb-24 md:pb-6">
+          <div
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 md:pb-6"
+            style={{ paddingBottom: contentPaddingBottom }}
+          >
             <CalendarMinimal lang={lang} />
           </div>
         )}
         {activeView === "flashcards" && (
-          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 pb-24 md:pb-6">
+          <div
+            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-3 md:py-6 md:pb-6"
+            style={{ paddingBottom: contentPaddingBottom }}
+          >
             <FlashcardsMinimal lang={lang} />
           </div>
         )}
       </main>
       </div>
 
-      {/* Mobile Bottom Navigation - FIXED at bottom of screen */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#212121] border-t-2 border-[#E8E8E8] dark:border-[#2F2F2F] px-2 py-3 flex items-center justify-around shadow-2xl z-[999] w-full">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeView === item.id;
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveView(item.id)}
-              className={`flex flex-col items-center gap-1.5 px-5 py-3 rounded-xl transition-all duration-200 ${
-                isActive
-                  ? "bg-[#007AFF] text-white"
-                  : "text-[#6B6B6B] dark:text-[#9B9B9B] active:scale-95"
-              }`}
-            >
-              <Icon size={24} strokeWidth={2.5} />
-              <span className="text-[10px] font-semibold whitespace-nowrap">{item.label.split(' ')[0]}</span>
-            </button>
-          );
-        })}
+      {/* Mobile Bottom Navigation */}
+      <nav
+        className="md:hidden fixed inset-x-0 flex justify-center items-end pointer-events-none z-[999]"
+        style={{ bottom: navBottomOffset }}
+      >
+        <div className="pointer-events-auto mx-auto flex items-center gap-3 rounded-full bg-white/90 dark:bg-[#1F1F1F]/90 border border-black/5 dark:border-white/10 backdrop-blur-md px-4 py-2 shadow-lg">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeView === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveView(item.id)}
+                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 min-w-[64px] ${
+                  isActive
+                    ? "bg-[#0A84FF] text-white shadow-md"
+                    : "text-[#4B5563] dark:text-[#D1D5DB] hover:bg-black/5 dark:hover:bg-white/10"
+                }`}
+              >
+                <Icon size={20} strokeWidth={2.5} />
+                <span className="text-[10px] font-semibold whitespace-nowrap leading-none">
+                  {item.label.split(' ')[0]}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </nav>
     </div>
   );
