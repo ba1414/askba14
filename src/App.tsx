@@ -61,9 +61,58 @@ export default function App() {
 
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
+    <div className="flex flex-col min-h-[100svh] w-screen overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
       
-      {/* Mobile Navigation - STICKY AT TOP */}
+      {/* Mobile Top Nav (Sticky) */}
+      <nav
+        className="md:hidden sticky top-0 z-40 bg-white/95 dark:bg-[#1A1A1A]/95 backdrop-blur-xl border-b border-[#E8E8E8] dark:border-[#2F2F2F] shadow-sm"
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+      >
+        <div className="mx-auto max-w-[1600px] px-4 py-3 flex items-center justify-between gap-2">
+          {/* BA14 Logo */}
+          <div className="text-sm font-semibold text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</div>
+          
+          {/* Nav Buttons */}
+          <div className="flex items-center gap-2">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeView === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveView(item.id)}
+                  className={`h-9 px-3 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                    isActive
+                      ? "bg-[#007AFF] text-white"
+                      : "text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A]"
+                  }`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <Icon size={16} strokeWidth={2.5} />
+                  <span className="hidden sm:inline">{item.label.split(' ')[0]}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Theme & Lang */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={toggleLang}
+              className="h-9 px-3 text-xs font-medium rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
+            >
+              {lang}
+            </button>
+            <button
+              onClick={toggleTheme}
+              className="h-9 px-2.5 rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
+            >
+              {isDark ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar - Desktop Only */}
         <aside className="hidden md:flex md:w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex-col shadow-sm flex-shrink-0">
@@ -114,64 +163,22 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 w-full overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
         {activeView === "gpa" && (
-          <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[180px] pb-16 md:pt-6 md:pb-6"
-          >
+          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6">
             <GPACalculatorMinimal lang={lang} />
           </div>
         )}
         {activeView === "calendar" && (
-          <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[120px] pb-16 md:pt-6 md:pb-6"
-          >
+          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6">
             <CalendarMinimal lang={lang} />
           </div>
         )}
         {activeView === "flashcards" && (
-          <div
-            className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 pt-[120px] pb-16 md:pt-6 md:pb-6"
-          >
+          <div className="h-full w-full overflow-y-auto overflow-x-hidden px-3 md:px-8 py-6">
             <FlashcardsMinimal lang={lang} />
           </div>
         )}
       </main>
       </div>
-
-      {/* Mobile Navigation - STICKY AT TOP */}
-      <nav
-        className="md:hidden fixed left-0 right-0 z-[99999] border-b-4 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-lg"
-        style={{
-          top: "0",
-          paddingTop: "max(env(safe-area-inset-top, 0px), 110px)",
-          paddingBottom: "12px",
-          paddingLeft: "16px",
-          paddingRight: "16px"
-        }}
-      >
-        <div className="mx-auto flex max-w-md items-center justify-around gap-5">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeView === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setActiveView(item.id)}
-                className={`flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl px-5 py-4 transition-all ${
-                  isActive
-                    ? "bg-[#007AFF] text-white shadow-xl scale-105"
-                    : "bg-[#F3F4F6] dark:bg-[#2C2C2C] text-[#3F3F3F] dark:text-[#D1D5DB]"
-                }`}
-                style={{ minWidth: "80px", minHeight: "70px" }}
-              >
-                <Icon size={28} strokeWidth={2.5} />
-                <span className="text-xs font-bold leading-tight text-center">
-                  {item.label.split(' ')[0]}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </nav>
     </div>
   );
 }
