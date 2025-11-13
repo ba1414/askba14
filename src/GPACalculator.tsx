@@ -211,7 +211,7 @@ function CourseRow({
 }
 
 // Main Component
-export default function GPACalculator({ theme, lang: propLang, onClose }: { theme: string; lang: string; onClose: () => void }) {
+export default function GPACalculator({ theme, lang: propLang, onClose, embedded }: { theme: string; lang: string; onClose?: () => void; embedded?: boolean }) {
   // Use language from prop
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
@@ -276,9 +276,10 @@ export default function GPACalculator({ theme, lang: propLang, onClose }: { them
   }, [scale, courses, totalCreditsRequired, targetGPA]);
 
   const handleClose = () => {
+    if (embedded) return; // No close in embedded mode
     setIsClosing(true);
     setTimeout(() => {
-      onClose();
+      onClose?.();
     }, 200); // Match animation duration
   };
 
@@ -370,20 +371,10 @@ export default function GPACalculator({ theme, lang: propLang, onClose }: { them
     };
   }, [targetGPA, scale, courses, gpa, totalCreditsRequired]);
 
-  return (
-    <div 
-      className={`fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6 ${
-        isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
-      }`}
-      onClick={handleClose}
-    >
-      <div 
-        className={`bg-white dark:bg-[#0B0B0D] rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden ${
-          isClosing ? 'animate-scaleOut' : 'animate-scaleIn'
-        }`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
+  const content = (
+    <>
+      {/* Header */}
+      {!embedded && (
         <div className="sticky top-0 bg-white/80 dark:bg-[#0B0B0D]/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 px-4 sm:px-6 md:px-8 py-4 sm:py-6 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <div className="p-1.5 sm:p-2 bg-[#0A84FF]/10 dark:bg-[#0A84FF]/20 rounded-lg sm:rounded-xl flex-shrink-0">
@@ -407,9 +398,10 @@ export default function GPACalculator({ theme, lang: propLang, onClose }: { them
             <X size={20} className="text-[#86868B] dark:text-white/60 sm:w-6 sm:h-6" />
           </button>
         </div>
+      )}
 
-        {/* Content */}
-        <div className="p-4 sm:p-6 md:p-8 overflow-y-auto max-h-[calc(95vh-80px)] sm:max-h-[calc(90vh-100px)]">
+      {/* Content */}
+      <div className="p-4 sm:p-6 md:p-8 overflow-y-auto max-h-[calc(95vh-80px)] sm:max-h-[calc(90vh-100px)]">
           {/* GPA Visualization & Scale Selector */}
           <div className="flex flex-col items-center gap-4 sm:gap-6 mb-6 sm:mb-8">
             <GPACircle gpa={gpa} scale={scale} theme={theme} />
@@ -540,6 +532,28 @@ export default function GPACalculator({ theme, lang: propLang, onClose }: { them
             {t.addCourse}
           </button>
         </div>
+      </div>
+    </>
+  );
+
+  if (embedded) {
+    return <div className="h-full bg-white dark:bg-[#212121]">{content}</div>;
+  }
+
+  return (
+    <div 
+      className={`fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6 ${
+        isClosing ? 'animate-fadeOut' : 'animate-fadeIn'
+      }`}
+      onClick={handleClose}
+    >
+      <div 
+        className={`bg-white dark:bg-[#0B0B0D] rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden ${
+          isClosing ? 'animate-scaleOut' : 'animate-scaleIn'
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {content}
       </div>
 
       <style>{`
