@@ -61,60 +61,69 @@ export default function App() {
 
 
   return (
-    <div className="min-h-[100svh] flex flex-col bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
-      
-      {/* Mobile Top Nav (Sticky) */}
-      <nav
-        className="md:hidden sticky top-0 z-40 bg-white/95 dark:bg-[#1A1A1A]/95 backdrop-blur-xl border-b border-[#E8E8E8] dark:border-[#2F2F2F] shadow-sm"
-        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
-      >
-        <div className="mx-auto max-w-[1600px] px-4 py-3 flex items-center justify-between gap-2">
-          {/* BA14 Logo */}
-          <div className="text-sm font-semibold text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</div>
-          
-          {/* Nav Buttons */}
-          <div className="flex items-center gap-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeView === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveView(item.id)}
-                  className={`h-9 px-3 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                    isActive
-                      ? "bg-[#007AFF] text-white"
-                      : "text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A]"
-                  }`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  <Icon size={16} strokeWidth={2.5} />
-                  <span className="hidden sm:inline">{item.label.split(' ')[0]}</span>
-                </button>
-              );
-            })}
-          </div>
+    <>
+      {/* Mobile Layout */}
+      <div className="md:hidden min-h-screen bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
+        {/* Mobile Top Nav (Sticky) */}
+        <nav
+          className="sticky top-0 z-40 bg-white/95 dark:bg-[#1A1A1A]/95 backdrop-blur-xl border-b border-[#E8E8E8] dark:border-[#2F2F2F] shadow-sm"
+          style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+        >
+          <div className="mx-auto max-w-[1600px] px-4 py-3 flex items-center justify-between gap-2">
+            {/* BA14 Logo */}
+            <div className="text-sm font-semibold text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</div>
+            
+            {/* Nav Buttons */}
+            <div className="flex items-center gap-2">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeView === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveView(item.id)}
+                    className={`h-9 px-3 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                      isActive
+                        ? "bg-[#007AFF] text-white"
+                        : "text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A]"
+                    }`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <Icon size={16} strokeWidth={2.5} />
+                    <span className="hidden sm:inline">{item.label.split(' ')[0]}</span>
+                  </button>
+                );
+              })}
+            </div>
 
-          {/* Theme & Lang */}
-          <div className="flex items-center gap-1">
-            <button
-              onClick={toggleLang}
-              className="h-9 px-3 text-xs font-medium rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
-            >
-              {lang}
-            </button>
-            <button
-              onClick={toggleTheme}
-              className="h-9 px-2.5 rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
-            >
-              {isDark ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
-            </button>
+            {/* Theme & Lang */}
+            <div className="flex items-center gap-1">
+              <button
+                onClick={toggleLang}
+                className="h-9 px-3 text-xs font-medium rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
+              >
+                {lang}
+              </button>
+              <button
+                onClick={toggleTheme}
+                className="h-9 px-2.5 rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
+              >
+                {isDark ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
+              </button>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+
+        {/* Mobile Content */}
+        <main className="px-3 py-6 pb-12">
+          {activeView === "gpa" && <GPACalculatorMinimal lang={lang} />}
+          {activeView === "calendar" && <CalendarMinimal lang={lang} />}
+          {activeView === "flashcards" && <FlashcardsMinimal lang={lang} />}
+        </main>
+      </div>
 
       {/* Desktop/Tablet Layout */}
-      <div className="hidden md:flex flex-1 overflow-hidden">
+      <div className="hidden md:flex h-screen bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
         {/* Sidebar - Desktop Only */}
         <aside className="flex w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex-col shadow-sm flex-shrink-0">
         {/* Logo/Brand */}
@@ -180,28 +189,6 @@ export default function App() {
         )}
       </main>
       </div>
-
-      {/* Mobile Content - Grows and Scrolls */}
-      <main 
-        className="md:hidden grow overflow-y-auto overflow-x-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]"
-        style={{ WebkitOverflowScrolling: 'touch' }}
-      >
-        {activeView === "gpa" && (
-          <div className="px-3 py-6 pb-12">
-            <GPACalculatorMinimal lang={lang} />
-          </div>
-        )}
-        {activeView === "calendar" && (
-          <div className="px-3 py-6 pb-12">
-            <CalendarMinimal lang={lang} />
-          </div>
-        )}
-        {activeView === "flashcards" && (
-          <div className="px-3 py-6 pb-12">
-            <FlashcardsMinimal lang={lang} />
-          </div>
-        )}
-      </main>
-    </div>
+    </>
   );
 }
