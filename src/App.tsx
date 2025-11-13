@@ -47,6 +47,7 @@ export default function App() {
   const [theme, setTheme] = useTheme();
   const [lang, setLang] = useLang();
   const [activeView, setActiveView] = useState<View>("gpa");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isDark = theme === "dark";
   const toggleTheme = () => setTheme(isDark ? "light" : "dark");
@@ -59,9 +60,28 @@ export default function App() {
   ];
 
   return (
-    <div className="flex h-screen bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex flex-col shadow-sm">
+    <div className="flex flex-col md:flex-row h-screen bg-[#FAFAFA] dark:bg-[#1A1A1A] text-[#1F1F1F] dark:text-[#E8E8E8] transition-colors duration-200">
+      {/* Mobile Header */}
+      <header className="md:hidden bg-white dark:bg-[#212121] border-b border-[#E8E8E8] dark:border-[#2F2F2F] px-4 py-3 flex items-center justify-between">
+        <h1 className="text-lg font-semibold tracking-tight text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</h1>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={toggleLang}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
+          >
+            {lang}
+          </button>
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4]"
+          >
+            {isDark ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
+          </button>
+        </div>
+      </header>
+
+      {/* Sidebar - Desktop */}
+      <aside className="hidden md:flex w-64 bg-white dark:bg-[#212121] border-r border-[#E8E8E8] dark:border-[#2F2F2F] flex-col shadow-sm">
         {/* Logo/Brand */}
         <div className="px-6 py-5 border-b border-[#E8E8E8] dark:border-[#2F2F2F]">
           <h1 className="text-xl font-semibold tracking-tight text-[#0F0F0F] dark:text-[#F0F0F0]">BA14</h1>
@@ -109,21 +129,43 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 overflow-hidden bg-[#FAFAFA] dark:bg-[#1A1A1A]">
         {activeView === "gpa" && (
-          <div className="h-full overflow-y-auto px-8 py-6">
+          <div className="h-full overflow-y-auto px-4 md:px-8 py-4 md:py-6">
             <GPACalculatorMinimal lang={lang} />
           </div>
         )}
         {activeView === "calendar" && (
-          <div className="h-full overflow-y-auto px-8 py-6">
+          <div className="h-full overflow-y-auto px-4 md:px-8 py-4 md:py-6">
             <CalendarMinimal lang={lang} />
           </div>
         )}
         {activeView === "flashcards" && (
-          <div className="h-full overflow-y-auto px-8 py-6">
+          <div className="h-full overflow-y-auto px-4 md:px-8 py-4 md:py-6">
             <FlashcardsMinimal lang={lang} />
           </div>
         )}
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="md:hidden bg-white dark:bg-[#212121] border-t border-[#E8E8E8] dark:border-[#2F2F2F] px-2 py-2 flex items-center justify-around shadow-lg">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeView === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveView(item.id)}
+              className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-all duration-200 ${
+                isActive
+                  ? "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#0F0F0F] dark:text-[#FFFFFF]"
+                  : "text-[#6B6B6B] dark:text-[#9B9B9B]"
+              }`}
+            >
+              <Icon size={20} strokeWidth={2} />
+              <span className="text-[10px] font-medium">{item.label.split(' ')[0]}</span>
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }
