@@ -161,11 +161,11 @@ export default function App() {
       </main>
       </div>
 
-      {/* Mobile Bottom Navigation - REPOSITIONED HIGHER */}
+      {/* Mobile Bottom Navigation - POSITIONED WELL ABOVE BROWSER TOOLBAR */}
       <nav
         className="md:hidden fixed left-0 right-0 z-[99999] border-t-4 border-[#007AFF] bg-white dark:bg-[#1A1A1A] shadow-2xl"
         style={{ 
-          bottom: "60px",
+          bottom: "110px",
           paddingBottom: "16px",
           paddingTop: "16px",
           paddingLeft: "20px",
