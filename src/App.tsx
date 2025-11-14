@@ -66,20 +66,36 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
   const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      setMessage("");
+      setMessage(lang === "EN" ? "Opening Google Sign-In..." : "開啟 Google 登入...");
+      
       // Try popup first, fallback to redirect if blocked
       try {
-        await signInWithPopup(auth, googleProvider);
+        const result = await signInWithPopup(auth, googleProvider);
+        if (result.user) {
+          setMessage(lang === "EN" ? "Sign in successful!" : "登入成功！");
+        }
       } catch (popupError: any) {
-        if (popupError.code === 'auth/popup-blocked') {
+        console.log("Popup error:", popupError.code);
+        if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/popup-closed-by-user') {
+          setMessage(lang === "EN" ? "Redirecting to Google..." : "正在轉至 Google...");
           // Use redirect instead
           await signInWithRedirect(auth, googleProvider);
+        } else if (popupError.code === 'auth/cancelled-popup-request') {
+          setMessage("");
+          setLoading(false);
         } else {
           throw popupError;
         }
       }
     } catch (error: any) {
-      setMessage(error.message);
+      console.error("Google sign-in error:", error);
+      if (error.code === 'auth/unauthorized-domain') {
+        setMessage(lang === "EN" 
+          ? "Error: Domain not authorized. Please add this domain in Firebase Console." 
+          : "錯誤：域名未授權。請在 Firebase 控制台添加此域名。");
+      } else {
+        setMessage(error.message || (lang === "EN" ? "Sign in failed" : "登入失敗"));
+      }
       setLoading(false);
     }
   };
@@ -146,7 +162,13 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             </div>
 
             {message && (
-              <div className="text-sm text-center text-[#007AFF] dark:text-[#0A84FF]">
+              <div className={`text-sm text-center p-3 rounded-lg ${
+                message.includes("Error") || message.includes("錯誤") || message.includes("failed") || message.includes("失敗")
+                  ? "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400"
+                  : message.includes("success") || message.includes("成功")
+                  ? "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400"
+                  : "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+              }`}>
                 {message}
               </div>
             )}
