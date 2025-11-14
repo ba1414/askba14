@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Calculator, Calendar, BookMarked, Sun, Moon } from "lucide-react";
+import { Calculator, Calendar, BookMarked, Sun, Moon, BarChart3 } from "lucide-react";
 import GPACalculatorMinimal from "./GPACalculatorNew";
 import CalendarMinimal from "./CalendarMinimalNew";
 import FlashcardsMinimal from "./FlashcardsMinimal";
+import ProjectTimeline from "./ProjectTimeline";
 
 /**
  * ChatGPT-style minimal UI
@@ -12,7 +13,7 @@ import FlashcardsMinimal from "./FlashcardsMinimal";
  * - Clean and distraction-free
  */
 
-type View = "gpa" | "calendar" | "flashcards";
+type View = "gpa" | "calendar" | "flashcards" | "projects";
 
 function useTheme() {
   const getDefault = () => {
@@ -57,6 +58,7 @@ export default function App() {
     { id: "gpa" as View, icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算機" },
     { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "行事曆" },
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
+    { id: "projects" as View, icon: BarChart3, label: lang === "EN" ? "Projects" : "項目" },
   ];
 
 
@@ -122,6 +124,7 @@ export default function App() {
           {activeView === "gpa" && <GPACalculatorMinimal lang={lang} />}
           {activeView === "calendar" && <CalendarMinimal lang={lang} />}
           {activeView === "flashcards" && <FlashcardsMinimal lang={lang} />}
+          {activeView === "projects" && <ProjectTimeline lang={lang} />}
         </main>
       </div>
 
@@ -188,6 +191,11 @@ export default function App() {
         {activeView === "flashcards" && (
           <div className="h-full overflow-y-auto overflow-x-hidden px-8 py-6">
             <FlashcardsMinimal lang={lang} />
+          </div>
+        )}
+        {activeView === "projects" && (
+          <div className="h-full overflow-y-auto overflow-x-hidden px-8 py-6">
+            <ProjectTimeline lang={lang} />
           </div>
         )}
       </main>
