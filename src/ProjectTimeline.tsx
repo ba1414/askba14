@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Trash2, Download, Upload, Share2, Calendar, Clock } from "lucide-react";
+import { Plus, Trash2, Download, Upload, Share2, Calendar, Clock, Edit2, Check, X } from "lucide-react";
 import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
@@ -9,23 +9,28 @@ const TRANSLATIONS = {
     projectName: "Project name...",
     startDate: "Start Date",
     endDate: "End Date",
+    color: "Color",
     status: "Status",
     notStarted: "Not Started",
     inProgress: "In Progress",
     completed: "Completed",
-    create: "Create",
+    create: "Add",
     cancel: "Cancel",
-    export: "Export Data",
-    import: "Import Data",
-    share: "Share",
+    export: "Export",
+    import: "Import",
+    share: "Share Link",
+    reset: "Reset All",
     days: "days",
     daysLeft: "days left",
     overdue: "overdue",
     progress: "Progress",
     delete: "Delete",
-    noProjects: "No projects yet. Create one to get started!",
-    copyLink: "Copy Share Link",
-    linkCopied: "Link copied!",
+    edit: "Edit",
+    save: "Save",
+    noProjects: "No projects yet. Add one above to get started.",
+    savedLocally: "Data is saved in your browser (survives refresh).",
+    linkCopied: "Share link copied! Anyone can view your timeline.",
+    clearConfirm: "Delete all projects? This cannot be undone.",
   },
   粵: {
     title: "項目時間表",
@@ -33,23 +38,28 @@ const TRANSLATIONS = {
     projectName: "項目名稱...",
     startDate: "開始日期",
     endDate: "結束日期",
+    color: "顏色",
     status: "狀態",
     notStarted: "未開始",
     inProgress: "進行中",
     completed: "已完成",
-    create: "建立",
+    create: "新增",
     cancel: "取消",
-    export: "匯出數據",
-    import: "匯入數據",
-    share: "分享",
+    export: "匯出",
+    import: "匯入",
+    share: "分享連結",
+    reset: "全部清除",
     days: "日",
     daysLeft: "日剩餘",
     overdue: "逾期",
     progress: "進度",
     delete: "刪除",
+    edit: "編輯",
+    save: "儲存",
     noProjects: "未有項目。新增一個開始使用！",
-    copyLink: "複製分享連結",
-    linkCopied: "已複製連結！",
+    savedLocally: "數據已儲存於瀏覽器（重新整理後仍然保留）。",
+    linkCopied: "分享連結已複製！任何人都可以查看你嘅時間表。",
+    clearConfirm: "刪除所有項目？此操作無法復原。",
   },
 };
 
@@ -60,6 +70,7 @@ interface Project {
   name: string;
   startDate: string;
   endDate: string;
+  color: string;
   status: ProjectStatus;
   createdAt: number;
 }
@@ -71,17 +82,43 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [newProject, setNewProject] = useState({
     name: "",
     startDate: "",
     endDate: "",
+    color: "#1F6FEB",
     status: "not-started" as ProjectStatus,
+  });
+  const [editProject, setEditProject] = useState({
+    name: "",
+    startDate: "",
+    endDate: "",
+    color: "#1F6FEB",
   });
   const [showCopied, setShowCopied] = useState(false);
 
   // Load projects from IndexedDB on mount
   useEffect(() => {
     (async () => {
+      // Try to load from URL first (shared link)
+      const params = new URLSearchParams(window.location.search);
+      const sharedData = params.get("timeline");
+      
+      if (sharedData) {
+        try {
+          const decoded = JSON.parse(atob(sharedData));
+          setProjects(decoded);
+          setIsLoaded(true);
+          // Clean URL after loading
+          window.history.replaceState({}, "", window.location.pathname);
+          return;
+        } catch (error) {
+          console.error("Failed to load shared timeline");
+        }
+      }
+      
+      // Otherwise load from IndexedDB
       const savedProjects = await loadData('projects', 'list', []);
       setProjects(savedProjects);
       setIsLoaded(true);
@@ -103,17 +140,42 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
       name: newProject.name,
       startDate: newProject.startDate,
       endDate: newProject.endDate,
+      color: newProject.color,
       status: newProject.status,
       createdAt: Date.now(),
     };
 
     setProjects([...projects, project]);
-    setNewProject({ name: "", startDate: "", endDate: "", status: "not-started" });
+    setNewProject({ name: "", startDate: "", endDate: "", color: "#1F6FEB", status: "not-started" });
     setShowAddForm(false);
   };
 
   const deleteProject = (id: string) => {
     setProjects(projects.filter((p) => p.id !== id));
+  };
+
+  const startEdit = (project: Project) => {
+    setEditingId(project.id);
+    setEditProject({
+      name: project.name,
+      startDate: project.startDate,
+      endDate: project.endDate,
+      color: project.color,
+    });
+  };
+
+  const saveEdit = () => {
+    if (!editingId) return;
+    setProjects(projects.map((p) =>
+      p.id === editingId
+        ? { ...p, ...editProject }
+        : p
+    ));
+    setEditingId(null);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
   };
 
   const updateStatus = (id: string, status: ProjectStatus) => {
@@ -169,26 +231,17 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
 
   const shareData = () => {
     const encoded = btoa(JSON.stringify(projects));
-    const url = `${window.location.origin}${window.location.pathname}?import=${encoded}`;
+    const url = `${window.location.origin}${window.location.pathname}?timeline=${encoded}`;
     navigator.clipboard.writeText(url);
     setShowCopied(true);
-    setTimeout(() => setShowCopied(false), 2000);
+    setTimeout(() => setShowCopied(false), 3000);
   };
 
-  // Check for import parameter
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const importData = params.get("import");
-    if (importData) {
-      try {
-        const decoded = JSON.parse(atob(importData));
-        setProjects(decoded);
-        window.history.replaceState({}, "", window.location.pathname);
-      } catch (error) {
-        console.error("Failed to import shared data");
-      }
+  const resetAll = () => {
+    if (confirm(t.clearConfirm)) {
+      setProjects([]);
     }
-  }, []);
+  };
 
   const getStatusColor = (status: ProjectStatus) => {
     switch (status) {
@@ -215,50 +268,58 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
   return (
     <div className="w-full max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-[#0F0F0F] dark:text-[#F0F0F0] mb-4">
+      <div className="mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2">
           {t.title}
         </h1>
+        <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B]">{t.savedLocally}</p>
+      </div>
         
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="px-4 py-2 bg-[#007AFF] text-white rounded-lg hover:bg-[#0051D5] transition-colors flex items-center gap-2"
-          >
-            <Plus size={18} />
-            {t.addProject}
-          </button>
-          <button
-            onClick={exportData}
-            className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4] rounded-lg hover:bg-[#E5E7EB] dark:hover:bg-[#383838] transition-colors flex items-center gap-2"
-          >
-            <Download size={18} />
-            {t.export}
-          </button>
-          <label className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4] rounded-lg hover:bg-[#E5E7EB] dark:hover:bg-[#383838] transition-colors flex items-center gap-2 cursor-pointer">
-            <Upload size={18} />
-            {t.import}
-            <input type="file" accept=".json" onChange={importData} className="hidden" />
-          </label>
-          <button
-            onClick={shareData}
-            className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4] rounded-lg hover:bg-[#E5E7EB] dark:hover:bg-[#383838] transition-colors flex items-center gap-2"
-          >
-            <Share2 size={18} />
-            {t.share}
-          </button>
-          {showCopied && (
-            <span className="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-lg flex items-center gap-2">
-              {t.linkCopied}
-            </span>
-          )}
-        </div>
+      {/* Toolbar */}
+      <div className="mb-6 flex flex-wrap gap-2">
+        <button
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="px-4 py-2 bg-[#007AFF] text-white rounded-lg hover:bg-[#0051D5] transition-colors flex items-center gap-2 font-medium"
+        >
+          <Plus size={18} />
+          {t.addProject}
+        </button>
+        <button
+          onClick={exportData}
+          className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4] rounded-lg hover:bg-[#E5E7EB] dark:hover:bg-[#383838] transition-colors flex items-center gap-2"
+        >
+          <Download size={18} />
+          {t.export}
+        </button>
+        <label className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4] rounded-lg hover:bg-[#E5E7EB] dark:hover:bg-[#383838] transition-colors flex items-center gap-2 cursor-pointer">
+          <Upload size={18} />
+          {t.import}
+          <input type="file" accept=".json" onChange={importData} className="hidden" />
+        </label>
+        <button
+          onClick={shareData}
+          className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4] rounded-lg hover:bg-[#E5E7EB] dark:hover:bg-[#383838] transition-colors flex items-center gap-2"
+        >
+          <Share2 size={18} />
+          {t.share}
+        </button>
+        <button
+          onClick={resetAll}
+          className="px-4 py-2 border border-[#E8E8E8] dark:border-[#2F2F2F] text-[#6B6B6B] dark:text-[#9B9B9B] rounded-lg hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A] transition-colors"
+        >
+          {t.reset}
+        </button>
+        {showCopied && (
+          <span className="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-lg flex items-center gap-2 animate-pulse">
+            {t.linkCopied}
+          </span>
+        )}
       </div>
 
       {/* Add Project Form */}
       {showAddForm && (
         <div className="mb-6 p-4 bg-white dark:bg-[#1F1F1F] rounded-xl border border-[#E8E8E8] dark:border-[#2F2F2F]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <input
               type="text"
               placeholder={t.projectName}
@@ -266,25 +327,29 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
               onChange={(e) => setNewProject({ ...newProject, name: e.target.value })}
               className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
             />
-            <div className="flex gap-2">
-              <input
-                type="date"
-                value={newProject.startDate}
-                onChange={(e) => setNewProject({ ...newProject, startDate: e.target.value })}
-                className="flex-1 px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
-              />
-              <input
-                type="date"
-                value={newProject.endDate}
-                onChange={(e) => setNewProject({ ...newProject, endDate: e.target.value })}
-                className="flex-1 px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
-              />
-            </div>
+            <input
+              type="date"
+              value={newProject.startDate}
+              onChange={(e) => setNewProject({ ...newProject, startDate: e.target.value })}
+              className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
+            />
+            <input
+              type="date"
+              value={newProject.endDate}
+              onChange={(e) => setNewProject({ ...newProject, endDate: e.target.value })}
+              className="px-4 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
+            />
+            <input
+              type="color"
+              value={newProject.color}
+              onChange={(e) => setNewProject({ ...newProject, color: e.target.value })}
+              className="h-10 w-full bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none cursor-pointer"
+            />
           </div>
-          <div className="flex gap-2 mt-4">
+          <div className="flex gap-2 mt-3">
             <button
               onClick={addProject}
-              className="px-4 py-2 bg-[#007AFF] text-white rounded-lg hover:bg-[#0051D5] transition-colors"
+              className="px-4 py-2 bg-[#007AFF] text-white rounded-lg hover:bg-[#0051D5] transition-colors font-medium"
             >
               {t.create}
             </button>
@@ -300,15 +365,15 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
 
       {/* Projects List */}
       {projects.length === 0 ? (
-        <div className="text-center py-12 text-[#6B6B6B] dark:text-[#9B9B9B]">
-          {t.noProjects}
+        <div className="text-center py-16 px-4">
+          <p className="text-lg text-[#6B6B6B] dark:text-[#9B9B9B] mb-2">{t.noProjects}</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {projects
-            .sort((a, b) => new Date(a.endDate).getTime() - new Date(b.endDate).getTime())
+            .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
             .map((project) => {
-              const progress = calculateProgress(project);
+              const isEditing = editingId === project.id;
               const daysLeft = getDaysLeft(project.endDate);
 
               return (
@@ -316,60 +381,107 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
                   key={project.id}
                   className="p-4 bg-white dark:bg-[#1F1F1F] rounded-xl border border-[#E8E8E8] dark:border-[#2F2F2F]"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2">
-                        {project.name}
-                      </h3>
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-[#6B6B6B] dark:text-[#9B9B9B]">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14} />
-                          {new Date(project.startDate).toLocaleDateString()} - {new Date(project.endDate).toLocaleDateString()}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock size={14} />
-                          {daysLeft > 0 ? `${daysLeft} ${t.daysLeft}` : daysLeft < 0 ? `${Math.abs(daysLeft)} ${t.days} ${t.overdue}` : t.completed}
-                        </span>
+                  {isEditing ? (
+                    // Edit mode
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                        <input
+                          type="text"
+                          value={editProject.name}
+                          onChange={(e) => setEditProject({ ...editProject, name: e.target.value })}
+                          className="px-3 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
+                          placeholder={t.projectName}
+                        />
+                        <input
+                          type="date"
+                          value={editProject.startDate}
+                          onChange={(e) => setEditProject({ ...editProject, startDate: e.target.value })}
+                          className="px-3 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
+                        />
+                        <input
+                          type="date"
+                          value={editProject.endDate}
+                          onChange={(e) => setEditProject({ ...editProject, endDate: e.target.value })}
+                          className="px-3 py-2 bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none outline-none text-[#1F1F1F] dark:text-[#E8E8E8]"
+                        />
+                        <input
+                          type="color"
+                          value={editProject.color}
+                          onChange={(e) => setEditProject({ ...editProject, color: e.target.value })}
+                          className="h-10 w-full bg-[#F3F4F6] dark:bg-[#2A2A2A] rounded-lg border-none cursor-pointer"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={saveEdit}
+                          className="px-3 py-1.5 bg-[#007AFF] text-white rounded-lg hover:bg-[#0051D5] flex items-center gap-1.5 text-sm"
+                        >
+                          <Check size={16} />
+                          {t.save}
+                        </button>
+                        <button
+                          onClick={cancelEdit}
+                          className="px-3 py-1.5 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#3F3F3F] dark:text-[#D4D4D4] rounded-lg hover:bg-[#E5E7EB] dark:hover:bg-[#383838] flex items-center gap-1.5 text-sm"
+                        >
+                          <X size={16} />
+                          {t.cancel}
+                        </button>
                       </div>
                     </div>
-                    <button
-                      onClick={() => deleteProject(project.id)}
-                      className="text-red-500 hover:text-red-600 p-2"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="mb-3">
-                    <div className="flex items-center justify-between mb-1 text-sm">
-                      <span className="text-[#6B6B6B] dark:text-[#9B9B9B]">{t.progress}</span>
-                      <span className="font-medium text-[#0F0F0F] dark:text-[#F0F0F0]">{progress}%</span>
-                    </div>
-                    <div className="h-2 bg-[#E8E8E8] dark:bg-[#2F2F2F] rounded-full overflow-hidden">
+                  ) : (
+                    // View mode
+                    <div className="flex items-center gap-3">
                       <div
-                        className="h-full bg-[#007AFF] rounded-full transition-all duration-300"
-                        style={{ width: `${progress}%` }}
+                        className="w-4 h-4 rounded-md flex-shrink-0 border border-black/10"
+                        style={{ backgroundColor: project.color }}
                       />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] truncate">
+                          {project.name}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-[#6B6B6B] dark:text-[#9B9B9B] mt-1">
+                          <span className="flex items-center gap-1">
+                            <Calendar size={12} />
+                            {new Date(project.startDate).toLocaleDateString()} → {new Date(project.endDate).toLocaleDateString()}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock size={12} />
+                            {daysLeft > 0 ? `${daysLeft} ${t.daysLeft}` : daysLeft < 0 ? `${Math.abs(daysLeft)} ${t.days} ${t.overdue}` : t.completed}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {(["not-started", "in-progress", "completed"] as ProjectStatus[]).map((status) => (
+                          <button
+                            key={status}
+                            onClick={() => updateStatus(project.id, status)}
+                            className={`px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                              project.status === status
+                                ? getStatusColor(status)
+                                : "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#E8E8E8] dark:hover:bg-[#323232]"
+                            }`}
+                            title={getStatusLabel(status)}
+                          >
+                            {status === "not-started" ? "⏸" : status === "in-progress" ? "▶" : "✓"}
+                          </button>
+                        ))}
+                        <button
+                          onClick={() => startEdit(project)}
+                          className="p-1.5 text-[#6B6B6B] dark:text-[#9B9B9B] hover:text-[#007AFF] dark:hover:text-[#007AFF] hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A] rounded-lg"
+                          title={t.edit}
+                        >
+                          <Edit2 size={16} />
+                        </button>
+                        <button
+                          onClick={() => deleteProject(project.id)}
+                          className="p-1.5 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
+                          title={t.delete}
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-
-                  {/* Status Selector */}
-                  <div className="flex gap-2">
-                    {(["not-started", "in-progress", "completed"] as ProjectStatus[]).map((status) => (
-                      <button
-                        key={status}
-                        onClick={() => updateStatus(project.id, status)}
-                        className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
-                          project.status === status
-                            ? getStatusColor(status)
-                            : "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#E8E8E8] dark:hover:bg-[#323232]"
-                        }`}
-                      >
-                        {getStatusLabel(status)}
-                      </button>
-                    ))}
-                  </div>
+                  )}
                 </div>
               );
             })}
