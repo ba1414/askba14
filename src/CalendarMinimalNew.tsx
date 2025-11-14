@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Check, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
   EN: {
@@ -31,28 +32,20 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    try {
-      const saved = localStorage.getItem('ba14_calendar_tasks');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        console.log('✅ Loaded calendar tasks:', parsed.length);
-        return parsed;
-      }
-    } catch (error) {
-      console.error('❌ Failed to load tasks:', error);
-    }
-    return [];
-  });
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
+  // Load tasks from IndexedDB on mount
   useEffect(() => {
-    try {
-      localStorage.setItem('ba14_calendar_tasks', JSON.stringify(tasks));
-      console.log('💾 Saved calendar tasks:', tasks.length);
-    } catch (error) {
-      console.error('❌ Failed to save tasks:', error);
-    }
+    (async () => {
+      const savedTasks = await loadData('calendar', 'tasks', []);
+      setTasks(savedTasks);
+    })();
+  }, []);
+
+  // Save tasks to IndexedDB
+  useEffect(() => {
+    saveData('calendar', 'tasks', tasks);
   }, [tasks]);
 
   const addTask = () => {

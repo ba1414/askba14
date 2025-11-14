@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Plus, Trash2, Target } from "lucide-react";
+import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
   EN: {
@@ -126,42 +127,16 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
-  const [scale, setScale] = useState<GPAScale>(() => {
-    try {
-      const saved = localStorage.getItem('ba14_gpa_scale');
-      if (saved) {
-        console.log('✅ Loaded GPA scale:', saved);
-        return saved as GPAScale;
-      }
-    } catch (error) {
-      console.error('❌ Failed to load GPA scale:', error);
-    }
-    return "4.0";
-  });
+  const [scale, setScale] = useState<GPAScale>("4.0");
   
   const [courses, setCourses] = useState<Course[]>(() => {
     // Always start with 5 default courses
-    const defaultCourses = Array.from({ length: 5 }, (_, i) => ({
+    return Array.from({ length: 5 }, (_, i) => ({
       id: `course-${Date.now()}-${i}`,
       name: "",
       grade: "",
       credits: 3
     }));
-
-    try {
-      const saved = localStorage.getItem('ba14_gpa_courses');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed && parsed.length > 0) {
-          console.log('✅ Loaded GPA courses:', parsed.length);
-          return parsed;
-        }
-      }
-    } catch (error) {
-      console.error('❌ Failed to load GPA data:', error);
-    }
-    
-    return defaultCourses;
   });
   
   const [targetGPA, setTargetGPA] = useState("");
@@ -169,22 +144,26 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
   const [cumulativeGPA, setCumulativeGPA] = useState("");
   const [cumulativeCredits, setCumulativeCredits] = useState("");
 
+  // Load data from IndexedDB on mount
   useEffect(() => {
-    try {
-      localStorage.setItem('ba14_gpa_courses', JSON.stringify(courses));
-      console.log('💾 Saved GPA courses:', courses.length);
-    } catch (error) {
-      console.error('❌ Failed to save GPA courses:', error);
-    }
+    (async () => {
+      const savedCourses = await loadData('gpa', 'courses', []);
+      if (savedCourses.length > 0) {
+        setCourses(savedCourses);
+      }
+      const savedScale = await loadData('gpa', 'scale', '4.0');
+      setScale(savedScale as GPAScale);
+    })();
+  }, []);
+
+  // Save courses to IndexedDB
+  useEffect(() => {
+    saveData('gpa', 'courses', courses);
   }, [courses]);
 
+  // Save scale to IndexedDB
   useEffect(() => {
-    try {
-      localStorage.setItem('ba14_gpa_scale', scale);
-      console.log('💾 Saved GPA scale:', scale);
-    } catch (error) {
-      console.error('❌ Failed to save GPA scale:', error);
-    }
+    saveData('gpa', 'scale', scale);
   }, [scale]);
 
   const currentGPA = useMemo(() => {

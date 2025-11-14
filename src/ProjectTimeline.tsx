@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Trash2, Download, Upload, Share2, Calendar, Clock } from "lucide-react";
+import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
   EN: {
@@ -67,19 +68,7 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
-  const [projects, setProjects] = useState<Project[]>(() => {
-    try {
-      const saved = localStorage.getItem("ba14_projects");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        console.log('✅ Loaded projects:', parsed.length);
-        return parsed;
-      }
-    } catch (error) {
-      console.error("❌ Failed to load projects:", error);
-    }
-    return [];
-  });
+  const [projects, setProjects] = useState<Project[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
     name: "",
@@ -89,14 +78,17 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
   });
   const [showCopied, setShowCopied] = useState(false);
 
-  // Save to localStorage
+  // Load projects from IndexedDB on mount
   useEffect(() => {
-    try {
-      localStorage.setItem("ba14_projects", JSON.stringify(projects));
-      console.log('💾 Saved projects:', projects.length);
-    } catch (error) {
-      console.error("❌ Failed to save projects:", error);
-    }
+    (async () => {
+      const savedProjects = await loadData('projects', 'list', []);
+      setProjects(savedProjects);
+    })();
+  }, []);
+
+  // Save projects to IndexedDB
+  useEffect(() => {
+    saveData('projects', 'list', projects);
   }, [projects]);
 
   const addProject = () => {

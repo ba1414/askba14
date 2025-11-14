@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Plus, Trash2, Play, Upload, Download, X as CloseIcon } from "lucide-react";
 import jsPDF from 'jspdf';
+import { saveData, loadData } from "./db";
 
 /**
  * Minimal Flashcards - ChatGPT style
@@ -92,19 +93,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
-  const [decks, setDecks] = useState<Deck[]>(() => {
-    try {
-      const saved = localStorage.getItem('ba14_flashcards_decks');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        console.log('✅ Loaded flashcard decks:', parsed.length);
-        return parsed;
-      }
-    } catch (error) {
-      console.error('❌ Failed to load decks:', error);
-    }
-    return [];
-  });
+  const [decks, setDecks] = useState<Deck[]>([]);
   const [newDeckName, setNewDeckName] = useState("");
   const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
   const [newCardFront, setNewCardFront] = useState("");
@@ -118,13 +107,17 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
 
+  // Load decks from IndexedDB on mount
   useEffect(() => {
-    try {
-      localStorage.setItem('ba14_flashcards_decks', JSON.stringify(decks));
-      console.log('💾 Saved flashcard decks:', decks.length);
-    } catch (error) {
-      console.error('❌ Failed to save decks:', error);
-    }
+    (async () => {
+      const savedDecks = await loadData('flashcards', 'decks', []);
+      setDecks(savedDecks);
+    })();
+  }, []);
+
+  // Save decks to IndexedDB
+  useEffect(() => {
+    saveData('flashcards', 'decks', decks);
   }, [decks]);
 
   const createDeck = () => {
