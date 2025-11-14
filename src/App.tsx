@@ -73,12 +73,14 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
         const result = await signInWithPopup(auth, googleProvider);
         if (result.user) {
           setMessage(lang === "EN" ? "Sign in successful!" : "登入成功！");
+          // Success - Firebase auth will trigger onAuthStateChanged
+          // Just keep loading state, App component will handle the transition
         }
       } catch (popupError: any) {
         console.log("Popup error:", popupError.code);
         if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/popup-closed-by-user') {
           setMessage(lang === "EN" ? "Redirecting to Google..." : "正在轉至 Google...");
-          // Use redirect instead
+          // Use redirect instead (loading will persist through redirect)
           await signInWithRedirect(auth, googleProvider);
         } else if (popupError.code === 'auth/cancelled-popup-request') {
           setMessage("");
@@ -108,12 +110,15 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
     try {
       if (isSignUp) {
         await createUserWithEmailAndPassword(auth, email, password);
+        setMessage(lang === "EN" ? "Account created! Signing in..." : "帳戶已建立！登入中...");
       } else {
         await signInWithEmailAndPassword(auth, email, password);
+        setMessage(lang === "EN" ? "Sign in successful!" : "登入成功！");
       }
+      // Success - Firebase auth will trigger onAuthStateChanged
+      // Keep loading state, App component will handle the transition
     } catch (error: any) {
       setMessage(error.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -267,16 +272,20 @@ export default function App() {
     getRedirectResult(auth)
       .then((result) => {
         if (result?.user) {
+          console.log("Redirect result user:", result.user.email);
           setUser(result.user);
           setIsGuest(false);
           localStorage.removeItem("guestMode");
         }
+        setLoading(false); // Set loading false even if no redirect result
       })
       .catch((error) => {
         console.error("Redirect error:", error);
+        setLoading(false); // Set loading false on error too
       });
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("Auth state changed:", user?.email || "null");
       setUser(user);
       setLoading(false);
       if (user) {
