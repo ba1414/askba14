@@ -6,7 +6,9 @@ import FlashcardsMinimal from "./FlashcardsMinimal";
 import ProjectTimeline from "./ProjectTimeline";
 import { auth, googleProvider } from "./firebase";
 import { 
-  signInWithPopup, 
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
@@ -64,10 +66,20 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
   const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      await signInWithPopup(auth, googleProvider);
+      setMessage("");
+      // Try popup first, fallback to redirect if blocked
+      try {
+        await signInWithPopup(auth, googleProvider);
+      } catch (popupError: any) {
+        if (popupError.code === 'auth/popup-blocked') {
+          // Use redirect instead
+          await signInWithRedirect(auth, googleProvider);
+        } else {
+          throw popupError;
+        }
+      }
     } catch (error: any) {
       setMessage(error.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -228,6 +240,19 @@ export default function App() {
       setLoading(false);
       return;
     }
+
+    // Check for redirect result first
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          setUser(result.user);
+          setIsGuest(false);
+          localStorage.removeItem("guestMode");
+        }
+      })
+      .catch((error) => {
+        console.error("Redirect error:", error);
+      });
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
