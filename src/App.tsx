@@ -66,35 +66,27 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
   const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      setMessage(lang === "EN" ? "Opening Google Sign-In..." : "開啟 Google 登入...");
+      setMessage(lang === "EN" ? "Redirecting to Google..." : "正在轉至 Google...");
       
-      // Try popup first, fallback to redirect if blocked
-      try {
-        const result = await signInWithPopup(auth, googleProvider);
-        if (result.user) {
-          setMessage(lang === "EN" ? "Sign in successful!" : "登入成功！");
-          // Success - Firebase auth will trigger onAuthStateChanged
-          // Just keep loading state, App component will handle the transition
-        }
-      } catch (popupError: any) {
-        console.log("Popup error:", popupError.code);
-        if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/popup-closed-by-user') {
-          setMessage(lang === "EN" ? "Redirecting to Google..." : "正在轉至 Google...");
-          // Use redirect instead (loading will persist through redirect)
-          await signInWithRedirect(auth, googleProvider);
-        } else if (popupError.code === 'auth/cancelled-popup-request') {
-          setMessage("");
-          setLoading(false);
-        } else {
-          throw popupError;
-        }
-      }
+      // Use redirect for better cross-browser compatibility
+      // Safari and Firefox have issues with popup
+      await signInWithRedirect(auth, googleProvider);
+      // After redirect, user will return and getRedirectResult will handle it
     } catch (error: any) {
       console.error("Google sign-in error:", error);
       if (error.code === 'auth/unauthorized-domain') {
         setMessage(lang === "EN" 
           ? "Error: Domain not authorized. Please add this domain in Firebase Console." 
           : "錯誤：域名未授權。請在 Firebase 控制台添加此域名。");
+      } else if (error.code === 'auth/popup-blocked') {
+        setMessage(lang === "EN" ? "Popup blocked. Redirecting..." : "彈窗被阻擋。正在轉址...");
+        // Try redirect as fallback
+        try {
+          await signInWithRedirect(auth, googleProvider);
+        } catch (redirectError) {
+          console.error("Redirect error:", redirectError);
+          setMessage(lang === "EN" ? "Sign in failed" : "登入失敗");
+        }
       } else {
         setMessage(error.message || (lang === "EN" ? "Sign in failed" : "登入失敗"));
       }
