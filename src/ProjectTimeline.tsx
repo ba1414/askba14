@@ -67,7 +67,19 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(() => {
+    try {
+      const saved = localStorage.getItem("ba14_projects");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        console.log('✅ Loaded projects:', parsed.length);
+        return parsed;
+      }
+    } catch (error) {
+      console.error("❌ Failed to load projects:", error);
+    }
+    return [];
+  });
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
     name: "",
@@ -77,25 +89,13 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
   });
   const [showCopied, setShowCopied] = useState(false);
 
-  // Load from localStorage
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("ba14_project_timeline");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setProjects(parsed);
-      }
-    } catch (error) {
-      console.error("Failed to load projects:", error);
-    }
-  }, []);
-
   // Save to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem("ba14_project_timeline", JSON.stringify(projects));
+      localStorage.setItem("ba14_projects", JSON.stringify(projects));
+      console.log('💾 Saved projects:', projects.length);
     } catch (error) {
-      console.error("Failed to save projects:", error);
+      console.error("❌ Failed to save projects:", error);
     }
   }, [projects]);
 

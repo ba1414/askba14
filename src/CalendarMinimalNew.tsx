@@ -31,25 +31,27 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    try {
+      const saved = localStorage.getItem('ba14_calendar_tasks');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        console.log('✅ Loaded calendar tasks:', parsed.length);
+        return parsed;
+      }
+    } catch (error) {
+      console.error('❌ Failed to load tasks:', error);
+    }
+    return [];
+  });
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('calendar_tasks');
-      if (saved) {
-        setTasks(JSON.parse(saved));
-      }
+      localStorage.setItem('ba14_calendar_tasks', JSON.stringify(tasks));
+      console.log('💾 Saved calendar tasks:', tasks.length);
     } catch (error) {
-      console.error('Failed to load tasks:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('calendar_tasks', JSON.stringify(tasks));
-    } catch (error) {
-      console.error('Failed to save tasks:', error);
+      console.error('❌ Failed to save tasks:', error);
     }
   }, [tasks]);
 
