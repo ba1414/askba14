@@ -280,6 +280,45 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
     };
   };
 
+  // Helper function to get card color based on familiarity
+  const getCardColor = (card: Flashcard) => {
+    const { repetitions = 0, interval = 0 } = card;
+    
+    // Red: Not familiar (0-1 repetitions or new)
+    if (repetitions <= 1 || interval < 1) {
+      return {
+        bg: "bg-red-50 dark:bg-red-950/30",
+        border: "border-red-200 dark:border-red-800/50",
+        text: "text-red-700 dark:text-red-400"
+      };
+    }
+    
+    // Yellow: Somewhat familiar (2-3 repetitions or short interval)
+    if (repetitions <= 3 || interval < 6) {
+      return {
+        bg: "bg-yellow-50 dark:bg-yellow-950/30",
+        border: "border-yellow-200 dark:border-yellow-800/50",
+        text: "text-yellow-700 dark:text-yellow-400"
+      };
+    }
+    
+    // Blue: Familiar (4-6 repetitions or medium interval)
+    if (repetitions <= 6 || interval < 14) {
+      return {
+        bg: "bg-blue-50 dark:bg-blue-950/30",
+        border: "border-blue-200 dark:border-blue-800/50",
+        text: "text-blue-700 dark:text-blue-400"
+      };
+    }
+    
+    // Green: Very familiar (7+ repetitions or long interval)
+    return {
+      bg: "bg-green-50 dark:bg-green-950/30",
+      border: "border-green-200 dark:border-green-800/50",
+      text: "text-green-700 dark:text-green-400"
+    };
+  };
+
   const rateCard = (quality: number) => {
     if (!studyingDeck) return;
     
@@ -726,27 +765,37 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
             {/* Cards List */}
             {deck.cards.length > 0 && (
               <div className="mt-4 space-y-2 max-h-48 overflow-y-auto">
-                {deck.cards.map((card) => (
-                  <div 
-                    key={card.id}
-                    className="group flex items-center justify-between p-3 bg-[#F9FAFB] dark:bg-[#1A1A1A] rounded-lg hover:bg-[#F3F4F6] dark:hover:bg-[#252525] transition-all"
-                  >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#0F0F0F] dark:text-[#F0F0F0] truncate">
-                        {card.front}
-                      </p>
-                      <p className="text-xs text-[#9B9B9B] dark:text-[#6B6B6B] truncate">
-                        {card.back}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => deleteCard(deck.id, card.id)}
-                      className="opacity-0 group-hover:opacity-100 ml-2 p-1.5 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded transition-all"
+                {deck.cards.map((card) => {
+                  const cardColor = getCardColor(card);
+                  return (
+                    <div 
+                      key={card.id}
+                      className={`group flex items-center justify-between p-3 rounded-lg border transition-all ${cardColor.bg} ${cardColor.border} hover:shadow-sm`}
                     >
-                      <Trash2 size={14} strokeWidth={2} />
-                    </button>
-                  </div>
-                ))}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-[#0F0F0F] dark:text-[#F0F0F0] truncate">
+                          {card.front}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <p className="text-xs text-[#9B9B9B] dark:text-[#6B6B6B] truncate">
+                            {card.back}
+                          </p>
+                          {card.repetitions !== undefined && card.repetitions > 0 && (
+                            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cardColor.text} ${cardColor.bg}`}>
+                              {card.repetitions}× {lang === "EN" ? "studied" : "已溫"}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => deleteCard(deck.id, card.id)}
+                        className="opacity-0 group-hover:opacity-100 ml-2 p-1.5 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded transition-all"
+                      >
+                        <Trash2 size={14} strokeWidth={2} />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

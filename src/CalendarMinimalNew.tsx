@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Check, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Check, X, ChevronLeft, ChevronRight, BarChart3 } from "lucide-react";
 import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
@@ -9,6 +9,8 @@ const TRANSLATIONS = {
     add: "Add",
     pending: "pending",
     completed: "completed",
+    projects: "Projects",
+    tasks: "Tasks",
   },
   粵: {
     title: "行事曆與任務",
@@ -16,6 +18,8 @@ const TRANSLATIONS = {
     add: "新增",
     pending: "待辦",
     completed: "已完成",
+    projects: "項目",
+    tasks: "任務",
   },
 };
 
@@ -26,6 +30,15 @@ interface Task {
   completed: boolean;
 }
 
+interface Project {
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  color: string;
+  status: string;
+}
+
 export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
@@ -34,13 +47,16 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
-  // Load tasks from IndexedDB on mount
+  // Load tasks and projects from IndexedDB on mount
   useEffect(() => {
     (async () => {
       const savedTasks = await loadData('calendar', 'tasks', []);
+      const savedProjects = await loadData('projects', 'projects', []);
       setTasks(savedTasks);
+      setProjects(savedProjects);
       setIsLoaded(true);
     })();
   }, []);
@@ -94,6 +110,17 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const dayTasks = tasks.filter((t) => t.date === selectedDateStr);
   const pendingCount = dayTasks.filter((t) => !t.completed).length;
   const completedCount = dayTasks.filter((t) => t.completed).length;
+
+  // Check if a project is active on a given date
+  const getProjectsForDate = (dateStr: string) => {
+    return projects.filter(p => {
+      const start = new Date(p.startDate).toISOString().split('T')[0];
+      const end = new Date(p.endDate).toISOString().split('T')[0];
+      return dateStr >= start && dateStr <= end;
+    });
+  };
+
+  const dayProjects = getProjectsForDate(selectedDateStr);
 
   return (
     <div className="w-full max-w-7xl mx-auto p-2 md:p-4 lg:p-8">
@@ -156,6 +183,8 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
               const isSelected = dateStr === selectedDateStr;
               const isToday = dateStr === new Date().toISOString().split('T')[0];
               const hasTasks = tasks.some((t) => t.date === dateStr);
+              const dayProjectsList = getProjectsForDate(dateStr);
+              const hasProjects = dayProjectsList.length > 0;
 
               return (
                 <button
@@ -170,9 +199,18 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                   }`}
                 >
                   {day}
-                  {hasTasks && !isSelected && (
-                    <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#007AFF] dark:bg-[#0A84FF]" />
-                  )}
+                  <div className="absolute bottom-0.5 left-1/2 -translate-x-1/2 flex gap-0.5">
+                    {hasTasks && !isSelected && (
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#007AFF] dark:bg-[#0A84FF]" />
+                    )}
+                    {hasProjects && !isSelected && dayProjectsList.slice(0, 2).map((proj, idx) => (
+                      <div 
+                        key={idx} 
+                        className="w-1.5 h-1.5 rounded-full"
+                        style={{ backgroundColor: proj.color }}
+                      />
+                    ))}
+                  </div>
                 </button>
               );
             })}
@@ -228,43 +266,107 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
 
           {/* Tasks List */}
           <div className="flex-1 overflow-y-auto space-y-2">
-            {dayTasks.length === 0 ? (
+            {/* Tasks Section */}
+            {dayTasks.length > 0 && (
+              <div className="mb-4">
+                <h4 className="text-xs font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <Check size={14} />
+                  {t.tasks}
+                </h4>
+                <div className="space-y-2">
+                  {dayTasks.map((task) => (
+                    <div
+                      key={task.id}
+                      className="group flex items-start gap-3 p-3 bg-[#F9FAFB] dark:bg-[#1A1A1A] rounded-lg hover:bg-[#F3F4F6] dark:hover:bg-[#252525] transition-all"
+                    >
+                      <button
+                        onClick={() => toggleTask(task.id)}
+                        className={`flex-shrink-0 w-5 h-5 rounded-md border-2 flex items-center justify-center mt-0.5 transition-all ${
+                          task.completed
+                            ? "bg-[#007AFF] dark:bg-[#0A84FF] border-[#007AFF] dark:border-[#0A84FF]"
+                            : "border-[#E5E7EB] dark:border-[#323232] hover:border-[#007AFF] dark:hover:border-[#0A84FF]"
+                        }`}
+                      >
+                        {task.completed && <Check size={12} className="text-white" strokeWidth={3} />}
+                      </button>
+                      <span
+                        className={`flex-1 text-sm transition-all ${
+                          task.completed
+                            ? "line-through text-[#9B9B9B] dark:text-[#6B6B6B]"
+                            : "text-[#0F0F0F] dark:text-[#F0F0F0]"
+                        }`}
+                      >
+                        {task.title}
+                      </span>
+                      <button
+                        onClick={() => deleteTask(task.id)}
+                        className="opacity-0 group-hover:opacity-100 p-1 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded transition-all"
+                      >
+                        <X size={14} strokeWidth={2} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Projects Section */}
+            {dayProjects.length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <BarChart3 size={14} />
+                  {t.projects}
+                </h4>
+                <div className="space-y-2">
+                  {dayProjects.map((project) => (
+                    <div
+                      key={project.id}
+                      className="p-3 rounded-lg border-l-4 transition-all bg-[#F9FAFB] dark:bg-[#1A1A1A] hover:bg-[#F3F4F6] dark:hover:bg-[#252525]"
+                      style={{ borderLeftColor: project.color }}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-[#0F0F0F] dark:text-[#F0F0F0]">
+                            {project.name}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span 
+                              className="text-xs px-2 py-0.5 rounded-full font-medium"
+                              style={{ 
+                                backgroundColor: `${project.color}20`,
+                                color: project.color 
+                              }}
+                            >
+                              {project.status}
+                            </span>
+                            <span className="text-xs text-[#9B9B9B] dark:text-[#6B6B6B]">
+                              {new Date(project.startDate).toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { month: 'short', day: 'numeric' })} 
+                              {' → '}
+                              {new Date(project.endDate).toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { month: 'short', day: 'numeric' })}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Empty State */}
+            {dayTasks.length === 0 && dayProjects.length === 0 && (
               <div className="flex items-center justify-center h-full text-center py-12">
                 <div>
                   <p className="text-sm text-[#9B9B9B] dark:text-[#6B6B6B] mb-1">
-                    {lang === "EN" ? "No tasks" : "未有任務"}
+                    {lang === "EN" ? "No tasks or projects" : "未有任務或項目"}
                   </p>
                   <p className="text-xs text-[#BFBFBF] dark:text-[#5B5B5B]">
                     {lang === "EN" ? "Add a task to get started" : "新增任務開始"}
                   </p>
                 </div>
               </div>
-            ) : (
-              dayTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="group flex items-start gap-3 p-3 bg-[#F9FAFB] dark:bg-[#1A1A1A] rounded-lg hover:bg-[#F3F4F6] dark:hover:bg-[#252525] transition-all"
-                >
-                  <button
-                    onClick={() => toggleTask(task.id)}
-                    className={`flex-shrink-0 w-5 h-5 rounded-md border-2 flex items-center justify-center mt-0.5 transition-all ${
-                      task.completed
-                        ? "bg-[#007AFF] dark:bg-[#0A84FF] border-[#007AFF] dark:border-[#0A84FF]"
-                        : "border-[#E5E7EB] dark:border-[#323232] hover:border-[#007AFF] dark:hover:border-[#0A84FF]"
-                    }`}
-                  >
-                    {task.completed && <Check size={12} className="text-white" strokeWidth={3} />}
-                  </button>
-                  <span
-                    className={`flex-1 text-sm transition-all ${
-                      task.completed
-                        ? "line-through text-[#9B9B9B] dark:text-[#6B6B6B]"
-                        : "text-[#0F0F0F] dark:text-[#F0F0F0]"
-                    }`}
-                  >
-                    {task.title}
-                  </span>
-                  <button
+            )}
+          </div>
                     onClick={() => deleteTask(task.id)}
                     className="opacity-0 group-hover:opacity-100 p-1 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded transition-all"
                   >
