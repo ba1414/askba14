@@ -127,6 +127,7 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const [scale, setScale] = useState<GPAScale>("4.0");
   
   const [courses, setCourses] = useState<Course[]>(() => {
@@ -153,18 +154,23 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
       }
       const savedScale = await loadData('gpa', 'scale', '4.0');
       setScale(savedScale as GPAScale);
+      setIsLoaded(true); // Mark as loaded
     })();
   }, []);
 
-  // Save courses to IndexedDB
+  // Save courses to IndexedDB (only after initial load)
   useEffect(() => {
-    saveData('gpa', 'courses', courses);
-  }, [courses]);
+    if (isLoaded) {
+      saveData('gpa', 'courses', courses);
+    }
+  }, [courses, isLoaded]);
 
-  // Save scale to IndexedDB
+  // Save scale to IndexedDB (only after initial load)
   useEffect(() => {
-    saveData('gpa', 'scale', scale);
-  }, [scale]);
+    if (isLoaded) {
+      saveData('gpa', 'scale', scale);
+    }
+  }, [scale, isLoaded]);
 
   const currentGPA = useMemo(() => {
     const gradeValues = scale === "4.0" ? GRADE_VALUES_4_0 : GRADE_VALUES_4_3;

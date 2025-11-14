@@ -93,6 +93,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const [decks, setDecks] = useState<Deck[]>([]);
   const [newDeckName, setNewDeckName] = useState("");
   const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
@@ -112,13 +113,16 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
     (async () => {
       const savedDecks = await loadData('flashcards', 'decks', []);
       setDecks(savedDecks);
+      setIsLoaded(true);
     })();
   }, []);
 
-  // Save decks to IndexedDB
+  // Save decks to IndexedDB (only after initial load)
   useEffect(() => {
-    saveData('flashcards', 'decks', decks);
-  }, [decks]);
+    if (isLoaded) {
+      saveData('flashcards', 'decks', decks);
+    }
+  }, [decks, isLoaded]);
 
   const createDeck = () => {
     if (!newDeckName.trim()) return;

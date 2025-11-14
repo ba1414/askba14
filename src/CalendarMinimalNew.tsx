@@ -30,6 +30,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -40,13 +41,16 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
     (async () => {
       const savedTasks = await loadData('calendar', 'tasks', []);
       setTasks(savedTasks);
+      setIsLoaded(true);
     })();
   }, []);
 
-  // Save tasks to IndexedDB
+  // Save tasks to IndexedDB (only after initial load)
   useEffect(() => {
-    saveData('calendar', 'tasks', tasks);
-  }, [tasks]);
+    if (isLoaded) {
+      saveData('calendar', 'tasks', tasks);
+    }
+  }, [tasks, isLoaded]);
 
   const addTask = () => {
     if (!newTaskTitle.trim()) return;

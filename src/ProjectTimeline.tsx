@@ -68,6 +68,7 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newProject, setNewProject] = useState({
@@ -83,13 +84,16 @@ export default function ProjectTimeline({ lang: propLang }: { lang: string }) {
     (async () => {
       const savedProjects = await loadData('projects', 'list', []);
       setProjects(savedProjects);
+      setIsLoaded(true);
     })();
   }, []);
 
-  // Save projects to IndexedDB
+  // Save projects to IndexedDB (only after initial load)
   useEffect(() => {
-    saveData('projects', 'list', projects);
-  }, [projects]);
+    if (isLoaded) {
+      saveData('projects', 'list', projects);
+    }
+  }, [projects, isLoaded]);
 
   const addProject = () => {
     if (!newProject.name.trim() || !newProject.startDate || !newProject.endDate) return;
