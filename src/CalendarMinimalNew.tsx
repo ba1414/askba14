@@ -367,15 +367,6 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
               </div>
             )}
           </div>
-                    onClick={() => deleteTask(task.id)}
-                    className="opacity-0 group-hover:opacity-100 p-1 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded transition-all"
-                  >
-                    <X size={14} strokeWidth={2} />
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
         </div>
       </div>
     </div>
