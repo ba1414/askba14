@@ -74,68 +74,16 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
 
       {/* Full Width Cards */}
       <div className="space-y-6">
-        {/* Interests */}
-        <div className="bg-white dark:bg-[#1d1d1f] rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-[#d2d2d7]/30 dark:border-[#424245]">
-          <h3 
-            className="text-2xl text-[#1d1d1f] dark:text-[#f5f5f7] mb-6"
-            style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}
-          >
-            {lang === "EN" ? "Interests" : "興趣"}
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {[1, 2, 3, 4].map((i) => (
-              <div 
-                key={i}
-                className="px-6 py-3 bg-[#f5f5f7] dark:bg-[#2d2d2d] rounded-full text-[#1d1d1f] dark:text-[#f5f5f7] text-sm"
-                style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 600 }}
-              >
-                {lang === "EN" ? `Interest ${i}` : `興趣 ${i}`}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Skills */}
-        <div className="bg-white dark:bg-[#1d1d1f] rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-[#d2d2d7]/30 dark:border-[#424245]">
-          <h3 
-            className="text-2xl text-[#1d1d1f] dark:text-[#f5f5f7] mb-6"
-            style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}
-          >
-            {lang === "EN" ? "Skills" : "技能"}
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div 
-                key={i}
-                className="text-center p-4 bg-[#f5f5f7] dark:bg-[#2d2d2d] rounded-2xl"
-              >
-                <div className="text-3xl mb-2">💡</div>
-                <p 
-                  className="text-[#1d1d1f] dark:text-[#f5f5f7] text-sm"
-                  style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 600 }}
-                >
-                  {lang === "EN" ? `Skill ${i}` : `技能 ${i}`}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Contact */}
-        <div className="bg-gradient-to-br from-[#0071e3] to-[#00c3ff] rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div className="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
           <h3 
             className="text-2xl text-white mb-4"
             style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}
           >
             {lang === "EN" ? "Get in Touch" : "聯絡我"}
           </h3>
-          <p className="text-white/90 mb-6">
-            {lang === "EN" 
-              ? "Feel free to reach out for collaborations or just a friendly hello"
-              : "歡迎聯絡我進行合作或打個招呼"}
-          </p>
           <button 
-            className="px-8 py-3 bg-white text-[#0071e3] rounded-full font-semibold hover:bg-white/90 transition-colors"
+            className="px-8 py-3 bg-white text-yellow-600 rounded-full font-semibold hover:bg-white/90 transition-colors"
             style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 600 }}
           >
             {lang === "EN" ? "Say Hello" : "打招呼"}
