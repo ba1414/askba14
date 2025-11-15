@@ -35,7 +35,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
         {/* Profile Card */}
         <div className="bg-white dark:bg-[#1d1d1f] rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-[#d2d2d7]/30 dark:border-[#424245]">
           <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
-            <div className="w-32 h-32 rounded-full mb-6 flex items-center justify-center overflow-hidden shadow-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+            <div className="w-32 h-32 rounded-full mb-6 flex items-center justify-center overflow-hidden shadow-xl bg-white dark:bg-[#1d1d1f]">
               <img 
                 src="/askba14/profile.png" 
                 alt="Profile" 
