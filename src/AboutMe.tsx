@@ -37,7 +37,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
           <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
             <div className="w-32 h-32 rounded-full mb-6 flex items-center justify-center overflow-hidden shadow-xl bg-white">
               <img 
-                src="/profile.png" 
+                src="/askba14/profile.png" 
                 alt="Profile" 
                 className="w-full h-full object-cover"
               />
