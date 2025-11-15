@@ -35,10 +35,8 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
         {/* Profile Card */}
         <div className="bg-white dark:bg-[#1d1d1f] rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-[#d2d2d7]/30 dark:border-[#424245]">
           <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#0071e3] to-[#00c3ff] mb-6 flex items-center justify-center">
-              <span className="text-5xl text-white" style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}>
-                {lang === "EN" ? "You" : "你"}
-              </span>
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#0071e3] to-[#00c3ff] mb-6 flex items-center justify-center overflow-hidden shadow-xl">
+              <div className="text-7xl">🧑‍💻</div>
             </div>
             <h2 
               className="text-2xl text-[#1d1d1f] dark:text-[#f5f5f7] mb-2"
