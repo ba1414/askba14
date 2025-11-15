@@ -4,6 +4,7 @@ import GPACalculatorMinimal from "./GPACalculatorNew";
 import CalendarMinimal from "./CalendarMinimalNew";
 import FlashcardsMinimal from "./FlashcardsMinimal";
 import ProjectTimeline from "./ProjectTimeline";
+import AboutMe from "./AboutMe";
 import { auth, googleProvider } from "./firebase";
 import { 
   signInWithPopup,
@@ -24,7 +25,7 @@ import {
  * - Clean and distraction-free
  */
 
-type View = "gpa" | "calendar" | "flashcards" | "projects";
+type View = "gpa" | "calendar" | "flashcards" | "projects" | "about";
 
 function useTheme() {
   const getDefault = () => {
@@ -314,6 +315,7 @@ export default function App() {
     { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "行事曆" },
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
     { id: "projects" as View, icon: BarChart3, label: lang === "EN" ? "Projects" : "項目" },
+    { id: "about" as View, icon: User, label: lang === "EN" ? "About Me" : "關於我" },
   ];
 
   // Show loading state
@@ -533,6 +535,11 @@ export default function App() {
         {activeView === "projects" && (
           <div className="h-full overflow-y-auto overflow-x-hidden px-8 py-6">
             <ProjectTimeline lang={lang} />
+          </div>
+        )}
+        {activeView === "about" && (
+          <div className="h-full overflow-y-auto overflow-x-hidden px-8 py-6">
+            <AboutMe lang={lang} />
           </div>
         )}
       </main>
