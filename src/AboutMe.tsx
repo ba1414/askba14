@@ -48,9 +48,6 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
             >
               {lang === "EN" ? "ba" : "ba"}
             </h2>
-            <p className="text-[#6e6e73] dark:text-[#a1a1a6] text-center">
-              {lang === "EN" ? "Add your title or role" : "加入你的職稱或角色"}
-            </p>
           </div>
         </div>
 
