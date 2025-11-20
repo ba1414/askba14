@@ -25,9 +25,6 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
         >
           {t.title}
         </h1>
-        <p className="text-xl md:text-2xl text-[#6e6e73] dark:text-[#a1a1a6]">
-          {t.subtitle}
-        </p>
       </div>
 
       {/* Content Cards - Apple Style Grid */}
