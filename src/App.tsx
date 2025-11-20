@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Calculator, Calendar, BookMarked, Sun, Moon, BarChart3, LogOut, User, Cloud } from "lucide-react";
+import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud } from "lucide-react";
 import GPACalculatorMinimal from "./GPACalculatorNew";
 import CalendarMinimal from "./CalendarMinimalNew";
 import FlashcardsMinimal from "./FlashcardsMinimal";
-import ProjectTimeline from "./ProjectTimeline";
 import AboutMe from "./AboutMe";
 import { auth, googleProvider } from "./firebase";
 import { 
@@ -25,7 +24,7 @@ import {
  * - Clean and distraction-free
  */
 
-type View = "gpa" | "calendar" | "flashcards" | "projects" | "about";
+type View = "gpa" | "calendar" | "flashcards" | "about";
 
 function useTheme() {
   const getDefault = () => {
@@ -311,10 +310,9 @@ export default function App() {
   const toggleLang = () => setLang(lang === "EN" ? "粵" : "EN");
 
   const navItems = [
-    { id: "gpa" as View, icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算機" },
-    { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "行事曆" },
+    { id: "gpa" as View, icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算器" },
+    { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "日曆" },
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
-    { id: "projects" as View, icon: BarChart3, label: lang === "EN" ? "Projects" : "項目" },
     { id: "about" as View, icon: User, label: lang === "EN" ? "About Me" : "關於我" },
   ];
 
@@ -431,7 +429,6 @@ export default function App() {
           {activeView === "gpa" && <GPACalculatorMinimal lang={lang} />}
           {activeView === "calendar" && <CalendarMinimal lang={lang} />}
           {activeView === "flashcards" && <FlashcardsMinimal lang={lang} />}
-          {activeView === "projects" && <ProjectTimeline lang={lang} />}
         </main>
       </div>
 
@@ -530,11 +527,6 @@ export default function App() {
         {activeView === "flashcards" && (
           <div className="h-full overflow-y-auto overflow-x-hidden px-8 py-6">
             <FlashcardsMinimal lang={lang} />
-          </div>
-        )}
-        {activeView === "projects" && (
-          <div className="h-full overflow-y-auto overflow-x-hidden px-8 py-6">
-            <ProjectTimeline lang={lang} />
           </div>
         )}
         {activeView === "about" && (
