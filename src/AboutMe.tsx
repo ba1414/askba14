@@ -50,12 +50,14 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
 
         {/* Info Card */}
         <div className="bg-white dark:bg-[#1d1d1f] rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-[#d2d2d7]/30 dark:border-[#424245]">
-          <h3 
-            className="text-2xl text-[#1d1d1f] dark:text-[#f5f5f7] mb-6 text-center"
-            style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}
-          >
-            {lang === "EN" ? "Bio" : "簡介"}
-          </h3>
+          <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
+            <h3 
+              className="text-2xl text-[#1d1d1f] dark:text-[#f5f5f7]"
+              style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}
+            >
+              {lang === "EN" ? "Bio" : "簡介"}
+            </h3>
+          </div>
         </div>
       </div>
     </div>
