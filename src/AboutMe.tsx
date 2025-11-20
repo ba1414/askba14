@@ -46,7 +46,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
               className="text-2xl text-[#1d1d1f] dark:text-[#f5f5f7] mb-2"
               style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}
             >
-              {lang === "EN" ? "Your Name" : "你的名字"}
+              {lang === "EN" ? "ba" : "ba"}
             </h2>
             <p className="text-[#6e6e73] dark:text-[#a1a1a6] text-center">
               {lang === "EN" ? "Add your title or role" : "加入你的職稱或角色"}
