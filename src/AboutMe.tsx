@@ -71,25 +71,6 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
           </div>
         </div>
       </div>
-
-      {/* Full Width Cards */}
-      <div className="space-y-6">
-        {/* Contact */}
-        <div className="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-          <h3 
-            className="text-2xl text-white mb-4"
-            style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 700 }}
-          >
-            {lang === "EN" ? "Get in Touch" : "聯絡我"}
-          </h3>
-          <button 
-            className="px-8 py-3 bg-white text-yellow-600 rounded-full font-semibold hover:bg-white/90 transition-colors"
-            style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif", fontWeight: 600 }}
-          >
-            {lang === "EN" ? "Say Hello" : "打招呼"}
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
