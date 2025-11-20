@@ -59,13 +59,6 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
           >
             {lang === "EN" ? "Bio" : "簡介"}
           </h3>
-          <div className="space-y-4 text-[#6e6e73] dark:text-[#a1a1a6]">
-            <p className="text-base leading-relaxed">
-              {lang === "EN" 
-                ? "Write something interesting about yourself..."
-                : "寫下關於你自己的有趣事情..."}
-            </p>
-          </div>
         </div>
       </div>
     </div>
