@@ -33,7 +33,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
   const t = TRANSLATIONS[lang];
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-4 md:p-8 animate-fade-in">
+    <div className="w-full max-w-6xl mx-auto p-4 md:p-8 animate-fade-in" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, sans-serif" }}>
       {/* Header */}
       <div className="mb-12 text-center">
         <h1 className="text-5xl md:text-7xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight mb-4">
@@ -59,7 +59,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
               />
             </div>
           </div>
-          <h2 className="text-3xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2 relative z-10">BA</h2>
+          <h2 className="text-6xl text-[#1D1D1F] dark:text-[#F5F5F7] mb-2 relative z-10" style={{ fontFamily: "'Great Vibes', cursive" }}>BA</h2>
           <div className="flex items-center gap-2 text-[#86868B] bg-[#F2F2F7] dark:bg-[#2C2C2E] px-4 py-2 rounded-full text-sm font-medium relative z-10">
             <MapPin size={14} />
             {t.location}
