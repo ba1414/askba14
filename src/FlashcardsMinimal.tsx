@@ -1,73 +1,89 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Plus, Trash2, Play, Upload, Download, X as CloseIcon } from "lucide-react";
+import { Plus, Trash2, Play, Upload, Download, X as CloseIcon, BookOpen, Brain, Clock, MoreHorizontal, CheckCircle, RotateCw, Layers, Zap } from "lucide-react";
 import jsPDF from 'jspdf';
 import { saveData, loadData } from "./db";
 
 /**
- * Minimal Flashcards - ChatGPT style
- * No decorations, flat design
+ * Apple-Style Flashcards (True Bento Grid)
+ * - Immersive study mode
+ * - Spaced repetition logic
+ * - Beautiful PDF export
  */
 
 const TRANSLATIONS = {
   EN: {
     title: "Flashcards",
-    createDeck: "Create New Deck",
-    deckName: "Deck name...",
+    subtitle: "Master your knowledge",
+    createDeck: "New Deck",
+    deckName: "Deck Name",
     create: "Create",
-    cards: "cards",
+    cards: "Cards",
     study: "Study",
-    front: "Front (Question)...",
-    back: "Back (Answer)...",
+    front: "Front (Question)",
+    back: "Back (Answer)",
     addCard: "Add Card",
     bulkImport: "Bulk Import",
-    bulkImportPlaceholder: "Paste cards here (one per line, format: Question | Answer)",
+    bulkImportPlaceholder: "Paste cards here (Question | Answer)",
     import: "Import",
     cancel: "Cancel",
     importCSV: "Import CSV",
-    csvFormat: "CSV format: front,back (one card per line)",
     exportPDF: "Export PDF",
-    studyMode: "Study Mode",
+    studyMode: "Study Session",
     showAnswer: "Show Answer",
     nextCard: "Next Card",
-    finishStudy: "Finish Study",
-    cardProgress: "Card {current} of {total}",
-    noCards: "No cards yet. Add cards to start studying!",
+    finishStudy: "Finish",
+    cardProgress: "{current} / {total}",
+    noCards: "No cards yet",
     rateCard: "How well did you know this?",
-    again: "Not Familiar",
-    hard: "Somewhat Familiar",
-    good: "Familiar",
-    easy: "Very Familiar",
-    reviewIn: "Review again in {time}",
+    again: "Again",
+    hard: "Hard",
+    good: "Good",
+    easy: "Easy",
+    reviewIn: "Review in {time}",
+    due: "Due",
+    new: "New",
+    mastered: "Mastered",
+    learning: "Learning",
+    recent: "Recent",
+    allDecks: "All Decks",
+    quickActions: "Quick Actions",
   },
   粵: {
     title: "字卡",
-    createDeck: "建立新卡組",
-    deckName: "卡組名稱...",
+    subtitle: "掌握你嘅知識",
+    createDeck: "新卡組",
+    deckName: "卡組名稱",
     create: "建立",
     cards: "張卡",
-    study: "開始溫習",
-    front: "正面（問題）...",
-    back: "背面（答案）...",
+    study: "溫習",
+    front: "正面 (問題)",
+    back: "背面 (答案)",
     addCard: "新增卡片",
     bulkImport: "批量匯入",
-    bulkImportPlaceholder: "貼上卡片內容（每行一張，格式：問題 | 答案）",
+    bulkImportPlaceholder: "貼上卡片 (問題 | 答案)",
     import: "匯入",
     cancel: "取消",
     importCSV: "匯入 CSV",
-    csvFormat: "CSV 格式：正面,背面（每行一張卡）",
-    exportPDF: "匯出PDF",
+    exportPDF: "匯出 PDF",
     studyMode: "溫習模式",
     showAnswer: "顯示答案",
     nextCard: "下一張",
-    finishStudy: "完成溫習",
-    cardProgress: "第 {current} / {total} 張",
-    noCards: "未有卡片。新增卡片嚟開始溫習！",
-    rateCard: "你對呢個概念有幾熟悉？",
-    again: "唔熟",
-    hard: "少少熟",
-    good: "熟",
-    easy: "好熟",
-    reviewIn: "{time}後再溫",
+    finishStudy: "完成",
+    cardProgress: "{current} / {total}",
+    noCards: "未有卡片",
+    rateCard: "你覺得呢張卡點？",
+    again: "唔識",
+    hard: "難",
+    good: "識",
+    easy: "好易",
+    reviewIn: "{time}後",
+    due: "到期",
+    new: "新卡",
+    mastered: "已掌握",
+    learning: "學習中",
+    recent: "最近",
+    allDecks: "所有卡組",
+    quickActions: "快速操作",
   },
 };
 
@@ -76,17 +92,18 @@ interface Flashcard {
   front: string;
   back: string;
   mastered: boolean;
-  lastReviewed?: number; // timestamp
-  nextReview?: number; // timestamp
-  easeFactor?: number; // SM-2 algorithm ease factor (default 2.5)
-  interval?: number; // days until next review
-  repetitions?: number; // number of successful repetitions
+  lastReviewed?: number;
+  nextReview?: number;
+  easeFactor?: number;
+  interval?: number;
+  repetitions?: number;
 }
 
 interface Deck {
   id: string;
   name: string;
   cards: Flashcard[];
+  lastStudied?: number;
 }
 
 export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) {
@@ -105,10 +122,10 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   
   // Study mode states
   const [studyingDeck, setStudyingDeck] = useState<Deck | null>(null);
+  const [studyQueue, setStudyQueue] = useState<Flashcard[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  // Load decks from IndexedDB on mount
   useEffect(() => {
     (async () => {
       const savedDecks = await loadData('flashcards', 'decks', []);
@@ -117,7 +134,6 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
     })();
   }, []);
 
-  // Save decks to IndexedDB (only after initial load)
   useEffect(() => {
     if (isLoaded) {
       saveData('flashcards', 'decks', decks);
@@ -130,8 +146,9 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       id: Date.now().toString(),
       name: newDeckName,
       cards: [],
+      lastStudied: Date.now(),
     };
-    setDecks([...decks, newDeck]);
+    setDecks([newDeck, ...decks]); // Add to top
     setNewDeckName("");
   };
 
@@ -147,11 +164,14 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       front: newCardFront,
       back: newCardBack,
       mastered: false,
+      easeFactor: 2.5,
+      interval: 0,
+      repetitions: 0,
+      nextReview: 0,
     };
     setDecks(decks.map((d) => (d.id === deckId ? { ...d, cards: [...d.cards, newCard] } : d)));
     setNewCardFront("");
     setNewCardBack("");
-    // Keep the form open after adding a card
   };
 
   const deleteCard = (deckId: string, cardId: string) => {
@@ -162,10 +182,8 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
 
   const bulkImport = (deckId: string) => {
     if (!bulkImportText.trim()) return;
-    
     const lines = bulkImportText.trim().split('\n');
     const newCards: Flashcard[] = [];
-    
     lines.forEach((line, index) => {
       const parts = line.split('|').map(p => p.trim());
       if (parts.length >= 2 && parts[0] && parts[1]) {
@@ -174,14 +192,15 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
           front: parts[0],
           back: parts[1],
           mastered: false,
+          easeFactor: 2.5,
+          interval: 0,
+          repetitions: 0,
+          nextReview: 0,
         });
       }
     });
-    
     if (newCards.length > 0) {
-      setDecks(decks.map((d) => 
-        d.id === deckId ? { ...d, cards: [...d.cards, ...newCards] } : d
-      ));
+      setDecks(decks.map((d) => d.id === deckId ? { ...d, cards: [...d.cards, ...newCards] } : d));
       setBulkImportText("");
       setShowBulkImport(null);
     }
@@ -190,391 +209,294 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   const handleCSVImport = (deckId: string, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target?.result as string;
       const lines = text.split('\n').filter(line => line.trim());
       const newCards: Flashcard[] = [];
-
       lines.forEach((line, index) => {
-        // Support both comma and semicolon as separators
-        const parts = line.includes(';') 
-          ? line.split(';').map(p => p.trim())
-          : line.split(',').map(p => p.trim());
-        
+        const parts = line.includes(';') ? line.split(';').map(p => p.trim()) : line.split(',').map(p => p.trim());
         if (parts.length >= 2 && parts[0] && parts[1]) {
-          // Remove quotes if present
-          const front = parts[0].replace(/^["']|["']$/g, '');
-          const back = parts[1].replace(/^["']|["']$/g, '');
-          
           newCards.push({
             id: `${Date.now()}-${index}`,
-            front,
-            back,
+            front: parts[0].replace(/^["']|["']$/g, ''),
+            back: parts[1].replace(/^["']|["']$/g, ''),
             mastered: false,
+            easeFactor: 2.5,
+            interval: 0,
+            repetitions: 0,
+            nextReview: 0,
           });
         }
       });
-
       if (newCards.length > 0) {
-        setDecks(decks.map((d) => 
-          d.id === deckId ? { ...d, cards: [...d.cards, ...newCards] } : d
-        ));
+        setDecks(decks.map((d) => d.id === deckId ? { ...d, cards: [...d.cards, ...newCards] } : d));
       }
     };
-
     reader.readAsText(file);
-    // Reset file input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  // Study mode functions
   const startStudy = (deck: Deck) => {
     if (deck.cards.length === 0) return;
+    
+    // Sort cards: Due > New > Others
+    const now = Date.now();
+    const sortedCards = [...deck.cards].sort((a, b) => {
+      const aDue = a.nextReview || 0;
+      const bDue = b.nextReview || 0;
+      
+      // If both are due (or new), sort by due date
+      if (aDue < now && bDue < now) return aDue - bDue;
+      
+      // If one is due and other isn't
+      if (aDue < now) return -1;
+      if (bDue < now) return 1;
+      
+      // If neither is due, sort by due date (earliest first)
+      return aDue - bDue;
+    });
+
+    setStudyQueue(sortedCards);
     setStudyingDeck(deck);
     setCurrentCardIndex(0);
     setShowAnswer(false);
+    
+    // Update last studied time
+    setDecks(decks.map(d => d.id === deck.id ? { ...d, lastStudied: now } : d));
   };
 
-  // SM-2 Spaced Repetition Algorithm
   const calculateNextReview = (card: Flashcard, quality: number): Flashcard => {
-    // quality: 0 = Again, 1 = Hard, 2 = Good, 3 = Easy
     const now = Date.now();
     let easeFactor = card.easeFactor || 2.5;
     let interval = card.interval || 0;
     let repetitions = card.repetitions || 0;
 
     if (quality < 2) {
-      // Not familiar or somewhat familiar - restart
       repetitions = 0;
       interval = 1;
     } else {
-      // Familiar or very familiar
       easeFactor = easeFactor + (0.1 - (3 - quality) * (0.08 + (3 - quality) * 0.02));
-      
       if (easeFactor < 1.3) easeFactor = 1.3;
-      
       repetitions += 1;
-      
-      if (repetitions === 1) {
-        interval = 1;
-      } else if (repetitions === 2) {
-        interval = 6;
-      } else {
-        interval = Math.round(interval * easeFactor);
-      }
+      if (repetitions === 1) interval = 1;
+      else if (repetitions === 2) interval = 6;
+      else interval = Math.round(interval * easeFactor);
     }
-
-    const nextReview = now + (interval * 24 * 60 * 60 * 1000); // convert days to milliseconds
 
     return {
       ...card,
       lastReviewed: now,
-      nextReview: nextReview,
-      easeFactor: easeFactor,
-      interval: interval,
-      repetitions: repetitions,
-    };
-  };
-
-  // Helper function to get card color based on familiarity
-  const getCardColor = (card: Flashcard) => {
-    const { repetitions = 0, interval = 0 } = card;
-    
-    // Red: Not familiar (0-1 repetitions or new)
-    if (repetitions <= 1 || interval < 1) {
-      return {
-        bg: "bg-red-50 dark:bg-red-950/30",
-        border: "border-red-200 dark:border-red-800/50",
-        text: "text-red-700 dark:text-red-400"
-      };
-    }
-    
-    // Yellow: Somewhat familiar (2-3 repetitions or short interval)
-    if (repetitions <= 3 || interval < 6) {
-      return {
-        bg: "bg-yellow-50 dark:bg-yellow-950/30",
-        border: "border-yellow-200 dark:border-yellow-800/50",
-        text: "text-yellow-700 dark:text-yellow-400"
-      };
-    }
-    
-    // Blue: Familiar (4-6 repetitions or medium interval)
-    if (repetitions <= 6 || interval < 14) {
-      return {
-        bg: "bg-blue-50 dark:bg-blue-950/30",
-        border: "border-blue-200 dark:border-blue-800/50",
-        text: "text-blue-700 dark:text-blue-400"
-      };
-    }
-    
-    // Green: Very familiar (7+ repetitions or long interval)
-    return {
-      bg: "bg-green-50 dark:bg-green-950/30",
-      border: "border-green-200 dark:border-green-800/50",
-      text: "text-green-700 dark:text-green-400"
+      nextReview: now + (interval * 24 * 60 * 60 * 1000),
+      easeFactor,
+      interval,
+      repetitions,
+      mastered: repetitions > 4
     };
   };
 
   const rateCard = (quality: number) => {
-    if (!studyingDeck) return;
+    if (!studyingDeck || !studyQueue[currentCardIndex]) return;
     
-    const currentCard = studyingDeck.cards[currentCardIndex];
+    const currentCard = studyQueue[currentCardIndex];
     const updatedCard = calculateNextReview(currentCard, quality);
     
-    // Update the card in the deck
+    // Update deck in main state
     const updatedDeck = {
       ...studyingDeck,
       cards: studyingDeck.cards.map(c => c.id === currentCard.id ? updatedCard : c)
     };
-    
-    // Update decks state
     setDecks(decks.map(d => d.id === studyingDeck.id ? updatedDeck : d));
-    
-    // Move to next card or finish
-    if (currentCardIndex < studyingDeck.cards.length - 1) {
+    setStudyingDeck(updatedDeck); // Keep local deck state in sync
+
+    // Move to next
+    if (currentCardIndex < studyQueue.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
       setShowAnswer(false);
-      setStudyingDeck(updatedDeck);
     } else {
-      setStudyingDeck(null);
-      setCurrentCardIndex(0);
-      setShowAnswer(false);
+      finishStudy();
     }
   };
 
   const finishStudy = () => {
     setStudyingDeck(null);
+    setStudyQueue([]);
     setCurrentCardIndex(0);
     setShowAnswer(false);
   };
 
   const formatReviewTime = (days: number): string => {
-    if (days < 1) return lang === "EN" ? "today" : "今日";
-    if (days === 1) return lang === "EN" ? "1 day" : "1日";
-    if (days < 7) return lang === "EN" ? `${days} days` : `${days}日`;
+    if (days < 1) return lang === "EN" ? "1d" : "1日";
+    if (days < 7) return lang === "EN" ? `${days}d` : `${days}日`;
     const weeks = Math.floor(days / 7);
-    if (weeks === 1) return lang === "EN" ? "1 week" : "1星期";
-    if (weeks < 4) return lang === "EN" ? `${weeks} weeks` : `${weeks}星期`;
+    if (weeks < 4) return lang === "EN" ? `${weeks}w` : `${weeks}週`;
     const months = Math.floor(days / 30);
-    return lang === "EN" ? `${months} month${months > 1 ? 's' : ''}` : `${months}個月`;
+    return lang === "EN" ? `${months}m` : `${months}月`;
   };
 
-  // Export to PDF function
   const exportToPDF = (deck: Deck) => {
     if (deck.cards.length === 0) return;
 
-    const pdf = new jsPDF();
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const margin = 25;
-    const maxWidth = pageWidth - 2 * margin;
-    let yPosition = margin;
-
-    // Add watermark to each page
-    const addWatermark = () => {
-      pdf.setFontSize(60);
-      pdf.setTextColor(240, 240, 240);
-      pdf.setFont('helvetica', 'bold');
-      const watermarkText = 'BA14';
-      const textWidth = pdf.getTextWidth(watermarkText);
-      pdf.text(watermarkText, (pageWidth - textWidth) / 2, pageHeight / 2, {
-        angle: 45,
-        align: 'center'
-      });
-      pdf.setTextColor(0, 0, 0); // Reset to black
-    };
-
-    // Add footer with copyright
-    const addFooter = () => {
-      pdf.setFontSize(10);
-      pdf.setTextColor(180, 180, 180);
-      pdf.text('© BA14', pageWidth / 2, pageHeight - 15, { align: 'center' });
-      pdf.setTextColor(0, 0, 0); // Reset to black
-    };
-
-    addWatermark();
-
-    // Title with minimal underline
-    pdf.setFontSize(24);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(deck.name, margin, yPosition);
-    yPosition += 5;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = 210;
+    const pageHeight = 297;
+    const margin = 15;
+    const cardGap = 10;
+    const cardWidth = (pageWidth - (2 * margin) - cardGap) / 2;
+    const cardHeight = 50;
     
-    // Minimal line under title
-    pdf.setLineWidth(0.3);
-    pdf.setDrawColor(0, 0, 0);
-    pdf.line(margin, yPosition, margin + 40, yPosition);
-    yPosition += 15;
+    let x = margin;
+    let y = margin + 30; // Start after title
 
-    // Cards
-    deck.cards.forEach((card, index) => {
-      // Check if we need a new page
-      if (yPosition > pageHeight - 50) {
-        addFooter();
+    // Header
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(24);
+    pdf.setTextColor(29, 29, 31); // Apple dark gray
+    pdf.text(deck.name, margin, margin + 10);
+    
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    pdf.setTextColor(134, 134, 139); // Apple gray
+    pdf.text(`${deck.cards.length} cards • Generated by BA14`, margin, margin + 18);
+
+    // Draw Cards
+    deck.cards.forEach((card, i) => {
+      if (y + cardHeight > pageHeight - margin) {
         pdf.addPage();
-        addWatermark();
-        yPosition = margin;
+        y = margin;
       }
 
-      // Card container with minimal border
-      const cardStartY = yPosition;
-      
-      // Card number badge
-      pdf.setFillColor(250, 250, 250);
-      pdf.roundedRect(margin, yPosition, 20, 8, 2, 2, 'F');
-      pdf.setFontSize(9);
-      pdf.setFont('helvetica', 'normal');
-      pdf.setTextColor(100, 100, 100);
-      pdf.text(`${index + 1}`, margin + 10, yPosition + 6, { align: 'center' });
-      pdf.setTextColor(0, 0, 0);
-      yPosition += 14;
+      // Card Box
+      pdf.setDrawColor(229, 229, 234); // Apple light gray border
+      pdf.setFillColor(255, 255, 255);
+      pdf.roundedRect(x, y, cardWidth, cardHeight, 4, 4, 'FD');
 
-      // Question
+      // Content
+      const contentMargin = 5;
+      const textWidth = cardWidth - (2 * contentMargin);
+      
+      // Q Label
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(8);
+      pdf.setTextColor(0, 122, 255); // Apple Blue
+      pdf.text("Q", x + contentMargin, y + contentMargin + 3);
+
+      // Question Text
+      pdf.setFont("helvetica", "bold");
       pdf.setFontSize(11);
-      pdf.setFont('helvetica', 'normal');
-      pdf.setTextColor(120, 120, 120);
-      pdf.text('Q', margin + 2, yPosition);
-      pdf.setTextColor(0, 0, 0);
-      pdf.setFont('helvetica', 'normal');
-      const questionLines = pdf.splitTextToSize(card.front, maxWidth - 12);
-      pdf.text(questionLines, margin + 12, yPosition);
-      yPosition += questionLines.length * 6 + 8;
+      pdf.setTextColor(29, 29, 31);
+      const qLines = pdf.splitTextToSize(card.front, textWidth);
+      pdf.text(qLines, x + contentMargin, y + contentMargin + 10);
 
-      // Answer
-      pdf.setTextColor(120, 120, 120);
-      pdf.text('A', margin + 2, yPosition);
-      pdf.setTextColor(0, 0, 0);
-      const answerLines = pdf.splitTextToSize(card.back, maxWidth - 12);
-      pdf.text(answerLines, margin + 12, yPosition);
-      yPosition += answerLines.length * 6 + 4;
+      // Divider
+      pdf.setDrawColor(242, 242, 247);
+      pdf.line(x + contentMargin, y + (cardHeight/2), x + cardWidth - contentMargin, y + (cardHeight/2));
 
-      // Minimal card border
-      const cardHeight = yPosition - cardStartY;
-      pdf.setDrawColor(230, 230, 230);
-      pdf.setLineWidth(0.3);
-      pdf.roundedRect(margin - 2, cardStartY - 2, maxWidth + 4, cardHeight + 2, 3, 3);
-      
-      yPosition += 10;
+      // A Label
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(8);
+      pdf.setTextColor(52, 199, 89); // Apple Green
+      pdf.text("A", x + contentMargin, y + (cardHeight/2) + contentMargin + 3);
+
+      // Answer Text
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+      pdf.setTextColor(29, 29, 31);
+      const aLines = pdf.splitTextToSize(card.back, textWidth);
+      pdf.text(aLines, x + contentMargin, y + (cardHeight/2) + contentMargin + 10);
+
+      // Move to next position
+      if (x === margin) {
+        x += cardWidth + cardGap;
+      } else {
+        x = margin;
+        y += cardHeight + cardGap;
+      }
     });
 
-    // Add footer to last page
-    addFooter();
-
-    // Save the PDF
-    pdf.save(`${deck.name.replace(/[^a-z0-9]/gi, '_')}_flashcards.pdf`);
+    pdf.save(`${deck.name}_flashcards.pdf`);
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-2 md:p-4 lg:p-8">
-      {/* Study Mode Modal */}
-      {studyingDeck && (
-        <div className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl shadow-2xl max-w-2xl w-full p-8 border border-[#E5E7EB] dark:border-[#323232]">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0]">
-                  {studyingDeck.name}
-                </h2>
-                <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B] mt-1">
-                  {t.cardProgress
-                    .replace('{current}', (currentCardIndex + 1).toString())
-                    .replace('{total}', studyingDeck.cards.length.toString())}
-                </p>
-              </div>
-              <button
-                onClick={finishStudy}
-                className="p-2 hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A] rounded-lg transition-all"
-              >
-                <CloseIcon size={24} className="text-[#6B6B6B] dark:text-[#9B9B9B]" />
+    <div className="w-full max-w-7xl mx-auto p-4 md:p-8 animate-fade-in">
+      {/* Study Mode Overlay */}
+      {studyingDeck && studyQueue.length > 0 && (
+        <div className="fixed inset-0 bg-[#F2F2F7] dark:bg-[#000000] z-50 flex flex-col animate-in fade-in duration-300">
+          {/* Study Header */}
+          <div className="px-6 py-4 flex items-center justify-between bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border-b border-[#E5E5EA] dark:border-[#2C2C2E] sticky top-0 z-10">
+            <div className="flex items-center gap-4">
+              <button onClick={finishStudy} className="p-2 hover:bg-[#F2F2F7] dark:hover:bg-[#2C2C2E] rounded-full transition-colors">
+                <CloseIcon size={24} className="text-[#86868B]" />
               </button>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="mb-8">
-              <div className="h-2 bg-[#E5E7EB] dark:bg-[#323232] rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-[#007AFF] to-[#0051D5] dark:from-[#0A84FF] dark:to-[#007AFF] transition-all duration-300"
-                  style={{ width: `${((currentCardIndex + 1) / studyingDeck.cards.length) * 100}%` }}
-                />
+              <div>
+                <h2 className="text-lg font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">{studyingDeck.name}</h2>
+                <p className="text-xs text-[#86868B]">{t.cardProgress.replace('{current}', (currentCardIndex + 1).toString()).replace('{total}', studyQueue.length.toString())}</p>
               </div>
             </div>
+            <div className="w-32 h-2 bg-[#E5E5EA] dark:bg-[#2C2C2E] rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-[#007AFF] transition-all duration-500 ease-out"
+                style={{ width: `${((currentCardIndex + 1) / studyQueue.length) * 100}%` }}
+              />
+            </div>
+          </div>
 
-            {/* Card Display */}
-            <div className="mb-8">
-              <div className="bg-gradient-to-br from-[#F9FAFB] to-white dark:from-[#252525] dark:to-[#1E1E1E] border-2 border-[#E5E7EB] dark:border-[#323232] rounded-2xl p-8 min-h-[300px] flex flex-col items-center justify-center text-center">
-                {/* Question */}
-                <div className="mb-6">
-                  <span className="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] uppercase tracking-wider mb-2 block">
-                    {lang === "EN" ? "Question" : "問題"}
-                  </span>
-                  <p className="text-xl font-medium text-[#0F0F0F] dark:text-[#F0F0F0]">
-                    {studyingDeck.cards[currentCardIndex].front}
-                  </p>
-                </div>
-
-                {/* Answer */}
-                {showAnswer && (
-                  <div className="pt-6 border-t-2 border-dashed border-[#E5E7EB] dark:border-[#323232] w-full animate-in fade-in duration-300">
-                    <span className="text-xs font-semibold text-[#10B981] dark:text-[#34D399] uppercase tracking-wider mb-2 block">
-                      {lang === "EN" ? "Answer" : "答案"}
-                    </span>
-                    <p className="text-lg text-[#0F0F0F] dark:text-[#F0F0F0]">
-                      {studyingDeck.cards[currentCardIndex].back}
-                    </p>
+          {/* Study Content */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+            <div className="w-full max-w-2xl perspective-1000">
+              <div 
+                className="relative w-full aspect-[4/3] md:aspect-[16/9] cursor-pointer group"
+                onClick={() => setShowAnswer(!showAnswer)}
+              >
+                <div className={`w-full h-full transition-all duration-500 transform-style-3d relative ${showAnswer ? 'rotate-y-180' : ''}`}>
+                  {/* Front */}
+                  <div className={`absolute inset-0 backface-hidden bg-white dark:bg-[#1C1C1E] rounded-[2rem] shadow-2xl border border-[#E5E5EA] dark:border-[#2C2C2E] flex flex-col items-center justify-center p-12 text-center hover:scale-[1.02] transition-transform duration-300 ${showAnswer ? 'opacity-0' : 'opacity-100'}`}>
+                    <span className="text-sm font-bold text-[#007AFF] uppercase tracking-widest mb-6">{t.front}</span>
+                    <h3 className="text-3xl md:text-5xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] leading-tight tracking-tight">
+                      {studyQueue[currentCardIndex].front}
+                    </h3>
+                    <p className="mt-8 text-[#86868B] text-sm font-medium animate-pulse">{lang === "EN" ? "Tap to flip" : "點擊翻轉"}</p>
                   </div>
-                )}
+
+                  {/* Back */}
+                  <div className={`absolute inset-0 backface-hidden rotate-y-180 bg-[#1C1C1E] dark:bg-white rounded-[2rem] shadow-2xl border border-[#E5E5EA] dark:border-[#2C2C2E] flex flex-col items-center justify-center p-12 text-center ${showAnswer ? 'opacity-100' : 'opacity-0'}`}>
+                    <span className="text-sm font-bold text-[#34C759] uppercase tracking-widest mb-6">{t.back}</span>
+                    <h3 className="text-3xl md:text-5xl font-bold text-white dark:text-[#1D1D1F] leading-tight tracking-tight">
+                      {studyQueue[currentCardIndex].back}
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-3">
+          {/* Study Controls */}
+          <div className="p-6 pb-10 bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border-t border-[#E5E5EA] dark:border-[#2C2C2E]">
+            <div className="max-w-2xl mx-auto">
               {!showAnswer ? (
                 <button
                   onClick={() => setShowAnswer(true)}
-                  className="flex-1 px-6 py-4 bg-[#007AFF] dark:bg-[#0A84FF] text-white rounded-xl text-base font-semibold hover:bg-[#0051D5] dark:hover:bg-[#409CFF] transition-all duration-200 shadow-sm"
+                  className="w-full py-4 bg-[#007AFF] hover:bg-[#0071E3] text-white rounded-2xl text-lg font-semibold shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   {t.showAnswer}
                 </button>
               ) : (
-                <div className="w-full space-y-3">
-                  <p className="text-sm font-medium text-[#6B6B6B] dark:text-[#9B9B9B] text-center mb-3">
-                    {t.rateCard}
-                  </p>
-                  <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-4 gap-3">
+                  {[
+                    { label: t.again, color: "bg-[#FF3B30]", hover: "hover:bg-[#D70015]", val: 0, time: 1 },
+                    { label: t.hard, color: "bg-[#FF9500]", hover: "hover:bg-[#C93400]", val: 1, time: 3 },
+                    { label: t.good, color: "bg-[#34C759]", hover: "hover:bg-[#248A3D]", val: 2, time: 6 },
+                    { label: t.easy, color: "bg-[#007AFF]", hover: "hover:bg-[#0040DD]", val: 3, time: 14 }
+                  ].map((btn) => (
                     <button
-                      onClick={() => rateCard(0)}
-                      className="px-4 py-3 bg-[#EF4444] dark:bg-[#DC2626] text-white rounded-xl text-sm font-semibold hover:bg-[#DC2626] dark:hover:bg-[#B91C1C] transition-all duration-200 shadow-sm"
+                      key={btn.val}
+                      onClick={() => rateCard(btn.val)}
+                      className={`flex flex-col items-center justify-center py-3 ${btn.color} ${btn.hover} text-white rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg`}
                     >
-                      {t.again}
-                      <div className="text-xs opacity-80 mt-1">{formatReviewTime(1)}</div>
+                      <span className="text-sm font-bold">{btn.label}</span>
+                      <span className="text-[10px] opacity-80 mt-0.5">{formatReviewTime(btn.time)}</span>
                     </button>
-                    <button
-                      onClick={() => rateCard(1)}
-                      className="px-4 py-3 bg-[#F59E0B] dark:bg-[#D97706] text-white rounded-xl text-sm font-semibold hover:bg-[#D97706] dark:hover:bg-[#B45309] transition-all duration-200 shadow-sm"
-                    >
-                      {t.hard}
-                      <div className="text-xs opacity-80 mt-1">{formatReviewTime(3)}</div>
-                    </button>
-                    <button
-                      onClick={() => rateCard(2)}
-                      className="px-4 py-3 bg-[#10B981] dark:bg-[#059669] text-white rounded-xl text-sm font-semibold hover:bg-[#059669] dark:hover:bg-[#047857] transition-all duration-200 shadow-sm"
-                    >
-                      {t.good}
-                      <div className="text-xs opacity-80 mt-1">{formatReviewTime(6)}</div>
-                    </button>
-                    <button
-                      onClick={() => rateCard(3)}
-                      className="px-4 py-3 bg-[#007AFF] dark:bg-[#0A84FF] text-white rounded-xl text-sm font-semibold hover:bg-[#0051D5] dark:hover:bg-[#409CFF] transition-all duration-200 shadow-sm"
-                    >
-                      {t.easy}
-                      <div className="text-xs opacity-80 mt-1">{formatReviewTime(14)}</div>
-                    </button>
-                  </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -582,236 +504,207 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
         </div>
       )}
 
-      {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-3xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2 tracking-tight">
-          {t.title}
-        </h1>
-        <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B]">
-          {lang === "EN" ? "Create flashcard decks to study and memorize" : "建立字卡組合嚟學習同記憶"}
-        </p>
-      </div>
-
-      {/* Create Deck - Apple-style card */}
-      <div className="mb-8 bg-gradient-to-br from-white to-[#F9FAFB] dark:from-[#252525] dark:to-[#1E1E1E] border border-[#E5E7EB] dark:border-[#323232] rounded-2xl p-6 shadow-sm">
-        <h3 className="text-sm font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-4 uppercase tracking-wider">
-          {t.createDeck}
-        </h3>
+      {/* Main Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <div>
+          <h1 className="text-4xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight">
+            {t.title}
+          </h1>
+          <p className="text-[#86868B] dark:text-[#86868B] mt-1 text-lg">
+            {t.subtitle}
+          </p>
+        </div>
         <div className="flex gap-3">
-          <input
-            type="text"
-            value={newDeckName}
-            onChange={(e) => setNewDeckName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                createDeck();
-              }
-            }}
-            placeholder={t.deckName}
-            className="flex-1 px-4 py-3 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B] transition-all"
-          />
-          <button
-            onClick={() => createDeck()}
-            disabled={!newDeckName.trim()}
-            className="px-6 py-3 bg-[#007AFF] dark:bg-[#0A84FF] text-white rounded-xl text-sm font-semibold hover:bg-[#0051D5] dark:hover:bg-[#409CFF] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-sm flex items-center gap-2"
-          >
-            <Plus size={18} strokeWidth={2.5} />
-            {t.create}
-          </button>
+          {/* Search or Filter could go here */}
         </div>
       </div>
 
-      {/* Bento Grid Layout for Decks */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-        {decks.map((deck) => (
+      {/* Bento Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+        
+        {/* Create New Deck Card (Large) */}
+        <div className="lg:col-span-4 md:col-span-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E] hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div className="w-12 h-12 bg-[#007AFF] rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+              <Plus size={24} className="text-white" />
+            </div>
+            <h3 className="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">{t.createDeck}</h3>
+            <p className="text-[#86868B] text-sm">{lang === "EN" ? "Start a new subject" : "開始新主題"}</p>
+          </div>
+          <div className="mt-6 relative">
+            <input
+              type="text"
+              value={newDeckName}
+              onChange={(e) => setNewDeckName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && createDeck()}
+              placeholder={t.deckName}
+              className="w-full px-4 py-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-[#1D1D1F] dark:text-[#F5F5F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all pr-12"
+            />
+            <button
+              onClick={createDeck}
+              disabled={!newDeckName.trim()}
+              className="absolute right-2 top-2 bottom-2 px-3 bg-[#007AFF] text-white rounded-lg text-sm font-medium disabled:opacity-0 transition-all hover:bg-[#0071E3] flex items-center"
+            >
+              <Plus size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* Stats / Quick Actions (Medium) */}
+        <div className="lg:col-span-8 md:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="bg-gradient-to-br from-[#007AFF] to-[#0051D5] rounded-[2rem] p-6 shadow-lg shadow-blue-500/20 text-white flex flex-col justify-between relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-10 -mt-10 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+            <div>
+              <div className="flex items-center gap-2 mb-1 opacity-80">
+                <Zap size={16} />
+                <span className="text-xs font-bold uppercase tracking-wider">{t.quickActions}</span>
+              </div>
+              <h3 className="text-2xl font-bold">{t.studyMode}</h3>
+            </div>
+            <div className="mt-4">
+              <p className="text-sm opacity-90 mb-4">
+                {decks.reduce((acc, d) => acc + d.cards.filter(c => (c.nextReview || 0) < Date.now()).length, 0)} cards due for review
+              </p>
+              {decks.length > 0 && (
+                <button 
+                  onClick={() => startStudy(decks[0])}
+                  className="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-sm font-bold transition-all flex items-center gap-2"
+                >
+                  <Play size={14} fill="currentColor" />
+                  {lang === "EN" ? "Start Review" : "開始溫習"}
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E] hover:shadow-lg transition-all duration-300 flex flex-col justify-center items-center text-center">
+            <div className="w-16 h-16 rounded-full border-4 border-[#34C759] flex items-center justify-center mb-2">
+              <span className="text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
+                {decks.reduce((acc, d) => acc + d.cards.filter(c => c.mastered).length, 0)}
+              </span>
+            </div>
+            <p className="text-[#86868B] text-sm font-medium">{t.mastered} Cards</p>
+          </div>
+        </div>
+
+        {/* Decks List */}
+        {decks.map((deck, index) => (
           <div 
             key={deck.id} 
-            className="bg-white dark:bg-[#212121] border border-[#E5E7EB] dark:border-[#2F2F2F] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200"
+            className={`bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E] hover:shadow-lg transition-all duration-300 flex flex-col group animate-in fade-in slide-in-from-bottom-4 ${index === 0 ? 'lg:col-span-8 md:col-span-12' : 'lg:col-span-4 md:col-span-6'}`}
+            style={{ animationDelay: `${index * 50}ms` }}
           >
-            {/* Deck Header */}
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex-1">
-                <h4 className="text-lg font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-1">
-                  {deck.name}
-                </h4>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium text-[#6B6B6B] dark:text-[#9B9B9B] bg-[#F3F4F6] dark:bg-[#2A2A2A] px-2 py-1 rounded-md">
-                    {deck.cards.length} {t.cards}
-                  </span>
+            <div className="flex justify-between items-start mb-4">
+              <div className="flex items-center gap-3">
+                <div className={`p-3 rounded-2xl transition-colors duration-300 ${index === 0 ? 'bg-[#FF9500] text-white shadow-lg shadow-orange-500/30' : 'bg-[#F2F2F7] dark:bg-[#2C2C2E] group-hover:bg-[#007AFF] group-hover:text-white'}`}>
+                  <Layers size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] leading-tight">{deck.name}</h3>
+                  <p className="text-[#86868B] text-xs font-medium">{deck.cards.length} {t.cards}</p>
                 </div>
               </div>
-              <button
+              <button 
                 onClick={() => deleteDeck(deck.id)}
-                className="p-2 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded-lg transition-all duration-200"
+                className="p-2 text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#FF3B30]/10 rounded-full"
               >
-                <Trash2 size={16} strokeWidth={2} />
+                <Trash2 size={18} />
               </button>
             </div>
 
-            {/* Add Card Form */}
-            {selectedDeck?.id === deck.id ? (
-              <div className="space-y-3 mb-4">
-                <input
-                  type="text"
-                  value={newCardFront}
-                  onChange={(e) => setNewCardFront(e.target.value)}
-                  placeholder={t.front}
-                  className="w-full px-4 py-2.5 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B] transition-all"
-                />
-                <input
-                  type="text"
-                  value={newCardBack}
-                  onChange={(e) => setNewCardBack(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      addCard(deck.id);
-                    }
-                  }}
-                  placeholder={t.back}
-                  className="w-full px-4 py-2.5 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B] transition-all"
-                />
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => addCard(deck.id)}
-                    disabled={!newCardFront.trim() || !newCardBack.trim()}
-                    className="flex-1 px-4 py-2.5 bg-[#007AFF] dark:bg-[#0A84FF] text-white rounded-lg text-sm font-medium hover:bg-[#0051D5] dark:hover:bg-[#409CFF] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
-                  >
-                    <Plus size={16} strokeWidth={2.5} />
-                    {t.addCard}
-                  </button>
-                  <button
-                    onClick={() => setSelectedDeck(null)}
-                    className="px-4 py-2.5 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#6B6B6B] dark:text-[#9B9B9B] rounded-lg text-sm font-medium hover:bg-[#E5E7EB] dark:hover:bg-[#323232] transition-all duration-200"
-                  >
-                    {lang === "EN" ? "Cancel" : "取消"}
-                  </button>
-                </div>
+            {/* Stats Mini-Grid */}
+            <div className="grid grid-cols-3 gap-2 mb-6">
+              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-2 text-center">
+                <div className="text-[10px] text-[#86868B] font-bold uppercase tracking-wider">{t.due}</div>
+                <div className="text-lg font-bold text-[#FF3B30]">{deck.cards.filter(c => (c.nextReview || 0) < Date.now()).length}</div>
               </div>
-            ) : showBulkImport === deck.id ? (
-              <div className="space-y-3 mb-4">
-                <textarea
-                  value={bulkImportText}
-                  onChange={(e) => setBulkImportText(e.target.value)}
-                  placeholder={t.bulkImportPlaceholder}
-                  rows={6}
-                  className="w-full px-4 py-2.5 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B] transition-all resize-none"
-                />
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => bulkImport(deck.id)}
-                    disabled={!bulkImportText.trim()}
-                    className="flex-1 px-4 py-2.5 bg-[#10B981] dark:bg-[#059669] text-white rounded-lg text-sm font-medium hover:bg-[#059669] dark:hover:bg-[#047857] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
-                  >
-                    {t.import}
-                  </button>
-                  <button
-                    onClick={() => setShowBulkImport(null)}
-                    className="px-4 py-2.5 bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#6B6B6B] dark:text-[#9B9B9B] rounded-lg text-sm font-medium hover:bg-[#E5E7EB] dark:hover:bg-[#323232] transition-all duration-200"
-                  >
-                    {t.cancel}
-                  </button>
-                </div>
+              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-2 text-center">
+                <div className="text-[10px] text-[#86868B] font-bold uppercase tracking-wider">{t.new}</div>
+                <div className="text-lg font-bold text-[#007AFF]">{deck.cards.filter(c => !c.lastReviewed).length}</div>
               </div>
-            ) : (
-              <>
-                {/* Study & Export Buttons */}
-                <div className="flex gap-2 mb-4">
-                  <button
-                    onClick={() => startStudy(deck)}
-                    disabled={deck.cards.length === 0}
-                    className="flex-1 px-4 py-3 bg-gradient-to-r from-[#007AFF] to-[#0051D5] dark:from-[#0A84FF] dark:to-[#007AFF] text-white rounded-xl text-sm font-semibold hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
-                  >
-                    <Play size={16} strokeWidth={2.5} />
-                    {t.study}
-                  </button>
-                  <button
-                    onClick={() => exportToPDF(deck)}
-                    disabled={deck.cards.length === 0}
-                    className="px-4 py-3 bg-[#10B981] dark:bg-[#059669] text-white rounded-xl text-sm font-semibold hover:bg-[#059669] dark:hover:bg-[#047857] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
-                  >
-                    <Download size={16} strokeWidth={2} />
-                    PDF
-                  </button>
-                </div>
+              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-2 text-center">
+                <div className="text-[10px] text-[#86868B] font-bold uppercase tracking-wider">{t.mastered}</div>
+                <div className="text-lg font-bold text-[#34C759]">{deck.cards.filter(c => c.mastered).length}</div>
+              </div>
+            </div>
 
-                {/* Import Buttons */}
-                <div className="flex gap-2 mb-4">
-                  <button
-                    onClick={() => setSelectedDeck(deck)}
-                    className="flex-1 px-4 py-3 border-2 border-dashed border-[#E5E7EB] dark:border-[#323232] rounded-xl text-sm font-medium text-[#6B6B6B] dark:text-[#9B9B9B] hover:border-[#007AFF] dark:hover:border-[#0A84FF] hover:text-[#007AFF] dark:hover:text-[#0A84FF] hover:bg-[#F9FAFB] dark:hover:bg-[#1A1A1A] transition-all duration-200 flex items-center justify-center gap-2"
-                  >
-                    <Plus size={18} strokeWidth={2} />
-                    {t.addCard}
-                  </button>
-                  <label className="cursor-pointer">
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept=".csv"
-                      onChange={(e) => handleCSVImport(deck.id, e)}
-                      className="hidden"
-                    />
-                    <div className="px-4 py-3 border-2 border-dashed border-[#E5E7EB] dark:border-[#323232] rounded-xl text-sm font-medium text-[#8B5CF6] dark:text-[#A78BFA] hover:border-[#8B5CF6] dark:hover:border-[#A78BFA] hover:bg-[#F5F3FF] dark:hover:bg-[#2E1F3F] transition-all duration-200 flex items-center gap-2">
-                      <Upload size={16} strokeWidth={2} />
-                      CSV
-                    </div>
-                  </label>
-                </div>
-              </>
-            )}
+            <div className="mt-auto space-y-2">
+              <button
+                onClick={() => startStudy(deck)}
+                disabled={deck.cards.length === 0}
+                className="w-full py-3 bg-[#007AFF] hover:bg-[#0071E3] text-white rounded-xl font-semibold shadow-lg shadow-blue-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:shadow-none disabled:hover:scale-100 flex items-center justify-center gap-2"
+              >
+                <Play size={18} fill="currentColor" />
+                {t.study}
+              </button>
+              
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => setSelectedDeck(selectedDeck?.id === deck.id ? null : deck)}
+                  className="py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] rounded-xl font-medium hover:bg-[#E5E5EA] dark:hover:bg-[#3A3A3C] transition-colors flex items-center justify-center gap-2 text-sm"
+                >
+                  <Plus size={16} />
+                  {t.addCard}
+                </button>
+                <button
+                  onClick={() => exportToPDF(deck)}
+                  disabled={deck.cards.length === 0}
+                  className="py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] rounded-xl font-medium hover:bg-[#E5E5EA] dark:hover:bg-[#3A3A3C] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 text-sm"
+                >
+                  <Download size={16} />
+                  PDF
+                </button>
+              </div>
+            </div>
 
-            {/* Cards List */}
-            {deck.cards.length > 0 && (
-              <div className="mt-4 space-y-2 max-h-48 overflow-y-auto">
-                {deck.cards.map((card) => {
-                  const cardColor = getCardColor(card);
-                  return (
-                    <div 
-                      key={card.id}
-                      className={`group flex items-center justify-between p-3 rounded-lg border transition-all ${cardColor.bg} ${cardColor.border} hover:shadow-sm`}
+            {/* Add Card / Import Area */}
+            {selectedDeck?.id === deck.id && (
+              <div className="mt-4 pt-4 border-t border-[#E5E5EA] dark:border-[#2C2C2E] animate-in slide-in-from-top-2">
+                <div className="space-y-3">
+                  <input
+                    value={newCardFront}
+                    onChange={(e) => setNewCardFront(e.target.value)}
+                    placeholder={t.front}
+                    className="w-full px-3 py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF]"
+                  />
+                  <input
+                    value={newCardBack}
+                    onChange={(e) => setNewCardBack(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && addCard(deck.id)}
+                    placeholder={t.back}
+                    className="w-full px-3 py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF]"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => addCard(deck.id)}
+                      className="flex-1 py-2.5 bg-[#007AFF] text-white rounded-xl text-xs font-bold"
                     >
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[#0F0F0F] dark:text-[#F0F0F0] truncate">
-                          {card.front}
-                        </p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <p className="text-xs text-[#9B9B9B] dark:text-[#6B6B6B] truncate">
-                            {card.back}
-                          </p>
-                          {card.repetitions !== undefined && card.repetitions > 0 && (
-                            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cardColor.text} ${cardColor.bg}`}>
-                              {card.repetitions}× {lang === "EN" ? "studied" : "已溫"}
-                            </span>
-                          )}
-                        </div>
+                      {t.addCard}
+                    </button>
+                    <label className="flex-1 cursor-pointer">
+                      <input type="file" accept=".csv" onChange={(e) => handleCSVImport(deck.id, e)} className="hidden" />
+                      <div className="w-full py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] rounded-xl text-xs font-bold text-center hover:bg-[#E5E5EA] transition-colors flex items-center justify-center gap-1">
+                        <Upload size={12} /> CSV
                       </div>
-                      <button
-                        onClick={() => deleteCard(deck.id, card.id)}
-                        className="opacity-0 group-hover:opacity-100 ml-2 p-1.5 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded transition-all"
-                      >
-                        <Trash2 size={14} strokeWidth={2} />
-                      </button>
-                    </div>
-                  );
-                })}
+                    </label>
+                  </div>
+                </div>
               </div>
             )}
           </div>
         ))}
-      </div>
 
-      {decks.length === 0 && (
-        <div className="text-center py-20 bg-gradient-to-br from-white to-[#F9FAFB] dark:from-[#252525] dark:to-[#1E1E1E] border border-[#E5E7EB] dark:border-[#323232] rounded-2xl">
-          <div className="text-sm font-medium text-[#9B9B9B] dark:text-[#6B6B6B] mb-2">
-            {lang === "EN" ? "No decks yet" : "未有卡組"}
+        {/* Empty State */}
+        {decks.length === 0 && (
+          <div className="col-span-full py-20 text-center">
+            <div className="w-20 h-20 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+              <BookOpen size={40} className="text-[#86868B]" />
+            </div>
+            <h3 className="text-xl font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">{t.noCards}</h3>
+            <p className="text-[#86868B]">{lang === "EN" ? "Create a deck to start your learning journey" : "建立卡組開始你嘅學習旅程"}</p>
           </div>
-          <p className="text-xs text-[#BFBFBF] dark:text-[#5B5B5B]">
-            {lang === "EN" ? "Create your first deck to get started" : "建立第一個卡組開始"}
-          </p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
