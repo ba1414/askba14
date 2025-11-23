@@ -1,45 +1,51 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Plus, Trash2, Target } from "lucide-react";
+import { Plus, Trash2, Target, Calculator } from "lucide-react";
 import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
   EN: {
     title: "GPA Calculator",
-    scale: "Scale",
+    scale: "Grading Scale",
     addCourse: "Add Course",
-    courseName: "Course name...",
+    courseName: "Course Name",
     grade: "Grade",
     credits: "Credits",
-    currentGPA: "Current",
-    targetGPA: "Target GPA",
-    requiredGPA: "Need",
-    cumulativeGPA: "Cumulative GPA",
+    currentGPA: "Current GPA",
+    targetGPA: "Target Calculator",
+    requiredGPA: "Required GPA",
+    cumulativeGPA: "Current Cumulative GPA",
     currentCredits: "Completed Credits",
     upcomingCredits: "Upcoming Credits",
+    targetGoal: "Target Goal",
     calculate: "Calculate",
     excellent: "Excellent",
     good: "Good",
     average: "Average",
     poor: "Poor",
+    noCourses: "No courses added",
+    startAdding: "Add a course to get started",
   },
   粵: {
     title: "GPA 計算機",
-    scale: "評分制",
+    scale: "評分標準",
     addCourse: "新增課程",
-    courseName: "課程名稱...",
+    courseName: "課程名稱",
     grade: "成績",
     credits: "學分",
-    currentGPA: "現時",
-    targetGPA: "目標 GPA",
-    requiredGPA: "所需",
-    cumulativeGPA: "累積 GPA",
+    currentGPA: "現時 GPA",
+    targetGPA: "目標計算",
+    requiredGPA: "所需 GPA",
+    cumulativeGPA: "現時累積 GPA",
     currentCredits: "已完成學分",
     upcomingCredits: "下學期學分",
+    targetGoal: "目標 GPA",
     calculate: "計算",
     excellent: "優秀",
     good: "良好",
     average: "平均",
     poor: "欠佳",
+    noCourses: "未有課程",
+    startAdding: "新增課程以開始",
   },
 };
 
@@ -69,56 +75,79 @@ function getGPAColor(gpa: number, scale: GPAScale) {
   const maxGPA = scale === "4.3" ? 4.3 : 4.0;
   const percentage = (gpa / maxGPA) * 100;
   
-  if (percentage >= 85) return { color: "#10B981", label: "excellent" }; // Green
-  if (percentage >= 70) return { color: "#3B82F6", label: "good" }; // Blue
-  if (percentage >= 50) return { color: "#F59E0B", label: "average" }; // Orange
-  return { color: "#EF4444", label: "poor" }; // Red
+  if (percentage >= 85) return { color: "#34C759", label: "excellent" }; // Apple Green
+  if (percentage >= 70) return { color: "#007AFF", label: "good" }; // Apple Blue
+  if (percentage >= 50) return { color: "#FF9500", label: "average" }; // Apple Orange
+  return { color: "#FF3B30", label: "poor" }; // Apple Red
 }
 
 function CircularProgress({ gpa, scale, lang }: { gpa: number; scale: GPAScale; lang: "EN" | "粵" }) {
   const t = TRANSLATIONS[lang];
   const maxGPA = scale === "4.3" ? 4.3 : 4.0;
-  const percentage = (gpa / maxGPA) * 100;
+  const percentage = Math.min(100, Math.max(0, (gpa / maxGPA) * 100));
   const { color, label } = getGPAColor(gpa, scale);
   
-  const circumference = 2 * Math.PI * 70;
+  const radius = 80;
+  const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="relative w-48 h-48">
-      <svg className="transform -rotate-90 w-full h-full">
-        {/* Background circle */}
-        <circle
-          cx="96"
-          cy="96"
-          r="70"
-          stroke="#E5E7EB"
-          strokeWidth="12"
-          fill="none"
-          className="dark:stroke-[#323232]"
-        />
-        {/* Progress circle with animation */}
-        <circle
-          cx="96"
-          cy="96"
-          r="70"
-          stroke={color}
-          strokeWidth="12"
-          fill="none"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
-          className="transition-all duration-1000 ease-out"
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-5xl font-bold text-[#0F0F0F] dark:text-[#F0F0F0]">
-          {gpa.toFixed(2)}
-        </div>
-        <div className="text-xs font-medium uppercase tracking-wider mt-1" style={{ color }}>
-          {t[label as keyof typeof t]}
+    <div className="relative flex flex-col items-center justify-center py-8">
+      <div className="relative w-52 h-52">
+        <svg className="transform -rotate-90 w-full h-full drop-shadow-xl">
+          {/* Background circle */}
+          <circle
+            cx="104"
+            cy="104"
+            r={radius}
+            stroke="currentColor"
+            strokeWidth="16"
+            fill="none"
+            className="text-[#E5E5EA] dark:text-[#2C2C2E]"
+          />
+          {/* Progress circle */}
+          <circle
+            cx="104"
+            cy="104"
+            r={radius}
+            stroke={color}
+            strokeWidth="16"
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            className="transition-all duration-1000 ease-out"
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-6xl font-bold tracking-tighter text-[#1D1D1F] dark:text-[#F5F5F7]" style={{ fontFamily: "'SF Pro Display', sans-serif" }}>
+            {gpa.toFixed(2)}
+          </span>
+          <span className="text-sm font-semibold uppercase tracking-wide mt-2 px-3 py-1 rounded-full bg-opacity-10" style={{ color: color, backgroundColor: `${color}20` }}>
+            {t[label as keyof typeof t]}
+          </span>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SegmentedControl({ options, value, onChange }: { options: string[], value: string, onChange: (val: string) => void }) {
+  return (
+    <div className="flex p-1 bg-[#E5E5EA] dark:bg-[#2C2C2E] rounded-lg relative">
+      {options.map((option) => (
+        <button
+          key={option}
+          onClick={() => onChange(option)}
+          className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all duration-200 z-10 ${
+            value === option
+              ? "bg-white dark:bg-[#636366] text-black dark:text-white shadow-sm"
+              : "text-[#8E8E93] hover:text-black dark:hover:text-white"
+          }`}
+        >
+          {option}
+        </button>
+      ))}
     </div>
   );
 }
@@ -131,7 +160,6 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
   const [scale, setScale] = useState<GPAScale>("4.0");
   
   const [courses, setCourses] = useState<Course[]>(() => {
-    // Always start with 5 default courses
     return Array.from({ length: 5 }, (_, i) => ({
       id: `course-${Date.now()}-${i}`,
       name: "",
@@ -145,31 +173,22 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
   const [cumulativeGPA, setCumulativeGPA] = useState("");
   const [cumulativeCredits, setCumulativeCredits] = useState("");
 
-  // Load data from IndexedDB on mount
   useEffect(() => {
     (async () => {
       const savedCourses = await loadData('gpa', 'courses', []);
-      if (savedCourses.length > 0) {
-        setCourses(savedCourses);
-      }
+      if (savedCourses.length > 0) setCourses(savedCourses);
       const savedScale = await loadData('gpa', 'scale', '4.0');
       setScale(savedScale as GPAScale);
-      setIsLoaded(true); // Mark as loaded
+      setIsLoaded(true);
     })();
   }, []);
 
-  // Save courses to IndexedDB (only after initial load)
   useEffect(() => {
-    if (isLoaded) {
-      saveData('gpa', 'courses', courses);
-    }
+    if (isLoaded) saveData('gpa', 'courses', courses);
   }, [courses, isLoaded]);
 
-  // Save scale to IndexedDB (only after initial load)
   useEffect(() => {
-    if (isLoaded) {
-      saveData('gpa', 'scale', scale);
-    }
+    if (isLoaded) saveData('gpa', 'scale', scale);
   }, [scale, isLoaded]);
 
   const currentGPA = useMemo(() => {
@@ -224,183 +243,215 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
   const maxGPA = scale === "4.3" ? 4.3 : 4.0;
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-2 md:p-4 lg:p-8">
+    <div className="w-full max-w-6xl mx-auto p-4 md:p-8 animate-fade-in">
       {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-3xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2 tracking-tight">
-          {t.title}
-        </h1>
-        <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B]">
-          {lang === "EN" ? "Calculate and forecast your grade point average" : "計算同預測你嘅平均績點"}
-        </p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <div>
+          <h1 className="text-4xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight">
+            {t.title}
+          </h1>
+          <p className="text-[#86868B] dark:text-[#86868B] mt-1 text-lg">
+            {lang === "EN" ? "Track your academic progress" : "追蹤你嘅學業進度"}
+          </p>
+        </div>
+        <div className="w-full md:w-48">
+          <div className="text-xs font-medium text-[#86868B] mb-2 uppercase tracking-wider ml-1">{t.scale}</div>
+          <SegmentedControl 
+            options={["4.0", "4.3"]} 
+            value={scale} 
+            onChange={(val) => setScale(val as GPAScale)} 
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* Current GPA Card */}
-        <div className="bg-gradient-to-br from-white to-[#F9FAFB] dark:from-[#252525] dark:to-[#1E1E1E] border border-[#E5E7EB] dark:border-[#323232] rounded-2xl p-6 shadow-sm flex flex-col items-center">
-          <h3 className="text-sm font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] mb-6 uppercase tracking-wider">
-            {t.currentGPA}
-          </h3>
-          <CircularProgress gpa={currentGPA} scale={scale} lang={lang} />
-          <div className="mt-6 text-center">
-            <p className="text-xs text-[#9B9B9B] dark:text-[#6B6B6B]">
-              {totalCredits} {t.credits}
-            </p>
-          </div>
-        </div>
-
-        {/* Scale Toggle */}
-        <div className="bg-white dark:bg-[#212121] border border-[#E5E7EB] dark:border-[#2F2F2F] rounded-2xl p-6 shadow-sm">
-          <h3 className="text-sm font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] mb-4 uppercase tracking-wider">
-            {t.scale}
-          </h3>
-          <div className="flex flex-col gap-3">
-            {(["4.3", "4.0"] as GPAScale[]).map((s) => (
-              <button
-                key={s}
-                onClick={() => setScale(s)}
-                className={`w-full px-8 py-4 rounded-xl text-lg font-bold transition-all duration-200 ${
-                  scale === s
-                    ? "bg-[#007AFF] dark:bg-[#0A84FF] text-white shadow-lg scale-105"
-                    : "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#6B6B6B] dark:text-[#9B9B9B] hover:bg-[#E5E7EB] dark:hover:bg-[#323232]"
-                }`}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Target GPA Calculator */}
-        <div className="bg-white dark:bg-[#212121] border border-[#E5E7EB] dark:border-[#2F2F2F] rounded-2xl p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <Target size={16} className="text-[#007AFF] dark:text-[#0A84FF]" strokeWidth={2.5} />
-            <h3 className="text-sm font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] uppercase tracking-wider">
-              {t.targetGPA}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Left Column: Stats & Target */}
+        <div className="lg:col-span-4 space-y-6">
+          {/* Main GPA Card */}
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E]">
+            <h3 className="text-sm font-semibold text-[#86868B] uppercase tracking-wider mb-2 text-center">
+              {t.currentGPA}
             </h3>
-          </div>
-          <div className="space-y-3">
-            <input
-              type="number"
-              value={cumulativeGPA}
-              onChange={(e) => setCumulativeGPA(e.target.value)}
-              placeholder={t.cumulativeGPA}
-              step="0.01"
-              max={maxGPA}
-              className="w-full px-3 py-2 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B]"
-            />
-            <input
-              type="number"
-              value={cumulativeCredits}
-              onChange={(e) => setCumulativeCredits(e.target.value)}
-              placeholder={t.currentCredits}
-              step="1"
-              className="w-full px-3 py-2 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B]"
-            />
-            <input
-              type="number"
-              value={targetGPA}
-              onChange={(e) => setTargetGPA(e.target.value)}
-              placeholder={t.targetGPA}
-              step="0.01"
-              max={maxGPA}
-              className="w-full px-3 py-2 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B]"
-            />
-            <input
-              type="number"
-              value={upcomingCredits}
-              onChange={(e) => setUpcomingCredits(e.target.value)}
-              placeholder={t.upcomingCredits}
-              step="1"
-              className="w-full px-3 py-2 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B]"
-            />
-            {requiredGPA !== null && (
-              <div className="mt-4 p-3 bg-[#F0F9FF] dark:bg-[#1E3A4F] rounded-lg">
-                <p className="text-xs text-[#6B6B6B] dark:text-[#9B9B9B] mb-1">{t.requiredGPA}</p>
-                <p className="text-2xl font-bold text-[#007AFF] dark:text-[#0A84FF]">
-                  {requiredGPA.toFixed(2)}
-                </p>
-                {requiredGPA > maxGPA && (
-                  <p className="text-xs text-[#EF4444] dark:text-[#F87171] mt-1">
-                    {lang === "EN" ? "Target not achievable" : "目標無法達到"}
-                  </p>
-                )}
+            <CircularProgress gpa={currentGPA} scale={scale} lang={lang} />
+            <div className="flex justify-center gap-8 mt-2">
+              <div className="text-center">
+                <div className="text-2xl font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">{totalCredits}</div>
+                <div className="text-xs text-[#86868B] uppercase tracking-wide">{t.credits}</div>
               </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Add Course Button */}
-      <button
-        onClick={addCourse}
-        className="w-full mb-6 px-6 py-4 border-2 border-dashed border-[#E5E7EB] dark:border-[#323232] rounded-xl text-sm font-medium text-[#6B6B6B] dark:text-[#9B9B9B] hover:border-[#007AFF] dark:hover:border-[#0A84FF] hover:text-[#007AFF] dark:hover:text-[#0A84FF] hover:bg-[#F9FAFB] dark:hover:bg-[#1A1A1A] flex items-center justify-center gap-2 transition-all duration-200"
-      >
-        <Plus size={20} strokeWidth={2} />
-        {t.addCourse}
-      </button>
-
-      {/* Courses List */}
-      <div className="space-y-3">
-        {courses.map((course, index) => (
-          <div key={course.id} className="group">
-            <div className="bg-white dark:bg-[#212121] border border-[#E8E8E8] dark:border-[#2F2F2F] rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200">
-              <div className="flex gap-3 items-center">
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] flex items-center justify-center">
-                  <span className="text-xs font-semibold text-[#6B6B6B] dark:text-[#9B9B9B]">{index + 1}</span>
-                </div>
-                
-                <input
-                  type="text"
-                  value={course.name}
-                  onChange={(e) => updateCourse(course.id, { name: e.target.value })}
-                  placeholder={t.courseName}
-                  className="flex-1 px-4 py-2.5 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B] transition-all"
-                />
-                
-                <select
-                  value={course.grade}
-                  onChange={(e) => updateCourse(course.id, { grade: e.target.value })}
-                  className="px-4 py-2.5 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] transition-all font-medium"
-                >
-                  <option value="">{t.grade}</option>
-                  {grades.map((g) => (
-                    <option key={g} value={g}>{g}</option>
-                  ))}
-                </select>
-                
-                <input
-                  type="number"
-                  value={course.credits || ""}
-                  onChange={(e) => updateCourse(course.id, { credits: parseFloat(e.target.value) || 0 })}
-                  placeholder={t.credits}
-                  className="w-24 px-4 py-2.5 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B] transition-all font-medium"
-                  min="0"
-                  step="0.5"
-                />
-                
-                <button
-                  onClick={() => deleteCourse(course.id)}
-                  className="p-2.5 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100"
-                >
-                  <Trash2 size={18} strokeWidth={2} />
-                </button>
+              <div className="text-center">
+                <div className="text-2xl font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">{courses.filter(c => c.grade).length}</div>
+                <div className="text-xs text-[#86868B] uppercase tracking-wide">{lang === "EN" ? "Courses" : "課程"}</div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
 
-      {courses.length === 0 && (
-        <div className="text-center py-20">
-          <div className="text-sm text-[#9B9B9B] dark:text-[#6B6B6B] mb-4">
-            {lang === "EN" ? "No courses added yet" : "未有課程"}
+          {/* Target Calculator */}
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E]">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="p-2 bg-[#007AFF] rounded-lg">
+                <Target size={18} className="text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">
+                {t.targetGPA}
+              </h3>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-[#86868B] ml-1">{t.cumulativeGPA}</label>
+                  <input
+                    type="number"
+                    value={cumulativeGPA}
+                    onChange={(e) => setCumulativeGPA(e.target.value)}
+                    className="w-full px-4 py-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-[#1D1D1F] dark:text-[#F5F5F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
+                    placeholder="0.00"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-[#86868B] ml-1">{t.currentCredits}</label>
+                  <input
+                    type="number"
+                    value={cumulativeCredits}
+                    onChange={(e) => setCumulativeCredits(e.target.value)}
+                    className="w-full px-4 py-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-[#1D1D1F] dark:text-[#F5F5F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-[#86868B] ml-1">{t.targetGoal}</label>
+                  <input
+                    type="number"
+                    value={targetGPA}
+                    onChange={(e) => setTargetGPA(e.target.value)}
+                    className="w-full px-4 py-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-[#1D1D1F] dark:text-[#F5F5F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
+                    placeholder="0.00"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-[#86868B] ml-1">{t.upcomingCredits}</label>
+                  <input
+                    type="number"
+                    value={upcomingCredits}
+                    onChange={(e) => setUpcomingCredits(e.target.value)}
+                    className="w-full px-4 py-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-[#1D1D1F] dark:text-[#F5F5F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+
+              {requiredGPA !== null && (
+                <div className={`mt-6 p-4 rounded-2xl ${
+                  requiredGPA > maxGPA 
+                    ? "bg-[#FF3B30]/10 text-[#FF3B30]" 
+                    : "bg-[#34C759]/10 text-[#34C759]"
+                }`}>
+                  <div className="flex justify-between items-end">
+                    <span className="text-sm font-medium opacity-80">{t.requiredGPA}</span>
+                    <span className="text-3xl font-bold tracking-tight">{requiredGPA.toFixed(2)}</span>
+                  </div>
+                  {requiredGPA > maxGPA && (
+                    <p className="text-xs mt-2 opacity-80">
+                      {lang === "EN" ? "This goal is mathematically impossible." : "此目標在數學上是不可能的。"}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-          <p className="text-xs text-[#BFBFBF] dark:text-[#5B5B5B]">
-            {lang === "EN" ? "Add your first course to calculate your GPA" : "新增第一個課程開始計算"}
-          </p>
         </div>
-      )}
+
+        {/* Right Column: Course List */}
+        <div className="lg:col-span-8">
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E] overflow-hidden">
+            <div className="p-6 border-b border-[#E5E5EA] dark:border-[#2C2C2E] flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">
+                {lang === "EN" ? "This Semester" : "本學期"}
+              </h3>
+              <button
+                onClick={addCourse}
+                className="flex items-center gap-2 px-4 py-2 bg-[#007AFF] hover:bg-[#0071E3] text-white rounded-full text-sm font-medium transition-colors"
+              >
+                <Plus size={16} strokeWidth={2.5} />
+                {t.addCourse}
+              </button>
+            </div>
+
+            <div className="divide-y divide-[#E5E5EA] dark:divide-[#2C2C2E]">
+              {courses.length === 0 ? (
+                <div className="p-12 text-center">
+                  <div className="w-16 h-16 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Calculator size={32} className="text-[#86868B]" />
+                  </div>
+                  <h3 className="text-[#1D1D1F] dark:text-[#F5F5F7] font-medium mb-1">{t.noCourses}</h3>
+                  <p className="text-[#86868B] text-sm">{t.startAdding}</p>
+                </div>
+              ) : (
+                courses.map((course, index) => (
+                  <div key={course.id} className="group p-4 hover:bg-[#F9F9F9] dark:hover:bg-[#252525] transition-colors flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-full bg-[#F2F2F7] dark:bg-[#2C2C2E] flex items-center justify-center text-xs font-medium text-[#86868B] flex-shrink-0">
+                      {index + 1}
+                    </div>
+                    
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                      <div className="md:col-span-6">
+                        <input
+                          type="text"
+                          value={course.name}
+                          onChange={(e) => updateCourse(course.id, { name: e.target.value })}
+                          placeholder={t.courseName}
+                          className="w-full bg-transparent text-[#1D1D1F] dark:text-[#F5F5F7] placeholder-[#86868B] focus:outline-none font-medium"
+                        />
+                      </div>
+                      
+                      <div className="md:col-span-3">
+                        <select
+                          value={course.grade}
+                          onChange={(e) => updateCourse(course.id, { grade: e.target.value })}
+                          className={`w-full bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-colors ${
+                            !course.grade ? "text-[#86868B]" : "text-[#1D1D1F] dark:text-[#F5F5F7]"
+                          }`}
+                        >
+                          <option value="">{t.grade}</option>
+                          {grades.map((g) => (
+                            <option key={g} value={g}>{g}</option>
+                          ))}
+                        </select>
+                      </div>
+                      
+                      <div className="md:col-span-3 relative">
+                        <input
+                          type="number"
+                          value={course.credits || ""}
+                          onChange={(e) => updateCourse(course.id, { credits: parseFloat(e.target.value) || 0 })}
+                          placeholder={t.credits}
+                          className="w-full bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-lg px-3 py-2 text-sm font-medium text-[#1D1D1F] dark:text-[#F5F5F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-colors"
+                          min="0"
+                          step="0.5"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#86868B] pointer-events-none">
+                          {lang === "EN" ? "Cr" : "學分"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => deleteCourse(course.id)}
+                      className="p-2 text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#FF3B30]/10 rounded-lg"
+                      title="Delete course"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
