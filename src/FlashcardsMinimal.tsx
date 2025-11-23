@@ -47,6 +47,11 @@ const TRANSLATIONS = {
     recent: "Recent",
     allDecks: "All Decks",
     quickActions: "Quick Actions",
+    statusNew: "New",
+    statusLearning: "Learning (Hard)",
+    statusReviewing: "Reviewing (Medium)",
+    statusMastered: "Mastered (Easy)",
+    viewCards: "View Cards",
   },
   粵: {
     title: "字卡",
@@ -84,6 +89,11 @@ const TRANSLATIONS = {
     recent: "最近",
     allDecks: "所有卡組",
     quickActions: "快速操作",
+    statusNew: "新卡",
+    statusLearning: "學習中 (難)",
+    statusReviewing: "溫習中 (中)",
+    statusMastered: "已掌握 (易)",
+    viewCards: "查看卡片",
   },
 };
 
@@ -106,6 +116,22 @@ interface Deck {
   lastStudied?: number;
 }
 
+const getCardStatus = (card: Flashcard) => {
+  if (!card.lastReviewed) return 'new';
+  if (card.interval && card.interval > 21) return 'mastered'; // Easy
+  if (card.interval && card.interval > 3) return 'reviewing'; // Medium
+  return 'learning'; // Hard
+};
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'mastered': return 'bg-[#34C759] text-[#34C759] border-[#34C759]'; // Green
+    case 'reviewing': return 'bg-[#FF9500] text-[#FF9500] border-[#FF9500]'; // Orange
+    case 'learning': return 'bg-[#FF3B30] text-[#FF3B30] border-[#FF3B30]'; // Red
+    default: return 'bg-[#007AFF] text-[#007AFF] border-[#007AFF]'; // Blue (New)
+  }
+};
+
 export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
@@ -114,6 +140,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   const [decks, setDecks] = useState<Deck[]>([]);
   const [newDeckName, setNewDeckName] = useState("");
   const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null);
+  const [viewingCardsDeck, setViewingCardsDeck] = useState<string | null>(null);
   const [newCardFront, setNewCardFront] = useState("");
   const [newCardBack, setNewCardBack] = useState("");
   const [bulkImportText, setBulkImportText] = useState("");
@@ -687,7 +714,64 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                         <Upload size={12} /> CSV
                       </div>
                     </label>
+                    <button
+                       onClick={() => setViewingCardsDeck(viewingCardsDeck === deck.id ? null : deck.id)}
+                       className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-colors ${viewingCardsDeck === deck.id ? 'bg-[#007AFF] text-white' : 'bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] hover:bg-[#E5E5EA]'}`}
+                    >
+                      {t.viewCards}
+                    </button>
                   </div>
+
+                  {/* Card List View */}
+                  {viewingCardsDeck === deck.id && (
+                    <div className="mt-4 pt-4 border-t border-[#E5E5EA] dark:border-[#2C2C2E] animate-in slide-in-from-top-2">
+                      {deck.cards.length === 0 ? (
+                        <div className="text-center py-4 text-gray-400 text-xs">
+                          {t.noCards}
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {(['learning', 'reviewing', 'mastered', 'new'] as const).map(status => {
+                            const statusCards = deck.cards.filter(c => getCardStatus(c) === status);
+                            if (statusCards.length === 0) return null;
+                            
+                            const colorClass = getStatusColor(status);
+                            const label = status === 'learning' ? t.statusLearning : 
+                                          status === 'reviewing' ? t.statusReviewing :
+                                          status === 'mastered' ? t.statusMastered : t.statusNew;
+
+                            return (
+                              <div key={status}>
+                                <h4 className={`text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-2 ${colorClass.split(' ')[1]}`}>
+                                  <span className={`w-1.5 h-1.5 rounded-full ${colorClass.split(' ')[0]}`}></span>
+                                  {label} ({statusCards.length})
+                                </h4>
+                                <div className="space-y-2">
+                                  {statusCards.map(card => (
+                                    <div key={card.id} className={`p-3 rounded-xl bg-[#F2F2F7] dark:bg-[#2C2C2E] border-l-4 ${colorClass.split(' ')[2]} group relative`}>
+                                       <div className="flex justify-between items-start gap-2">
+                                         <div className="flex-1 min-w-0">
+                                           <div className="font-medium text-[#1D1D1F] dark:text-[#F5F5F7] text-sm truncate">{card.front}</div>
+                                           <div className="text-xs text-[#86868B] mt-0.5 truncate">{card.back}</div>
+                                         </div>
+                                         <button 
+                                           onClick={() => deleteCard(deck.id, card.id)}
+                                           className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity"
+                                         >
+                                           <Trash2 size={14} />
+                                         </button>
+                                       </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                 </div>
               </div>
             )}
