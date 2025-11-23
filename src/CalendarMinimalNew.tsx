@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Check, X, ChevronLeft, ChevronRight, BarChart3 } from "lucide-react";
+import { Plus, Check, ChevronLeft, ChevronRight, Trash2, Circle } from "lucide-react";
 import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
   EN: {
-    title: "Calendar & Tasks",
-    addTask: "Add a task...",
+    title: "Calendar & Reminders",
+    addTask: "New Reminder",
     add: "Add",
-    pending: "pending",
-    completed: "completed",
+    pending: "Pending",
+    completed: "Completed",
     projects: "Projects",
-    tasks: "Tasks",
+    tasks: "Reminders",
+    noTasks: "No Reminders",
+    today: "Today",
   },
   粵: {
-    title: "行事曆與任務",
-    addTask: "新增任務...",
+    title: "行事曆與提醒事項",
+    addTask: "新提醒事項",
     add: "新增",
     pending: "待辦",
     completed: "已完成",
     projects: "項目",
-    tasks: "任務",
+    tasks: "提醒事項",
+    noTasks: "沒有提醒事項",
+    today: "今天",
   },
 };
 
@@ -106,11 +110,15 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
   };
 
+  const goToToday = () => {
+    const today = new Date();
+    setCurrentDate(today);
+    setSelectedDate(today);
+  };
+
   const selectedDateStr = selectedDate.toISOString().split('T')[0];
   const dayTasks = tasks.filter((t) => t.date === selectedDateStr);
-  const pendingCount = dayTasks.filter((t) => !t.completed).length;
-  const completedCount = dayTasks.filter((t) => t.completed).length;
-
+  
   // Check if a project is active on a given date
   const getProjectsForDate = (dateStr: string) => {
     return projects.filter(p => {
@@ -121,251 +129,182 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   };
 
   const dayProjects = getProjectsForDate(selectedDateStr);
+  const completedCount = dayTasks.filter(t => t.completed).length;
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-2 md:p-4 lg:p-8">
-      {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-3xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2 tracking-tight">
-          {t.title}
-        </h1>
-        <p className="text-sm text-[#6B6B6B] dark:text-[#9B9B9B]">
-          {lang === "EN" ? "Organize your schedule and track tasks" : "整理你嘅時間表同追蹤任務"}
-        </p>
-      </div>
-
-      {/* Bento Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-6">
-        {/* Calendar Card - Larger bento box */}
-        <div className="lg:col-span-2 bg-gradient-to-br from-white to-[#F9FAFB] dark:from-[#252525] dark:to-[#1E1E1E] border border-[#E5E7EB] dark:border-[#323232] rounded-2xl p-6 shadow-sm">
-          {/* Month Navigation */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-[#0F0F0F] dark:text-[#F0F0F0]">
-              {currentDate.toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { 
-                month: 'long', 
-                year: 'numeric' 
-              })}
-            </h2>
-            <div className="flex gap-2">
-              <button
-                onClick={prevMonth}
-                className="p-2 hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A] rounded-lg transition-all"
-              >
-                <ChevronLeft size={20} className="text-[#6B6B6B] dark:text-[#9B9B9B]" strokeWidth={2} />
+    <div className="w-full max-w-7xl mx-auto animate-fade-in" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif" }}>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 h-[calc(100vh-140px)] min-h-[600px]">
+        
+        {/* Left Column: Calendar (macOS Calendar Style) */}
+        <div className="lg:col-span-8 flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[12px] shadow-[0_0_0_0.5px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.04)] dark:shadow-[0_0_0_0.5px_rgba(255,255,255,0.04),0_2px_6px_rgba(0,0,0,0.3)] overflow-hidden">
+          {/* Header */}
+          <div className="px-6 py-5 flex items-center justify-between">
+            <div className="flex items-baseline gap-2">
+              <h2 className="text-[28px] font-bold text-[#1D1D1F] dark:text-white tracking-tight">
+                {currentDate.toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { month: 'long' })}
+              </h2>
+              <span className="text-[28px] font-normal text-[#86868B]">
+                {currentDate.getFullYear()}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <button onClick={prevMonth} className="p-2 text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
+                <ChevronLeft size={22} />
               </button>
-              <button
-                onClick={nextMonth}
-                className="p-2 hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A] rounded-lg transition-all"
-              >
-                <ChevronRight size={20} className="text-[#6B6B6B] dark:text-[#9B9B9B]" strokeWidth={2} />
+              <button onClick={goToToday} className="px-3 py-1 text-[15px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 rounded-md transition-colors">
+                {t.today}
+              </button>
+              <button onClick={nextMonth} className="p-2 text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
+                <ChevronRight size={22} />
               </button>
             </div>
           </div>
 
-          {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-1 md:gap-2">
-            {/* Day Headers */}
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="text-center text-xs font-semibold text-[#9B9B9B] dark:text-[#6B6B6B] pb-2 uppercase tracking-wider">
-                {day}
-              </div>
-            ))}
-
-            {/* Calendar Days */}
-            {Array.from({ length: firstDay }).map((_, i) => (
-              <div key={`empty-${i}`} />
-            ))}
-
-            {Array.from({ length: daysInMonth }).map((_, i) => {
-              const day = i + 1;
-              const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-              const dateStr = date.toISOString().split('T')[0];
-              const isSelected = dateStr === selectedDateStr;
-              const isToday = dateStr === new Date().toISOString().split('T')[0];
-              const hasTasks = tasks.some((t) => t.date === dateStr);
-              const dayProjectsList = getProjectsForDate(dateStr);
-              const hasProjects = dayProjectsList.length > 0;
-
-              return (
-                <button
-                  key={day}
-                  onClick={() => setSelectedDate(date)}
-                  className={`aspect-square p-2 text-sm rounded-xl relative font-medium transition-all duration-200 ${
-                    isSelected
-                      ? "bg-[#007AFF] dark:bg-[#0A84FF] text-white shadow-lg scale-105"
-                      : isToday
-                      ? "bg-[#F3F4F6] dark:bg-[#2A2A2A] text-[#007AFF] dark:text-[#0A84FF] font-semibold"
-                      : "hover:bg-[#F9FAFB] dark:hover:bg-[#252525] text-[#0F0F0F] dark:text-[#F0F0F0]"
-                  }`}
-                >
+          {/* Grid */}
+          <div className="flex-1 px-6 pb-6">
+            <div className="grid grid-cols-7 mb-2">
+              {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day) => (
+                <div key={day} className="text-center text-[11px] font-semibold text-[#86868B] tracking-wider">
                   {day}
-                  <div className="absolute bottom-0.5 left-1/2 -translate-x-1/2 flex gap-0.5">
-                    {hasTasks && !isSelected && (
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#007AFF] dark:bg-[#0A84FF]" />
-                    )}
-                    {hasProjects && !isSelected && dayProjectsList.slice(0, 2).map((proj, idx) => (
-                      <div 
-                        key={idx} 
-                        className="w-1.5 h-1.5 rounded-full"
-                        style={{ backgroundColor: proj.color }}
-                      />
-                    ))}
-                  </div>
-                </button>
-              );
-            })}
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-7 h-full auto-rows-fr">
+              {Array.from({ length: firstDay }).map((_, i) => <div key={`empty-${i}`} />)}
+              
+              {Array.from({ length: daysInMonth }).map((_, i) => {
+                const day = i + 1;
+                const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                const dateStr = date.toISOString().split('T')[0];
+                const isSelected = dateStr === selectedDateStr;
+                const isToday = dateStr === new Date().toISOString().split('T')[0];
+                const hasTasks = tasks.some((t) => t.date === dateStr && !t.completed);
+                const dayProjectsList = getProjectsForDate(dateStr);
+
+                return (
+                  <button
+                    key={day}
+                    onClick={() => setSelectedDate(date)}
+                    className="relative flex flex-col items-center justify-start pt-2 group outline-none"
+                  >
+                    <span
+                      className={`
+                        w-9 h-9 flex items-center justify-center rounded-full text-[17px] transition-all duration-200
+                        ${isToday && isSelected 
+                          ? "bg-[#FF3B30] text-white font-semibold shadow-md" // Today Selected: Red Circle
+                          : isSelected
+                            ? "bg-[#1D1D1F] dark:bg-white text-white dark:text-black font-semibold shadow-md" // Normal Selected: Black/White Circle
+                            : isToday
+                              ? "text-[#FF3B30] font-semibold" // Today Unselected: Red Text
+                              : "text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:bg-black/5 dark:group-hover:bg-white/10" // Normal
+                        }
+                      `}
+                    >
+                      {day}
+                    </span>
+                    <div className="flex gap-0.5 mt-1">
+                      {hasTasks && !isSelected && (
+                        <div className={`w-1 h-1 rounded-full ${isToday ? 'bg-[#FF3B30]' : 'bg-[#8E8E93]'}`} />
+                      )}
+                      {dayProjectsList.slice(0, 2).map((proj, idx) => (
+                        <div 
+                          key={idx} 
+                          className="w-1 h-1 rounded-full"
+                          style={{ backgroundColor: proj.color }}
+                        />
+                      ))}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Tasks Card - Smaller bento box */}
-        <div className="lg:col-span-1 bg-white dark:bg-[#212121] border border-[#E5E7EB] dark:border-[#2F2F2F] rounded-2xl p-6 shadow-sm flex flex-col max-h-[600px]">
-          {/* Selected Date */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-[#0F0F0F] dark:text-[#F0F0F0] mb-2">
-              {selectedDate.toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-              })}
+        {/* Right Column: Reminders */}
+        <div className="lg:col-span-4 flex flex-col bg-[#F2F2F7] dark:bg-[#000000] rounded-[18px] overflow-hidden border border-black/5 dark:border-white/10">
+          <div className="p-6 bg-white dark:bg-[#1C1C1E] border-b border-black/5 dark:border-white/5">
+            <h3 className="text-[22px] font-bold text-[#1D1D1F] dark:text-white mb-1">
+              {t.tasks}
             </h3>
-            <div className="flex items-center gap-3 text-xs">
-              <span className="px-2 py-1 bg-[#FEF3C7] dark:bg-[#3F3F1F] text-[#92400E] dark:text-[#FDE68A] rounded-md font-medium">
-                {pendingCount} {t.pending}
-              </span>
-              <span className="px-2 py-1 bg-[#D1FAE5] dark:bg-[#1F3F2F] text-[#065F46] dark:text-[#6EE7B7] rounded-md font-medium">
-                {completedCount} {t.completed}
-              </span>
-            </div>
+            <p className="text-[15px] text-[#86868B]">
+              {selectedDate.toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { weekday: 'long', month: 'short', day: 'numeric' })}
+            </p>
           </div>
 
-          {/* Add Task */}
-          <div className="mb-4">
-            <div className="flex gap-2">
+          <div className="flex-1 p-4 overflow-y-auto bg-[#F2F2F7] dark:bg-[#000000]">
+            {dayTasks.length === 0 && dayProjects.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-[#86868B] opacity-60">
+                <Check size={32} className="mb-2" />
+                <p className="text-sm font-medium">{t.noTasks}</p>
+              </div>
+            ) : (
+              <div className="bg-white dark:bg-[#1C1C1E] rounded-xl overflow-hidden shadow-sm">
+                {dayTasks.map((task, index) => (
+                  <div 
+                    key={task.id} 
+                    className={`
+                      group flex items-center gap-3 p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors
+                      ${index !== dayTasks.length - 1 || dayProjects.length > 0 ? 'border-b border-black/5 dark:border-white/10' : ''}
+                    `}
+                  >
+                    <button
+                      onClick={() => toggleTask(task.id)}
+                      className={`
+                        flex-shrink-0 w-5 h-5 rounded-full border-[1.5px] flex items-center justify-center transition-all
+                        ${task.completed
+                          ? "bg-[#007AFF] border-[#007AFF]"
+                          : "border-[#C6C6C8] dark:border-[#48484A] hover:border-[#007AFF]"
+                        }
+                      `}
+                    >
+                      {task.completed && <Check size={12} className="text-white" strokeWidth={3} />}
+                    </button>
+                    <span className={`flex-1 text-[15px] ${task.completed ? "text-[#86868B] line-through" : "text-[#1D1D1F] dark:text-white"}`}>
+                      {task.title}
+                    </span>
+                    <button onClick={() => deleteTask(task.id)} className="opacity-0 group-hover:opacity-100 text-[#FF3B30] p-1">
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ))}
+                {dayProjects.map((project, index) => (
+                  <div 
+                    key={project.id} 
+                    className={`
+                      px-3.5 py-3 border-l-[4px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors
+                      ${index !== dayProjects.length - 1 ? 'border-b border-black/5 dark:border-white/10' : ''}
+                    `}
+                    style={{ borderLeftColor: project.color }}
+                  >
+                    <p className="text-[15px] font-medium text-[#1D1D1F] dark:text-white">{project.name}</p>
+                    <p className="text-[13px] text-[#86868B] mt-0.5">
+                      {new Date(project.startDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} - {new Date(project.endDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="p-4 bg-white dark:bg-[#1C1C1E] border-t border-black/5 dark:border-white/5">
+            <div className="flex items-center gap-2 bg-[#767680]/10 dark:bg-[#767680]/20 px-3 py-2 rounded-lg">
+              <Plus size={18} className="text-[#86868B]" />
               <input
                 type="text"
                 value={newTaskTitle}
                 onChange={(e) => setNewTaskTitle(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    addTask();
-                  }
-                }}
+                onKeyDown={(e) => e.key === 'Enter' && addTask()}
                 placeholder={t.addTask}
-                className="flex-1 px-3 py-2.5 bg-[#F9FAFB] dark:bg-[#1A1A1A] border border-[#E5E7EB] dark:border-[#323232] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] dark:focus:ring-[#0A84FF] focus:border-transparent text-[#0F0F0F] dark:text-[#F0F0F0] placeholder-[#9B9B9B] dark:placeholder-[#6B6B6B] transition-all"
+                className="flex-1 bg-transparent border-none outline-none text-[15px] text-[#1D1D1F] dark:text-white placeholder-[#86868B]"
               />
-              <button
-                onClick={() => addTask()}
-                disabled={!newTaskTitle.trim()}
-                className="p-2.5 bg-[#007AFF] dark:bg-[#0A84FF] text-white rounded-lg hover:bg-[#0051D5] dark:hover:bg-[#409CFF] disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
-              >
-                <Plus size={18} strokeWidth={2.5} />
-              </button>
+              {newTaskTitle && (
+                <button onClick={addTask} className="text-[#007AFF] font-semibold text-[13px]">
+                  {t.add}
+                </button>
+              )}
             </div>
-          </div>
-
-          {/* Tasks List */}
-          <div className="flex-1 overflow-y-auto space-y-2">
-            {/* Tasks Section */}
-            {dayTasks.length > 0 && (
-              <div className="mb-4">
-                <h4 className="text-xs font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <Check size={14} />
-                  {t.tasks}
-                </h4>
-                <div className="space-y-2">
-                  {dayTasks.map((task) => (
-                    <div
-                      key={task.id}
-                      className="group flex items-start gap-3 p-3 bg-[#F9FAFB] dark:bg-[#1A1A1A] rounded-lg hover:bg-[#F3F4F6] dark:hover:bg-[#252525] transition-all"
-                    >
-                      <button
-                        onClick={() => toggleTask(task.id)}
-                        className={`flex-shrink-0 w-5 h-5 rounded-md border-2 flex items-center justify-center mt-0.5 transition-all ${
-                          task.completed
-                            ? "bg-[#007AFF] dark:bg-[#0A84FF] border-[#007AFF] dark:border-[#0A84FF]"
-                            : "border-[#E5E7EB] dark:border-[#323232] hover:border-[#007AFF] dark:hover:border-[#0A84FF]"
-                        }`}
-                      >
-                        {task.completed && <Check size={12} className="text-white" strokeWidth={3} />}
-                      </button>
-                      <span
-                        className={`flex-1 text-sm transition-all ${
-                          task.completed
-                            ? "line-through text-[#9B9B9B] dark:text-[#6B6B6B]"
-                            : "text-[#0F0F0F] dark:text-[#F0F0F0]"
-                        }`}
-                      >
-                        {task.title}
-                      </span>
-                      <button
-                        onClick={() => deleteTask(task.id)}
-                        className="opacity-0 group-hover:opacity-100 p-1 text-[#DC2626] hover:bg-[#FEE2E2] dark:hover:bg-[#3F1F1F] rounded transition-all"
-                      >
-                        <X size={14} strokeWidth={2} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Projects Section */}
-            {dayProjects.length > 0 && (
-              <div>
-                <h4 className="text-xs font-semibold text-[#6B6B6B] dark:text-[#9B9B9B] uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <BarChart3 size={14} />
-                  {t.projects}
-                </h4>
-                <div className="space-y-2">
-                  {dayProjects.map((project) => (
-                    <div
-                      key={project.id}
-                      className="p-3 rounded-lg border-l-4 transition-all bg-[#F9FAFB] dark:bg-[#1A1A1A] hover:bg-[#F3F4F6] dark:hover:bg-[#252525]"
-                      style={{ borderLeftColor: project.color }}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-[#0F0F0F] dark:text-[#F0F0F0]">
-                            {project.name}
-                          </p>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span 
-                              className="text-xs px-2 py-0.5 rounded-full font-medium"
-                              style={{ 
-                                backgroundColor: `${project.color}20`,
-                                color: project.color 
-                              }}
-                            >
-                              {project.status}
-                            </span>
-                            <span className="text-xs text-[#9B9B9B] dark:text-[#6B6B6B]">
-                              {new Date(project.startDate).toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { month: 'short', day: 'numeric' })} 
-                              {' → '}
-                              {new Date(project.endDate).toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { month: 'short', day: 'numeric' })}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Empty State */}
-            {dayTasks.length === 0 && dayProjects.length === 0 && (
-              <div className="flex items-center justify-center h-full text-center py-12">
-                <div>
-                  <p className="text-sm text-[#9B9B9B] dark:text-[#6B6B6B] mb-1">
-                    {lang === "EN" ? "No tasks or projects" : "未有任務或項目"}
-                  </p>
-                  <p className="text-xs text-[#BFBFBF] dark:text-[#5B5B5B]">
-                    {lang === "EN" ? "Add a task to get started" : "新增任務開始"}
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>

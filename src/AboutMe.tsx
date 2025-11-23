@@ -59,7 +59,12 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
               />
             </div>
           </div>
-          <h2 className="text-6xl text-[#1D1D1F] dark:text-[#F5F5F7] mb-2 relative z-10" style={{ fontFamily: "'Great Vibes', cursive" }}>BA</h2>
+          <h2 
+            className="text-6xl font-extrabold mb-2 relative z-10 bg-gradient-to-b from-[#1D1D1F] to-[#1D1D1F]/50 dark:from-[#F5F5F7] dark:to-[#F5F5F7]/50 bg-clip-text text-transparent" 
+            style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif" }}
+          >
+            BA
+          </h2>
           <div className="flex items-center gap-2 text-[#86868B] bg-[#F2F2F7] dark:bg-[#2C2C2E] px-4 py-2 rounded-full text-sm font-medium relative z-10">
             <MapPin size={14} />
             {t.location}

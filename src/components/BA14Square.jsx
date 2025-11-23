@@ -19,6 +19,11 @@ function InnerShadowText({ sizePct = 12 }) {
           <feComposite in="SourceAlpha" in2="blurOut" operator="arithmetic" k2="-1" k3="1" result="innerShadow" />
           <feColorMatrix in="innerShadow" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0" />
         </filter>
+        {/* Gradient for BA text */}
+        <linearGradient id="baGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="1" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0.5" />
+        </linearGradient>
       </defs>
 
       {/* Centered stack: BA over 14 */}
@@ -28,12 +33,12 @@ function InnerShadowText({ sizePct = 12 }) {
           y="42"
           textAnchor="middle"
           style={{
-            fontFamily: 'Inter, Helvetica Neue, Arial, system-ui, sans-serif',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, Helvetica Neue, Arial, sans-serif',
             fontWeight: 800,
             letterSpacing: `${0.05 * sizePct}px`,
             fontSize: `${sizePct}px`,
           }}
-          fill="currentColor"
+          fill="url(#baGradient)"
         >
           BA
         </text>
@@ -60,7 +65,7 @@ function InnerShadowText({ sizePct = 12 }) {
           y="41"
           textAnchor="middle"
           style={{
-            fontFamily: 'Inter, Helvetica Neue, Arial, system-ui, sans-serif',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, Helvetica Neue, Arial, sans-serif',
             fontWeight: 800,
             letterSpacing: `${0.05 * sizePct}px`,
             fontSize: `${sizePct}px`,
