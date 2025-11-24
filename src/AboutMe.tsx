@@ -79,27 +79,27 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
         </div>
 
         {/* Education Card */}
-        <div className="md:col-span-1 bg-white dark:bg-[#1C1C1E] rounded-[2.5rem] p-6 border border-[#E5E5EA] dark:border-[#2C2C2E] flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300">
-          <div className="w-12 h-12 bg-[#FF9500] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-orange-500/30 mb-4">
+        <div className="md:col-span-1 bg-orange-50 dark:bg-orange-500/10 rounded-[2.5rem] p-6 border border-orange-100 dark:border-orange-500/20 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 group">
+          <div className="w-12 h-12 bg-orange-100 dark:bg-orange-500/20 rounded-2xl flex items-center justify-center text-orange-500 dark:text-orange-400 mb-4 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
             <Book size={24} />
           </div>
           <div>
-            <h3 className="text-[#86868B] text-xs font-bold uppercase tracking-wider mb-1">{t.education}</h3>
+            <h3 className="text-orange-600/60 dark:text-orange-400/60 text-xs font-bold uppercase tracking-wider mb-1">{t.education}</h3>
             <p className="font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{t.university}</p>
             <p className="text-sm text-[#86868B]">{t.major}</p>
           </div>
         </div>
 
         {/* Skills Card */}
-        <div className="md:col-span-1 bg-[#1D1D1F] dark:bg-white rounded-[2.5rem] p-6 text-white dark:text-[#1D1D1F] flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 shadow-xl">
-          <div className="w-12 h-12 bg-white/20 dark:bg-black/10 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-md">
+        <div className="md:col-span-1 bg-[#2C2C2E] dark:bg-[#1C1C1E] rounded-[2.5rem] p-6 text-white flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 shadow-xl border border-white/5">
+          <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-md">
             <Code size={24} />
           </div>
           <div>
-            <h3 className="opacity-60 text-xs font-bold uppercase tracking-wider mb-3">{t.skills}</h3>
+            <h3 className="text-white/40 text-xs font-bold uppercase tracking-wider mb-3">{t.skills}</h3>
             <div className="flex flex-wrap gap-2">
               {['React', 'TypeScript', 'Node.js', 'UI/UX'].map(skill => (
-                <span key={skill} className="px-2 py-1 bg-white/10 dark:bg-black/5 rounded-lg text-xs font-medium border border-white/10 dark:border-black/5">
+                <span key={skill} className="px-2.5 py-1 bg-white/10 rounded-lg text-xs font-medium border border-white/5 hover:bg-white/20 transition-colors cursor-default">
                   {skill}
                 </span>
               ))}
@@ -108,7 +108,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
         </div>
 
         {/* Interests Grid */}
-        <div className="md:col-span-2 bg-gradient-to-br from-[#007AFF] to-[#0051D5] rounded-[2.5rem] p-8 text-white shadow-lg shadow-blue-500/30 relative overflow-hidden group">
+        <div className="md:col-span-2 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-[2.5rem] p-8 text-white shadow-lg shadow-purple-500/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-20 -mt-20 blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
           <div className="relative z-10">
             <h3 className="text-white/80 text-xs font-bold uppercase tracking-wider mb-6">{t.interests}</h3>
@@ -119,7 +119,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
                 { icon: Coffee, label: "Coffee" },
                 { icon: Globe, label: "Travel" }
               ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center gap-2 group/item">
+                <div key={i} className="flex flex-col items-center gap-2 group/item cursor-default">
                   <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md group-hover/item:bg-white/30 transition-colors">
                     <item.icon size={20} />
                   </div>
@@ -133,16 +133,16 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
         {/* Social Links */}
         <div className="md:col-span-2 grid grid-cols-3 gap-4">
           {[
-            { icon: Github, label: "GitHub", bg: "bg-[#24292e] text-white" },
-            { icon: Linkedin, label: "LinkedIn", bg: "bg-[#0077b5] text-white" },
-            { icon: Mail, label: "Email", bg: "bg-[#34C759] text-white" }
+            { icon: Github, label: "GitHub", color: "text-[#24292e] dark:text-white", hover: "hover:bg-[#24292e] hover:text-white", border: "border-gray-200 dark:border-white/10" },
+            { icon: Linkedin, label: "LinkedIn", color: "text-[#0077b5]", hover: "hover:bg-[#0077b5] hover:text-white", border: "border-blue-100 dark:border-blue-900/30" },
+            { icon: Mail, label: "Email", color: "text-[#34C759]", hover: "hover:bg-[#34C759] hover:text-white", border: "border-green-100 dark:border-green-900/30" }
           ].map((social, i) => (
             <a 
               key={i}
               href="#"
-              className={`${social.bg} rounded-[2rem] flex flex-col items-center justify-center p-4 hover:scale-105 transition-transform duration-300 shadow-lg`}
+              className={`bg-white dark:bg-[#1C1C1E] border ${social.border} rounded-[2rem] flex flex-col items-center justify-center p-4 hover:scale-105 transition-all duration-300 shadow-sm group ${social.color} ${social.hover}`}
             >
-              <social.icon size={24} className="mb-2" />
+              <social.icon size={24} className="mb-2 transition-colors" />
               <span className="text-xs font-bold">{social.label}</span>
             </a>
           ))}

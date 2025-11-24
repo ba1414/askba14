@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud, Clock, Lightbulb, Menu, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud, Clock, Lightbulb, Menu, X, MessageSquarePlus, Languages } from "lucide-react";
 import GPACalculatorMinimal from "./GPACalculatorNew";
 import CalendarMinimal from "./CalendarMinimalNew";
 import FlashcardsMinimal from "./FlashcardsMinimal";
@@ -25,6 +25,8 @@ import {
  * - No decorations, flat design
  * - Clean and distraction-free
  */
+
+type View = "gpa" | "calendar" | "flashcards" | "timeline" | "tips" | "about";
 
 function useTheme() {
   const getDefault = () => {
@@ -53,44 +55,6 @@ function useLang() {
     localStorage.setItem("lang", lang);
   }, [lang]);
   return [lang, setLang] as const;
-}
-
-// Scroll Reveal Component
-function ScrollReveal({ children, id }: { children: React.ReactNode; id: string }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
-  }, []);
-
-  return (
-    <section
-      id={id}
-      ref={ref}
-      className={`min-h-screen py-20 transition-all duration-1000 transform ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
-    >
-      {children}
-    </section>
-  );
 }
 
 // Login Form Component
@@ -282,6 +246,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
 export default function App() {
   const [theme, setTheme] = useTheme();
   const [lang, setLang] = useLang();
+  const [activeView, setActiveView] = useState<View>("gpa");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -347,21 +312,13 @@ export default function App() {
   const toggleLang = () => setLang(lang === "EN" ? "粵" : "EN");
 
   const navItems = [
-    { id: "tips", icon: Lightbulb, label: lang === "EN" ? "Tips" : "心得" },
-    { id: "gpa", icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算器" },
-    { id: "calendar", icon: Calendar, label: lang === "EN" ? "Calendar" : "日曆" },
-    { id: "flashcards", icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
-    { id: "timeline", icon: Clock, label: lang === "EN" ? "Timeline" : "時間線" },
-    { id: "about", icon: User, label: lang === "EN" ? "About Me" : "關於我" },
+    { id: "gpa" as View, icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算器" },
+    { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "日曆" },
+    { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
+    { id: "timeline" as View, icon: Clock, label: lang === "EN" ? "Timeline" : "時間線" },
+    { id: "tips" as View, icon: Lightbulb, label: lang === "EN" ? "Tips" : "心得" },
+    { id: "about" as View, icon: User, label: lang === "EN" ? "About Me" : "關於我" },
   ];
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setMobileMenuOpen(false);
-    }
-  };
 
   // Show loading state
   if (loading) {
@@ -379,9 +336,104 @@ export default function App() {
     return <LoginForm lang={lang} onContinueAsGuest={handleContinueAsGuest} />;
   }
 
+  // Sidebar Content (Refined UI)
+  const SidebarContent = () => (
+    <div className={`flex flex-col h-full transition-colors duration-300 ${isDark ? 'bg-[#171717] border-r border-white/5' : 'bg-gray-50 border-r border-gray-200'}`}>
+      
+      {/* Sidebar Header / BA14 Button */}
+      <div className="p-4">
+        <button 
+          onClick={() => { setActiveView('tips'); setMobileMenuOpen(false); }}
+          className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-200 text-left group shadow-sm
+            ${isDark 
+              ? 'bg-[#212121] border-white/10 hover:bg-[#2A2A2A] hover:border-white/20 text-white' 
+              : 'bg-white border-gray-200 hover:bg-white hover:border-blue-300 hover:shadow-md text-gray-800'}
+          `}
+        >
+          <div className={`p-1.5 rounded-lg ${isDark ? 'bg-blue-600/20 text-blue-400' : 'bg-blue-50 text-blue-600'}`}>
+            <MessageSquarePlus size={20} strokeWidth={2.5} />
+          </div>
+          <span className="text-sm font-bold tracking-wide">BA14</span>
+        </button>
+      </div>
+
+      {/* Navigation List */}
+      <div className="flex-1 overflow-y-auto px-3 py-2 sidebar-scroll">
+        <div className={`px-4 py-2 text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+          {lang === "EN" ? "Tools" : "工具"}
+        </div>
+        <div className="space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeView === item.id;
+            return (
+            <button
+              key={item.id}
+              onClick={() => {
+                setActiveView(item.id);
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                ${isActive 
+                  ? (isDark ? 'bg-[#2A2A2A] text-white shadow-sm' : 'bg-white text-blue-600 shadow-sm ring-1 ring-black/5') 
+                  : (isDark ? 'text-gray-400 hover:bg-[#212121] hover:text-gray-200' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900')}
+              `}
+            >
+              <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? (isDark ? 'text-blue-400' : 'text-blue-600') : ''} />
+              <span className="truncate">{item.label}</span>
+            </button>
+          )})}
+        </div>
+      </div>
+
+      {/* Sidebar Footer (User/Settings) */}
+      <div className={`p-4 border-t ${isDark ? 'border-white/5 bg-[#1A1A1A]' : 'border-gray-200 bg-gray-100/50'}`}>
+        <div className="grid grid-cols-2 gap-2 mb-2">
+          <button 
+            onClick={toggleTheme}
+            className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 border
+              ${isDark 
+                ? 'bg-[#212121] border-white/5 text-gray-300 hover:bg-[#2A2A2A] hover:text-white' 
+                : 'bg-white border-gray-200 text-gray-600 hover:bg-white hover:border-gray-300 hover:text-gray-900 shadow-sm'}
+            `}
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            <span>{isDark ? 'Light' : 'Dark'}</span>
+          </button>
+          
+          <button 
+            onClick={toggleLang}
+            className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 border
+              ${isDark 
+                ? 'bg-[#212121] border-white/5 text-gray-300 hover:bg-[#2A2A2A] hover:text-white' 
+                : 'bg-white border-gray-200 text-gray-600 hover:bg-white hover:border-gray-300 hover:text-gray-900 shadow-sm'}
+            `}
+          >
+            <Languages size={16} />
+            <span>{lang === 'EN' ? '中文' : 'EN'}</span>
+          </button>
+        </div>
+
+        {!isGuest && (
+          <button
+            onClick={handleLogout}
+            className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 border
+              ${isDark 
+                ? 'bg-[#212121] border-white/5 text-gray-300 hover:bg-red-900/20 hover:text-red-400 hover:border-red-900/30' 
+                : 'bg-white border-gray-200 text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 shadow-sm'}
+            `}
+          >
+            <LogOut size={16} />
+            <span>{lang === 'EN' ? 'Log out' : '登出'}</span>
+          </button>
+        )}
+      </div>
+    </div>
+  );
+
 
   return (
-    <div className="bg-[#FAFAFA] dark:bg-[#000000] min-h-screen text-[#1D1D1F] dark:text-[#F5F5F7] font-sans selection:bg-[#007AFF]/30">
+    <>
       {/* Login Modal for Guest users */}
       {showLoginModal && isGuest && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
@@ -397,165 +449,76 @@ export default function App() {
         </div>
       )}
 
-      {/* Sticky Header / Navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex-shrink-0 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <span className="text-xl font-bold tracking-tight">BA14</span>
-            </div>
+      {/* Mobile Header (Hamburger) */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-[#343541] border-b border-white/10 text-[#ECECF1] px-4 py-3 flex items-center justify-between">
+        <button 
+          onClick={() => setMobileMenuOpen(true)}
+          className="p-1 -ml-1 hover:bg-[#2A2B32] rounded-md"
+        >
+          <Menu size={24} />
+        </button>
+        <div className="font-medium">BA14</div>
+        <div className="w-8" /> {/* Spacer for balance */}
+      </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-1">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="px-4 py-2 rounded-full text-sm font-medium text-[#86868B] hover:text-[#1D1D1F] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-
-            {/* Right Controls */}
-            <div className="hidden md:flex items-center gap-2">
-              {isGuest && (
-                <button
-                  onClick={handleUpgradeToCloud}
-                  className="p-2 text-[#007AFF] hover:bg-[#007AFF]/10 rounded-full transition-colors"
-                  title={lang === "EN" ? "Save to Cloud" : "雲端備份"}
-                >
-                  <Cloud size={20} />
-                </button>
-              )}
-              <button
-                onClick={toggleLang}
-                className="px-3 py-1 text-xs font-medium bg-black/5 dark:bg-white/10 rounded-md hover:bg-black/10 dark:hover:bg-white/20 transition-colors"
-              >
-                {lang}
-              </button>
-              <button
-                onClick={toggleTheme}
-                className="p-2 text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors"
-              >
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              {!isGuest && (
-                <button
-                  onClick={handleLogout}
-                  className="p-2 text-[#FF3B30] hover:bg-[#FF3B30]/10 rounded-full transition-colors"
-                >
-                  <LogOut size={20} />
-                </button>
-              )}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-md text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10"
-              >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+      {/* Mobile Sidebar Overlay */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 flex md:hidden">
+          <div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="relative w-72 h-full shadow-xl transform transition-transform duration-300 ease-in-out">
+            <SidebarContent />
           </div>
         </div>
+      )}
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-[#1C1C1E] border-b border-black/5 dark:border-white/5">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10"
-                >
-                  <div className="flex items-center gap-3">
-                    <item.icon size={18} />
-                    {item.label}
-                  </div>
-                </button>
-              ))}
-              <div className="border-t border-black/5 dark:border-white/5 my-2 pt-2 flex items-center justify-between px-3">
-                <div className="flex gap-2">
-                  <button onClick={toggleLang} className="px-3 py-1 text-xs bg-black/5 dark:bg-white/10 rounded-md">
-                    {lang}
-                  </button>
-                  <button onClick={toggleTheme} className="p-1.5 bg-black/5 dark:bg-white/10 rounded-md">
-                    {isDark ? <Sun size={16} /> : <Moon size={16} />}
-                  </button>
-                </div>
-                {!isGuest && (
-                  <button onClick={handleLogout} className="text-[#FF3B30] text-sm font-medium">
-                    {lang === "EN" ? "Logout" : "登出"}
-                  </button>
-                )}
-              </div>
+      <div className="flex h-screen bg-gray-50 dark:bg-[#343541] text-[#ECECF1]">
+        {/* Desktop Sidebar */}
+        <aside className="hidden md:flex w-72 flex-col bg-gray-50 dark:bg-[#171717] border-r border-gray-200 dark:border-[#2F2F2F]">
+          <SidebarContent />
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 relative h-full overflow-hidden bg-white dark:bg-[#0F0F0F] text-[#1F1F1F] dark:text-[#ECECF1] transition-colors duration-300">
+          {/* Desktop Header (Title) */}
+          <div className="hidden md:flex items-center justify-between px-8 py-4 border-b border-gray-100 dark:border-white/5 bg-white/80 dark:bg-[#0F0F0F]/80 backdrop-blur-sm sticky top-0 z-10">
+            <h1 className="text-xl font-bold text-gray-800 dark:text-white tracking-tight">
+              {navItems.find(i => i.id === activeView)?.label}
+            </h1>
+            <div className="flex items-center gap-3">
+               {/* Optional: Add user avatar or status here if needed */}
+               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                  {user?.email?.[0].toUpperCase() || "G"}
+               </div>
             </div>
           </div>
-        )}
-      </header>
 
-      {/* Main Content - Single Page Scroll */}
-      <main className="pt-16">
-        
-        {/* Hero / Tips Section */}
-        <ScrollReveal id="tips">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-            <AssociateDegreeTips lang={lang} />
+          <div className="h-full overflow-y-auto overflow-x-hidden pt-16 md:pt-0 pb-20">
+            <div className="max-w-5xl mx-auto px-4 py-6 md:px-8 md:py-8 animate-fade-in">
+            {activeView === "gpa" && (
+                <GPACalculatorMinimal lang={lang} />
+            )}
+            {activeView === "calendar" && (
+                <CalendarMinimal lang={lang} />
+            )}
+            {activeView === "flashcards" && (
+                <FlashcardsMinimal lang={lang} />
+            )}
+            {activeView === "timeline" && (
+                <Timeline lang={lang} />
+            )}
+            {activeView === "tips" && (
+                <AssociateDegreeTips lang={lang} />
+            )}
+            {activeView === "about" && (
+                <AboutMe lang={lang} />
+            )}
+            </div>
           </div>
-        </ScrollReveal>
-
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-black/5 dark:via-white/10 to-transparent my-8" />
-
-        {/* GPA Calculator Section */}
-        <ScrollReveal id="gpa">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <GPACalculatorMinimal lang={lang} />
-          </div>
-        </ScrollReveal>
-
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-black/5 dark:via-white/10 to-transparent my-8" />
-
-        {/* Calendar Section */}
-        <ScrollReveal id="calendar">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <CalendarMinimal lang={lang} />
-          </div>
-        </ScrollReveal>
-
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-black/5 dark:via-white/10 to-transparent my-8" />
-
-        {/* Flashcards Section */}
-        <ScrollReveal id="flashcards">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FlashcardsMinimal lang={lang} />
-          </div>
-        </ScrollReveal>
-
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-black/5 dark:via-white/10 to-transparent my-8" />
-
-        {/* Timeline Section */}
-        <ScrollReveal id="timeline">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Timeline lang={lang} />
-          </div>
-        </ScrollReveal>
-
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-black/5 dark:via-white/10 to-transparent my-8" />
-
-        {/* About Me Section */}
-        <ScrollReveal id="about">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-            <AboutMe lang={lang} />
-          </div>
-        </ScrollReveal>
-
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }
