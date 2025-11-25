@@ -12,12 +12,12 @@ export default {
       },
       colors: {
         // Apple Dark Theme
-        'apple-dark-bg': '#050509',
-        'apple-dark-card': '#111217',
-        'apple-dark-card-sec': '#16171D',
+        'apple-dark-bg': '#000000',
+        'apple-dark-card': '#1C1C1E',
+        'apple-dark-card-sec': '#2C2C2E',
         // Apple Light Theme
-        'apple-light-bg': '#F5F5F7',
-        'apple-light-card': '#FFFFFF',
+        'apple-light-bg': '#FFFFFF',
+        'apple-light-card': '#F2F2F7',
         // Red Theme System
         'page': '#050307',
         'card': '#10040A',

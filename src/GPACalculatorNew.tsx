@@ -393,7 +393,7 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
 
       {/* Course List (Full Width) */}
       <div className="apple-card overflow-hidden">
-        <div className="p-6 border-b border-[#E5E5EA] dark:border-[#2C2C2E] flex justify-between items-center bg-white/50 dark:bg-[#1C1C1E]/50 backdrop-blur-xl sticky top-0 z-10">
+        <div className="p-6 border-b border-[#E5E5EA] dark:border-[#2C2C2E] flex justify-between items-center bg-white dark:bg-[#1C1C1E] sticky top-0 z-10">
           <h3 className="text-lg font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
             <BookOpen size={20} className="text-[#007AFF]" />
             {t.semester}

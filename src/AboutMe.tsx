@@ -299,7 +299,6 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
 
           {/* Philosophy Card */}
           <div className="md:col-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-10 text-primary relative overflow-hidden group border border-black/5 dark:border-white/10">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gray-100 dark:bg-zinc-800 rounded-full -mr-20 -mt-20 blur-3xl opacity-50"></div>
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-gray-100 dark:bg-zinc-800 rounded-xl flex items-center justify-center text-primary">

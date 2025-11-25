@@ -39,7 +39,7 @@ const FadeInSection = ({ children, delay = 0 }: { children: React.ReactNode, del
 const ExpandableCard = ({ title, icon: Icon, children, defaultOpen = false }: any) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   return (
-    <div className="mt-4 bg-white/50 dark:bg-white/5 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/5">
+    <div className="mt-4 bg-white dark:bg-[#1C1C1E] rounded-2xl border border-gray-200 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/5">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full p-5 flex items-center justify-between text-left group transition-colors"
@@ -91,13 +91,13 @@ const HeroCard = ({ title, subtitle }: { title: string, subtitle: string }) => {
         className="absolute top-0 left-4 md:left-0 hidden md:block transition-transform duration-200 ease-out"
         style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }}
       >
-        <span className="px-5 py-2.5 rounded-full bg-white dark:bg-white/10 backdrop-blur-md text-sm font-bold text-gray-600 dark:text-gray-400 -rotate-6 shadow-lg shadow-gray-500/10 border border-gray-100 dark:border-white/10">GPA 4.0?</span>
+        <span className="px-5 py-2.5 rounded-full bg-white dark:bg-[#2C2C2E] text-sm font-bold text-gray-600 dark:text-gray-400 -rotate-6 shadow-lg shadow-gray-500/10 border border-gray-100 dark:border-white/10">GPA 4.0?</span>
       </div>
       <div 
         className="absolute top-20 right-4 md:right-0 hidden md:block transition-transform duration-200 ease-out"
         style={{ transform: `translate(${mousePos.x * -40}px, ${mousePos.y * -40}px)` }}
       >
-        <span className="px-5 py-2.5 rounded-full bg-white dark:bg-white/10 backdrop-blur-md text-sm font-bold text-gray-600 dark:text-gray-400 rotate-6 shadow-lg shadow-gray-500/10 border border-gray-100 dark:border-white/10">Non-JUPAS</span>
+        <span className="px-5 py-2.5 rounded-full bg-white dark:bg-[#2C2C2E] text-sm font-bold text-gray-600 dark:text-gray-400 rotate-6 shadow-lg shadow-gray-500/10 border border-gray-100 dark:border-white/10">Non-JUPAS</span>
       </div>
 
       <div 
@@ -180,7 +180,7 @@ const TabbedSelector = () => {
 
   return (
     <div className="w-full">
-      <div className="flex p-1.5 bg-gray-100/80 dark:bg-white/5 backdrop-blur-md rounded-2xl mb-6">
+      <div className="flex p-1.5 bg-gray-100 dark:bg-[#1C1C1E] rounded-2xl mb-6">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -196,7 +196,7 @@ const TabbedSelector = () => {
           </button>
         ))}
       </div>
-      <div className="p-8 bg-white dark:bg-white/5 rounded-3xl border border-gray-100 dark:border-white/10 min-h-[120px] flex items-center justify-center text-center shadow-sm">
+      <div className="p-8 bg-white dark:bg-[#1C1C1E] rounded-3xl border border-gray-100 dark:border-white/10 min-h-[120px] flex items-center justify-center text-center shadow-sm">
         <p className="text-lg font-medium text-gray-800 dark:text-gray-300 animate-[fadeIn_0.3s_ease-out]">
           {active === "ability" && "Check your DSE electives. Good at Bio? Science. Good at writing? Arts. Don't force it."}
           {active === "interest" && "You will study this for 2-4 years. If you hate it, you won't get a high GPA."}
@@ -263,7 +263,6 @@ const GPASimulator = () => {
   return (
     <div className="flex flex-col items-center w-full py-4">
       <div className="relative w-56 h-56 mb-8 group">
-        <div className="absolute inset-0 bg-gray-500/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <svg className="w-full h-full transform -rotate-90 relative z-10">
           <circle cx="112" cy="112" r="100" stroke="currentColor" strokeWidth="16" fill="transparent" className="text-gray-100 dark:text-white/10" />
           <circle
@@ -338,7 +337,6 @@ const FeynmanTimer = () => {
   return (
     <div className="w-full bg-gray-50 dark:bg-white/5 rounded-3xl p-8 flex flex-col items-center text-center border border-gray-200 dark:border-white/10">
       <div className="mb-6 relative">
-        <div className={`absolute inset-0 bg-gray-500/10 blur-2xl rounded-full transition-opacity duration-500 ${active ? 'opacity-100' : 'opacity-0'}`}></div>
         <span className="relative text-6xl font-mono font-bold text-gray-900 dark:text-white tabular-nums tracking-tight">
           {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
         </span>
@@ -434,7 +432,7 @@ const CONTENT = {
         title: "Before Results",
         visual: (
           <div className="space-y-6">
-            <div className="p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/20 shadow-xl shadow-gray-500/5">
+            <div className="p-8 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-500/5">
               <h4 className="font-bold text-gray-900 dark:text-white mb-6 text-center tracking-tight">The Goal: Full Cert</h4>
               <div className="flex gap-4 justify-center">
                 <FlipNumber value={3} />
@@ -459,7 +457,7 @@ const CONTENT = {
         title: "DSE Release Day",
         visual: (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="p-6 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/20 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
+            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
               <div className="w-14 h-14 rounded-2xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                 <AlertCircle size={28} />
               </div>
@@ -467,7 +465,7 @@ const CONTENT = {
               <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Retake DSE</p>
               <div className="mt-6 text-[10px] font-bold text-gray-900 bg-gray-100 dark:bg-white/10 dark:text-white px-3 py-1.5 rounded-full inline-block uppercase tracking-wider">Exam Focus</div>
             </div>
-            <div className="p-6 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/20 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
+            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
               <div className="w-14 h-14 rounded-2xl bg-zinc-100 dark:bg-white/10 text-zinc-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                 <CheckCircle2 size={28} />
               </div>
@@ -489,7 +487,7 @@ const CONTENT = {
         id: "3",
         title: "Pre-Semester Prep",
         visual: (
-          <div className="bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] p-8 border border-white/20 shadow-xl shadow-gray-500/5">
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-8 border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-500/5">
             <ChecklistWithProgress items={[
               "Adjust Mindset: It's not easier than Uni",
               "Plan IELTS (Aug or Dec)",
@@ -587,7 +585,7 @@ const CONTENT = {
         title: "DSE 放榜日",
         visual: (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="p-6 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/20 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
+            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
               <div className="w-14 h-14 rounded-2xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                 <AlertCircle size={28} />
               </div>
@@ -595,7 +593,7 @@ const CONTENT = {
               <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Retake DSE</p>
               <div className="mt-6 text-[10px] font-bold text-gray-900 bg-gray-100 dark:bg-white/10 dark:text-white px-3 py-1.5 rounded-full inline-block uppercase tracking-wider">專注考試</div>
             </div>
-            <div className="p-6 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/20 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
+            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
               <div className="w-14 h-14 rounded-2xl bg-zinc-100 dark:bg-white/10 text-zinc-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                 <CheckCircle2 size={28} />
               </div>
@@ -617,7 +615,7 @@ const CONTENT = {
         id: "3",
         title: "開學前準備",
         visual: (
-          <div className="bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] p-8 border border-white/20 shadow-xl shadow-gray-500/5">
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-8 border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-500/5">
             <ChecklistWithProgress items={[
               "調整心態：Asso 唔係 Hea 讀",
               "報考 IELTS (8月或12月)",
@@ -732,7 +730,7 @@ export default function AssociateDegreeTips({ lang: propLang }: { lang: string }
 
                     {/* Text / Details Area - Narrower */}
                     <div className="lg:col-span-2 flex flex-col justify-center">
-                      <div className="p-8 rounded-[2rem] bg-white/40 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow duration-500">
+                      <div className="p-8 rounded-[2rem] bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow duration-500">
                         <BookOpen className="text-gray-900 dark:text-white mb-6" size={28} />
                         <p className="text-lg leading-relaxed text-gray-800 dark:text-gray-300 font-medium">
                           {section.details}

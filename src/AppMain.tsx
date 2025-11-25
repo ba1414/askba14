@@ -337,7 +337,7 @@ export default function App() {
 
   // Sidebar Content (Refined UI)
   const SidebarContent = () => (
-    <div className={`flex flex-col h-full transition-colors duration-300 backdrop-blur-xl ${isDark ? 'bg-[#16161a]/85 border-r border-white/5' : 'bg-white/90 border-r border-gray-200'}`}>
+    <div className={`flex flex-col h-full transition-colors duration-300 ${isDark ? 'bg-black border-r border-white/10' : 'bg-white border-r border-gray-200'}`}>
       
       {/* Sidebar Header / BA14 Button */}
       <div className="p-6">
