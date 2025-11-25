@@ -142,14 +142,11 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
 
   return (
     <div className="main-grid col-span-full">
-      <div className="bg-orb bg-orb-1"></div>
-      <div className="bg-orb bg-orb-2"></div>
-      <div className="bg-orb bg-orb-3"></div>
       
       <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in p-4 md:p-8 relative z-10" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, sans-serif" }}>
         {/* Header */}
         <div className="mb-16 text-center relative z-10">
-          <h1 className="relative text-6xl md:text-8xl font-bold text-primary tracking-tighter mb-6 drop-shadow-[0_0_30px_rgba(255,55,95,0.3)]">
+          <h1 className="relative text-6xl md:text-8xl font-bold text-primary tracking-tighter mb-6">
             {t.title}
           </h1>
           <p className="relative text-xl md:text-2xl text-secondary font-medium max-w-2xl mx-auto leading-relaxed">
@@ -161,41 +158,39 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 auto-rows-[minmax(180px,auto)] relative z-10">
           
           {/* Profile Card - Large */}
-          <TiltCard className="md:col-span-2 md:row-span-2 bg-card/60 backdrop-blur-xl rounded-[40px] p-10 shadow-2xl shadow-apple-red-900/20 border border-white/10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,55,95,0.15),transparent_55%)]" />
+          <TiltCard className="md:col-span-2 md:row-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-10 border border-black/5 dark:border-white/10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
             
             <div className="relative w-56 h-56 mb-10 group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-apple-red-500 to-apple-red-400 blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 animate-pulse"></div>
-              <div className="relative w-full h-full rounded-full p-1.5 bg-gradient-to-br from-apple-red-500 to-apple-red-600">
-                <div className="w-full h-full rounded-full overflow-hidden border-4 border-card shadow-inner">
+              <div className="relative w-full h-full rounded-full p-1.5 bg-gray-100 dark:bg-zinc-800">
+                <div className="w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-inner">
                   <img 
                     src="/askba14/profile.png" 
                     alt="Profile" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-all duration-500"
                   />
                 </div>
               </div>
-              <div className="absolute bottom-2 right-4 bg-card text-2xl shadow-lg rounded-full p-2 border border-white/10 text-apple-red-500">
+              <div className="absolute bottom-2 right-4 bg-white dark:bg-zinc-800 text-2xl shadow-lg rounded-full p-2 border border-black/5 dark:border-white/10">
                 👋
               </div>
             </div>
 
-            <h2 className="text-7xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50 tracking-tighter">
+            <h2 className="text-7xl font-bold mb-3 text-primary tracking-tighter">
               BA
             </h2>
-            <div className="flex items-center gap-2 text-secondary bg-white/5 px-5 py-2.5 rounded-full text-sm font-semibold backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
-              <MapPin size={16} className="text-apple-red-500" />
+            <div className="flex items-center gap-2 text-secondary bg-gray-100 dark:bg-zinc-800 px-5 py-2.5 rounded-full text-sm font-semibold border border-black/5 dark:border-white/5">
+              <MapPin size={16} className="text-primary" />
               {t.location}
             </div>
           </TiltCard>
 
           {/* Bio Card - Expanded */}
-          <div className="md:col-span-2 bg-card/60 backdrop-blur-md rounded-[40px] p-10 flex flex-col justify-center relative overflow-hidden group hover:shadow-lg hover:shadow-apple-red-900/10 transition-all duration-300 border border-white/5">
-            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:rotate-12 duration-500">
-              <Sparkles size={120} className="text-apple-red-400" />
+          <div className="md:col-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-10 flex flex-col justify-center relative overflow-hidden group border border-black/5 dark:border-white/10">
+            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:rotate-12 duration-500">
+              <Sparkles size={120} className="text-primary" />
             </div>
             <div className="relative z-10">
-              <div className="w-12 h-12 bg-apple-red-500/10 rounded-2xl flex items-center justify-center text-apple-red-500 mb-6">
+              <div className="w-12 h-12 bg-gray-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center text-primary mb-6">
                 <Languages size={24} />
               </div>
               <p className="text-xl md:text-2xl leading-relaxed text-primary font-medium">
@@ -205,22 +200,21 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
           </div>
 
           {/* Education Card */}
-          <div className="md:col-span-1 bg-card/60 backdrop-blur-md rounded-[40px] p-8 border border-white/5 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 group relative overflow-hidden">
-            <div className="absolute -right-4 -top-4 w-24 h-24 bg-apple-red-500/5 rounded-full blur-2xl group-hover:bg-apple-red-500/10 transition-colors"></div>
-            <div className="w-14 h-14 bg-apple-red-500/10 rounded-2xl flex items-center justify-center text-apple-red-500 mb-6 group-hover:rotate-12 transition-transform duration-300">
+          <div className="md:col-span-1 bg-white dark:bg-zinc-900 rounded-[40px] p-8 border border-black/5 dark:border-white/10 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 group relative overflow-hidden">
+            <div className="w-14 h-14 bg-gray-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:rotate-12 transition-transform duration-300">
               <GraduationCap size={28} />
             </div>
             <div>
-              <h3 className="text-apple-red-400 text-xs font-bold uppercase tracking-widest mb-2">{t.education}</h3>
+              <h3 className="text-secondary text-xs font-bold uppercase tracking-widest mb-2">{t.education}</h3>
               <p className="font-bold text-lg text-primary leading-tight mb-1">{t.university}</p>
               <p className="text-sm font-medium text-secondary leading-snug">{t.major}</p>
             </div>
           </div>
 
           {/* Experience Timeline */}
-          <div className="md:col-span-1 md:row-span-2 bg-card/60 backdrop-blur-md rounded-[40px] p-8 border border-l-2 border-l-apple-red-500/40 border-y-white/5 border-r-white/5 shadow-sm hover:shadow-xl transition-all duration-300">
+          <div className="md:col-span-1 md:row-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-8 border border-black/5 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-apple-red-500/10 rounded-xl flex items-center justify-center text-apple-red-500">
+              <div className="w-10 h-10 bg-gray-100 dark:bg-zinc-800 rounded-xl flex items-center justify-center text-primary">
                 <Briefcase size={20} />
               </div>
               <h3 className="font-bold text-lg text-primary">{t.experience}</h3>
@@ -248,23 +242,22 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
           </div>
 
           {/* Tech Stack */}
-          <div className="md:col-span-2 bg-card/60 backdrop-blur-md rounded-[40px] p-8 text-primary flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 shadow-xl border border-white/5 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-apple-red-500/5 to-transparent opacity-50"></div>
+          <div className="md:col-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-8 text-primary flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 border border-black/5 dark:border-white/10 relative overflow-hidden">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/10 shadow-sm">
+                <div className="w-14 h-14 bg-gray-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center border border-black/5 dark:border-white/5">
                   <Code size={28} className="text-primary" />
                 </div>
-                <ArrowUpRight className="text-white/30" />
+                <ArrowUpRight className="text-secondary" />
               </div>
               <h3 className="text-secondary text-xs font-bold uppercase tracking-widest mb-4">{t.skills}</h3>
               
               <div className="space-y-4">
                 <div>
-                  <p className="text-xs font-bold text-apple-red-400 mb-2 uppercase tracking-wider">Frontend</p>
+                  <p className="text-xs font-bold text-primary mb-2 uppercase tracking-wider">Frontend</p>
                   <div className="flex flex-wrap gap-2">
                     {['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'Next.js'].map(skill => (
-                      <span key={skill} className="px-3 py-1.5 bg-apple-red-500/10 rounded-full text-[11px] font-semibold border border-apple-red-500/20 hover:bg-apple-red-500/20 transition-colors cursor-default backdrop-blur-sm text-secondary shadow-sm">
+                      <span key={skill} className="px-3 py-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full text-[11px] font-semibold border border-black/5 dark:border-white/5 text-secondary">
                         {skill}
                       </span>
                     ))}
@@ -274,7 +267,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
                   <p className="text-xs font-bold text-secondary mb-2 uppercase tracking-wider">Backend & Tools</p>
                   <div className="flex flex-wrap gap-2">
                     {['Node.js', 'Python', 'Firebase', 'Git', 'Figma'].map(skill => (
-                      <span key={skill} className="px-3 py-1.5 bg-white/5 rounded-full text-[11px] font-semibold border border-white/5 hover:bg-white/10 transition-colors cursor-default backdrop-blur-sm text-secondary shadow-sm">
+                      <span key={skill} className="px-3 py-1.5 bg-white dark:bg-zinc-900 rounded-full text-[11px] font-semibold border border-black/10 dark:border-white/10 text-secondary">
                         {skill}
                       </span>
                     ))}
@@ -290,7 +283,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
               title="AskBA" 
               desc="Interactive survival guide for Associate Degree students." 
               tags={['React', 'Vite', 'Tailwind']}
-              color="bg-card/60 backdrop-blur-md"
+              color="bg-white dark:bg-zinc-900"
               icon={Terminal}
             />
           </div>
@@ -299,17 +292,17 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
               title="LinguaFlow" 
               desc="NLP tool for analyzing sentence structures." 
               tags={['Python', 'NLTK', 'Flask']}
-              color="bg-gradient-to-br from-card-elevated to-card"
+              color="bg-white dark:bg-zinc-900"
               icon={Cpu}
             />
           </div>
 
           {/* Philosophy Card */}
-          <div className="md:col-span-2 bg-card/60 backdrop-blur-md rounded-[40px] p-10 text-primary relative overflow-hidden group border border-white/5">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-apple-red-500/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+          <div className="md:col-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-10 text-primary relative overflow-hidden group border border-black/5 dark:border-white/10">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gray-100 dark:bg-zinc-800 rounded-full -mr-20 -mt-20 blur-3xl opacity-50"></div>
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-apple-red-500/10 rounded-xl flex items-center justify-center backdrop-blur-md text-apple-red-500">
+                <div className="w-10 h-10 bg-gray-100 dark:bg-zinc-800 rounded-xl flex items-center justify-center text-primary">
                   <Palette size={20} />
                 </div>
                 <h3 className="font-bold text-lg">{t.philosophy}</h3>
@@ -321,17 +314,16 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
           </div>
 
           {/* Interests / Vibe Card */}
-          <div className="md:col-span-2 bg-gradient-to-br from-apple-red-600 to-apple-red-800 rounded-[40px] p-8 text-white shadow-2xl shadow-apple-red-900/30 relative overflow-hidden group flex flex-col justify-between">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-10 rounded-full -mr-32 -mt-32 blur-3xl group-hover:scale-125 transition-transform duration-1000"></div>
+          <div className="md:col-span-2 bg-zinc-900 dark:bg-white rounded-[40px] p-8 text-white dark:text-black shadow-xl relative overflow-hidden group flex flex-col justify-between">
             
             <div className="relative z-10 flex justify-between items-start mb-8">
               <div>
-                <h3 className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">{t.interests}</h3>
+                <h3 className="text-white/60 dark:text-black/60 text-xs font-bold uppercase tracking-widest mb-1">{t.interests}</h3>
                 <p className="text-2xl font-bold">Creative Flow</p>
               </div>
               <div className="flex gap-2">
                 {[Camera, Coffee, Globe].map((Icon, i) => (
-                  <div key={i} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/10 hover:bg-white/20 transition-colors">
+                  <div key={i} className="w-10 h-10 rounded-full bg-white/10 dark:bg-black/10 flex items-center justify-center border border-white/10 dark:border-black/10">
                     <Icon size={18} />
                   </div>
                 ))}

@@ -358,7 +358,7 @@ export default function App() {
 
       {/* Navigation List */}
       <div className="flex-1 overflow-y-auto px-4 py-2 sidebar-scroll space-y-1">
-        <div className={`px-4 py-2 text-[11px] font-semibold uppercase tracking-wider mb-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+        <div className={`px-4 py-2 text-[11px] font-semibold uppercase tracking-wider mb-2 ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
           {lang === "EN" ? "Menu" : "選單"}
         </div>
         {navItems.map((item) => {
@@ -374,7 +374,7 @@ export default function App() {
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-[15px] font-medium transition-all duration-200 relative group
               ${isActive 
                 ? 'bg-[#007AFF] text-white shadow-md shadow-blue-500/25' 
-                : (isDark ? 'text-gray-400 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-black hover:bg-black/5')}
+                : (isDark ? 'text-gray-400 hover:text-white hover:bg-white/10' : 'text-gray-600 hover:text-black hover:bg-black/5')}
             `}
           >
             <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : ''} />

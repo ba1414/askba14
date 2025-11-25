@@ -13,88 +13,21 @@
   
   body {
     @apply font-sans text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors duration-300;
-    background: radial-gradient(circle at top left, #FFE5EC 0, transparent 55%),
-                radial-gradient(circle at bottom right, #FFE3F1 0, transparent 55%),
-                #F5F5F7;
+    background: #F5F5F7;
   }
 
   .dark body {
-    background: radial-gradient(circle at top left, #130008 0, transparent 55%),
-                radial-gradient(circle at bottom right, #200010 0, transparent 55%),
-                #050307;
+    background: #000000;
   }
 
   .main-grid {
-    @apply max-w-[1120px] mx-auto p-8 rounded-[32px] relative overflow-hidden transition-all duration-300;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 245, 248, 0.9));
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.06);
+    @apply max-w-[1120px] mx-auto p-8 relative overflow-hidden transition-all duration-300;
   }
 
   .dark .main-grid {
-    background: linear-gradient(145deg, rgba(255, 55, 95, 0.08), rgba(0, 0, 0, 0.45));
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-  }
-
-  .main-grid::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    mix-blend-mode: soft-light;
-    opacity: 0.25;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-  }
-
-  .bg-orb {
-    position: fixed;
-    width: 420px;
-    height: 420px;
-    border-radius: 9999px;
-    filter: blur(80px);
-    opacity: 0.22;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .bg-orb-1 {
-    top: -120px;
-    left: -80px;
-    background: #FF8FA6;
-    animation: float1 26s ease-in-out infinite alternate;
-  }
-  
-  .bg-orb-2 {
-    bottom: -140px;
-    right: -100px;
-    background: #FF8FA6;
-    animation: float2 32s ease-in-out infinite alternate;
-  }
-
-  .bg-orb-3 {
-    top: 40%;
-    left: 40%;
-    width: 600px;
-    height: 600px;
-    background: #FF8FA6;
-    opacity: 0.1;
-    animation: float1 40s ease-in-out infinite alternate-reverse;
-  }
-
-  .dark .bg-orb-1 { background: #FF375F; }
-  .dark .bg-orb-2 { background: #FF375F; }
-  .dark .bg-orb-3 { background: #FF375F; }
-
-  @keyframes float1 {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(40px, 60px, 0); }
-  }
-  
-  @keyframes float2 {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(-60px, -40px, 0); }
+    background: transparent;
+    box-shadow: none;
+    border: none;
   }
 
   /* Typography Scale */
