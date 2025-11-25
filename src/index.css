@@ -196,3 +196,15 @@
   }
 }
 
+:root {
+    --color-primary: #000000;
+    --color-secondary: #52525B;
+    --color-muted: #71717A;
+  }
+
+  .dark {
+    --color-primary: #FFFFFF;
+    --color-secondary: #A1A1AA;
+    --color-muted: #52525B;
+  }
+

@@ -22,9 +22,9 @@ export default {
         'page': '#050307',
         'card': '#10040A',
         'card-elevated': '#180713',
-        'primary': '#FDF5F7',
-        'secondary': '#C8AFC0',
-        'muted': '#8E7587',
+        'primary': 'var(--color-primary)',
+        'secondary': 'var(--color-secondary)',
+        'muted': 'var(--color-muted)',
         'apple-red': {
           900: '#13030A',
           800: '#250615',
