@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud, Clock, Lightbulb, Menu, X, MessageSquarePlus, Languages } from "lucide-react";
+import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud, Lightbulb, Menu, X, MessageSquarePlus, Languages } from "lucide-react";
 import GPACalculatorMinimal from "./GPACalculatorNew";
 import CalendarMinimal from "./CalendarMinimalNew";
 import FlashcardsMinimal from "./FlashcardsMinimal";
 import AboutMe from "./AboutMe";
-import Timeline from "./Timeline";
 import AssociateDegreeTips from "./AssociateDegreeTips";
+import Footer from "./components/Footer";
 import { auth, googleProvider } from "./firebase";
 import { 
   signInWithPopup,
@@ -26,7 +26,7 @@ import {
  * - Clean and distraction-free
  */
 
-type View = "gpa" | "calendar" | "flashcards" | "timeline" | "tips" | "about";
+type View = "gpa" | "calendar" | "flashcards" | "tips" | "about";
 
 function useTheme() {
   const getDefault = () => {
@@ -315,7 +315,6 @@ export default function App() {
     { id: "gpa" as View, icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算器" },
     { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "日曆" },
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
-    { id: "timeline" as View, icon: Clock, label: lang === "EN" ? "Timeline" : "時間線" },
     { id: "tips" as View, icon: Lightbulb, label: lang === "EN" ? "Tips" : "心得" },
     { id: "about" as View, icon: User, label: lang === "EN" ? "About Me" : "關於我" },
   ];
@@ -338,89 +337,85 @@ export default function App() {
 
   // Sidebar Content (Refined UI)
   const SidebarContent = () => (
-    <div className={`flex flex-col h-full transition-colors duration-300 ${isDark ? 'bg-[#171717] border-r border-white/5' : 'bg-gray-50 border-r border-gray-200'}`}>
+    <div className={`flex flex-col h-full transition-colors duration-300 backdrop-blur-xl ${isDark ? 'bg-[#16161a]/85 border-r border-white/5' : 'bg-white/90 border-r border-gray-200'}`}>
       
       {/* Sidebar Header / BA14 Button */}
-      <div className="p-4">
+      <div className="p-6">
         <button 
           onClick={() => { setActiveView('tips'); setMobileMenuOpen(false); }}
-          className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-200 text-left group shadow-sm
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group
             ${isDark 
-              ? 'bg-[#212121] border-white/10 hover:bg-[#2A2A2A] hover:border-white/20 text-white' 
-              : 'bg-white border-gray-200 hover:bg-white hover:border-blue-300 hover:shadow-md text-gray-800'}
+              ? 'hover:bg-white/5 text-white' 
+              : 'hover:bg-black/5 text-gray-900'}
           `}
         >
-          <div className={`p-1.5 rounded-lg ${isDark ? 'bg-blue-600/20 text-blue-400' : 'bg-blue-50 text-blue-600'}`}>
-            <MessageSquarePlus size={20} strokeWidth={2.5} />
+          <div className={`p-2 rounded-lg ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-600'}`}>
+            <MessageSquarePlus size={20} strokeWidth={2} />
           </div>
-          <span className="text-sm font-bold tracking-wide">BA14</span>
+          <span className="text-lg font-semibold tracking-tight">BA14</span>
         </button>
       </div>
 
       {/* Navigation List */}
-      <div className="flex-1 overflow-y-auto px-3 py-2 sidebar-scroll">
-        <div className={`px-4 py-2 text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-          {lang === "EN" ? "Tools" : "工具"}
+      <div className="flex-1 overflow-y-auto px-4 py-2 sidebar-scroll space-y-1">
+        <div className={`px-4 py-2 text-[11px] font-semibold uppercase tracking-wider mb-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+          {lang === "EN" ? "Menu" : "選單"}
         </div>
-        <div className="space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeView === item.id;
-            return (
-            <button
-              key={item.id}
-              onClick={() => {
-                setActiveView(item.id);
-                setMobileMenuOpen(false);
-              }}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-                ${isActive 
-                  ? (isDark ? 'bg-[#2A2A2A] text-white shadow-sm' : 'bg-white text-blue-600 shadow-sm ring-1 ring-black/5') 
-                  : (isDark ? 'text-gray-400 hover:bg-[#212121] hover:text-gray-200' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900')}
-              `}
-            >
-              <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? (isDark ? 'text-blue-400' : 'text-blue-600') : ''} />
-              <span className="truncate">{item.label}</span>
-            </button>
-          )})}
-        </div>
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeView === item.id;
+          return (
+          <button
+            key={item.id}
+            onClick={() => {
+              setActiveView(item.id);
+              setMobileMenuOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-[15px] font-medium transition-all duration-200 relative group
+              ${isActive 
+                ? 'bg-[#007AFF] text-white shadow-md shadow-blue-500/25' 
+                : (isDark ? 'text-gray-400 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-black hover:bg-black/5')}
+            `}
+          >
+            <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : ''} />
+            <span className="truncate">{item.label}</span>
+          </button>
+        )})}
       </div>
 
       {/* Sidebar Footer (User/Settings) */}
-      <div className={`p-4 border-t ${isDark ? 'border-white/5 bg-[#1A1A1A]' : 'border-gray-200 bg-gray-100/50'}`}>
-        <div className="grid grid-cols-2 gap-2 mb-2">
+      <div className={`p-6 border-t ${isDark ? 'border-white/5' : 'border-gray-200'}`}>
+        <div className="flex items-center justify-between gap-2 mb-4">
           <button 
             onClick={toggleTheme}
-            className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 border
+            className={`p-2 rounded-lg transition-all duration-200
               ${isDark 
-                ? 'bg-[#212121] border-white/5 text-gray-300 hover:bg-[#2A2A2A] hover:text-white' 
-                : 'bg-white border-gray-200 text-gray-600 hover:bg-white hover:border-gray-300 hover:text-gray-900 shadow-sm'}
+                ? 'text-gray-400 hover:text-white hover:bg-white/10' 
+                : 'text-gray-500 hover:text-black hover:bg-black/5'}
             `}
           >
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
-            <span>{isDark ? 'Light' : 'Dark'}</span>
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           
           <button 
             onClick={toggleLang}
-            className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 border
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border
               ${isDark 
-                ? 'bg-[#212121] border-white/5 text-gray-300 hover:bg-[#2A2A2A] hover:text-white' 
-                : 'bg-white border-gray-200 text-gray-600 hover:bg-white hover:border-gray-300 hover:text-gray-900 shadow-sm'}
+                ? 'border-white/10 text-gray-300 hover:bg-white/10' 
+                : 'border-gray-200 text-gray-600 hover:bg-gray-50'}
             `}
           >
-            <Languages size={16} />
-            <span>{lang === 'EN' ? '中文' : 'EN'}</span>
+            {lang === 'EN' ? '中文' : 'EN'}
           </button>
         </div>
 
         {!isGuest && (
           <button
             onClick={handleLogout}
-            className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 border
+            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200
               ${isDark 
-                ? 'bg-[#212121] border-white/5 text-gray-300 hover:bg-red-900/20 hover:text-red-400 hover:border-red-900/30' 
-                : 'bg-white border-gray-200 text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 shadow-sm'}
+                ? 'text-gray-400 hover:text-red-400 hover:bg-red-500/10' 
+                : 'text-gray-500 hover:text-red-600 hover:bg-red-50'}
             `}
           >
             <LogOut size={16} />
@@ -474,29 +469,18 @@ export default function App() {
         </div>
       )}
 
-      <div className="flex h-screen bg-gray-50 dark:bg-[#343541] text-[#ECECF1]">
+      <div className="flex h-screen bg-apple-light-bg dark:bg-apple-dark-bg text-[#1D1D1F] dark:text-[#F5F5F7]">
         {/* Desktop Sidebar */}
-        <aside className="hidden md:flex w-72 flex-col bg-gray-50 dark:bg-[#171717] border-r border-gray-200 dark:border-[#2F2F2F]">
+        <aside className="hidden md:flex w-[280px] flex-col fixed inset-y-0 left-0 z-50">
           <SidebarContent />
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 relative h-full overflow-hidden bg-white dark:bg-[#0F0F0F] text-[#1F1F1F] dark:text-[#ECECF1] transition-colors duration-300">
-          {/* Desktop Header (Title) */}
-          <div className="hidden md:flex items-center justify-between px-8 py-4 border-b border-gray-100 dark:border-white/5 bg-white/80 dark:bg-[#0F0F0F]/80 backdrop-blur-sm sticky top-0 z-10">
-            <h1 className="text-xl font-bold text-gray-800 dark:text-white tracking-tight">
-              {navItems.find(i => i.id === activeView)?.label}
-            </h1>
-            <div className="flex items-center gap-3">
-               {/* Optional: Add user avatar or status here if needed */}
-               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold shadow-sm">
-                  {user?.email?.[0].toUpperCase() || "G"}
-               </div>
-            </div>
-          </div>
+        <main className="flex-1 relative h-full overflow-y-auto md:ml-[280px] transition-all duration-300">
+          {/* Mobile Header Spacer */}
+          <div className="h-16 md:h-0" />
 
-          <div className="h-full overflow-y-auto overflow-x-hidden pt-16 md:pt-0 pb-20">
-            <div className="max-w-5xl mx-auto px-4 py-6 md:px-8 md:py-8 animate-fade-in">
+          <div className="layout-grid animate-fade-in">
             {activeView === "gpa" && (
                 <GPACalculatorMinimal lang={lang} />
             )}
@@ -506,17 +490,15 @@ export default function App() {
             {activeView === "flashcards" && (
                 <FlashcardsMinimal lang={lang} />
             )}
-            {activeView === "timeline" && (
-                <Timeline lang={lang} />
-            )}
             {activeView === "tips" && (
                 <AssociateDegreeTips lang={lang} />
             )}
             {activeView === "about" && (
                 <AboutMe lang={lang} />
             )}
-            </div>
           </div>
+          
+          <Footer lang={lang} />
         </main>
       </div>
     </>

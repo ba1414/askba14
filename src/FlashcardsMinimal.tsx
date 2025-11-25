@@ -445,7 +445,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 md:p-8 animate-fade-in">
+    <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in">
       {/* Study Mode Overlay */}
       {studyingDeck && studyQueue.length > 0 && (
         <div className="fixed inset-0 bg-[#F2F2F7] dark:bg-[#000000] z-50 flex flex-col animate-in fade-in duration-300">
@@ -550,13 +550,13 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
         
         {/* Create New Deck Card (Large) */}
-        <div className="lg:col-span-4 md:col-span-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E] hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+        <div className="lg:col-span-4 md:col-span-6 bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-sm border border-black/5 dark:border-white/5 hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
           <div>
-            <div className="w-12 h-12 bg-[#007AFF] rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 bg-[#007AFF] rounded-full flex items-center justify-center mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
               <Plus size={24} className="text-white" />
             </div>
-            <h3 className="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">{t.createDeck}</h3>
-            <p className="text-[#86868B] text-sm">{lang === "EN" ? "Start a new subject" : "開始新主題"}</p>
+            <h3 className="text-[20px] font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-1">{t.createDeck}</h3>
+            <p className="text-[#86868B] text-[15px]">{lang === "EN" ? "Start a new subject" : "開始新主題"}</p>
           </div>
           <div className="mt-6 relative">
             <input
@@ -579,23 +579,23 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
 
         {/* Stats / Quick Actions (Medium) */}
         <div className="lg:col-span-8 md:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-br from-[#007AFF] to-[#0051D5] rounded-[2rem] p-6 shadow-lg shadow-blue-500/20 text-white flex flex-col justify-between relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-[#007AFF] to-[#0051D5] rounded-[24px] p-6 shadow-lg shadow-blue-500/20 text-white flex flex-col justify-between relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-10 -mt-10 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div>
               <div className="flex items-center gap-2 mb-1 opacity-80">
                 <Zap size={16} />
                 <span className="text-xs font-bold uppercase tracking-wider">{t.quickActions}</span>
               </div>
-              <h3 className="text-2xl font-bold">{t.studyMode}</h3>
+              <h3 className="text-[24px] font-bold">{t.studyMode}</h3>
             </div>
             <div className="mt-4">
-              <p className="text-sm opacity-90 mb-4">
+              <p className="text-[15px] opacity-90 mb-4">
                 {decks.reduce((acc, d) => acc + d.cards.filter(c => (c.nextReview || 0) < Date.now()).length, 0)} cards due for review
               </p>
               {decks.length > 0 && (
                 <button 
                   onClick={() => startStudy(decks[0])}
-                  className="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl text-sm font-bold transition-all flex items-center gap-2"
+                  className="px-5 py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full text-sm font-bold transition-all flex items-center gap-2"
                 >
                   <Play size={14} fill="currentColor" />
                   {lang === "EN" ? "Start Review" : "開始溫習"}
@@ -604,13 +604,13 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E] hover:shadow-lg transition-all duration-300 flex flex-col justify-center items-center text-center">
+          <div className="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-sm border border-black/5 dark:border-white/5 hover:shadow-md transition-all duration-300 flex flex-col justify-center items-center text-center">
             <div className="w-16 h-16 rounded-full border-4 border-[#34C759] flex items-center justify-center mb-2">
-              <span className="text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
+              <span className="text-3xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
                 {decks.reduce((acc, d) => acc + d.cards.filter(c => c.mastered).length, 0)}
               </span>
             </div>
-            <p className="text-[#86868B] text-sm font-medium">{t.mastered} Cards</p>
+            <p className="text-[#86868B] text-[15px] font-medium">{t.mastered} Cards</p>
           </div>
         </div>
 
@@ -618,17 +618,17 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
         {decks.map((deck, index) => (
           <div 
             key={deck.id} 
-            className={`bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-6 shadow-sm border border-[#E5E5EA] dark:border-[#2C2C2E] hover:shadow-lg transition-all duration-300 flex flex-col group animate-in fade-in slide-in-from-bottom-4 ${index === 0 ? 'lg:col-span-8 md:col-span-12' : 'lg:col-span-4 md:col-span-6'}`}
+            className={`bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-sm border border-black/5 dark:border-white/5 hover:shadow-md transition-all duration-300 flex flex-col group animate-in fade-in slide-in-from-bottom-4 ${index === 0 ? 'lg:col-span-8 md:col-span-12' : 'lg:col-span-4 md:col-span-6'}`}
             style={{ animationDelay: `${index * 50}ms` }}
           >
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center gap-3">
-                <div className={`p-3 rounded-2xl transition-colors duration-300 ${index === 0 ? 'bg-[#FF9500] text-white shadow-lg shadow-orange-500/30' : 'bg-[#F2F2F7] dark:bg-[#2C2C2E] group-hover:bg-[#007AFF] group-hover:text-white'}`}>
+            <div className="flex justify-between items-start mb-6">
+              <div className="flex items-center gap-4">
+                <div className={`p-3.5 rounded-2xl transition-colors duration-300 ${index === 0 ? 'bg-[#FF9500] text-white shadow-lg shadow-orange-500/30' : 'bg-[#F2F2F7] dark:bg-[#2C2C2E] group-hover:bg-[#007AFF] group-hover:text-white'}`}>
                   <Layers size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] leading-tight">{deck.name}</h3>
-                  <p className="text-[#86868B] text-xs font-medium">{deck.cards.length} {t.cards}</p>
+                  <h3 className="text-[20px] font-bold text-[#1D1D1F] dark:text-[#F5F5F7] leading-tight">{deck.name}</h3>
+                  <p className="text-[#86868B] text-[13px] font-medium mt-0.5">{deck.cards.length} {t.cards}</p>
                 </div>
               </div>
               <button 
@@ -640,18 +640,18 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
             </div>
 
             {/* Stats Mini-Grid */}
-            <div className="grid grid-cols-3 gap-2 mb-6">
-              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-2 text-center">
-                <div className="text-[10px] text-[#86868B] font-bold uppercase tracking-wider">{t.due}</div>
-                <div className="text-lg font-bold text-[#FF3B30]">{deck.cards.filter(c => (c.nextReview || 0) < Date.now()).length}</div>
+            <div className="grid grid-cols-3 gap-3 mb-6">
+              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-3 text-center">
+                <div className="text-[32px] font-bold text-[#FF3B30] leading-none mb-1">{deck.cards.filter(c => (c.nextReview || 0) < Date.now()).length}</div>
+                <div className="text-[11px] text-[#86868B] font-bold uppercase tracking-wider">{t.due}</div>
               </div>
-              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-2 text-center">
-                <div className="text-[10px] text-[#86868B] font-bold uppercase tracking-wider">{t.new}</div>
-                <div className="text-lg font-bold text-[#007AFF]">{deck.cards.filter(c => !c.lastReviewed).length}</div>
+              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-3 text-center">
+                <div className="text-[32px] font-bold text-[#007AFF] leading-none mb-1">{deck.cards.filter(c => !c.lastReviewed).length}</div>
+                <div className="text-[11px] text-[#86868B] font-bold uppercase tracking-wider">{t.new}</div>
               </div>
-              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-2 text-center">
-                <div className="text-[10px] text-[#86868B] font-bold uppercase tracking-wider">{t.mastered}</div>
-                <div className="text-lg font-bold text-[#34C759]">{deck.cards.filter(c => c.mastered).length}</div>
+              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-3 text-center">
+                <div className="text-[32px] font-bold text-[#34C759] leading-none mb-1">{deck.cards.filter(c => c.mastered).length}</div>
+                <div className="text-[11px] text-[#86868B] font-bold uppercase tracking-wider">{t.mastered}</div>
               </div>
             </div>
 

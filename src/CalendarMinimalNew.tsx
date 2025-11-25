@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Check, ChevronLeft, ChevronRight, Trash2, Circle } from "lucide-react";
+import { Plus, Check, ChevronLeft, ChevronRight, Trash2, Circle, X } from "lucide-react";
 import { saveData, loadData } from "./db";
 
 const TRANSLATIONS = {
   EN: {
     title: "Calendar & Reminders",
     addTask: "New Reminder",
-    add: "Add",
+    add: "Add Task",
+    cancel: "Cancel",
     pending: "Pending",
     completed: "Completed",
     projects: "Projects",
@@ -17,7 +18,8 @@ const TRANSLATIONS = {
   粵: {
     title: "行事曆與提醒事項",
     addTask: "新提醒事項",
-    add: "新增",
+    add: "新增事項",
+    cancel: "取消",
     pending: "待辦",
     completed: "已完成",
     projects: "項目",
@@ -53,6 +55,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
 
   // Load tasks and projects from IndexedDB on mount
   useEffect(() => {
@@ -132,45 +135,48 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const completedCount = dayTasks.filter(t => t.completed).length;
 
   return (
-    <div className="w-full max-w-7xl mx-auto animate-fade-in" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif" }}>
+    <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif" }}>
       
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 h-[calc(100vh-140px)] min-h-[600px]">
         
         {/* Left Column: Calendar (macOS Calendar Style) */}
-        <div className="lg:col-span-8 flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[12px] shadow-[0_0_0_0.5px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.04)] dark:shadow-[0_0_0_0.5px_rgba(255,255,255,0.04),0_2px_6px_rgba(0,0,0,0.3)] overflow-hidden">
+        <div className="lg:col-span-8 flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-sm border border-black/5 dark:border-white/5 overflow-hidden">
           {/* Header */}
-          <div className="px-6 py-5 flex items-center justify-between">
-            <div className="flex items-baseline gap-2">
-              <h2 className="text-[28px] font-bold text-[#1D1D1F] dark:text-white tracking-tight">
+          <div className="px-8 py-6 flex items-center justify-between border-b border-black/5 dark:border-white/5">
+            <div className="flex items-baseline gap-3">
+              <h2 className="text-[34px] font-bold text-[#1D1D1F] dark:text-white tracking-tight">
                 {currentDate.toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { month: 'long' })}
               </h2>
-              <span className="text-[28px] font-normal text-[#86868B]">
+              <span className="text-[34px] font-normal text-[#86868B]">
                 {currentDate.getFullYear()}
               </span>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <button onClick={prevMonth} className="p-2 text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
-                <ChevronLeft size={22} />
+                <ChevronLeft size={24} />
               </button>
-              <button onClick={goToToday} className="px-3 py-1 text-[15px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 rounded-md transition-colors">
+              <button 
+                onClick={goToToday} 
+                className="px-4 py-1.5 text-[15px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 rounded-full transition-colors"
+              >
                 {t.today}
               </button>
               <button onClick={nextMonth} className="p-2 text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
-                <ChevronRight size={22} />
+                <ChevronRight size={24} />
               </button>
             </div>
           </div>
 
           {/* Grid */}
-          <div className="flex-1 px-6 pb-6">
-            <div className="grid grid-cols-7 mb-2">
+          <div className="flex-1 px-8 pb-8 pt-4">
+            <div className="grid grid-cols-7 mb-4">
               {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day) => (
-                <div key={day} className="text-center text-[11px] font-semibold text-[#86868B] tracking-wider">
+                <div key={day} className="text-center text-[12px] font-semibold text-[#86868B] tracking-wider">
                   {day}
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-7 h-full auto-rows-fr">
+            <div className="grid grid-cols-7 h-full auto-rows-fr gap-y-2">
               {Array.from({ length: firstDay }).map((_, i) => <div key={`empty-${i}`} />)}
               
               {Array.from({ length: daysInMonth }).map((_, i) => {
@@ -190,27 +196,27 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                   >
                     <span
                       className={`
-                        w-9 h-9 flex items-center justify-center rounded-full text-[17px] transition-all duration-200
+                        w-10 h-10 flex items-center justify-center rounded-full text-[19px] transition-all duration-200
                         ${isToday && isSelected 
-                          ? "bg-[#FF3B30] text-white font-semibold shadow-md" // Today Selected: Red Circle
+                          ? "bg-[#007AFF] text-white font-semibold shadow-md" // Today Selected: Blue Circle
                           : isSelected
                             ? "bg-[#1D1D1F] dark:bg-white text-white dark:text-black font-semibold shadow-md" // Normal Selected: Black/White Circle
                             : isToday
-                              ? "text-[#FF3B30] font-semibold" // Today Unselected: Red Text
+                              ? "text-[#007AFF] font-semibold" // Today Unselected: Blue Text
                               : "text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:bg-black/5 dark:group-hover:bg-white/10" // Normal
                         }
                       `}
                     >
                       {day}
                     </span>
-                    <div className="flex gap-0.5 mt-1">
+                    <div className="flex gap-1 mt-1.5 h-1.5">
                       {hasTasks && !isSelected && (
-                        <div className={`w-1 h-1 rounded-full ${isToday ? 'bg-[#FF3B30]' : 'bg-[#8E8E93]'}`} />
+                        <div className={`w-1.5 h-1.5 rounded-full ${isToday ? 'bg-[#007AFF]' : 'bg-[#8E8E93]'}`} />
                       )}
                       {dayProjectsList.slice(0, 2).map((proj, idx) => (
                         <div 
                           key={idx} 
-                          className="w-1 h-1 rounded-full"
+                          className="w-1.5 h-1.5 rounded-full"
                           style={{ backgroundColor: proj.color }}
                         />
                       ))}
@@ -223,7 +229,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
         </div>
 
         {/* Right Column: Reminders */}
-        <div className="lg:col-span-4 flex flex-col bg-[#F2F2F7] dark:bg-[#000000] rounded-[18px] overflow-hidden border border-black/5 dark:border-white/10">
+        <div className="lg:col-span-4 flex flex-col bg-[#F2F2F7] dark:bg-[#000000] rounded-[24px] overflow-hidden border border-black/5 dark:border-white/10">
           <div className="p-6 bg-white dark:bg-[#1C1C1E] border-b border-black/5 dark:border-white/5">
             <h3 className="text-[22px] font-bold text-[#1D1D1F] dark:text-white mb-1">
               {t.tasks}
@@ -236,8 +242,18 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
           <div className="flex-1 p-4 overflow-y-auto bg-[#F2F2F7] dark:bg-[#000000]">
             {dayTasks.length === 0 && dayProjects.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-[#86868B] opacity-60">
-                <Check size={32} className="mb-2" />
-                <p className="text-sm font-medium">{t.noTasks}</p>
+                <div className="w-20 h-20 bg-white dark:bg-[#1C1C1E] rounded-full flex items-center justify-center mb-4 shadow-sm">
+                   <Check size={32} className="text-[#007AFF]" />
+                </div>
+                <p className="text-[17px] font-medium text-[#1D1D1F] dark:text-white mb-1">{t.noTasks}</p>
+                <p className="text-[15px] text-[#86868B]">Enjoy your free time!</p>
+                
+                <button 
+                  onClick={() => setIsAdding(true)}
+                  className="mt-6 px-6 py-2.5 bg-[#007AFF] text-white rounded-full font-medium text-sm hover:bg-[#0062CC] transition-colors shadow-sm"
+                >
+                  + {t.addTask}
+                </button>
               </div>
             ) : (
               <div className="bg-white dark:bg-[#1C1C1E] rounded-xl overflow-hidden shadow-sm">
@@ -289,22 +305,62 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
           </div>
 
           <div className="p-4 bg-white dark:bg-[#1C1C1E] border-t border-black/5 dark:border-white/5">
-            <div className="flex items-center gap-2 bg-[#767680]/10 dark:bg-[#767680]/20 px-3 py-2 rounded-lg">
-              <Plus size={18} className="text-[#86868B]" />
-              <input
-                type="text"
-                value={newTaskTitle}
-                onChange={(e) => setNewTaskTitle(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && addTask()}
-                placeholder={t.addTask}
-                className="flex-1 bg-transparent border-none outline-none text-[15px] text-[#1D1D1F] dark:text-white placeholder-[#86868B]"
-              />
-              {newTaskTitle && (
-                <button onClick={addTask} className="text-[#007AFF] font-semibold text-[13px]">
-                  {t.add}
-                </button>
-              )}
-            </div>
+            {!isAdding ? (
+              <button 
+                onClick={() => setIsAdding(true)}
+                className="w-full flex items-center justify-center gap-2 bg-[#007AFF] hover:bg-[#0062CC] text-white py-3.5 rounded-xl font-semibold transition-all active:scale-95 shadow-sm"
+              >
+                <Plus size={20} strokeWidth={2.5} />
+                {t.addTask}
+              </button>
+            ) : (
+              <div className="flex flex-col gap-3 animate-fade-in">
+                <div className="relative">
+                  <input
+                    autoFocus
+                    type="text"
+                    value={newTaskTitle}
+                    onChange={(e) => setNewTaskTitle(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        addTask();
+                        // Keep adding mode open for rapid entry, or close? 
+                        // Let's keep it open but clear title
+                      }
+                      if (e.key === 'Escape') {
+                        setIsAdding(false);
+                        setNewTaskTitle("");
+                      }
+                    }}
+                    placeholder={t.addTask}
+                    className="w-full bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-white px-4 py-3.5 rounded-xl border-none outline-none text-[16px] placeholder-[#86868B] focus:ring-2 focus:ring-[#007AFF]/50"
+                  />
+                  {newTaskTitle && (
+                    <button 
+                      onClick={() => setNewTaskTitle("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#86868B] hover:text-[#1D1D1F] dark:hover:text-white"
+                    >
+                      <X size={16} /> 
+                    </button>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => { setIsAdding(false); setNewTaskTitle(""); }}
+                    className="flex-1 py-3 text-[#86868B] font-medium hover:bg-[#F2F2F7] dark:hover:bg-[#2C2C2E] rounded-xl transition-colors"
+                  >
+                    {t.cancel}
+                  </button>
+                  <button 
+                    onClick={() => { addTask(); setIsAdding(false); }}
+                    disabled={!newTaskTitle.trim()}
+                    className="flex-1 py-3 bg-[#007AFF] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-sm hover:bg-[#0062CC] transition-all"
+                  >
+                    {t.add}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
