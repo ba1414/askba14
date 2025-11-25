@@ -84,34 +84,34 @@ const HeroCard = ({ title, subtitle }: { title: string, subtitle: string }) => {
     <div 
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
-      className="relative w-full max-w-4xl mx-auto mb-24 pt-12 pb-12 text-center perspective-1000"
+      className="relative w-full max-w-4xl mx-auto mb-32 pt-20 pb-12 text-center perspective-1000"
     >
       {/* Floating Chips with Parallax */}
       <div 
         className="absolute top-0 left-4 md:left-0 hidden md:block transition-transform duration-200 ease-out"
         style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }}
       >
-        <span className="px-5 py-2.5 rounded-full bg-white dark:bg-[#2C2C2E] text-sm font-bold text-gray-600 dark:text-gray-400 -rotate-6 shadow-lg shadow-gray-500/10 border border-gray-100 dark:border-white/10">GPA 4.0?</span>
+        <span className="px-6 py-3 rounded-full bg-white dark:bg-[#1C1C1E] text-sm font-bold text-gray-900 dark:text-white -rotate-6 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10">GPA 4.0?</span>
       </div>
       <div 
         className="absolute top-20 right-4 md:right-0 hidden md:block transition-transform duration-200 ease-out"
         style={{ transform: `translate(${mousePos.x * -40}px, ${mousePos.y * -40}px)` }}
       >
-        <span className="px-5 py-2.5 rounded-full bg-white dark:bg-[#2C2C2E] text-sm font-bold text-gray-600 dark:text-gray-400 rotate-6 shadow-lg shadow-gray-500/10 border border-gray-100 dark:border-white/10">Non-JUPAS</span>
+        <span className="px-6 py-3 rounded-full bg-white dark:bg-[#1C1C1E] text-sm font-bold text-gray-900 dark:text-white rotate-6 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10">Non-JUPAS</span>
       </div>
 
       <div 
         className="relative z-10 flex flex-col items-center transition-transform duration-200 ease-out"
         style={{ transform: `rotateX(${mousePos.y * 10}deg) rotateY(${mousePos.x * 10}deg)` }}
       >
-        <div className="mb-8 p-6 rounded-[2rem] bg-gray-50 dark:bg-white/5 shadow-xl shadow-gray-500/10 border border-white/50 dark:border-white/10">
-          <GraduationCap size={64} strokeWidth={1.5} className="text-gray-900 dark:text-white" />
+        <div className="mb-10 p-8 rounded-[2.5rem] bg-white dark:bg-[#1C1C1E] shadow-2xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10">
+          <GraduationCap size={80} strokeWidth={1} className="text-gray-900 dark:text-white" />
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-600 dark:from-white dark:to-white/60">
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8 text-gray-900 dark:text-white">
           {title}
         </h1>
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl font-medium leading-relaxed">
+        <p className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 max-w-2xl font-medium leading-relaxed tracking-tight">
           {subtitle}
         </p>
       </div>
@@ -121,9 +121,9 @@ const HeroCard = ({ title, subtitle }: { title: string, subtitle: string }) => {
 
 const FlipNumber = ({ value }: { value: number }) => {
   return (
-    <div className="relative w-14 h-20 bg-white dark:bg-[#1c1c1e] rounded-xl shadow-lg shadow-black/5 border border-gray-100 dark:border-white/10 flex items-center justify-center overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 pointer-events-none"></div>
-      <span className="text-4xl font-mono font-bold text-gray-900 dark:text-white group-hover:scale-110 transition-transform duration-300">
+    <div className="relative w-16 h-24 bg-white dark:bg-[#1C1C1E] rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 flex items-center justify-center overflow-hidden group hover:-translate-y-2 transition-all duration-500">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-50/50 dark:to-white/5 pointer-events-none"></div>
+      <span className="text-5xl font-mono font-bold text-gray-900 dark:text-white group-hover:scale-110 transition-transform duration-500 tracking-tighter">
         {value}
       </span>
     </div>
@@ -134,36 +134,36 @@ const RetakeAssoSplit = () => {
   const [hovered, setHovered] = useState<"left" | "right" | null>(null);
   
   return (
-    <div className="flex w-full h-40 rounded-3xl overflow-hidden shadow-sm border border-gray-200 dark:border-white/10">
+    <div className="flex w-full h-48 rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 bg-white dark:bg-[#1C1C1E]">
       <div 
-        className={`flex-1 relative overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${hovered === 'right' ? 'flex-[0.8] opacity-60 grayscale' : 'flex-[1.2]'}`}
+        className={`flex-1 relative overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${hovered === 'right' ? 'flex-[0.6] opacity-40 grayscale' : 'flex-[1.4]'}`}
         onMouseEnter={() => setHovered('left')}
         onMouseLeave={() => setHovered(null)}
       >
-        <div className="absolute inset-0 bg-gray-50 dark:bg-white/5 transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-white/10"></div>
-        <div className="relative h-full flex flex-col items-center justify-center p-4">
-          <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white flex items-center justify-center mb-3">
-            <AlertCircle size={24} />
+        <div className="absolute inset-0 bg-gray-50 dark:bg-white/5 transition-colors duration-500 hover:bg-white dark:hover:bg-white/10"></div>
+        <div className="relative h-full flex flex-col items-center justify-center p-6">
+          <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white flex items-center justify-center mb-4 shadow-sm">
+            <AlertCircle size={32} strokeWidth={1.5} />
           </div>
-          <span className="font-bold text-lg text-gray-900 dark:text-white">Retake DSE</span>
-          <span className="text-xs font-medium uppercase tracking-wider text-gray-600 mt-1">Exam Focus</span>
+          <span className="font-bold text-xl text-gray-900 dark:text-white tracking-tight">Retake DSE</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mt-2">Exam Focus</span>
         </div>
       </div>
       
-      <div className="w-px bg-gray-200 dark:bg-white/10"></div>
+      <div className="w-px bg-gray-100 dark:bg-white/5"></div>
       
       <div 
-        className={`flex-1 relative overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${hovered === 'left' ? 'flex-[0.8] opacity-60 grayscale' : 'flex-[1.2]'}`}
+        className={`flex-1 relative overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${hovered === 'left' ? 'flex-[0.6] opacity-40 grayscale' : 'flex-[1.4]'}`}
         onMouseEnter={() => setHovered('right')}
         onMouseLeave={() => setHovered(null)}
       >
-        <div className="absolute inset-0 bg-zinc-50 dark:bg-zinc-900/20 transition-colors duration-300 hover:bg-zinc-100 dark:hover:bg-zinc-900/30"></div>
-        <div className="relative h-full flex flex-col items-center justify-center p-4">
-          <div className="w-12 h-12 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white flex items-center justify-center mb-3">
-            <CheckCircle2 size={24} />
+        <div className="absolute inset-0 bg-zinc-50 dark:bg-zinc-900/20 transition-colors duration-500 hover:bg-white dark:hover:bg-zinc-900/30"></div>
+        <div className="relative h-full flex flex-col items-center justify-center p-6">
+          <div className="w-16 h-16 rounded-2xl bg-black dark:bg-white text-white dark:text-black flex items-center justify-center mb-4 shadow-lg shadow-black/20 dark:shadow-white/20">
+            <CheckCircle2 size={32} strokeWidth={1.5} />
           </div>
-          <span className="font-bold text-lg text-zinc-900 dark:text-white">Associate Degree</span>
-          <span className="text-xs font-medium uppercase tracking-wider text-zinc-600 mt-1">New Start</span>
+          <span className="font-bold text-xl text-gray-900 dark:text-white tracking-tight">Associate Degree</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mt-2">New Start</span>
         </div>
       </div>
     </div>
@@ -173,31 +173,31 @@ const RetakeAssoSplit = () => {
 const TabbedSelector = () => {
   const [active, setActive] = useState("ability");
   const tabs = [
-    { id: "ability", label: "Ability", icon: Brain, color: "text-gray-900 dark:text-white", bg: "bg-black dark:bg-white" },
-    { id: "interest", label: "Interest", icon: Star, color: "text-gray-900 dark:text-white", bg: "bg-black dark:bg-white" },
-    { id: "career", label: "Career", icon: Target, color: "text-gray-900 dark:text-white", bg: "bg-black dark:bg-white" }
+    { id: "ability", label: "Ability", icon: Brain, color: "text-white dark:text-black", bg: "bg-black dark:bg-white" },
+    { id: "interest", label: "Interest", icon: Star, color: "text-white dark:text-black", bg: "bg-black dark:bg-white" },
+    { id: "career", label: "Career", icon: Target, color: "text-white dark:text-black", bg: "bg-black dark:bg-white" }
   ];
 
   return (
     <div className="w-full">
-      <div className="flex p-1.5 bg-gray-100 dark:bg-[#1C1C1E] rounded-2xl mb-6">
+      <div className="flex p-1.5 bg-gray-100 dark:bg-[#2C2C2E] rounded-2xl mb-8">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActive(tab.id)}
-            className={`relative flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
+            className={`relative flex-1 flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-bold transition-all duration-500 ${
               active === tab.id 
-                ? "bg-white dark:bg-[#2C2C2E] shadow-sm text-gray-900 dark:text-white scale-[1.02]" 
-                : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                ? "bg-white dark:bg-[#1C1C1E] shadow-lg shadow-gray-200/50 dark:shadow-none text-black dark:text-white scale-100" 
+                : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 scale-95"
             }`}
           >
-            <tab.icon size={18} className={`transition-colors duration-300 ${active === tab.id ? tab.color : "currentColor"}`} />
-            <span className="hidden md:inline">{tab.label}</span>
+            <tab.icon size={18} className={`transition-colors duration-300 ${active === tab.id ? "text-black dark:text-white" : "currentColor"}`} />
+            <span className="hidden md:inline tracking-tight">{tab.label}</span>
           </button>
         ))}
       </div>
-      <div className="p-8 bg-white dark:bg-[#1C1C1E] rounded-3xl border border-gray-100 dark:border-white/10 min-h-[120px] flex items-center justify-center text-center shadow-sm">
-        <p className="text-lg font-medium text-gray-800 dark:text-gray-300 animate-[fadeIn_0.3s_ease-out]">
+      <div className="p-10 bg-white dark:bg-[#1C1C1E] rounded-[2.5rem] border border-gray-100 dark:border-white/10 min-h-[160px] flex items-center justify-center text-center shadow-xl shadow-gray-200/50 dark:shadow-none">
+        <p className="text-xl md:text-2xl font-medium text-gray-900 dark:text-white animate-[fadeIn_0.5s_ease-out] leading-relaxed max-w-lg">
           {active === "ability" && "Check your DSE electives. Good at Bio? Science. Good at writing? Arts. Don't force it."}
           {active === "interest" && "You will study this for 2-4 years. If you hate it, you won't get a high GPA."}
           {active === "career" && "Look at the university articulation list. Does this Asso program actually lead there?"}
@@ -261,35 +261,35 @@ const GPASimulator = () => {
   const [gpa, setGpa] = useState(3.0);
   
   return (
-    <div className="flex flex-col items-center w-full py-4">
-      <div className="relative w-56 h-56 mb-8 group">
-        <svg className="w-full h-full transform -rotate-90 relative z-10">
-          <circle cx="112" cy="112" r="100" stroke="currentColor" strokeWidth="16" fill="transparent" className="text-gray-100 dark:text-white/10" />
+    <div className="flex flex-col items-center w-full py-8">
+      <div className="relative w-64 h-64 mb-10 group">
+        <svg className="w-full h-full transform -rotate-90 relative z-10 drop-shadow-2xl">
+          <circle cx="128" cy="128" r="110" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-gray-100 dark:text-[#2C2C2E]" />
           <circle
-            cx="112" cy="112" r="100"
-            stroke="currentColor" strokeWidth="16"
+            cx="128" cy="128" r="110"
+            stroke="currentColor" strokeWidth="8"
             fill="transparent"
-            strokeDasharray={628}
-            strokeDashoffset={628 - (628 * (gpa / 4.3))}
-            className="text-gray-900 dark:text-white transition-all duration-300 ease-out"
+            strokeDasharray={691}
+            strokeDashoffset={691 - (691 * (gpa / 4.3))}
+            className="text-black dark:text-white transition-all duration-500 ease-out"
             strokeLinecap="round"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-          <span className="text-6xl font-bold text-gray-900 dark:text-white tracking-tighter tabular-nums">{gpa.toFixed(1)}</span>
-          <span className="text-xs text-gray-500 uppercase tracking-widest mt-2 font-semibold">CGPA</span>
+          <span className="text-7xl font-bold text-gray-900 dark:text-white tracking-tighter tabular-nums">{gpa.toFixed(1)}</span>
+          <span className="text-xs text-gray-400 uppercase tracking-[0.3em] mt-4 font-bold">CGPA</span>
         </div>
       </div>
       
-      <div className="w-full px-8">
+      <div className="w-full px-10">
         <input 
           type="range" 
           min="0" max="4.3" step="0.1" 
           value={gpa}
           onChange={(e) => setGpa(parseFloat(e.target.value))}
-          className="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-black dark:accent-white hover:accent-gray-800 dark:hover:accent-gray-200 transition-all"
+          className="w-full h-1.5 bg-gray-200 dark:bg-[#2C2C2E] rounded-full appearance-none cursor-pointer accent-black dark:accent-white hover:accent-gray-800 dark:hover:accent-gray-200 transition-all"
         />
-        <div className="flex justify-between text-xs font-medium text-gray-500 mt-4 font-mono">
+        <div className="flex justify-between text-[10px] font-bold text-gray-400 mt-6 font-mono uppercase tracking-widest">
           <span>0.0</span>
           <span className="text-gray-900 dark:text-white">Drag to simulate</span>
           <span>4.3</span>
@@ -335,26 +335,26 @@ const FeynmanTimer = () => {
   };
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-white/5 rounded-3xl p-8 flex flex-col items-center text-center border border-gray-200 dark:border-white/10">
-      <div className="mb-6 relative">
-        <span className="relative text-6xl font-mono font-bold text-gray-900 dark:text-white tabular-nums tracking-tight">
+    <div className="w-full bg-gray-50 dark:bg-[#1C1C1E] rounded-[2.5rem] p-10 flex flex-col items-center text-center border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/50 dark:shadow-none">
+      <div className="mb-8 relative">
+        <span className="relative text-7xl font-mono font-bold text-gray-900 dark:text-white tabular-nums tracking-tighter">
           {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
         </span>
       </div>
-      <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-8 max-w-xs leading-relaxed">
-        Try to explain a concept you just learned in 2 minutes.
+      <p className="text-sm font-bold text-gray-500 dark:text-gray-400 mb-10 max-w-xs leading-relaxed uppercase tracking-wide">
+        Explain a concept in 2 minutes.
       </p>
-      <div className="flex gap-4">
+      <div className="flex gap-4 w-full justify-center">
         {!active ? (
-          <button onClick={() => setActive(true)} className="flex items-center gap-2 px-8 py-3 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black rounded-full font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-gray-500/25">
-            <Play size={18} fill="currentColor" /> Start
+          <button onClick={() => setActive(true)} className="flex-1 max-w-[140px] flex items-center justify-center gap-2 px-6 py-4 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-gray-500/20 dark:shadow-none">
+            <Play size={20} fill="currentColor" /> Start
           </button>
         ) : (
-          <button onClick={() => setActive(false)} className="flex items-center gap-2 px-8 py-3 bg-white dark:bg-black text-gray-900 dark:text-white border border-gray-200 dark:border-white/20 rounded-full font-semibold transition-all hover:bg-gray-50 dark:hover:bg-white/10 active:scale-95">
-            <Pause size={18} fill="currentColor" /> Pause
+          <button onClick={() => setActive(false)} className="flex-1 max-w-[140px] flex items-center justify-center gap-2 px-6 py-4 bg-white dark:bg-[#2C2C2E] text-black dark:text-white border-2 border-black dark:border-white/20 rounded-2xl font-bold transition-all hover:bg-gray-50 dark:hover:bg-white/10 active:scale-95">
+            <Pause size={20} fill="currentColor" /> Pause
           </button>
         )}
-        <button onClick={reset} className="p-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors bg-gray-100/50 dark:bg-white/10 rounded-full">
+        <button onClick={reset} className="p-4 text-gray-400 hover:text-black dark:hover:text-white transition-colors bg-gray-100 dark:bg-[#2C2C2E] rounded-2xl hover:bg-gray-200 dark:hover:bg-white/10">
           <RotateCcw size={20} />
         </button>
       </div>
@@ -364,29 +364,29 @@ const FeynmanTimer = () => {
 
 const TargetBars = () => {
   return (
-    <div className="space-y-8 w-full">
+    <div className="space-y-10 w-full px-2">
       <div className="relative pt-2">
-        <div className="flex justify-between text-sm font-bold mb-3">
-          <span className="text-gray-700 dark:text-gray-400">Year 1 Entry</span>
-          <span className="text-gray-900 dark:text-white bg-gray-100 dark:bg-white/10 px-2 py-1 rounded-md">~4.0</span>
+        <div className="flex justify-between text-xs font-bold mb-4 uppercase tracking-widest">
+          <span className="text-gray-500 dark:text-gray-400">Year 1 Entry</span>
+          <span className="text-black dark:text-white bg-gray-100 dark:bg-white/10 px-3 py-1 rounded-lg">~4.0</span>
         </div>
-        <div className="h-4 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
-          <div className="h-full bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-400 dark:to-white w-[95%] animate-[growWidth_1.5s_ease-out] shadow-lg shadow-gray-500/20"></div>
+        <div className="h-6 bg-gray-100 dark:bg-[#2C2C2E] rounded-full overflow-hidden">
+          <div className="h-full bg-black dark:bg-white w-[95%] animate-[growWidth_1.5s_ease-out] shadow-lg shadow-black/20 dark:shadow-white/20"></div>
         </div>
         {/* Markers */}
         <div className="absolute top-0 left-[70%] -translate-x-1/2 flex flex-col items-center">
-          <div className="w-px h-14 bg-gray-300 dark:bg-white/20 border-dashed"></div>
-          <span className="text-[10px] font-bold text-gray-400 mt-1 bg-white dark:bg-[#1c1c1e] px-1">3.0</span>
+          <div className="w-px h-20 bg-gray-300 dark:bg-white/10 border-dashed"></div>
+          <span className="text-[10px] font-bold text-gray-400 mt-2 bg-white dark:bg-[#1C1C1E] px-2 py-1 rounded border border-gray-100 dark:border-white/10">3.0</span>
         </div>
       </div>
       
       <div className="relative pt-2">
-        <div className="flex justify-between text-sm font-bold mb-3">
-          <span className="text-gray-700 dark:text-gray-400">Senior Year Entry</span>
-          <span className="text-gray-900 dark:text-white bg-gray-100 dark:bg-white/10 px-2 py-1 rounded-md">~3.4+</span>
+        <div className="flex justify-between text-xs font-bold mb-4 uppercase tracking-widest">
+          <span className="text-gray-500 dark:text-gray-400">Senior Year Entry</span>
+          <span className="text-black dark:text-white bg-gray-100 dark:bg-white/10 px-3 py-1 rounded-lg">~3.4+</span>
         </div>
-        <div className="h-4 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
-          <div className="h-full bg-gradient-to-r from-zinc-500 to-zinc-700 dark:from-zinc-400 dark:to-zinc-200 w-[80%] animate-[growWidth_1.5s_ease-out_0.2s_both] shadow-lg shadow-gray-500/20"></div>
+        <div className="h-6 bg-gray-100 dark:bg-[#2C2C2E] rounded-full overflow-hidden">
+          <div className="h-full bg-gray-600 dark:bg-gray-400 w-[80%] animate-[growWidth_1.5s_ease-out_0.2s_both]"></div>
         </div>
       </div>
     </div>
@@ -395,25 +395,25 @@ const TargetBars = () => {
 
 const LockCard = ({ type, title, subtitle }: { type: "direct" | "conditional", title: string, subtitle: string }) => {
   return (
-    <div className={`group p-6 rounded-3xl border transition-all duration-300 hover:scale-[1.02] ${
+    <div className={`group p-8 rounded-[2rem] border transition-all duration-500 hover:scale-[1.02] ${
       type === 'direct' 
-        ? 'bg-gray-50/50 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:shadow-lg hover:shadow-gray-500/10' 
-        : 'bg-zinc-50/50 dark:bg-white/5 border-zinc-200 dark:border-white/10 hover:shadow-lg hover:shadow-gray-500/10'
+        ? 'bg-white dark:bg-[#1C1C1E] border-gray-200 dark:border-white/10 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-none' 
+        : 'bg-gray-50 dark:bg-[#1C1C1E] border-gray-200 dark:border-white/10 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-none'
     }`}>
-      <div className="flex items-start justify-between mb-5">
-        <div className={`p-3.5 rounded-2xl ${type === 'direct' ? 'bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white' : 'bg-zinc-200 dark:bg-white/10 text-zinc-900 dark:text-white'}`}>
-          {type === 'direct' ? <Unlock size={24} /> : <Lock size={24} className="group-hover:animate-[shake_0.5s_ease-in-out]" />}
+      <div className="flex items-start justify-between mb-8">
+        <div className={`p-4 rounded-2xl ${type === 'direct' ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-gray-200 dark:bg-white/10 text-gray-500 dark:text-gray-400'}`}>
+          {type === 'direct' ? <Unlock size={28} strokeWidth={1.5} /> : <Lock size={28} strokeWidth={1.5} className="group-hover:animate-[shake_0.5s_ease-in-out]" />}
         </div>
-        <span className={`text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider ${
-          type === 'direct' ? 'bg-gray-200 text-gray-700 dark:bg-white/20 dark:text-white' : 'bg-zinc-200 text-zinc-700 dark:bg-white/20 dark:text-white'
+        <span className={`text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-[0.2em] ${
+          type === 'direct' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-gray-200 text-gray-500 dark:bg-white/10 dark:text-gray-400'
         }`}>
           {type === 'direct' ? 'SECURE' : 'PENDING'}
         </span>
       </div>
-      <h4 className={`text-xl font-bold mb-2 ${type === 'direct' ? 'text-gray-900 dark:text-white' : 'text-zinc-900 dark:text-white'}`}>
+      <h4 className={`text-2xl font-bold mb-3 ${type === 'direct' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
         {title}
       </h4>
-      <p className={`text-sm font-medium ${type === 'direct' ? 'text-gray-700 dark:text-gray-300' : 'text-zinc-700 dark:text-gray-300'}`}>
+      <p className={`text-sm font-medium ${type === 'direct' ? 'text-gray-500 dark:text-gray-400' : 'text-gray-400 dark:text-gray-500'}`}>
         {subtitle}
       </p>
     </div>
