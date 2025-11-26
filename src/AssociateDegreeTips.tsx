@@ -4,7 +4,7 @@ import {
   BookOpen, Users, Brain, ArrowRight, Clock, FileText,
   Scale, School, Trophy, Mail, Lock, Unlock, Star,
   Zap, Target, HelpCircle, XCircle, Play, Pause, RotateCcw,
-  Check, Sparkles
+  Check, Sparkles, RefreshCw, Shield, Swords, Map, Flag, Briefcase
 } from "lucide-react";
 
 // --- Animation & Layout Components ---
@@ -36,38 +36,6 @@ const FadeInSection = ({ children, delay = 0 }: { children: React.ReactNode, del
   );
 };
 
-const ExpandableCard = ({ title, icon: Icon, children, defaultOpen = false }: any) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-  return (
-    <div className="mt-4 bg-white dark:bg-[#1C1C1E] rounded-2xl border border-gray-200 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/5">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-5 flex items-center justify-between text-left group transition-colors"
-      >
-        <div className="flex items-center gap-4">
-          <div className={`p-2 rounded-xl transition-colors ${isOpen ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white'}`}>
-            {Icon && <Icon size={20} />}
-          </div>
-          <span className="font-semibold text-[15px] text-gray-900 dark:text-white">{title}</span>
-        </div>
-        <ChevronDown
-          size={18}
-          className={`text-gray-400 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? "rotate-180 text-black dark:text-white" : ""}`}
-        />
-      </button>
-      <div
-        className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="p-5 pt-0 text-[15px] leading-relaxed text-gray-600 dark:text-gray-300">
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // --- Interactive Widgets ---
 
 const HeroCard = ({ title, subtitle }: { title: string, subtitle: string }) => {
@@ -86,18 +54,17 @@ const HeroCard = ({ title, subtitle }: { title: string, subtitle: string }) => {
       onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
       className="relative w-full max-w-4xl mx-auto mb-32 pt-20 pb-12 text-center perspective-1000"
     >
-      {/* Floating Chips with Parallax */}
       <div 
         className="absolute top-0 left-4 md:left-0 hidden md:block transition-transform duration-200 ease-out"
         style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }}
       >
-        <span className="px-6 py-3 rounded-full bg-white dark:bg-[#1C1C1E] text-sm font-bold text-gray-900 dark:text-white -rotate-6 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10">GPA 4.0?</span>
+        <span className="px-6 py-3 rounded-full bg-white dark:bg-[#1C1C1E] text-sm font-bold text-gray-900 dark:text-white -rotate-6 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10">Level 1</span>
       </div>
       <div 
         className="absolute top-20 right-4 md:right-0 hidden md:block transition-transform duration-200 ease-out"
         style={{ transform: `translate(${mousePos.x * -40}px, ${mousePos.y * -40}px)` }}
       >
-        <span className="px-6 py-3 rounded-full bg-white dark:bg-[#1C1C1E] text-sm font-bold text-gray-900 dark:text-white rotate-6 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10">Non-JUPAS</span>
+        <span className="px-6 py-3 rounded-full bg-white dark:bg-[#1C1C1E] text-sm font-bold text-gray-900 dark:text-white rotate-6 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10">Start Game</span>
       </div>
 
       <div 
@@ -119,34 +86,23 @@ const HeroCard = ({ title, subtitle }: { title: string, subtitle: string }) => {
   );
 };
 
-const FlipNumber = ({ value }: { value: number }) => {
-  return (
-    <div className="relative w-16 h-24 bg-white dark:bg-[#1C1C1E] rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 flex items-center justify-center overflow-hidden group hover:-translate-y-2 transition-all duration-500">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-50/50 dark:to-white/5 pointer-events-none"></div>
-      <span className="text-5xl font-mono font-bold text-gray-900 dark:text-white group-hover:scale-110 transition-transform duration-500 tracking-tighter">
-        {value}
-      </span>
-    </div>
-  );
-};
-
 const RetakeAssoSplit = () => {
   const [hovered, setHovered] = useState<"left" | "right" | null>(null);
   
   return (
-    <div className="flex w-full h-48 rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 bg-white dark:bg-[#1C1C1E]">
+    <div className="flex w-full h-64 rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 bg-white dark:bg-[#1C1C1E]">
       <div 
         className={`flex-1 relative overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${hovered === 'right' ? 'flex-[0.6] opacity-40 grayscale' : 'flex-[1.4]'}`}
         onMouseEnter={() => setHovered('left')}
         onMouseLeave={() => setHovered(null)}
       >
         <div className="absolute inset-0 bg-gray-50 dark:bg-white/5 transition-colors duration-500 hover:bg-white dark:hover:bg-white/10"></div>
-        <div className="relative h-full flex flex-col items-center justify-center p-6">
+        <div className="relative h-full flex flex-col items-center justify-center p-6 text-center">
           <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white flex items-center justify-center mb-4 shadow-sm">
-            <AlertCircle size={32} strokeWidth={1.5} />
+            <RotateCcw size={32} strokeWidth={1.5} />
           </div>
           <span className="font-bold text-xl text-gray-900 dark:text-white tracking-tight">Retake DSE</span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mt-2">Exam Focus</span>
+          <p className="text-xs text-gray-500 mt-2 max-w-[150px]">100% Exam Focus. High Pressure. One Shot.</p>
         </div>
       </div>
       
@@ -158,56 +114,45 @@ const RetakeAssoSplit = () => {
         onMouseLeave={() => setHovered(null)}
       >
         <div className="absolute inset-0 bg-zinc-50 dark:bg-zinc-900/20 transition-colors duration-500 hover:bg-white dark:hover:bg-zinc-900/30"></div>
-        <div className="relative h-full flex flex-col items-center justify-center p-6">
+        <div className="relative h-full flex flex-col items-center justify-center p-6 text-center">
           <div className="w-16 h-16 rounded-2xl bg-black dark:bg-white text-white dark:text-black flex items-center justify-center mb-4 shadow-lg shadow-black/20 dark:shadow-white/20">
-            <CheckCircle2 size={32} strokeWidth={1.5} />
+            <Swords size={32} strokeWidth={1.5} />
           </div>
           <span className="font-bold text-xl text-gray-900 dark:text-white tracking-tight">Associate Degree</span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mt-2">New Start</span>
+          <p className="text-xs text-gray-500 mt-2 max-w-[150px]">Continuous Assessment. Assignments + Exams. New Game.</p>
         </div>
       </div>
     </div>
   );
 };
 
-const TabbedSelector = () => {
-  const [active, setActive] = useState("ability");
-  const tabs = [
-    { id: "ability", label: "Ability", icon: Brain, color: "text-white dark:text-black", bg: "bg-black dark:bg-white" },
-    { id: "interest", label: "Interest", icon: Star, color: "text-white dark:text-black", bg: "bg-black dark:bg-white" },
-    { id: "career", label: "Career", icon: Target, color: "text-white dark:text-black", bg: "bg-black dark:bg-white" }
-  ];
-
+const MindsetReset = () => {
+  const [reset, setReset] = useState(false);
+  
   return (
-    <div className="w-full">
-      <div className="flex p-1.5 bg-gray-100 dark:bg-[#2C2C2E] rounded-2xl mb-8">
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActive(tab.id)}
-            className={`relative flex-1 flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-bold transition-all duration-500 ${
-              active === tab.id 
-                ? "bg-white dark:bg-[#1C1C1E] shadow-lg shadow-gray-200/50 dark:shadow-none text-black dark:text-white scale-100" 
-                : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 scale-95"
-            }`}
-          >
-            <tab.icon size={18} className={`transition-colors duration-300 ${active === tab.id ? "text-black dark:text-white" : "currentColor"}`} />
-            <span className="hidden md:inline tracking-tight">{tab.label}</span>
-          </button>
-        ))}
+    <div className="w-full p-8 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/50 dark:shadow-none text-center">
+      <div className={`transition-all duration-1000 ${reset ? "opacity-0 scale-90 h-0 overflow-hidden" : "opacity-100 scale-100 h-auto"}`}>
+        <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Game Over?</h3>
+        <p className="text-gray-500 mb-8">DSE didn't go as planned. You feel stuck.</p>
+        <button 
+          onClick={() => setReset(true)}
+          className="px-8 py-4 bg-black dark:bg-white text-white dark:text-black rounded-2xl font-bold text-lg hover:scale-105 transition-transform shadow-lg"
+        >
+          Insert Coin to Continue
+        </button>
       </div>
-      <div className="p-10 bg-white dark:bg-[#1C1C1E] rounded-[2.5rem] border border-gray-100 dark:border-white/10 min-h-[160px] flex items-center justify-center text-center shadow-xl shadow-gray-200/50 dark:shadow-none">
-        <p className="text-xl md:text-2xl font-medium text-gray-900 dark:text-white animate-[fadeIn_0.5s_ease-out] leading-relaxed max-w-lg">
-          {active === "ability" && "Check your DSE electives. Good at Bio? Science. Good at writing? Arts. Don't force it."}
-          {active === "interest" && "You will study this for 2-4 years. If you hate it, you won't get a high GPA."}
-          {active === "career" && "Look at the university articulation list. Does this Asso program actually lead there?"}
-        </p>
+      <div className={`transition-all duration-1000 ${!reset ? "opacity-0 scale-90 h-0 overflow-hidden" : "opacity-100 scale-100 h-auto"}`}>
+        <div className="w-20 h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 text-green-600 dark:text-green-400">
+          <Sparkles size={40} />
+        </div>
+        <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">New Game Started</h3>
+        <p className="text-gray-500">Welcome to Year 1. This is your second chance. Reset your mindset.</p>
       </div>
     </div>
   );
 };
 
-const ChecklistWithProgress = ({ items }: { items: string[] }) => {
+const ChecklistWithProgress = ({ items, title }: { items: string[], title?: string }) => {
   const [checkedState, setCheckedState] = useState(new Array(items.length).fill(false));
   const progress = (checkedState.filter(Boolean).length / items.length) * 100;
 
@@ -218,7 +163,8 @@ const ChecklistWithProgress = ({ items }: { items: string[] }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-8 border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/50 dark:shadow-none">
+      {title && <h4 className="text-lg font-bold mb-6 text-gray-900 dark:text-white">{title}</h4>}
       <div className="flex items-center justify-between mb-4 px-1">
         <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Progress</span>
         <span className="text-sm font-bold text-gray-900 dark:text-white">{Math.round(progress)}%</span>
@@ -261,7 +207,7 @@ const GPASimulator = () => {
   const [gpa, setGpa] = useState(3.0);
   
   return (
-    <div className="flex flex-col items-center w-full py-8">
+    <div className="flex flex-col items-center w-full py-8 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/50 dark:shadow-none">
       <div className="relative w-64 h-64 mb-10 group">
         <svg className="w-full h-full transform -rotate-90 relative z-10 drop-shadow-2xl">
           <circle cx="128" cy="128" r="110" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-gray-100 dark:text-[#2C2C2E]" />
@@ -299,96 +245,42 @@ const GPASimulator = () => {
   );
 };
 
-const CharacterCard3D = ({ title, desc, icon: Icon, type }: any) => {
-  return (
-    <div className="group perspective-1000 w-full h-full">
-      <div className="relative h-full p-6 rounded-3xl bg-white dark:bg-[#2C2C2E] border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 hover:rotate-x-2 hover:rotate-y-2">
-        <div className={`w-14 h-14 rounded-2xl mb-5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 ${
-          type === 'good' ? 'bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white' : 'bg-zinc-100 dark:bg-white/5 text-zinc-900 dark:text-gray-300'
-        }`}>
-          <Icon size={28} />
-        </div>
-        <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{title}</h4>
-        <p className="text-[15px] text-gray-600 dark:text-gray-400 leading-relaxed">{desc}</p>
-      </div>
-    </div>
-  );
-};
+const RadarChart = ({ labels, data }: { labels: string[], data: number[] }) => {
+  // Simple pentagon radar chart
+  const size = 200;
+  const center = size / 2;
+  const radius = size * 0.4;
+  
+  const points = labels.map((_, i) => {
+    const angle = (Math.PI * 2 * i) / labels.length - Math.PI / 2;
+    const val = data[i] / 100;
+    return `${center + Math.cos(angle) * radius * val},${center + Math.sin(angle) * radius * val}`;
+  }).join(" ");
 
-const FeynmanTimer = () => {
-  const [active, setActive] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(120); // 2 mins
-
-  useEffect(() => {
-    let interval: any;
-    if (active && timeLeft > 0) {
-      interval = setInterval(() => setTimeLeft(t => t - 1), 1000);
-    } else if (timeLeft === 0) {
-      setActive(false);
-    }
-    return () => clearInterval(interval);
-  }, [active, timeLeft]);
-
-  const reset = () => {
-    setActive(false);
-    setTimeLeft(120);
-  };
+  const bgPoints = labels.map((_, i) => {
+    const angle = (Math.PI * 2 * i) / labels.length - Math.PI / 2;
+    return `${center + Math.cos(angle) * radius},${center + Math.sin(angle) * radius}`;
+  }).join(" ");
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-[#1C1C1E] rounded-[2.5rem] p-10 flex flex-col items-center text-center border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/50 dark:shadow-none">
-      <div className="mb-8 relative">
-        <span className="relative text-7xl font-mono font-bold text-gray-900 dark:text-white tabular-nums tracking-tighter">
-          {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-        </span>
+    <div className="w-full flex flex-col items-center bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-8 border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/50 dark:shadow-none">
+      <div className="relative w-[200px] h-[200px]">
+        <svg width="200" height="200" className="overflow-visible">
+          <polygon points={bgPoints} fill="none" stroke="currentColor" className="text-gray-200 dark:text-white/10" strokeWidth="1" />
+          <polygon points={points} fill="currentColor" className="text-black/20 dark:text-white/20" stroke="currentColor" strokeWidth="2" />
+          {labels.map((label, i) => {
+             const angle = (Math.PI * 2 * i) / labels.length - Math.PI / 2;
+             const x = center + Math.cos(angle) * (radius + 20);
+             const y = center + Math.sin(angle) * (radius + 20);
+             return (
+               <text key={i} x={x} y={y} textAnchor="middle" dominantBaseline="middle" className="text-[10px] font-bold fill-gray-500 dark:fill-gray-400 uppercase">
+                 {label}
+               </text>
+             );
+          })}
+        </svg>
       </div>
-      <p className="text-sm font-bold text-gray-500 dark:text-gray-400 mb-10 max-w-xs leading-relaxed uppercase tracking-wide">
-        Explain a concept in 2 minutes.
-      </p>
-      <div className="flex gap-4 w-full justify-center">
-        {!active ? (
-          <button onClick={() => setActive(true)} className="flex-1 max-w-[140px] flex items-center justify-center gap-2 px-6 py-4 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-gray-500/20 dark:shadow-none">
-            <Play size={20} fill="currentColor" /> Start
-          </button>
-        ) : (
-          <button onClick={() => setActive(false)} className="flex-1 max-w-[140px] flex items-center justify-center gap-2 px-6 py-4 bg-white dark:bg-[#2C2C2E] text-black dark:text-white border-2 border-black dark:border-white/20 rounded-2xl font-bold transition-all hover:bg-gray-50 dark:hover:bg-white/10 active:scale-95">
-            <Pause size={20} fill="currentColor" /> Pause
-          </button>
-        )}
-        <button onClick={reset} className="p-4 text-gray-400 hover:text-black dark:hover:text-white transition-colors bg-gray-100 dark:bg-[#2C2C2E] rounded-2xl hover:bg-gray-200 dark:hover:bg-white/10">
-          <RotateCcw size={20} />
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const TargetBars = () => {
-  return (
-    <div className="space-y-10 w-full px-2">
-      <div className="relative pt-2">
-        <div className="flex justify-between text-xs font-bold mb-4 uppercase tracking-widest">
-          <span className="text-gray-500 dark:text-gray-400">Year 1 Entry</span>
-          <span className="text-black dark:text-white bg-gray-100 dark:bg-white/10 px-3 py-1 rounded-lg">~4.0</span>
-        </div>
-        <div className="h-6 bg-gray-100 dark:bg-[#2C2C2E] rounded-full overflow-hidden">
-          <div className="h-full bg-black dark:bg-white w-[95%] animate-[growWidth_1.5s_ease-out] shadow-lg shadow-black/20 dark:shadow-white/20"></div>
-        </div>
-        {/* Markers */}
-        <div className="absolute top-0 left-[70%] -translate-x-1/2 flex flex-col items-center">
-          <div className="w-px h-20 bg-gray-300 dark:bg-white/10 border-dashed"></div>
-          <span className="text-[10px] font-bold text-gray-400 mt-2 bg-white dark:bg-[#1C1C1E] px-2 py-1 rounded border border-gray-100 dark:border-white/10">3.0</span>
-        </div>
-      </div>
-      
-      <div className="relative pt-2">
-        <div className="flex justify-between text-xs font-bold mb-4 uppercase tracking-widest">
-          <span className="text-gray-500 dark:text-gray-400">Senior Year Entry</span>
-          <span className="text-black dark:text-white bg-gray-100 dark:bg-white/10 px-3 py-1 rounded-lg">~3.4+</span>
-        </div>
-        <div className="h-6 bg-gray-100 dark:bg-[#2C2C2E] rounded-full overflow-hidden">
-          <div className="h-full bg-gray-600 dark:bg-gray-400 w-[80%] animate-[growWidth_1.5s_ease-out_0.2s_both]"></div>
-        </div>
-      </div>
+      <p className="mt-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Non-JUPAS Readiness</p>
     </div>
   );
 };
@@ -423,261 +315,338 @@ const LockCard = ({ type, title, subtitle }: { type: "direct" | "conditional", t
 const CONTENT = {
   EN: {
     hero: {
-      title: "The Survival Guide",
-      subtitle: "Your interactive journey from DSE to University."
+      title: "The Game of Asso",
+      subtitle: "Player: Year 1 Student. Objective: University Offer."
     },
     sections: [
       {
         id: "0",
-        title: "Before Results",
-        visual: (
-          <div className="space-y-6">
-            <div className="p-8 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-500/5">
-              <h4 className="font-bold text-gray-900 dark:text-white mb-6 text-center tracking-tight">The Goal: Full Cert</h4>
-              <div className="flex gap-4 justify-center">
-                <FlipNumber value={3} />
-                <FlipNumber value={3} />
-                <FlipNumber value={2} />
-                <FlipNumber value={2} />
-              </div>
-              <div className="flex justify-center gap-8 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-                <span>Chi</span><span>Eng</span><span>Math</span><span>LS</span>
-              </div>
-            </div>
-            <div className="p-1">
-              <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">Missed it? Two paths:</p>
-              <RetakeAssoSplit />
-            </div>
-          </div>
-        ),
-        details: "Hong Kong universities usually require a 'full cert' (3322). If you miss this, you can Retake or go the Associate Degree route (Non-JUPAS)."
+        title: "Stage 0: The Choice",
+        visual: <RetakeAssoSplit />,
+        details: "After DSE, you are confused. Two paths: Retake (Exam Focus) or Associate Degree (Continuous Assessment). Don't do both. Pick one main quest."
       },
       {
         id: "1",
-        title: "DSE Release Day",
-        visual: (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
-              <div className="w-14 h-14 rounded-2xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
-                <AlertCircle size={28} />
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">Score &lt; 3322</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Retake DSE</p>
-              <div className="mt-6 text-[10px] font-bold text-gray-900 bg-gray-100 dark:bg-white/10 dark:text-white px-3 py-1.5 rounded-full inline-block uppercase tracking-wider">Exam Focus</div>
-            </div>
-            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
-              <div className="w-14 h-14 rounded-2xl bg-zinc-100 dark:bg-white/10 text-zinc-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
-                <CheckCircle2 size={28} />
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">Score &ge; 3322</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Associate Degree</p>
-              <div className="mt-6 text-[10px] font-bold text-zinc-900 bg-zinc-100 dark:bg-white/10 dark:text-white px-3 py-1.5 rounded-full inline-block uppercase tracking-wider">New Start</div>
-            </div>
-          </div>
-        ),
-        details: "Don't mix paths. 'Retake + Asso' is usually a bad idea. Choose one and go all in. If you choose Asso, you are playing a new game with new rules."
+        title: "Stage 1: New Game",
+        visual: <MindsetReset />,
+        details: "Reset your mindset. This is a new game. Check your language requirements (Full Cert?). If you missed English/Chinese, plan a retake NOW."
       },
       {
         id: "2",
-        title: "Choosing Programme",
-        visual: <TabbedSelector />,
-        details: "Asso (Academic) vs HD (Vocational). Choose based on what you are good at (look at DSE electives), what you like, and where you want to go."
+        title: "Stage 2: The Rules",
+        visual: (
+          <div className="bg-white dark:bg-[#1C1C1E] p-8 rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-xl">
+            <div className="flex justify-between items-end h-32 gap-4">
+              <div className="w-full bg-gray-100 dark:bg-white/10 rounded-t-xl relative group">
+                <div className="absolute bottom-0 w-full bg-gray-400 dark:bg-gray-600 h-[80%] rounded-t-xl transition-all group-hover:bg-black dark:group-hover:bg-white"></div>
+                <span className="absolute -top-6 w-full text-center text-xs font-bold">4.0 Cap</span>
+              </div>
+              <div className="w-full bg-gray-100 dark:bg-white/10 rounded-t-xl relative group">
+                <div className="absolute bottom-0 w-full bg-gray-400 dark:bg-gray-600 h-[90%] rounded-t-xl transition-all group-hover:bg-black dark:group-hover:bg-white"></div>
+                <span className="absolute -top-6 w-full text-center text-xs font-bold">4.3 Internal</span>
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-gray-500 text-center">Know your max GPA. It's curved.</p>
+          </div>
+        ),
+        details: "Understand the grading system. 4.3 scale vs 4.0 cap. Grading is curved - your grade depends on how others perform."
       },
       {
         id: "3",
-        title: "Pre-Semester Prep",
+        title: "Stage 3: Teammates",
         visual: (
-          <div className="bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-8 border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-500/5">
-            <ChecklistWithProgress items={[
-              "Adjust Mindset: It's not easier than Uni",
-              "Plan IELTS (Aug or Dec)",
-              "Check IGCSE schedules"
-            ]} />
+          <div className="grid grid-cols-2 gap-4">
+             <div className="p-6 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-100 dark:border-green-900/30">
+               <CheckCircle2 className="text-green-600 mb-2" />
+               <h4 className="font-bold text-green-900 dark:text-green-400">Carry</h4>
+               <p className="text-xs text-green-700 dark:text-green-300">Sits in front. Asks questions.</p>
+             </div>
+             <div className="p-6 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-100 dark:border-red-900/30">
+               <XCircle className="text-red-600 mb-2" />
+               <h4 className="font-bold text-red-900 dark:text-red-400">Freerider</h4>
+               <p className="text-xs text-red-700 dark:text-red-300">Ghost. Document everything.</p>
+             </div>
           </div>
         ),
-        details: "Use the summer to get language requirements out of the way. IELTS is crucial if your DSE English is Level 2 or 3."
+        details: "Continuous Assessment is your friend. Don't rely on the final exam. Manage your groupmates. Document freeriders."
       },
       {
         id: "4",
-        title: "GPA System",
+        title: "Stage 4: First Loot",
         visual: <GPASimulator />,
-        details: "Many colleges use 4.3 internally but cap at 4.0. Every decimal point counts. Read course outlines immediately."
+        details: "Sem 1 ends. Check your GPA. If it's bad, calculate what you need to recover. Appeal only if you are sure about marking errors."
       },
       {
         id: "5",
-        title: "People & Groups",
-        visual: (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <CharacterCard3D
-              title="The Serious One"
-              desc="Sits in front. Asks questions. Your target groupmate."
-              icon={CheckCircle2}
-              type="good"
-            />
-            <CharacterCard3D
-              title="The Freerider"
-              desc="Disappears. 'Ghost'. Document everything if you meet one."
-              icon={XCircle}
-              type="bad"
-            />
-          </div>
-        ),
-        details: "Group projects are dangerous. Find the serious people early. If you find a freerider, document evidence and report early."
+        title: "Stage 5: Side Quest",
+        visual: <ChecklistWithProgress items={["Review Sem 1 Notes", "Set Sem 2 Goal", "Register IELTS/DSE"]} title="Sem Break Tasks" />,
+        details: "Sem Break is for resetting and language side quests. If you need to retake English/Chinese, do it now."
       },
       {
         id: "6",
-        title: "Study Method",
-        visual: <FeynmanTimer />,
-        details: "The Feynman Technique: If you can't explain it simply to a classmate, you don't understand it. Teaching is the best way to learn."
+        title: "Stage 6: Stability",
+        visual: (
+          <div className="flex flex-col gap-2">
+            <div className="p-4 bg-white dark:bg-[#1C1C1E] rounded-xl border border-gray-200 dark:border-white/10 flex items-center gap-4">
+              <Clock size={20} /> <span>Timetable Strategy</span>
+            </div>
+            <div className="p-4 bg-white dark:bg-[#1C1C1E] rounded-xl border border-gray-200 dark:border-white/10 flex items-center gap-4">
+              <Brain size={20} /> <span>Feynman Method</span>
+            </div>
+            <div className="p-4 bg-white dark:bg-[#1C1C1E] rounded-xl border border-gray-200 dark:border-white/10 flex items-center gap-4">
+              <Target size={20} /> <span>Priority: GPA</span>
+            </div>
+          </div>
+        ),
+        details: "Build a study system. Balance your timetable. Prioritize GPA over everything else."
+      },
+      {
+        id: "7",
+        title: "Stage 7: Upgrade",
+        visual: (
+          <div className="grid grid-cols-3 gap-2">
+            <div className="p-4 bg-gray-100 dark:bg-white/10 rounded-xl text-center">
+              <span className="text-xs font-bold block mb-2">Summer</span>
+              <BookOpen className="mx-auto mb-2" size={20} />
+              <span className="text-[10px]">Retake</span>
+            </div>
+            <div className="p-4 bg-gray-100 dark:bg-white/10 rounded-xl text-center">
+              <span className="text-xs font-bold block mb-2">Intern</span>
+              <Briefcase className="mx-auto mb-2" size={20} />
+              <span className="text-[10px]">CV Boost</span>
+            </div>
+            <div className="p-4 bg-black dark:bg-white text-white dark:text-black rounded-xl text-center shadow-lg">
+              <span className="text-xs font-bold block mb-2">Plan</span>
+              <Map className="mx-auto mb-2" size={20} />
+              <span className="text-[10px]">Non-JUPAS</span>
+            </div>
+          </div>
+        ),
+        details: "Summer options: Retake courses to save GPA, Intern for CV, or Plan your Non-JUPAS strategy."
+      },
+      {
+        id: "8",
+        title: "Stage 8: Non-JUPAS",
+        visual: <RadarChart labels={["GPA", "PS", "Docs", "Interview", "Choice"]} data={[80, 60, 100, 40, 90]} />,
+        details: "Year 2 Sem 1. Apply for Non-JUPAS. Prepare documents (Soft Copy). Write your Personal Statement (don't copy DSE one)."
+      },
+      {
+        id: "9",
+        title: "Stage 9: Interview",
+        visual: <ChecklistWithProgress items={["Check Email Daily", "Prepare Intro", "Mock Interview"]} title="Interview Prep" />,
+        details: "Interview season. Check emails daily. Prepare for group discussions. It's about listening and integrating, not just talking."
       },
       {
         id: "10",
-        title: "GPA Targets",
-        visual: <TargetBars />,
-        details: "Year 1 entry is brutal (near perfect GPA). Senior Year (Year 3 entry) is the standard path, requiring around 3.4-3.7 depending on the programme."
+        title: "Stage 10: Boss Fight",
+        visual: (
+          <div className="p-8 bg-red-50 dark:bg-red-900/10 rounded-[2rem] border border-red-100 dark:border-red-900/20 text-center">
+            <Shield size={48} className="mx-auto text-red-500 mb-4" />
+            <h4 className="text-xl font-bold text-red-900 dark:text-red-400">Killer Subject</h4>
+            <p className="text-sm text-red-700 dark:text-red-300 mt-2">Don't complain. Find help. Survive.</p>
+          </div>
+        ),
+        details: "Year 2 Sem 2. The final stretch. Manage 'Killer' subjects. Every assignment adds HP to your offer chances."
       },
       {
         id: "11",
-        title: "Offers & Deadlines",
+        title: "Stage 11: The Offer",
         visual: (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <LockCard type="direct" title="Direct Offer" subtitle="Pay & Secure" />
-            <LockCard type="conditional" title="Conditional" subtitle="Meet GPA req." />
+          <div className="grid grid-cols-1 gap-4">
+            <LockCard type="direct" title="Direct Offer" subtitle="Secure" />
+            <LockCard type="conditional" title="Conditional" subtitle="GPA Req." />
           </div>
         ),
-        details: "Direct offers are safe. Conditional offers require you to maintain your GPA. Deposits are non-refundable, usually."
+        details: "Direct vs Conditional. Pay the deposit (non-refundable). If you miss a deadline, email immediately."
+      },
+      {
+        id: "12",
+        title: "Stage 12: Final Boss",
+        visual: <ChecklistWithProgress items={["Official Transcript", "DSE Cert", "Language Cert", "Oath"]} title="Paperwork" />,
+        details: "Paperwork hell. Official transcripts, oaths, mailing documents. Do exactly as instructed."
+      },
+      {
+        id: "13",
+        title: "Stage 13: Victory",
+        visual: (
+          <div className="p-8 bg-yellow-50 dark:bg-yellow-900/10 rounded-[2rem] border border-yellow-100 dark:border-yellow-900/20 text-center">
+            <Trophy size={64} className="mx-auto text-yellow-500 mb-6" />
+            <h4 className="text-2xl font-bold text-yellow-900 dark:text-yellow-400">University Student</h4>
+            <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-4">Level Up Complete.</p>
+          </div>
+        ),
+        details: "You made it. It wasn't luck. It was strategy. Welcome back to University."
       }
     ]
   },
   ZH: {
     hero: {
-      title: "副學士生存指南",
-      subtitle: "從 DSE 放榜到入讀大學的互動旅程。"
+      title: "Asso 遊戲攻略",
+      subtitle: "玩家：Year 1 新生。目標：大學 Offer。"
     },
     sections: [
       {
         id: "0",
-        title: "放榜前：了解遊戲規則",
-        visual: (
-          <div className="space-y-6">
-            <div className="p-8 bg-white/60 dark:bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/20 shadow-xl shadow-gray-500/5">
-              <h4 className="font-bold text-gray-900 dark:text-white mb-6 text-center tracking-tight">目標：Full Cert</h4>
-              <div className="flex gap-4 justify-center">
-                <FlipNumber value={3} />
-                <FlipNumber value={3} />
-                <FlipNumber value={2} />
-                <FlipNumber value={2} />
-              </div>
-              <div className="flex justify-center gap-8 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-                <span>中</span><span>英</span><span>數</span><span>通</span>
-              </div>
-            </div>
-            <div className="p-1">
-              <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">未達標？兩條路：</p>
-              <RetakeAssoSplit />
-            </div>
-          </div>
-        ),
-        details: "大學通常要求「Full Cert」(3322)。如果未達標，你可以選擇 Retake 或修讀副學士 (Non-JUPAS)。"
+        title: "Stage 0: 抉擇",
+        visual: <RetakeAssoSplit />,
+        details: "DSE 後好迷惘？兩條路：Retake (一試定生死) 或 Asso (持續評估)。唔好雙修，揀定一條主線。"
       },
       {
         id: "1",
-        title: "DSE 放榜日",
-        visual: (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
-              <div className="w-14 h-14 rounded-2xl bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
-                <AlertCircle size={28} />
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">分數 &lt; 3322</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Retake DSE</p>
-              <div className="mt-6 text-[10px] font-bold text-gray-900 bg-gray-100 dark:bg-white/10 dark:text-white px-3 py-1.5 rounded-full inline-block uppercase tracking-wider">專注考試</div>
-            </div>
-            <div className="p-6 bg-white dark:bg-[#1C1C1E] rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl hover:shadow-gray-500/10 transition-all duration-300 cursor-pointer group hover:-translate-y-1">
-              <div className="w-14 h-14 rounded-2xl bg-zinc-100 dark:bg-white/10 text-zinc-900 dark:text-white flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
-                <CheckCircle2 size={28} />
-              </div>
-              <h4 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">分數 &ge; 3322</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">副學士 Asso</p>
-              <div className="mt-6 text-[10px] font-bold text-zinc-900 bg-zinc-100 dark:bg-white/10 dark:text-white px-3 py-1.5 rounded-full inline-block uppercase tracking-wider">全新環境</div>
-            </div>
-          </div>
-        ),
-        details: "不要「Retake + Asso 雙修」，通常兩頭唔到岸。揀定一條路去盡。Asso 係一個全新嘅遊戲。"
+        title: "Stage 1: 新遊戲",
+        visual: <MindsetReset />,
+        details: "Reset 心態。呢個係二周目。Check 下有冇 Full Cert (3322)。如果中英文未達標，Year 1 就要報重考。"
       },
       {
         id: "2",
-        title: "揀科策略",
-        visual: <TabbedSelector />,
-        details: "Asso (學術) vs HD (職業)。根據你擅長嘅科目 (睇 DSE 選修)、興趣同埋想入嘅大學學系去揀。"
+        title: "Stage 2: 遊戲規則",
+        visual: (
+          <div className="bg-white dark:bg-[#1C1C1E] p-8 rounded-[2rem] border border-gray-200 dark:border-white/10 shadow-xl">
+            <div className="flex justify-between items-end h-32 gap-4">
+              <div className="w-full bg-gray-100 dark:bg-white/10 rounded-t-xl relative group">
+                <div className="absolute bottom-0 w-full bg-gray-400 dark:bg-gray-600 h-[80%] rounded-t-xl transition-all group-hover:bg-black dark:group-hover:bg-white"></div>
+                <span className="absolute -top-6 w-full text-center text-xs font-bold">4.0 Cap</span>
+              </div>
+              <div className="w-full bg-gray-100 dark:bg-white/10 rounded-t-xl relative group">
+                <div className="absolute bottom-0 w-full bg-gray-400 dark:bg-gray-600 h-[90%] rounded-t-xl transition-all group-hover:bg-black dark:group-hover:bg-white"></div>
+                <span className="absolute -top-6 w-full text-center text-xs font-bold">4.3 Internal</span>
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-gray-500 text-center">留意 GPA 上限。拉 Curve 機制。</p>
+          </div>
+        ),
+        details: "了解 GPA 系統。4.3 scale vs 4.0 cap。成績係拉 Curve 嘅，你嘅 Grade 取決於其他人考成點。"
       },
       {
         id: "3",
-        title: "開學前準備",
+        title: "Stage 3: 隊友與敵人",
         visual: (
-          <div className="bg-white dark:bg-[#1C1C1E] rounded-[2rem] p-8 border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-500/5">
-            <ChecklistWithProgress items={[
-              "調整心態：Asso 唔係 Hea 讀",
-              "報考 IELTS (8月或12月)",
-              "檢查 IGCSE 時間表"
-            ]} />
+          <div className="grid grid-cols-2 gap-4">
+             <div className="p-6 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-100 dark:border-green-900/30">
+               <CheckCircle2 className="text-green-600 mb-2" />
+               <h4 className="font-bold text-green-900 dark:text-green-400">Carry</h4>
+               <p className="text-xs text-green-700 dark:text-green-300">坐前排，會主動。</p>
+             </div>
+             <div className="p-6 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-100 dark:border-red-900/30">
+               <XCircle className="text-red-600 mb-2" />
+               <h4 className="font-bold text-red-900 dark:text-red-400">Freerider</h4>
+               <p className="text-xs text-red-700 dark:text-red-300">潛水。記得留證據。</p>
+             </div>
           </div>
         ),
-        details: "利用暑假搞掂語文要求。如果 DSE 英文得 Level 2 或 3，IELTS 係必須嘅。"
+        details: "Continuous Assessment 係你朋友。唔好靠 Final Exam。小心揀 Groupmate，遇到 Freerider 要狠心 Report。"
       },
       {
         id: "4",
-        title: "GPA 制度",
+        title: "Stage 4: 第一份戰利品",
         visual: <GPASimulator />,
-        details: "好多院校內部計 4.3，但成績表 Cap 4.0。每一個小數點都好重要。即刻睇 Course Outline。"
+        details: "Sem 1 出 Grade。睇 GPA。如果爛咗，計下要點追。除非好肯定計錯分，否則唔好亂 Appeal。"
       },
       {
         id: "5",
-        title: "人際與組員",
-        visual: (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <CharacterCard3D
-              title="認真型同學"
-              desc="坐前排，會發問。你嘅目標組員。"
-              icon={CheckCircle2}
-              type="good"
-            />
-            <CharacterCard3D
-              title="Freerider"
-              desc="消失、潛水。遇到要留證據，儘早匯報。"
-              icon={XCircle}
-              type="bad"
-            />
-          </div>
-        ),
-        details: "Group Project 係高危區。儘早搵認真嘅同學。遇到 Freerider 要留證據保障自己。"
+        title: "Stage 5: 支線任務",
+        visual: <ChecklistWithProgress items={["整理 Sem 1 Notes", "設定 Sem 2 目標", "報考 IELTS/DSE"]} title="Sem Break 任務" />,
+        details: "Sem Break 係用嚟 Reset 同埋搞語文支線。如果中英文未搞掂，而家好報名啦。"
       },
       {
         id: "6",
-        title: "讀書方法",
-        visual: <FeynmanTimer />,
-        details: "Feynman 技巧：如果你唔能夠簡單咁解釋俾同學聽，即係你未識。教人係最好嘅學習方法。"
+        title: "Stage 6: 穩定輸出",
+        visual: (
+          <div className="flex flex-col gap-2">
+            <div className="p-4 bg-white dark:bg-[#1C1C1E] rounded-xl border border-gray-200 dark:border-white/10 flex items-center gap-4">
+              <Clock size={20} /> <span>自砌 Timetable</span>
+            </div>
+            <div className="p-4 bg-white dark:bg-[#1C1C1E] rounded-xl border border-gray-200 dark:border-white/10 flex items-center gap-4">
+              <Brain size={20} /> <span>Feynman 學習法</span>
+            </div>
+            <div className="p-4 bg-white dark:bg-[#1C1C1E] rounded-xl border border-gray-200 dark:border-white/10 flex items-center gap-4">
+              <Target size={20} /> <span>GPA 優先</span>
+            </div>
+          </div>
+        ),
+        details: "建立讀書系統。平衡 Timetable。記住 GPA 係主線，其他嘢都要讓路。"
+      },
+      {
+        id: "7",
+        title: "Stage 7: 升級路線",
+        visual: (
+          <div className="grid grid-cols-3 gap-2">
+            <div className="p-4 bg-gray-100 dark:bg-white/10 rounded-xl text-center">
+              <span className="text-xs font-bold block mb-2">暑修</span>
+              <BookOpen className="mx-auto mb-2" size={20} />
+              <span className="text-[10px]">救 GPA</span>
+            </div>
+            <div className="p-4 bg-gray-100 dark:bg-white/10 rounded-xl text-center">
+              <span className="text-xs font-bold block mb-2">實習</span>
+              <Briefcase className="mx-auto mb-2" size={20} />
+              <span className="text-[10px]">刷 CV</span>
+            </div>
+            <div className="p-4 bg-black dark:bg-white text-white dark:text-black rounded-xl text-center shadow-lg">
+              <span className="text-xs font-bold block mb-2">規劃</span>
+              <Map className="mx-auto mb-2" size={20} />
+              <span className="text-[10px]">Non-JUPAS</span>
+            </div>
+          </div>
+        ),
+        details: "暑假三條路：暑修救 Grade、實習刷 CV、或者開始規劃 Non-JUPAS 策略。"
+      },
+      {
+        id: "8",
+        title: "Stage 8: Non-JUPAS",
+        visual: <RadarChart labels={["GPA", "PS", "文件", "面試", "選科"]} data={[80, 60, 100, 40, 90]} />,
+        details: "Year 2 Sem 1。報 Non-JUPAS。準備 Soft Copy 文件。寫 Personal Statement (唔好 Copy DSE 嗰篇)。"
+      },
+      {
+        id: "9",
+        title: "Stage 9: 面試季節",
+        visual: <ChecklistWithProgress items={["每日 Check Email", "準備自我介紹", "Mock Interview"]} title="面試準備" />,
+        details: "面試高峰期。每日 Check Email。準備小組討論。重點係聆聽同整合，唔係鬥講得多。"
       },
       {
         id: "10",
-        title: "GPA 目標",
-        visual: <TargetBars />,
-        details: "Year 1 入學極難 (接近滿分)。Senior Year (Year 3 入學) 係主流，通常需要 3.4-3.7，視乎學科。"
+        title: "Stage 10: Boss Fight",
+        visual: (
+          <div className="p-8 bg-red-50 dark:bg-red-900/10 rounded-[2rem] border border-red-100 dark:border-red-900/20 text-center">
+            <Shield size={48} className="mx-auto text-red-500 mb-4" />
+            <h4 className="text-xl font-bold text-red-900 dark:text-red-400">Killer 科</h4>
+            <p className="text-sm text-red-700 dark:text-red-300 mt-2">唔好怨。搵人幫。頂住。</p>
+          </div>
+        ),
+        details: "Year 2 Sem 2。最後衝刺。處理 Killer 科。每一份功課都係幫你個 Offer 加血。"
       },
       {
         id: "11",
-        title: "Offer 種類",
+        title: "Stage 11: 收成期",
         visual: (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <LockCard type="direct" title="Direct Offer" subtitle="交錢留位" />
-            <LockCard type="conditional" title="Conditional" subtitle="要過 GPA" />
+          <div className="grid grid-cols-1 gap-4">
+            <LockCard type="direct" title="Direct Offer" subtitle="直接取錄" />
+            <LockCard type="conditional" title="Conditional" subtitle="需達 GPA" />
           </div>
         ),
-        details: "Direct Offer 最穩陣。Conditional Offer 要你 Keep 到 GPA。留位費通常無得退。"
+        details: "Direct vs Conditional。交留位費 (通常無得退)。Miss 咗 Deadline 要即刻 Email 求情。"
+      },
+      {
+        id: "12",
+        title: "Stage 12: 最終 Boss",
+        visual: <ChecklistWithProgress items={["正式成績表", "DSE 證書", "語文成績", "宣誓"]} title="文件地獄" />,
+        details: "Paperwork 地獄。正式 Transcript、宣誓、寄文件。跟足指示做，唔好懶。"
+      },
+      {
+        id: "13",
+        title: "Stage 13: 通關",
+        visual: (
+          <div className="p-8 bg-yellow-50 dark:bg-yellow-900/10 rounded-[2rem] border border-yellow-100 dark:border-yellow-900/20 text-center">
+            <Trophy size={64} className="mx-auto text-yellow-500 mb-6" />
+            <h4 className="text-2xl font-bold text-yellow-900 dark:text-yellow-400">大學生</h4>
+            <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-4">Level Up Complete.</p>
+          </div>
+        ),
+        details: "你得咗。唔係靠運氣，係靠策略。歡迎返嚟大學世界。"
       }
     ]
   }
 };
+
 
 export default function AssociateDegreeTips({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "ZH" : "EN") as "EN" | "ZH";
@@ -694,16 +663,16 @@ export default function AssociateDegreeTips({ lang: propLang }: { lang: string }
           <div className="hidden md:block md:col-span-3 relative">
             <div className="sticky top-32">
               <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent"></div>
-              <div className="pl-8 space-y-8">
-                <div className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-8">Timeline</div>
+              <div className="pl-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-8">Stage Map</div>
                 {t.sections.map((section, index) => (
                   <a 
                     key={section.id} 
                     href={`#section-${section.id}`}
                     className="group flex items-center gap-4 text-sm font-medium text-gray-500 hover:text-black dark:hover:text-white transition-colors"
                   >
-                    <span className="text-[10px] font-mono opacity-30 group-hover:opacity-100 transition-opacity">0{index + 1}</span>
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">{section.title}</span>
+                    <span className="text-[10px] font-mono opacity-30 group-hover:opacity-100 transition-opacity w-6">{index}</span>
+                    <span className="group-hover:translate-x-1 transition-transform duration-300 truncate">{section.title.split(':')[1] || section.title}</span>
                   </a>
                 ))}
               </div>
@@ -711,15 +680,15 @@ export default function AssociateDegreeTips({ lang: propLang }: { lang: string }
           </div>
 
           {/* Main Content - Right Side */}
-          <div className="md:col-span-9 space-y-40">
+          <div className="md:col-span-9 space-y-32">
             {t.sections.map((section, index) => (
               <div key={section.id} id={`section-${section.id}`} className="scroll-mt-32">
                 <FadeInSection delay={100}>
                   <div className="flex items-center gap-6 mb-10">
-                    <div className="flex items-center justify-center w-16 h-16 rounded-[2rem] bg-white dark:bg-white/5 shadow-lg shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 text-2xl font-bold text-gray-400 dark:text-gray-600">
-                      {index + 1}
+                    <div className="flex items-center justify-center w-16 h-16 rounded-[2rem] bg-white dark:bg-white/5 shadow-lg shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 text-xl font-bold text-gray-400 dark:text-gray-600 font-mono">
+                      {index}
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">{section.title}</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{section.title}</h2>
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
@@ -748,8 +717,8 @@ export default function AssociateDegreeTips({ lang: propLang }: { lang: string }
         <div className="mt-48 text-center border-t border-gray-100 dark:border-white/5 pt-24">
           <p className="text-2xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-700 to-black dark:from-gray-400 dark:to-white max-w-3xl mx-auto leading-tight">
             {lang === "EN" 
-              ? "\"You give yourself a real chance to reach your target degree.\"" 
-              : "「給自己一個真正達成大學夢的機會。」"}
+              ? "\"It's not luck. It's a game you can win.\"" 
+              : "「升返 U 唔係靠運氣，係一個可以被攻略嘅遊戲。」"}
           </p>
         </div>
       </div>
