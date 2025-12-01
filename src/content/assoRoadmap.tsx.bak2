@@ -1,0 +1,422 @@
+import React from 'react';
+import { 
+  Map, Flag, Swords, BarChart3, Calendar, Sun, FileSignature, Mail,
+  Target, ListChecks, AlertTriangle, BookOpen, Brain, GraduationCap,
+  Clock, CheckCircle2, AlertCircle, Heart, Users, Zap, Layout,
+  MousePointer2, HelpCircle, Trophy, Shield
+} from 'lucide-react';
+
+// --- Types ---
+
+export type StageData = {
+  id: number;
+  label: string;
+  title: string;
+  keyMonths: string;
+  color: string;
+  icon: any;
+  summary: {
+    goals: string[];
+    actions: string[];
+    risks: string[];
+  };
+  details: React.ReactNode;
+};
+
+export type MonthData = {
+  id: string;
+  label: string;
+  summary: string[];
+  details: React.ReactNode;
+};
+
+export type MindsetItem = {
+  title: string;
+  summary: string;
+  details: React.ReactNode;
+  icon: any;
+  color: string;
+};
+
+// --- Big Picture Data ---
+
+export const BIG_PICTURE = {
+  hero: {
+    title: "Asso 升大學",
+    subtitle: "由 DSE 放榜 → Asso → Non-JUPAS → 入 U 路線圖。",
+    welcome: "歡迎你嚟到呢個網站。呢度整合咗過來人嘅經驗，幫你行少啲冤枉路。"
+  },
+  timeline: [
+    {
+      label: "兩年時間軸 Overview（副學士 / 高級文憑）",
+      desc: `整體結構：
+修讀年期：一般為 2 年。共 4 個學期（Sem 1–Sem 4），其間有 2 次 Sem Break（約 1 個月），以及 1 個暑假（介乎 Year 1 與 Year 2 之間）。每個學期約 4 個月；基本節奏：上課 → 小測／功課 → Group project／Presentation → 期末考試。時間軸只講流程，詳細的讀書方法可另成專題。`
+    },
+    {
+      label: "Year 1 – Semester 1（約 9 月–12 月中）",
+      desc: `開學初期（第 1 週）：正式開學，由 9 月開始。各科首堂會介紹科目內容、assessment 比重；同時是認識同學、組成 group 的時期（Form group）。
+學期中段：進入固定節奏：lecture/tutorial、quiz、小測、個人作業、group assignment、presentation。建議把重要 deadline 加入日曆並盡快建立 weekly plan。
+學期結束：約 12 月中完成期末考試，然後進入第一次 Sem Break。`
+    },
+    {
+      label: "Year 1 – Sem Break（約 12 月中–翌年 1 月）",
+      desc: `Sem Break 約一個月，彈性用途：休息、調整狀態、兼職、報讀短課或自學語言/電腦技能。部分同學用來追分或預修科目；若有暑期實習要求，該類同學需提前安排時間。`
+    },
+    {
+      label: "Year 1 – Semester 2（約 1 月底–5/6 月）",
+      desc: `開學及加退選期（1–2 週）：要在系統選科並整理 timetable。大多數人已找到合作的『書友』或固定拍檔以便做 group work。
+學期中段至期末：延續 Sem 1 的節奏，約 5 月中進入考試季，6 月初完成期末考，Sem 2 結束並進入暑假。`
+    },
+    {
+      label: "Year 1 – 暑假（約 6–8 月）",
+      desc: `暑假位於 Year 1 與 Year 2 之間：可選擇休息、旅行、兼職／實習、或報讀暑期課追分/預修科目。有些課程於暑假有實習要求，該類同學需事先安排並投入較多時間。`
+    },
+    {
+      label: "Year 2 – Semester 1（約 9–12 月）",
+      desc: `重要程度提升：要兼顧學業與升學申請（Non-JUPAS）。此學期成績對之後能否獲得較佳條件的 offer 非常關鍵。
+Non-JUPAS 報名與文件準備：於尾段（約 11 月尾–翌年 1 月）開始上載成績單、Personal Statement、獎項證明、推薦信等。建議採用『全面覆蓋』報名策略並留意各校 deadline。若學校發放成績較慢，先上載現有成績並及時更新，主動跟進 Transcript 發放進度。`
+    },
+    {
+      label: "Year 2 – Sem Break（約 12 月–翌年 1 月）",
+      desc: `面試高峰期：各校會陸續發出面試邀請，面試表現往往決定是否獲 Offer 及其條件。重點是整理面試材料、準備面試問答、並保持適當休息以穩定狀態。`
+    },
+    {
+      label: "Year 2 – Semester 2（約 1–6 月）",
+      desc: `最後衝刺與收官：多數大學會陸續發出 Conditional Offer，需評估自己達到條件（例如 CGPA）的機會與是否接受留位（留位費）。同時要在最後學期維持或拉高 GPA 以達到條件；若仍未有 Offer，維持跟進並把自己放在候補名單的可能性考慮在內。學期結束約 6 月完成畢業程序。`
+    },
+    {
+      label: "畢業至入讀 Degree（約 6–9 月）",
+      desc: `已獲 Offer 的同學可適度休息並準備新大學入學註冊（住宿、迎新等）。各校可能持續派 Offer 到 8–9 月，未收到 Offer 的同學仍有機會被補錄，因此保持文件齊全、持續跟進很重要。`
+    },
+    {
+      label: "總結重點（時間軸下的總結）",
+      desc: `Year 1 Sem 1–Sem 2：建立基礎並衝刺 GPA。
+Year 1 暑假：分水嶺—可休息、實習、追分或預修。
+Year 2 Sem 1：同時兼顧學業與 Non-JUPAS 報名。
+Year 2 Sem Break：面試高峰期，準備面試最重要。
+Year 2 Sem 2：守住／拉高 GPA，處理 Offer 與留位決策。`
+    }
+  ],
+  cards: []
+};
+
+// --- Stages Data (For Stepper) ---
+
+export const STAGES: StageData[] = [
+  {
+    id: 0,
+    label: "Stage 0",
+    title: "DSE 放榜 & Pre-Asso",
+    keyMonths: "7–8 月",
+    color: "from-red-500 to-orange-500",
+    icon: Map,
+    summary: {
+      goals: ["決定 Retake 定 Asso", "完成入學註冊", "調整心態準備開學"],
+      actions: ["交留位費 & 上載相片", "參加 Ocamp / O-day", "Check 清楚 Course Outline"],
+      risks: ["錯過註冊 Deadline", "誤信非官方 Group 消息", "未執好心情就開學"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>7 月 — 放榜後（Decision & 課程選擇）：</strong>評估自己目標（想盡快升 Year 3？定穩定提升 GPA？），再決定 Retake / Asso / HD。瀏覽課程大綱，留意 assessment 形式。確認報名 deadline。</p>
+        <p><strong>8 月 — 入學行政與迎新：</strong>完成入學行政：上載相片、交學費、完成 online briefing。收到 timetable 後，了解自己會去邊個 campus 上堂。參加 Ocamp / O‑day，認識學校資源、lecturers 同同系同學。</p>
+      </div>
+    )
+  },
+  {
+    id: 1,
+    label: "Stage 1",
+    title: "開學 & Sem 1 Start",
+    keyMonths: "9–10 月",
+    color: "from-orange-500 to-amber-500",
+    icon: Flag,
+    summary: {
+      goals: ["適應大專節奏", "建立 GPA 習慣", "搵到可靠 Groupmates"],
+      actions: ["砌好 Timetable", "Download Course Outline", "第一次 Group Meeting"],
+      risks: ["遲到 / 缺席 (Attendance)", "輕視 5-10% 小作業", "做獨行俠"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>9 月：適應期 + 認真砌 timetable。</strong>學期開始，add/drop 期、拿 final timetable。熟讀 syllabus、把所有重要 deadline 加入日曆。盡快認識組員，Group project 立即開 kick‑off meeting。</p>
+        <p><strong>10 月：節奏建立 + 首批作業到手。</strong>課程節奏加快，較正式的 assignments / quizzes 出現。估算每科每週工作量，訂 weekly plan。優先做 weight 較高的 assessment。</p>
+      </div>
+    )
+  },
+  {
+    id: 2,
+    label: "Stage 2",
+    title: "Sem 1 Midterm",
+    keyMonths: "11 月",
+    color: "from-amber-500 to-yellow-500",
+    icon: Swords,
+    summary: {
+      goals: ["穩住 Midterm 成績", "Project Interim 順利", "避免 Burnout"],
+      actions: ["溫習 Midterm", "Peer Review", "趕 Deadline"],
+      risks: ["缺席 Midterm (需醫生紙)", "Freeriders 出現", "Deadline 撞期"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>11 月：midterm 高峰（檢視期）。</strong>midterm / larger quizzes、project interim deliverables。把 midterm 範圍整理成 concise notes，做 timed practice。整理 group work interim output 並進行 peer review。Midterm 缺席通常要有正式證明。</p>
+      </div>
+    )
+  },
+  {
+    id: 3,
+    label: "Stage 3",
+    title: "Sem 1 Exam",
+    keyMonths: "12 月",
+    color: "from-yellow-500 to-lime-500",
+    icon: BarChart3,
+    summary: {
+      goals: ["衝刺 Final Exam", "Project Final Presentation", "保住 GPA"],
+      actions: ["Timed Practice", "Final Presentation", "Backup Files"],
+      risks: ["格式錯誤 (Turnitin)", "遲交 (Late Penalty)", "Careless Mistakes"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>12 月：Exam Period 準備（總結與衝刺）。</strong>教學接近尾聲，最後 assignment / presentation 完成，進入 exam revision。把全學期筆記整理成 revision sheet。確認所有檔案已備份。Sem 1 final 成績會真實計入 GPA，影響下一學期的信心。</p>
+      </div>
+    )
+  },
+  {
+    id: 4,
+    label: "Stage 4",
+    title: "Sem Break",
+    keyMonths: "1 月",
+    color: "from-lime-500 to-green-500",
+    icon: Calendar,
+    summary: {
+      goals: ["檢討 Sem 1 成績", "休息充電", "初步規劃 Non-JUPAS"],
+      actions: ["分析 GPA", "報 IELTS (如需要)", "休息"],
+      risks: ["過度放鬆", "錯過語文試報名", "完全唔理學業"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>放假期間可以點樣半休息半準備？</strong>回顧 Sem 1 成績：找出哪科拉低分數，分析原因。整理 notes：把零散筆記整理成 concise revision sheet。初步了解 Non‑JUPAS：泛覽心儀課程類型。心態管理：給自己休息時間。</p>
+      </div>
+    )
+  },
+  {
+    id: 5,
+    label: "Stage 5",
+    title: "Sem 2 & Summer",
+    keyMonths: "2–8 月",
+    color: "from-green-500 to-teal-500",
+    icon: Sun,
+    summary: {
+      goals: ["追/保 GPA", "補語文成績", "累積實務經驗"],
+      actions: ["檢視 Sem 1 GPA", "考 IELTS", "暑期工 / 實習"],
+      risks: ["放棄治療 (Give up)", "暑假空過", "報名太遲"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>2 月：看到 GPA，先冷靜評估。</strong>把 GPA 當作診斷工具。初步評估是否需要報 IELTS/IGCSE。</p>
+        <p><strong>3–5 月：Sem 2 衝刺。</strong>Midterm、Assignment 密集期，用 Calendar 管理。這段的穩定表現會影響 Sem 2 的累積成績。</p>
+        <p><strong>6–8 月：暑假（語文 / 實習）。</strong>補語文：安排 IELTS / IGCSE 準備。兼職 / 實習 / 義工：累積 PS 素材。整理 Year 1 學習方式，為 Year 2 佈局。</p>
+      </div>
+    )
+  },
+  {
+    id: 6,
+    label: "Stage 6",
+    title: "Year 2 Sem 1",
+    keyMonths: "9–12 月",
+    color: "from-teal-500 to-cyan-500",
+    icon: FileSignature,
+    summary: {
+      goals: ["Non-JUPAS 報名", "保持 GPA", "準備面試"],
+      actions: ["寫 Personal Statement", "搵 Reference Letter", "報名各大院校"],
+      risks: ["錯過報名 Deadline", "文件不齊", "GPA 大跌"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>Non-JUPAS 報名全攻略。</strong>Personal Statement (PS): 大約 700-800 字。講清楚「點解想讀」同「你有咩準備」。推薦信：一封已經足夠，重質不重量。報名策略：唔好只報一科，要有保底選擇。留意各大院校 Deadline。</p>
+      </div>
+    )
+  },
+  {
+    id: 7,
+    label: "Stage 7",
+    title: "Year 2 Sem 2",
+    keyMonths: "1–8 月",
+    color: "from-cyan-500 to-blue-500",
+    icon: Mail,
+    summary: {
+      goals: ["面試表現", "收到 Offer", "順利畢業"],
+      actions: ["Interview", "交留位費", "宣誓 / 驗證文件"],
+      risks: ["Miss Conditional Offer", "唔記得交錢", "最後 Sem 爛 Grade"],
+    },
+    details: (
+      <div className="space-y-4">
+        <p><strong>1–4 月：面試與 Offer。</strong>收到面試邀請：整理「面試要點清單」。Offer 類型：Conditional (有條件) vs Direct (直接)。留位費：務必準時交，Non-refundable。</p>
+        <p><strong>5–8 月：畢業與入學。</strong>最後衝刺：確保達到 Conditional Offer 要求。文件驗證：準備成績單正本、畢業證明、宣誓文件。</p>
+      </div>
+    )
+  }
+];
+
+// --- Monthly Data (For Timeline View) ---
+
+export const MONTHS: MonthData[] = [
+  {
+    id: "m1",
+    label: "7–8 月 (Pre-Asso)",
+    summary: ["DSE 放榜決定去向", "完成入學註冊 & Ocamp"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>放榜後：</strong>評估自己目標，決定 Retake / Asso / HD。</li>
+        <li><strong>入學行政：</strong>上載相片、交學費、完成 online briefing。</li>
+        <li><strong>迎新：</strong>參加 Ocamp / O-day，認識學校資源、lecturers 同同系同學。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m2",
+    label: "9 月 (Sem 1 Start)",
+    summary: ["適應大專節奏", "Add/Drop & 砌 Timetable"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>適應期：</strong>熟讀 syllabus、把所有重要 deadline 加入日曆。</li>
+        <li><strong>分組：</strong>盡快認識組員，Group project 立即開 kick-off meeting。</li>
+        <li><strong>通勤：</strong>把通勤時間和固定自習時段排入 weekly plan。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m3",
+    label: "10 月",
+    summary: ["Assignment 殺到", "建立溫習 Routine"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>工作量評估：</strong>估算每科每週工作量，訂 weekly plan。</li>
+        <li><strong>優先次序：</strong>優先做 weight 較高的 assessment。</li>
+        <li><strong>Group Work：</strong>與組員固定 weekly check-in。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m4",
+    label: "11 月 (Midterm)",
+    summary: ["Midterm 高峰期", "Project Interim"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>溫習：</strong>把 midterm 範圍整理成 concise notes，做 timed practice。</li>
+        <li><strong>Project：</strong>整理 group work interim output 並進行 peer review。</li>
+        <li><strong>請假：</strong>Midterm 缺席通常要有正式證明，否則可能記零分。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m5",
+    label: "12 月 (Final Exam)",
+    summary: ["Exam Revision", "Project Final Presentation"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>衝刺：</strong>把全學期筆記整理成 revision sheet，做 timed practice。</li>
+        <li><strong>備份：</strong>確認所有檔案已備份，交前請用 checklist 驗証。</li>
+        <li><strong>心態：</strong>Sem 1 final 成績會真實計入 GPA，影響下一學期的信心。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m6",
+    label: "1 月 (Sem Break)",
+    summary: ["檢討 Sem 1 成績", "休息 & 規劃"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>回顧：</strong>找出哪科拉低分數，分析原因。</li>
+        <li><strong>整理：</strong>把零散筆記整理成 concise revision sheet。</li>
+        <li><strong>Non-JUPAS：</strong>初步了解心儀課程類型，記錄常見要求。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m7",
+    label: "2–5 月 (Sem 2)",
+    summary: ["追/保 GPA", "Sem 2 衝刺"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>2月：</strong>看到 GPA，先冷靜評估。</li>
+        <li><strong>3-5月：</strong>Midterm、Assignment 密集期，用 Calendar 管理。</li>
+        <li><strong>策略：</strong>這段的穩定表現會影響 Sem 2 的累積成績。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m8",
+    label: "6–8 月 (Summer)",
+    summary: ["考 IELTS", "實習 / 義工 / 兼職"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>語文：</strong>安排 IELTS / IGCSE 準備。</li>
+        <li><strong>經歷：</strong>兼職 / 實習 / 義工：累積 PS 素材。</li>
+        <li><strong>佈局：</strong>整理 Year 1 學習方式，為 Year 2 佈局。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m9",
+    label: "Year 2 Sem 1",
+    summary: ["Non-JUPAS 報名", "寫 PS & 搵 Ref Letter"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>Personal Statement：</strong>大約 700-800 字。講清楚「點解想讀」同「你有咩準備」。</li>
+        <li><strong>推薦信：</strong>一封已經足夠，重質不重量。搵個熟你嘅 Lecturer。</li>
+        <li><strong>報名：</strong>唔好只報一科，要有保底選擇。留意各大院校 Deadline。</li>
+      </ul>
+    )
+  },
+  {
+    id: "m10",
+    label: "Year 2 Sem 2",
+    summary: ["面試 Interview", "收 Offer & 畢業"],
+    details: (
+      <ul className="list-disc pl-5 space-y-2 text-sm">
+        <li><strong>面試：</strong>收到面試邀請：整理「面試要點清單」。</li>
+        <li><strong>Offer：</strong>Conditional (有條件) vs Direct (直接)。</li>
+        <li><strong>留位費：</strong>務必準時交，Non-refundable。</li>
+        <li><strong>畢業：</strong>確保達到 Conditional Offer 要求，準備文件驗證。</li>
+      </ul>
+    )
+  }
+];
+
+// --- Mindset Data ---
+
+export const MINDSET: MindsetItem[] = [
+  {
+    title: "選 Groupmates 原則",
+    icon: Users,
+    color: "text-blue-500",
+    summary: "技能互補但態度可靠比「技術強」更重要。",
+    details: (
+      <p>觀察出席率與交付紀律。一個肯學肯做嘅普通人，好過一個成日失蹤嘅天才。主動約出來傾計，試探下大家對 Grade 嘅期望係咪一致。</p>
+    )
+  },
+  {
+    title: "Ocamp / 社團 / 兼職",
+    icon: Zap,
+    color: "text-yellow-500",
+    summary: "量力而為，GPA 先係主菜。",
+    details: (
+      <p>上莊 / 參加活動係好，可以識人同減壓，但切記唔好本末倒置。Asso 只有兩年，GPA 跌咗好難追。兼職最好搵同你讀嗰科有關嘅，或者時間彈性嘅。</p>
+    )
+  },
+  {
+    title: "面對壓力",
+    icon: Heart,
+    color: "text-pink-500",
+    summary: "分解任務，接受「短期辛苦」。",
+    details: (
+      <p>分解任務、保持 Weekly Review。接受「短期辛苦是為了後續選擇」。當你覺得好攰嗰陣，諗下你入 U 嗰一刻嘅畫面。搵朋友傾訴，唔好鬱埋喺心。</p>
+    )
+  },
+  {
+    title: "DSE 失利之後",
+    icon: Trophy,
+    color: "text-purple-500",
+    summary: "你唔係輸咗，只係換條路行。",
+    details: (
+      <p>DSE 只係一場考試，唔代表你嘅人生。Asso 係一個 Second Chance。好多人經 Asso 入返 U，甚至讀得比 DSE 直入嘅同學更好，因為佢哋更珍惜機會。</p>
+    )
+  }
+];

@@ -1,6 +1,6 @@
 aimport React from "react";
 
-const PALETTE = ["#1F6FEB", "#F9413A", "#FFCE00", "#00A884", "#6D28D9"];
+const PALETTE = ["#FACC6B", "#22D3EE"];
 
 function nextDistinctColor(index) {
   // Pick a different vibrant color for the shaded side
@@ -122,7 +122,7 @@ export default function BA14Square({ colorIndex = 0, onClick }) {
 
       {/* Embossed BA/14 centered seal */}
       <div
-        className="absolute inset-0 flex items-center justify-center text-black/[0.16] dark:text-white/[0.12] transition-all duration-[130ms] group-hover:text-black/[0.20] group-hover:dark:text-white/[0.16] group-active:text-black/[0.24] group-active:dark:text-white/[0.20]"
+        className="absolute inset-0 flex items-center justify-center text-[#020617]/20 transition-all duration-[130ms] group-hover:text-[#020617]/30 group-active:text-[#020617]/40"
         aria-hidden="true"
       >
         <InnerShadowText sizePct={12} />

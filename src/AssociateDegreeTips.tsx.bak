@@ -1,0 +1,1800 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Map, ChevronRight, CheckCircle2, AlertCircle, 
+  ArrowRight, BookOpen, Users, Brain, Clock, 
+  FileText, Trophy, Mail, Lock, Unlock, 
+  Target, HelpCircle, XCircle, Play, Pause, 
+  RotateCcw, Check, Sparkles, RefreshCw, Shield, 
+  Swords, BarChart3, PieChart, Activity, Layers,
+  GraduationCap, Heart, Frown, Meh, Smile,
+  Calendar, Search, PenTool, Send, FileCheck,
+  AlertTriangle, Compass, Briefcase, Sun, Moon,
+  Layout, ListChecks, GraduationCap as GradIcon,
+  HelpCircle as HelpIcon, MousePointerClick,
+  MessageSquare, UserPlus, BookOpenCheck,
+  ClipboardList, FileSignature, Stamp,
+  CornerDownRight, Lightbulb, Flag,
+  Ghost, Zap, Gauge, FileStack,
+  MousePointer2, MoveRight, Award
+} from 'lucide-react';
+
+// Simple Apple-style emoji image helper (uses emojicdn.elk.sh to render Apple emoji)
+const AppleEmoji = ({ emoji, className = 'w-5 h-5' }: { emoji: string; className?: string }) => (
+  <img
+    src={`https://emojicdn.elk.sh/${encodeURIComponent(emoji)}?style=apple`}
+    alt={emoji}
+    className={`inline-block select-none pointer-events-none ${className}`}
+  />
+);
+
+// --- Types ---
+
+type StageData = {
+  id: number;
+  label: string;
+  title: string;
+  subtitle: string;
+  icon: React.ElementType;
+  color: string;
+  tabs: {
+    id: string;
+    label: string;
+    content: React.ReactNode;
+  }[];
+};
+
+// --- Global Components ---
+
+const FadeIn = ({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) => {
+  const [isVisible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setVisible(true);
+    }, { threshold: 0.1 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div 
+      ref={ref}
+      className={`transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
+
+// --- Interactive Widgets ---
+
+const PathVisualizer = () => {
+  const [activePath, setActivePath] = useState<'retake' | 'asso' | null>(null);
+
+  return (
+    <div className="space-y-6">
+      <div className="relative h-48 bg-[var(--surface)] rounded-xl border border-[var(--border-subtle)] overflow-hidden p-4 flex items-center justify-center">
+        {/* SVG Paths */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 200" preserveAspectRatio="none">
+          {/* Start Node */}
+          <circle cx="50" cy="100" r="6" fill="var(--text-muted)" />
+          
+          {/* Path to Retake (Top) */}
+          <path 
+            d="M 50 100 C 150 100, 150 50, 250 50" 
+            fill="none" 
+            stroke={activePath === 'retake' ? 'var(--primary)' : 'var(--border-subtle)'} 
+            strokeWidth={activePath === 'retake' ? "4" : "2"}
+            className="transition-all duration-500"
+          />
+          
+          {/* Path to Asso (Bottom) */}
+          <path 
+            d="M 50 100 C 150 100, 150 150, 250 150" 
+            fill="none" 
+            stroke={activePath === 'asso' ? 'var(--primary)' : 'var(--border-subtle)'} 
+            strokeWidth={activePath === 'asso' ? "4" : "2"}
+            className="transition-all duration-500"
+          />
+        </svg>
+
+        {/* Interactive Nodes */}
+        <div className="absolute left-[10%] top-1/2 -translate-y-1/2">
+          <div className="px-3 py-1 rounded-full bg-[var(--text)] text-[var(--bg)] text-xs font-bold">DSE 放榜</div>
+        </div>
+
+        <button 
+          onClick={() => setActivePath('retake')}
+          className={`absolute right-[15%] top-[20%] p-3 rounded-xl border transition-all duration-300 flex items-center gap-2 ${
+            activePath === 'retake' 
+              ? 'bg-[var(--primary)] text-white border-[var(--primary)] scale-110 shadow-lg' 
+              : 'bg-[var(--surface)] border-[var(--border-subtle)] hover:border-[var(--primary)]'
+          }`}
+        >
+          <RotateCcw size={16} />
+          <span className="text-sm font-bold">Retake</span>
+        </button>
+
+        <button 
+          onClick={() => setActivePath('asso')}
+          className={`absolute right-[15%] bottom-[20%] p-3 rounded-xl border transition-all duration-300 flex items-center gap-2 ${
+            activePath === 'asso' 
+              ? 'bg-[var(--primary)] text-white border-[var(--primary)] scale-110 shadow-lg' 
+              : 'bg-[var(--surface)] border-[var(--border-subtle)] hover:border-[var(--primary)]'
+          }`}
+        >
+          <GradIcon size={16} />
+          <span className="text-sm font-bold">Asso / HD</span>
+        </button>
+      </div>
+
+      {/* Info Box */}
+      <div className="min-h-[100px] p-4 rounded-xl bg-[var(--surface-highlight)] border border-[var(--border-subtle)] transition-all duration-300">
+        {activePath === 'retake' && (
+          <div className="animate-in fade-in slide-in-from-top-2">
+            <h4 className="font-bold text-[var(--primary)] flex items-center gap-2 mb-2">
+              <RotateCcw size={16} /> Retake DSE
+            </h4>
+            <p className="text-sm text-[var(--text)]">
+              適合：差少少分入 U、有信心某科可以升 Grade。<br/>
+              風險：一試定生死，壓力極大。如果無升分，浪費一年。
+            </p>
+          </div>
+        )}
+        {activePath === 'asso' && (
+          <div className="animate-in fade-in slide-in-from-top-2">
+            <h4 className="font-bold text-[var(--primary)] flex items-center gap-2 mb-2">
+              <GradIcon size={16} /> Associate Degree / HD
+            </h4>
+            <p className="text-sm text-[var(--text)]">
+              適合：想轉環境、DSE 失手但肯搏。<br/>
+              優勢：持續評估 (Assignment + Exam)，唔係一試定生死。入 U 率其實唔低 (只要肯讀)。
+            </p>
+          </div>
+        )}
+        {!activePath && (
+          <div className="flex flex-col items-center justify-center h-full text-[var(--text-muted)] text-sm">
+            <MousePointer2 size={24} className="mb-2 animate-bounce" />
+            點擊上面嘅路徑睇詳情
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const TeammateScanner = () => {
+  const [scanState, setScanState] = useState<'idle' | 'scanning' | 'result'>('idle');
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+
+  const profiles = {
+    carry: { name: 'The Carry', icon: Swords, color: 'text-blue-500', stats: [90, 85, 70] },
+    ghost: { name: 'The Ghost', icon: Ghost, color: 'text-purple-500', stats: [10, 20, 99] },
+    normie: { name: 'The Normie', icon: UserPlus, color: 'text-green-500', stats: [60, 60, 10] },
+  };
+
+  const handleScan = (type: string) => {
+    setSelectedType(type);
+    setScanState('scanning');
+    setTimeout(() => setScanState('result'), 800);
+  };
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6">
+      {/* Controls */}
+      <div className="space-y-3">
+        <div className="text-xs font-bold text-[var(--text-muted)] uppercase mb-2">Select Target</div>
+        {Object.entries(profiles).map(([key, p]) => (
+          <button
+            key={key}
+            onClick={() => handleScan(key)}
+            className={`w-full p-3 rounded-xl border text-left flex items-center gap-3 transition-all ${
+              selectedType === key 
+                ? 'bg-[var(--surface-highlight)] border-[var(--primary)]' 
+                : 'bg-[var(--surface)] border-[var(--border-subtle)] hover:border-[var(--primary)]'
+            }`}
+          >
+            <div className={`p-2 rounded-lg bg-[var(--bg)] ${p.color}`}>
+              <p.icon size={20} />
+            </div>
+            <span className="font-bold text-sm">{p.name}</span>
+            {selectedType === key && <div className="ml-auto w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse"></div>}
+          </button>
+        ))}
+      </div>
+
+      {/* Scanner Display */}
+      <div className="bg-[#0a0a10] rounded-xl border border-[var(--border-subtle)] p-6 relative overflow-hidden flex flex-col items-center justify-center min-h-[200px]">
+        {/* Grid Background */}
+        <div className="absolute inset-0 opacity-20" 
+             style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+        </div>
+
+        {scanState === 'idle' && (
+          <div className="text-gray-500 text-xs font-mono animate-pulse">WAITING FOR INPUT...</div>
+        )}
+
+        {scanState === 'scanning' && (
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="absolute inset-0 bg-[var(--primary)]/10 animate-pulse"></div>
+            <div className="w-full h-0.5 bg-[var(--primary)] absolute top-0 animate-[scan_1s_ease-in-out_infinite]"></div>
+            <div className="text-[var(--primary)] font-mono font-bold">SCANNING...</div>
+          </div>
+        )}
+
+        {scanState === 'result' && selectedType && (
+          <div className="relative z-10 w-full space-y-4 animate-in zoom-in-95 duration-300">
+            <div className="flex items-center gap-2 text-white font-bold border-b border-gray-800 pb-2">
+              {React.createElement(profiles[selectedType as keyof typeof profiles].icon, { size: 18, className: profiles[selectedType as keyof typeof profiles].color })}
+              {profiles[selectedType as keyof typeof profiles].name}
+            </div>
+            
+            <div className="space-y-3">
+              {[
+                { label: 'Reliability', value: profiles[selectedType as keyof typeof profiles].stats[0], color: 'bg-blue-500' },
+                { label: 'Skill', value: profiles[selectedType as keyof typeof profiles].stats[1], color: 'bg-purple-500' },
+                { label: 'Ghost Risk', value: profiles[selectedType as keyof typeof profiles].stats[2], color: 'bg-red-500' },
+              ].map((stat, i) => (
+                <div key={i} className="space-y-1">
+                  <div className="flex justify-between text-xs text-gray-400">
+                    <span>{stat.label}</span>
+                    <span>{stat.value}%</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full ${stat.color} transition-all duration-1000 ease-out`}
+                      style={{ width: `${stat.value}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const GpaGauge = () => {
+  const [grades, setGrades] = useState([4.0, 3.3, 3.0, 4.3, 3.7]);
+  
+  const calculateGPA = () => {
+    const sum = grades.reduce((a, b) => a + b, 0);
+    return (sum / grades.length).toFixed(2);
+  };
+
+  const gpa = parseFloat(calculateGPA());
+  const percentage = (gpa / 4.3) * 100;
+
+  return (
+    <div className="flex flex-col md:flex-row gap-8 items-center">
+      {/* Gauge */}
+      <div className="relative w-48 h-24 overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full h-full bg-[var(--surface-highlight)] rounded-t-full border-t border-x border-[var(--border-subtle)]"></div>
+        <div 
+          className="absolute bottom-0 left-0 w-full h-full bg-[var(--primary)] origin-bottom transition-transform duration-500 ease-out opacity-20 rounded-t-full"
+          style={{ transform: `rotate(${percentage * 1.8 - 180}deg)` }}
+        ></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center mb-2">
+          <div className="text-3xl font-bold text-[var(--text)]">{gpa}</div>
+          <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-widest">CGPA</div>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="flex-1 grid grid-cols-5 gap-2">
+        {grades.map((g, i) => (
+          <div key={i} className="flex flex-col gap-1">
+            <div className="h-24 bg-[var(--surface)] rounded-lg relative overflow-hidden border border-[var(--border-subtle)] group cursor-pointer hover:border-[var(--primary)]">
+              <div 
+                className="absolute bottom-0 left-0 right-0 bg-[var(--primary)] transition-all duration-300 opacity-80 group-hover:opacity-100"
+                style={{ height: `${(g / 4.3) * 100}%` }}
+              ></div>
+              <input 
+                type="range" 
+                min="0" max="4.3" step="0.3"
+                value={g}
+                onChange={(e) => {
+                  const newGrades = [...grades];
+                  newGrades[i] = parseFloat(e.target.value);
+                  setGrades(newGrades);
+                }}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+            </div>
+            <div className="text-center text-xs font-bold text-[var(--text-muted)]">Sub {i+1}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const DocumentStack = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const docs = [
+    { title: 'Personal Statement', icon: FileText, color: 'bg-blue-500', desc: '你的故事核心。講清楚「點解想讀」同「你有咩準備」。' },
+    { title: 'Transcript', icon: FileCheck, color: 'bg-green-500', desc: 'GPA 係入場券。Year 1 Sem 1 成績最關鍵。' },
+    { title: 'Reference Letter', icon: FileSignature, color: 'bg-purple-500', desc: '搵個熟你嘅 Lecturer 寫。早啲 Request，唔好臨 Deadline 先問。' },
+    { title: 'Certificates', icon: Award, color: 'bg-orange-500', desc: '只放最 Relevant 嘅獎項。中學陸運會金牌通常無用。' },
+  ];
+
+  const nextDoc = () => setActiveIndex((prev) => (prev + 1) % docs.length);
+
+  return (
+    <div className="flex flex-col md:flex-row gap-8 items-center">
+      {/* Stack Visual */}
+      <div className="relative w-64 h-48 cursor-pointer group" onClick={nextDoc}>
+        {docs.map((doc, i) => {
+          const offset = (i - activeIndex + docs.length) % docs.length;
+          const isTop = offset === 0;
+          
+          return (
+            <div
+              key={i}
+              className={`absolute inset-0 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface)] shadow-lg transition-all duration-500 ease-out flex flex-col items-center justify-center gap-3 p-4
+                ${isTop ? 'z-10 scale-100 opacity-100 translate-y-0 rotate-0' : 'z-0 scale-90 opacity-40 translate-y-4 rotate-6'}
+              `}
+              style={{ 
+                transform: isTop ? 'none' : `translateY(${offset * 10}px) scale(${1 - offset * 0.05})`,
+                zIndex: docs.length - offset 
+              }}
+            >
+              <div className={`p-3 rounded-full ${doc.color} text-white`}>
+                <doc.icon size={24} />
+              </div>
+              <div className="font-bold text-sm text-center">{doc.title}</div>
+              {isTop && (
+                <div className="absolute top-2 right-2 text-[10px] text-[var(--text-muted)] animate-pulse">
+                  Click for next
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Description */}
+      <div className="flex-1 space-y-4">
+        <div className="flex items-center gap-2 text-[var(--primary)] font-bold uppercase tracking-widest text-xs">
+          <FileStack size={14} /> Document {activeIndex + 1} / {docs.length}
+        </div>
+        <h3 className="text-2xl font-bold">{docs[activeIndex].title}</h3>
+        <p className="text-[var(--text-muted)] leading-relaxed">
+          {docs[activeIndex].desc}
+        </p>
+        <button 
+          onClick={nextDoc}
+          className="flex items-center gap-2 text-sm font-bold hover:text-[var(--primary)] transition-colors"
+        >
+          Next Document <MoveRight size={16} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const ComparisonSlider = () => {
+  const [mode, setMode] = useState<'retake' | 'asso'>('asso');
+
+  return (
+    <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border-subtle)] overflow-hidden">
+      <div className="flex border-b border-[var(--border-subtle)]">
+        <button 
+          onClick={() => setMode('retake')}
+          className={`flex-1 py-4 font-bold text-sm transition-colors ${mode === 'retake' ? 'bg-[var(--primary)] text-white' : 'hover:bg-[var(--surface-highlight)]'}`}
+        >
+          Retake DSE
+        </button>
+        <button 
+          onClick={() => setMode('asso')}
+          className={`flex-1 py-4 font-bold text-sm transition-colors ${mode === 'asso' ? 'bg-[var(--primary)] text-white' : 'hover:bg-[var(--surface-highlight)]'}`}
+        >
+          讀 Asso / HD
+        </button>
+      </div>
+      <div className="p-6 space-y-4">
+        <div className="grid grid-cols-[100px_1fr] gap-4 items-center">
+          <div className="text-xs font-bold text-[var(--text-muted)] uppercase">學習內容</div>
+          <div className="text-sm">
+            {mode === 'retake' ? '溫習舊有中學 Syllabus，操 Past Paper。' : '全新大專課程，涉獵專業知識 (e.g. Marketing, Psych)。'}
+          </div>
+        </div>
+        <div className="grid grid-cols-[100px_1fr] gap-4 items-center">
+          <div className="text-xs font-bold text-[var(--text-muted)] uppercase">風險 & 壓力</div>
+          <div className="text-sm">
+            {mode === 'retake' ? '一試定生死。壓力極大，容錯率低。' : '持續評估 (Assignment + Exam)。壓力分散，但要 Keep 住 consistent。'}
+          </div>
+        </div>
+        <div className="grid grid-cols-[100px_1fr] gap-4 items-center">
+          <div className="text-xs font-bold text-[var(--text-muted)] uppercase">升大學</div>
+          <div className="text-sm">
+            {mode === 'retake' ? 'JUPAS (主要途徑)。' : 'Non-JUPAS (主要途徑) / 高年級入學 (Year 3)。'}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const HudIcons = () => {
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+
+  const items = [
+    { id: 'gpa', icon: BarChart3, label: 'GPA', desc: '4.3 Scale (A+ = 4.3). 4.0 is already perfect.' },
+    { id: 'timetable', icon: Calendar, label: 'Timetable', desc: 'Check gaps. Don\'t skip lectures.' },
+    { id: 'portal', icon: Layout, label: 'Portal', desc: 'Moodle / Canvas. Download notes BEFORE class.' },
+    { id: 'email', icon: Mail, label: 'Email', desc: 'Check daily. Official comms happen here.' },
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      {items.map(item => (
+        <div 
+          key={item.id}
+          className="relative group"
+          onMouseEnter={() => setActiveTooltip(item.id)}
+          onMouseLeave={() => setActiveTooltip(null)}
+        >
+          <div className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border-subtle)] flex flex-col items-center gap-2 hover:border-[var(--primary)] transition-colors cursor-help">
+            <item.icon className="text-[var(--primary)]" />
+            <span className="font-bold text-sm">{item.label}</span>
+          </div>
+          {activeTooltip === item.id && (
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 bg-[var(--text)] text-[var(--bg)] text-xs rounded-lg shadow-xl z-20 pointer-events-none">
+              {item.desc}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[var(--text)]"></div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const RoleCards = () => {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const roles = [
+    { id: 'carry', label: 'Carry 型', icon: Swords, desc: '能力強，主動帶領。跟住佢有運行，但唔好做 Freerider。' },
+    { id: 'safe', label: '穩陣型', icon: Shield, desc: '唔會特別出彩，但會準時交貨。好隊友。' },
+    { id: 'free', label: 'Freerider', icon: Frown, desc: '失蹤、遲交、求其。必須儘早識別，保留證據 Report。' },
+  ];
+
+  return (
+    <div className="flex gap-2 overflow-x-auto pb-2">
+      {roles.map(role => (
+        <button
+          key={role.id}
+          onClick={() => setExpanded(expanded === role.id ? null : role.id)}
+          className={`flex-shrink-0 p-4 rounded-xl border transition-all text-left w-32 ${
+            expanded === role.id 
+              ? 'bg-[var(--primary)] text-white border-[var(--primary)] w-48' 
+              : 'bg-[var(--surface)] border-[var(--border-subtle)] hover:border-[var(--primary)]'
+          }`}
+        >
+          <role.icon size={24} className="mb-2" />
+          <div className="font-bold text-sm mb-1">{role.label}</div>
+          {expanded === role.id && (
+            <div className="text-xs opacity-90 animate-in fade-in slide-in-from-top-2">
+              {role.desc}
+            </div>
+          )}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+const GradeSlider = () => {
+  const [val, setVal] = useState(2); // 0:C, 1:B, 2:A
+  const grades = ['C / D', 'B Range', 'A Range'];
+  const messages = [
+    '用冷靜 checklist 評估 appeal。唔好全情怪制度，諗下有無得救。',
+    '正常發揮。繼續優化讀書方法，衝 A。',
+    '恭喜！保持 Effort，唔好鬆懈。'
+  ];
+
+  return (
+    <div className="p-6 bg-[var(--surface)] rounded-2xl border border-[var(--border-subtle)]">
+      <h4 className="font-bold mb-4">你估自己呢科 Grade 係？</h4>
+      <input 
+        type="range" 
+        min="0" 
+        max="2" 
+        step="1"
+        value={val}
+        onChange={(e) => setVal(parseInt(e.target.value))}
+        className="w-full h-2 bg-[var(--border-subtle)] rounded-lg appearance-none cursor-pointer accent-[var(--primary)] mb-4"
+      />
+      <div className="flex justify-between text-xs font-bold text-[var(--text-muted)] mb-4">
+        {grades.map((g, i) => <span key={i} className={i === val ? 'text-[var(--primary)]' : ''}>{g}</span>)}
+      </div>
+      <div className="p-3 rounded-lg bg-[var(--surface-highlight)] text-sm text-[var(--text)]">
+        <span className="font-bold text-[var(--primary)]">Mindset: </span>
+        {messages[val]}
+      </div>
+    </div>
+  );
+};
+
+const ChecklistBoard = () => {
+  return (
+    <div className="grid grid-cols-3 gap-2 text-xs">
+      <div className="space-y-2">
+        <div className="font-bold text-[var(--text-muted)] text-center">已經有</div>
+        <div className="p-2 bg-[var(--surface)] border border-[var(--border-subtle)] rounded text-center">DSE 成績</div>
+        <div className="p-2 bg-[var(--surface)] border border-[var(--border-subtle)] rounded text-center">身份證</div>
+      </div>
+      <div className="space-y-2">
+        <div className="font-bold text-[var(--text-muted)] text-center">準備緊</div>
+        <div className="p-2 bg-[var(--primary)]/10 border border-[var(--primary)] rounded text-center text-[var(--primary)] font-bold">Personal Statement</div>
+        <div className="p-2 bg-[var(--primary)]/10 border border-[var(--primary)] rounded text-center text-[var(--primary)] font-bold">Reference Letter</div>
+      </div>
+      <div className="space-y-2">
+        <div className="font-bold text-[var(--text-muted)] text-center">仲未開始</div>
+        <div className="p-2 bg-[var(--surface)] border border-[var(--border-subtle)] rounded text-center opacity-50">Interview Prep</div>
+      </div>
+    </div>
+  );
+};
+
+const OfferCarousel = () => {
+  const offers = [
+    { title: 'Conditional', desc: '有條件取錄。通常要求 CGPA > 3.x。你要 Keep 住個分。', color: 'bg-amber-50 border-amber-200 text-amber-900', icon: AlertCircle },
+    { title: 'Direct Offer', desc: '直接取錄。恭喜你！交錢留位就得。', color: 'bg-emerald-50 border-emerald-200 text-emerald-900', icon: CheckCircle2 },
+    { title: 'Waiting List', desc: '候補名單。唔好灰心，有人放位就有機會。', color: 'bg-blue-50 border-blue-200 text-blue-900', icon: Clock },
+  ];
+
+  return (
+    <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
+      {offers.map((o, i) => (
+        <div key={i} className={`snap-center flex-shrink-0 w-64 p-6 rounded-2xl border-2 ${o.color} transition-all hover:-translate-y-1 shadow-sm relative overflow-hidden group`}>
+          <div className="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity rotate-12">
+            <o.icon size={100} />
+          </div>
+          <div className="flex justify-between items-start mb-4 relative z-10">
+            <div className="p-3 rounded-xl bg-white/60 backdrop-blur-sm shadow-sm">
+              <o.icon size={24} />
+            </div>
+            <div className="px-2 py-1 rounded text-[10px] font-bold bg-white/50 uppercase tracking-wider">Official</div>
+          </div>
+          <div className="font-bold text-xl mb-2 relative z-10">{o.title}</div>
+          <div className="text-sm opacity-90 leading-relaxed relative z-10">{o.desc}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const EncouragementWall = () => {
+  const quotes = [
+    "你唔係輸咗，只係仲未完結。",
+    "你而家頂緊嘅壓力，係之後面試嘅故事素材。",
+    "休息是為了走更長的路。",
+    "Plan B 唔係失敗，係另一條路。"
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      {quotes.map((q, i) => (
+        <div key={i} className="p-3 rounded-lg bg-[var(--surface-highlight)] text-xs font-medium text-[var(--text)] border border-[var(--border-subtle)]">
+          "{q}"
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// StatsBanner component restored with empty stat text values
+
+const StatsBanner = ({ stats }: { stats?: any[] }) => {
+  const defaultStats = [
+    { label: '', value: '', desc: '', color: 'text-emerald-500' },
+    { label: '', value: '', desc: '', color: 'text-blue-500' },
+    { label: '', value: '', desc: '', color: 'text-purple-500' },
+    { label: '', value: '', desc: '', color: 'text-orange-500' },
+  ];
+  const items = stats || defaultStats;
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-y border-[var(--border-subtle)] bg-[var(--surface)]/50 backdrop-blur-sm my-12">
+      {items.map((s, i) => (
+        <div key={i} className="text-center space-y-1 group cursor-default">
+          <div className={`text-3xl md:text-4xl font-black tracking-tighter ${s.color} group-hover:scale-110 transition-transform duration-300`}>
+            {s.value}
+          </div>
+          <div className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)]">{s.label}</div>
+          <div className="text-[10px] text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity">{s.desc}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// --- Stage Data ---
+
+const STAGES: StageData[] = [
+  {
+    id: 0,
+    label: "Stage 0",
+    title: "DSE 放榜 — Retake 定 Asso / HD？",
+    subtitle: "選擇路線：Retake · Asso · HD",
+    icon: Map,
+    color: "from-red-500 to-orange-500",
+    tabs: [
+      {
+        id: "action",
+        label: "我依家會做啲咩？",
+        content: (
+          <div className="space-y-4 text-sm">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border-subtle)] text-center">
+                <div className="mx-auto w-12 h-12 rounded-full bg-[var(--bg)] flex items-center justify-center mb-3">
+                  <AppleEmoji emoji={"📚"} className="w-6 h-6" />
+                </div>
+                <div className="font-bold">Retake</div>
+                <div className="text-xs text-[var(--text-muted)] mt-1">重考 DSE，目標提高分數入大學。</div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border-subtle)] text-center">
+                <div className="mx-auto w-12 h-12 rounded-full bg-[var(--bg)] flex items-center justify-center mb-3">
+                  <AppleEmoji emoji={"🎓"} className="w-6 h-6" />
+                </div>
+                <div className="font-bold">Asso</div>
+                <div className="text-xs text-[var(--text-muted)] mt-1">就讀副學士 / 高級文憑，透過 GPA 爭取升學機會。</div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border-subtle)] text-center">
+                <div className="mx-auto w-12 h-12 rounded-full bg-[var(--bg)] flex items-center justify-center mb-3">
+                  <AppleEmoji emoji={"⏳"} className="w-6 h-6" />
+                </div>
+                <div className="font-bold">HD</div>
+                <div className="text-xs text-[var(--text-muted)] mt-1">Higher Diploma，另一條升學 / 就業途徑。</div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <ul className="space-y-3">
+                <li className="flex gap-2"><CheckCircle2 size={16} className="text-[var(--primary)] flex-shrink-0" /> 決定大方向：Retake / Asso / HD。</li>
+                <li className="flex gap-2"><CheckCircle2 size={16} className="text-[var(--primary)] flex-shrink-0" /> 如果選 Asso：揀學科要同自己能力 + 興趣 + 之後出路對齊。</li>
+                <li className="flex gap-2"><CheckCircle2 size={16} className="text-[var(--primary)] flex-shrink-0" /> 留意 associate institutions 嘅升學率、課程結構，而唔係淨係睇宣傳。</li>
+              </ul>
+            </div>
+          </div>
+        )
+      },
+      {
+        id: "why",
+        label: "點解要做？",
+        content: (
+          <div className="space-y-3 text-sm">
+            <p>Asso 唔係浪費時間，係 <strong>Second Chance</strong>。大學唔會睇你 DSE 幾多分 (只要符合基本入學要求)，重點係你喺 Asso 嘅 GPA。</p>
+            <div className="p-3 bg-[var(--surface-highlight)] rounded-lg">
+              <strong>2+2 vs 1+4:</strong><br/>
+              大部分人行 2+2 (讀完 2 年 Asso 入 Year 3)。<br/>
+              極少數人行 1+4 (讀完 1 年 Asso 入 Year 1)，需要極高 GPA。
+            </div>
+          </div>
+        )
+      },
+      {
+        id: "tools",
+        label: "Interactive Path",
+        content: <PathVisualizer />
+      }
+    ]
+  },
+  {
+    id: 1,
+    label: "Stage 1",
+    title: "開學頭兩星期",
+    subtitle: "搞清楚遊戲規則",
+    icon: Flag,
+    color: "from-orange-500 to-amber-500",
+    tabs: [
+      {
+        id: "action",
+        label: "Timeline",
+        content: (
+          <div className="space-y-4 text-sm">
+            <div className="flex gap-3">
+              <div className="font-bold text-[var(--primary)] w-16 flex-shrink-0">Day 1-3</div>
+              <div>聽 Orientation / 搞學生証 / Login 各種系統 (Moodle, Portal)。</div>
+            </div>
+            <div className="flex gap-3">
+              <div className="font-bold text-[var(--primary)] w-16 flex-shrink-0">Day 4-7</div>
+              <div>熟悉 Timetable、知邊科要 Group Project。Download 定 Course Outline。</div>
+            </div>
+            <div className="flex gap-3">
+              <div className="font-bold text-[var(--primary)] w-16 flex-shrink-0">Day 8-14</div>
+              <div>試坐前排、主動問問題、識一兩個「書友」(非酒肉朋友)。</div>
+            </div>
+          </div>
+        )
+      },
+      {
+        id: "why",
+        label: "Why?",
+        content: (
+          <ul className="space-y-3 text-sm">
+            <li className="flex gap-2"><Lightbulb size={16} className="text-[var(--primary)] flex-shrink-0" /> Asso 節奏極快 (13 個星期就完 Sem)，早兩星期唔搞掂，之後會好亂。</li>
+            <li className="flex gap-2"><Lightbulb size={16} className="text-[var(--primary)] flex-shrink-0" /> GPA 由 <strong>Day 1</strong> 已經開始計。無「試玩 Semester」呢回事。</li>
+            <li className="flex gap-2"><Lightbulb size={16} className="text-[var(--primary)] flex-shrink-0" /> "You're the average of the 5 people..." 識啱人影響你之後兩年。</li>
+          </ul>
+        )
+      },
+      {
+        id: "tools",
+        label: "HUD",
+        content: <HudIcons />
+      }
+    ]
+  },
+  {
+    id: 2,
+    label: "Stage 2",
+    title: "Sem 1 戰鬥期",
+    subtitle: "讀書方法 + Group Project",
+    icon: Swords,
+    color: "from-amber-500 to-yellow-500",
+    tabs: [
+      {
+        id: "action",
+        label: "Checklist",
+        content: (
+          <div className="space-y-3 text-sm">
+            <div className="font-bold mb-2">Before you say YES to a group:</div>
+            <ul className="space-y-2">
+              <li className="flex gap-2"><Check size={16} className="text-[var(--primary)]" /> 問對方目標 Uni / Program。</li>
+              <li className="flex gap-2"><Check size={16} className="text-[var(--primary)]" /> 問佢知唔知 GPA 要幾多分先入到。</li>
+              <li className="flex gap-2"><Check size={16} className="text-[var(--primary)]" /> 睇吓佢平時上堂有冇出現 / 有冇問書。</li>
+            </ul>
+          </div>
+        )
+      },
+      {
+        id: "why",
+        label: "Methods",
+        content: (
+          <div className="grid grid-cols-1 gap-3 text-sm">
+            <div className="p-3 border border-[var(--border-subtle)] rounded-lg">
+              <div className="font-bold text-[var(--primary)]">Feynman 技巧</div>
+              <div>用自己說得明，先算明白。試下教你啲同學。</div>
+            </div>
+            <div className="p-3 border border-[var(--border-subtle)] rounded-lg">
+              <div className="font-bold text-[var(--primary)]">Past Paper 策略</div>
+              <div>唔係淨係操，係總結錯處。搵出題 Pattern。</div>
+            </div>
+          </div>
+        )
+      },
+      {
+        id: "tools",
+        label: "Teammate Scanner",
+        content: <TeammateScanner />
+      }
+    ]
+  },
+  {
+    id: 3,
+    label: "Stage 3",
+    title: "Exam & 成績",
+    subtitle: "Curve / 預期 vs 實際 / Appeal",
+    icon: BarChart3,
+    color: "from-yellow-500 to-lime-500",
+    tabs: [
+      {
+        id: "action",
+        label: "Decision",
+        content: (
+          <div className="space-y-3 text-sm">
+            <div className="font-bold">值唔值得 Appeal?</div>
+            <div className="pl-4 border-l-2 border-[var(--border-subtle)] space-y-2">
+              <div>1. 有冇客觀理由？(e.g. MC 嚴重對唔到 Answer)</div>
+              <div>2. 呢科係咪對你 Non-JUPAS 申請好關鍵？</div>
+              <div>3. 你有冇時間 + 心理空間去處理？</div>
+            </div>
+            <div className="text-[var(--text-muted)] text-xs mt-2">如果答案係 NO，專心向前好過。</div>
+          </div>
+        )
+      },
+      {
+        id: "why",
+        label: "Mindset",
+        content: (
+          <div className="space-y-3 text-sm">
+            <p>Curve 係存在，但你控制唔到。重點係：</p>
+            <ul className="list-disc list-inside space-y-1 text-[var(--text-muted)]">
+              <li>減少失準 (Careless mistakes)</li>
+              <li>少交白卷 (即使唔識都要寫 steps)</li>
+              <li>唔做 Deadline Fighter</li>
+            </ul>
+            <p>比較自己 vs Semester 開頭的自己，而唔係 vs 完美想像。</p>
+          </div>
+        )
+      },
+      {
+        id: "tools",
+        label: "GPA Simulator",
+        content: <GpaGauge />
+      }
+    ]
+  },
+  {
+    id: 4,
+    label: "Stage 4",
+    title: "全局時間線",
+    subtitle: "兩年 Asso Roadmap",
+    icon: Calendar,
+    color: "from-lime-500 to-green-500",
+    tabs: [
+      {
+        id: "action",
+        label: "Timeline",
+        content: (
+          <div className="space-y-4 text-sm relative">
+            <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-[var(--border-subtle)]"></div>
+            {[
+              { t: 'Y1 Sem 1', d: '專心適應、打好 GPA、開始諗 Full Cert / 語文補救。' },
+              { t: 'Y1 Sem Break', d: '休息少少，處理 DSE / IELTS / 其他考試。' },
+              { t: 'Y1 Sem 2', d: '持續 Keep 住 GPA、不鬆懈。' },
+              { t: 'Y2 Sem 1', d: 'Non-JUPAS 報名期、收 Interview、準備 PS。' },
+              { t: 'Y2 Sem Break', d: '陸續收 Conditional / Direct Offers。' },
+              { t: 'Y2 Sem 2', d: '處理文件、留位費、宣誓、Reg 科。' }
+            ].map((item, i) => (
+              <div key={i} className="flex gap-3 relative z-10">
+                <div className="w-4 h-4 rounded-full bg-[var(--primary)] border-2 border-[var(--bg)] flex-shrink-0"></div>
+                <div>
+                  <div className="font-bold text-[var(--primary)]">{item.t}</div>
+                  <div className="text-[var(--text-muted)]">{item.d}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      },
+      {
+        id: "why",
+        label: "Perspectives",
+        content: (
+          <div className="space-y-3 text-sm">
+            <div className="p-3 bg-[var(--surface-highlight)] rounded-lg">
+              <div className="font-bold text-[var(--primary)]">Year 1 就想走 (1+4)?</div>
+              <div>極難。GPA 要爆 4 (接近滿分)。DSE 成績都要見得人。建議當 Bonus，唔好當唯一目標。</div>
+            </div>
+            <div className="p-3 border border-[var(--border-subtle)] rounded-lg">
+              <div className="font-bold text-[var(--text)]">行穩陣 Year 2 走 (2+2)</div>
+              <div>主流玩法。Year 1 GPA 係入場券。Year 2 Sem 1 係決勝局。</div>
+            </div>
+          </div>
+        )
+      },
+      {
+        id: "tools",
+        label: "Radar",
+        content: (
+          <div className="space-y-2 text-xs">
+            <div className="flex justify-between p-2 border border-[var(--border-subtle)] rounded">
+              <span>Non-JUPAS 報名</span>
+              <span className="font-bold">每年 11 月 - 春季</span>
+            </div>
+            <div className="flex justify-between p-2 border border-[var(--border-subtle)] rounded">
+              <span>IELTS 報名</span>
+              <span className="font-bold">預留 2-3 個月</span>
+            </div>
+          </div>
+        )
+      }
+    ]
+  },
+  {
+    id: 5,
+    label: "Stage 5",
+    title: "Non-JUPAS 申請",
+    subtitle: "文件 / PS / 推薦信",
+    icon: FileSignature,
+    color: "from-green-500 to-teal-500",
+    tabs: [
+      {
+        id: "action",
+        label: "Guide",
+        content: (
+          <ul className="space-y-3 text-sm">
+            <li className="flex gap-2"><PenTool size={16} className="text-[var(--primary)] flex-shrink-0" /> <strong>Personal Statement (PS):</strong> 大約 700-800 字。</li>
+            <li className="flex gap-2"><Layout size={16} className="text-[var(--primary)] flex-shrink-0" /> <strong>結構：</strong> 開頭 → 2-3 個特質 + 經歷 → 點樣連到目標 Program → 結語。</li>
+            <li className="flex gap-2"><UserPlus size={16} className="text-[var(--primary)] flex-shrink-0" /> <strong>推薦信：</strong> 一封已經足夠，重質不重量。搵個熟你嘅 Lecturer。</li>
+          </ul>
+        )
+      },
+      {
+        id: "why",
+        label: "Principles",
+        content: (
+          <div className="space-y-3 text-sm">
+            <p>不用硬塞所有活動；揀最 <strong>Relevant</strong> 嗰啲。</p>
+            <p>PS 係講「你點諗 + 你嘅成長」，唔係 CV 重複。</p>
+            <p>大部分科目只要達到語文門檻即可；高很多分唔一定加好多分 (除非係語文系)。</p>
+          </div>
+        )
+      },
+      {
+        id: "tools",
+        label: "Doc Stack",
+        content: <DocumentStack />
+      }
+    ]
+  },
+  {
+    id: 6,
+    label: "Stage 6",
+    title: "Offer / Conditional",
+    subtitle: "留位費 / 宣誓 / 文件",
+    icon: Mail,
+    color: "from-teal-500 to-cyan-500",
+    tabs: [
+      {
+        id: "action",
+        label: "Checklist",
+        content: (
+          <ul className="space-y-3 text-sm">
+            <li className="flex gap-2"><CheckCircle2 size={16} className="text-[var(--primary)] flex-shrink-0" /> 確認條件有冇可能 Fulfill (e.g. CGPA)。</li>
+            <li className="flex gap-2"><CheckCircle2 size={16} className="text-[var(--primary)] flex-shrink-0" /> Mark 實所有 Deadline 喺日曆 (尤其是交錢)。</li>
+            <li className="flex gap-2"><CheckCircle2 size={16} className="text-[var(--primary)] flex-shrink-0" /> 搞定留位費支付 (通常幾千蚊，Non-refundable)。</li>
+          </ul>
+        )
+      },
+      {
+        id: "why",
+        label: "Docs",
+        content: (
+          <div className="space-y-3 text-sm">
+            <p>大學可能要求你宣誓文件真確 (去民政事務處宣誓)。</p>
+            <p>要影印 / 彩印副本、保留正本。</p>
+            <p className="font-bold text-[var(--primary)]">寧願早交唔好拖到最後一日。</p>
+          </div>
+        )
+      },
+      {
+        id: "tools",
+        label: "Offers",
+        content: <OfferCarousel />
+      }
+    ]
+  },
+  {
+    id: 7,
+    label: "Stage 7",
+    title: "Plan B 區",
+    subtitle: "Miss Deadline / GPA 失手",
+    icon: Compass,
+    color: "from-cyan-500 to-blue-500",
+    tabs: [
+      {
+        id: "action",
+        label: "Mindset",
+        content: (
+          <div className="space-y-3 text-sm">
+            <p>DSE、Asso、Non-JUPAS 只係第二次機會的一部份，不是人生終點。</p>
+            <p>重新部署唔等於輸，只係多行一個圈。</p>
+          </div>
+        )
+      },
+      {
+        id: "why",
+        label: "Options",
+        content: (
+          <ul className="space-y-2 text-sm list-disc list-inside text-[var(--text-muted)]">
+            <li>重讀一年 Asso 某些科目 (Retake courses)。</li>
+            <li>找其他入學年份 / Round (Spring Intake?)。</li>
+            <li>在工作 / Gap Year 中累積經驗後再申請。</li>
+          </ul>
+        )
+      },
+      {
+        id: "tools",
+        label: "Support",
+        content: <EncouragementWall />
+      }
+    ]
+  }
+];
+
+// --- Main Component ---
+
+export default function AssociateDegreeTips({ lang }: { lang: string }) {
+  const [activeStage, setActiveStage] = useState(0);
+  const [activeTab, setActiveTab] = useState<Record<number, string>>({});
+
+  const scrollToStage = (index: number) => {
+    setActiveStage(index);
+    const element = document.getElementById(`stage-${index}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  // Scroll spy
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = document.getElementById('main-scroll-container');
+      if (!container) return;
+
+      const stages = STAGES.map(s => document.getElementById(`stage-${s.id}`));
+      const scrollPosition = container.scrollTop + 300;
+
+      stages.forEach((stage, index) => {
+        if (stage && stage.offsetTop <= scrollPosition && (stage.offsetTop + stage.offsetHeight) > scrollPosition) {
+          setActiveStage(index);
+        }
+      });
+    };
+
+    const container = document.getElementById('main-scroll-container');
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial check
+    }
+    
+    return () => {
+      if (container) container.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] font-sans selection:bg-[var(--primary)] selection:text-white pb-32">
+      
+      {/* Top bar removed as requested */}
+
+      {/* Hero Section */}
+      <div className="relative overflow-hidden pt-32 pb-40 px-4">
+        
+          <div className="max-w-4xl mx-auto relative z-10">
+          {/* Removed 'Year 1 Survival Guide' badge */}
+          
+          <div className="mb-12">
+            <p className="text-2xl md:text-3xl text-[var(--text)] font-bold leading-relaxed mb-4 text-center">歡迎你嚟到呢個網站。</p>
+            <p className="text-lg md:text-xl text-[var(--text-muted)] leading-relaxed mb-2 mx-auto max-w-3xl text-left">希望你喺度搵到自己需要嘅資訊。</p>
+            <p className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed mx-auto max-w-3xl text-left">呢度會不定期更新，慢慢同你一齊整理升學路。</p>
+          </div>
+
+          {/* Part 1：大局觀 — 更 Apple-style、寬鬆間距 */}
+          <section className="mx-auto max-w-4xl px-4 sm:px-6 py-10 lg:py-12">
+            <div className="rounded-3xl p-6 md:p-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+                {/* Main column: roomy header + airy cards */}
+                <div className="md:col-span-3">
+                  <h3 className="text-3xl font-semibold mb-4 text-center md:text-left">Part 1：大局觀 — Asso 兩年升大學嘅 Game Flow</h3>
+                  <p className="text-sm text-[var(--text-muted)] mb-6 leading-relaxed mx-auto max-w-3xl text-left" style={{ lineHeight: 1.7 }}>
+                    呢度係一個寬鬆、重點清晰嘅全局 briefing，幫你喺入學後兩年做出有策略嘅決定。留意時間點（Non‑JUPAS、語試、Interview），分階段準備會舒服得多。
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/** Card: Decision */}
+                    <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm" style={{ minHeight: '96px' }}>
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-[var(--surface)]/70">
+                          <CheckCircle2 size={20} className="text-[var(--primary)]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold">決定大方向</div>
+                          <div className="text-xs text-[var(--text-muted)] mt-1">放榜後先決定 Retake / Asso / HD — 呢個決定會影響你嘅時間表與心態。</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/** Card: Day1 Mindset */}
+                    <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm" style={{ minHeight: '96px' }}>
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-[var(--surface)]/70">
+                          <GraduationCap size={20} className="text-[var(--primary)]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold">Day 1 Mindset</div>
+                          <div className="text-xs text-[var(--text-muted)] mt-1">Asso 嘅 GPA 由第一日開始計，Attendance & Assignment 好重要。建立習慣勝過臨急抱佛腳。</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/** Card: Goals */}
+                    <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm" style={{ minHeight: '96px' }}>
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-[var(--surface)]/70">
+                          <Target size={20} className="text-[var(--primary)]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold">年頭定目標</div>
+                          <div className="text-xs text-[var(--text-muted)] mt-1">設定 Target GPA，拆解每學期嘅小目標，按校系門檻調整策略。</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/** Card: Timeline management */}
+                    <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm" style={{ minHeight: '96px' }}>
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-[var(--surface)]/70">
+                          <Calendar size={20} className="text-[var(--primary)]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold">時間軸管理</div>
+                          <div className="text-xs text-[var(--text-muted)] mt-1">留意 Non‑JUPAS 報名（通常 Y2 Sem1），提前準備 PS、推薦信及語文成績。</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/** Card: Documents & Interview */}
+                    <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm" style={{ minHeight: '96px' }}>
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-[var(--surface)]/70">
+                          <PenTool size={20} className="text-[var(--primary)]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold">面試同文件</div>
+                          <div className="text-xs text-[var(--text-muted)] mt-1">PS 針對 Program；推薦信要早搵 Lecturer；面試要練習並整理例子。</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/** Card: Plan B */}
+                    <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm" style={{ minHeight: '96px' }}>
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-[var(--surface)]/70">
+                          <Shield size={20} className="text-[var(--primary)]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold">Plan B</div>
+                          <div className="text-xs text-[var(--text-muted)] mt-1">準備備選：延後申請、替代院校或 Gap Year，保留後路令決策更安心。</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 text-sm text-[var(--text-muted)]">快速參考：Keep 住學業穩定、提前做 Non‑JUPAS 準備、以及保留 Plan B。</div>
+                </div>
+
+                {/* Aside: airy timeline / tips */}
+                <aside className="md:col-span-1">
+                  <div className="p-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-9 h-9 rounded-lg bg-[var(--surface)]/60 flex items-center justify-center"><Calendar size={16} className="text-[var(--primary)]" /></div>
+                      <div className="font-semibold">時間軸參考</div>
+                    </div>
+
+                    <ol className="space-y-4 text-xs text-[var(--text-muted)]">
+                      <li>
+                        <div className="font-medium">Y1 Sem1</div>
+                        <div>適應節奏、建立習慣、記住 Course Outline 同評核方法。</div>
+                      </li>
+                      <li>
+                        <div className="font-medium">Y1 Sem2</div>
+                        <div>穩住 GPA，整理需要補救嘅語文或基礎科目。</div>
+                      </li>
+                      <li>
+                        <div className="font-medium">Y2 Sem1</div>
+                        <div>Non‑JUPAS 報名期；開始交 PS、推薦信同語文成績。</div>
+                      </li>
+                      <li>
+                        <div className="font-medium">Y2 Sem2</div>
+                        <div>面試 / Offer 處理、文件提交、完成留位手續。</div>
+                      </li>
+                    </ol>
+
+                    <div className="mt-6 p-3 rounded-lg bg-[var(--surface)]/40 text-xs text-[var(--text-muted)]">
+                      <div className="font-medium">小貼士</div>
+                      <div>分配固定時段做 PS 與面試練習；用日曆標記關鍵日期，提早準備更從容。</div>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </section>
+
+
+          {/* Part 2：Pre-Asso (7–8 月) — 入學前要搞掂啲乜？ */}
+          <section className="mx-auto max-w-4xl px-6 py-8 lg:py-10">
+            <div className="rounded-2xl p-6 md:p-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.03)' }}>
+              <h3 className="text-2xl font-semibold mb-3 text-center md:text-left">Part 2：Pre-Asso（7–8 月）：入學前要搞掂啲乜？</h3>
+              <p className="text-sm text-[var(--text-muted)] mb-6 leading-relaxed mx-auto max-w-3xl text-left">如果你而家仲好亂，好正常 — 7–8 月可以慢慢做落去；以下係按月份分嘅清單，幫你一步步準備入學行政同學業起手。</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* July */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-[var(--surface)]/70 flex items-center justify-center"><Calendar size={18} className="text-[var(--primary)]" /></div>
+                    <div>
+                      <div className="font-semibold">7 月 — 放榜後（Decision & 課程選擇）</div>
+                      <div className="text-xs text-[var(--text-muted)]">決定入 Asso/HD 前，先有幾件要清楚嘅事。</div>
+                    </div>
+                  </div>
+
+                  <ul className="list-none space-y-3 text-sm">
+                    <li>
+                      <div className="font-medium">我應該做咩？</div>
+                      <ul className="list-disc pl-5 text-[var(--text-muted)] mt-1">
+                        <li>評估自己目標（想盡快升 Year 3？定穩定提升 GPA？），再決定 Retake / Asso / HD。</li>
+                        <li>瀏覽課程大綱（curriculum / core / generic skills），留意 assessment 形式（assignment vs exam）。</li>
+                        <li>確認報名 deadline、入學行政要求同需提交嘅文件類型（例如相片、身份證明）。</li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      <div className="font-medium">要特別留意咩 deadline / 通知？</div>
+                      <div className="text-[var(--text-muted)] mt-1">學校同課程會有不同嘅報名同註冊截止日，仲有系統開通（student portal / email）。記低所有官方通知同 deadline，唔好等到最後一刻。</div>
+                    </li>
+
+                    <li>
+                      <div className="font-medium">呢個月做得好，點樣幫到之後升大學？</div>
+                      <div className="text-[var(--text-muted)] mt-1">提早決定課程同熟讀大綱，可以令你開學時更快適應，對早期 GPA 有直接幫助；提早完成行政可避免入學前嘅額外壓力。</div>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* August */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-[var(--surface)]/70 flex items-center justify-center"><Clock size={18} className="text-[var(--primary)]" /></div>
+                    <div>
+                      <div className="font-semibold">8 月 — 入學行政與迎新（Ocamp / O-day）</div>
+                      <div className="text-xs text-[var(--text-muted)]">處理註冊、收 timetables、熟悉 campus 同連繫同系同學。</div>
+                    </div>
+                  </div>
+
+                  <ul className="list-none space-y-3 text-sm">
+                    <li>
+                      <div className="font-medium">我應該做咩？</div>
+                      <ul className="list-disc pl-5 text-[var(--text-muted)] mt-1">
+                        <li>完成入學行政：上載相片、交學費（或確認付款方式）、完成 online briefing 同 e‑registration。</li>
+                        <li>收到 timetable 後，了解自己會去邊個 campus 上堂，預留通勤時間同路線。</li>
+                        <li>參加 Ocamp / O‑day，認識學校資源、lecturers 同同系同學，主動記低重要 contact。</li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      <div className="font-medium">要特別留意咩 deadline / 通知？</div>
+                      <div className="text-[var(--text-muted)] mt-1">留意註冊確認、收費截止、online briefing 日期同迎新活動時間，亦要留意系上 send 嘅入學須知（email / portal）。</div>
+                    </li>
+
+                    <li>
+                      <div className="font-medium">呢個月做得好，點樣幫到之後升大學？</div>
+                      <div className="text-[var(--text-muted)] mt-1">行政搞掂同早識人可以減少開學初嘅混亂，令你有更多心力去專注第一學期嘅學業，建立穩定嘅習慣。</div>
+                    </li>
+                  </ul>
+
+                  <div className="mt-4 p-3 rounded-lg bg-[var(--surface)]/30 text-xs text-[var(--text-muted)]">
+                    <div className="font-medium">關於 join TG / 情報 group</div>
+                    <div>可以考慮 join 同學群組（例如 major 群、入學資訊群），但只信官方來源為主，群組資料可作參考，唔好當唯一依據。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Part 3：Year 1 Sem 1（9–12 月） — 打好底線 */}
+          <section className="mx-auto max-w-4xl px-6 py-8 lg:py-10">
+            <div className="rounded-2xl p-6 md:p-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.03)' }}>
+              <h3 className="text-2xl font-semibold mb-3 text-center md:text-left">Part 3：Year 1 Semester 1（9–12 月）：打好底線</h3>
+              <p className="text-sm text-[var(--text-muted)] mb-6 leading-relaxed mx-auto max-w-3xl text-left">下面按月份列出你喺 Year 1 Sem 1 可能會遇到嘅流程、應做重點、要小心嘅地方，以及點樣幫助之後嘅升學準備。語氣以指導同安撫為主。</p>
+
+              <div className="space-y-6">
+                {/* September */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">9 月：適應期 + 認真砌 timetable</div>
+                  <p className="text-sm text-[var(--text-muted)]">學期開始，add/drop 期、拿 final timetable、第一輪 lecture/tutor 開始，會收到初步小測或簡單作業。</p>
+                  <ul className="mt-3 list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>今個月大概會發生咩事：</strong> add/drop 期、拿到 timetable、老師講 syllabus、第一個小 assignment/quiz 出現。
+                    </li>
+                    <li>
+                      <strong>Asso 同學應該主力做咩：</strong>熟讀 syllabus、把所有重要 deadline 加入日曆（手機 + 校內 calendar）、把通勤時間和固定自習時段排入 weekly plan、盡快認識組員。
+                    </li>
+                    <li>
+                      <strong>要小心嘅位：</strong>
+                      <ul className="list-disc pl-5 mt-1">
+                        <li><strong>出席率點計？</strong> 有科會用簽到、有科以 participation 計分；遲到或無故缺席可能扣分，要照 syllabus 要求行事。</li>
+                        <li><strong>deadline 點樣唔好 miss？</strong> 設置至少兩個提醒（3 天、1 日）；把開發期拆細，避免最後 48 小時趕工。</li>
+                        <li><strong>第一次遇到大量 assessment 怎樣 planning？</strong> 把大項拆成小 task（調查→草稿→review→final），group project 立即開 kick‑off meeting、確認分工與 milestone，保留 chat / doc 記錄。</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>同升大學的關係：</strong>開頭建立的習慣（交作業、準時、出席）會影響後續 GPA 與自信；不要等到 midterm 才開始追進度。
+                    </li>
+                  </ul>
+                </div>
+
+                {/* October */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">10 月：節奏建立 + 首批作業到手</div>
+                  <p className="text-sm text-[var(--text-muted)]">課程節奏加快，較正式的 assignments / quizzes 出現，group work 開始進入中期（需定期同步）。</p>
+                  <ul className="mt-3 list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>今個月大概會發生咩事：</strong>首批 weight 較高嘅 assignments、quiz，及小組活動的第一次提交或排練。
+                    </li>
+                    <li>
+                      <strong>Asso 同學應該主力做咩：</strong>估算每科每週工作量，訂 weekly plan，優先做 weight 較高的 assessment，建立結構化筆記。與組員固定 weekly check‑in。
+                    </li>
+                    <li>
+                      <strong>要小心嘅位：</strong>
+                      <ul className="list-disc pl-5 mt-1">
+                        <li><strong>出席率點計？</strong>某些 tutorial/lab 有簽到或小測，缺席會直接影響 participation 分數，留意補簽政策。</li>
+                        <li><strong>deadline 點樣唔好 miss？</strong>小作業易低估時間，為每項目保留 buffer（比計劃多一兩個工作段落）。</li>
+                        <li><strong>大量 assessment 的 planning：</strong>用 backward planning（從 deadline 倒推），把大項拆為每週任務並排進日曆。</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>同升大學的關係：</strong>首批交出來的作品會影響老師對你嘅印象與你嘅自信，早建立高標準比臨時衝刺更有效。
+                    </li>
+                  </ul>
+                </div>
+
+                {/* November */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">11 月：midterm 高峰（檢視期）</div>
+                  <p className="text-sm text-[var(--text-muted)]">midterm / larger quizzes、project interim deliverables，老師會提供比較直接的成績反饋。</p>
+                  <ul className="mt-3 list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>今個月大概會發生咩事：</strong>midterm 考試、小型報告或中期評核、部分科開始進入 revision 節奏。
+                    </li>
+                    <li>
+                      <strong>Asso 同學應該主力做咩：</strong>把 midterm 範圍整理成 concise notes，做 timed practice，集中覆習 weight 較重的科目；整理 group work interim output 並進行 peer review。
+                    </li>
+                    <li>
+                      <strong>要小心嘅位：</strong>
+                      <ul className="list-disc pl-5 mt-1">
+                        <li><strong>出席率點計？</strong>midterm 缺席通常要有正式證明（醫生紙 / 特別申請），否則可能記零分或無法補考。</li>
+                        <li><strong>deadline 點樣唔好 miss？</strong>多項 assessment 同時發生，將考試、報告標為高優先級並鎖定準備時段。</li>
+                        <li><strong>大量 assessment 的 planning：</strong>使用階段式整合（draft → feedback → final），並預留 contingency 時段應付突發情況。</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>同升大學的關係：</strong>midterm 反映你對大學學習節奏的適應度，成績好會增強申請時的自信；若成績未理想，要即時檢視並調整學習策略。
+                    </li>
+                  </ul>
+                </div>
+
+                {/* December */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">12 月：end of teaching → exam period 準備（總結與衝刺）</div>
+                  <p className="text-sm text-[var(--text-muted)]">教學接近尾聲，最後 assignment / presentation 完成，開始正式進入 exam revision 期（有時會有 review session）。</p>
+                  <ul className="mt-3 list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>今個月大概會發生咩事：</strong>最後交功課、final presentation、review classes、準備正式考試（exam period）。
+                    </li>
+                    <li>
+                      <strong>Asso 同學應該主力做咩：</strong>把全學期筆記整理成 revision sheet，做 timed practice，檢視錯題並做 targeted review；確認所有檔案已備份。
+                    </li>
+                    <li>
+                      <strong>要小心嘅位：</strong>
+                      <ul className="list-disc pl-5 mt-1">
+                        <li><strong>出席率點計？</strong>部分課程（lab / presentation）缺席或未完成會直接影響最終評分，確認是否有 final attendance 要求。</li>
+                        <li><strong>deadline 點樣唔好 miss？</strong>最後階段常有格式或上傳細節（檔名、Turnitin、附件），交前請用 checklist 驗証。</li>
+                        <li><strong>大型考試/Project 的 planning：</strong>把衝刺拆為周計劃與日計劃，安排 group rehearsal，同時做 timed mock 考練習。</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>同升大學的關係：</strong>Sem 1 final 成績會真實計入 GPA，對想爭取轉學 / later application 有實際影響；更重要是它會影響你下一學期的信心與策略。
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Part 4：Year 1 Sem Break（1 月）：善用空檔 */}
+          <section className="mx-auto max-w-5xl px-6 py-8 lg:py-10">
+            <div className="rounded-2xl p-6 md:p-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.03)' }}>
+              <h3 className="text-2xl font-semibold mb-3">Part 4：Year 1 Sem Break（1 月）：善用空檔</h3>
+              <p className="text-sm text-[var(--text-muted)] mb-4 leading-relaxed">放假唔代表要放棄準備──善用半放鬆、半整理的方法，可以令你下學期更從容。</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-medium mb-2">放假期間可以點樣半休息半準備？</div>
+                  <ul className="list-disc pl-5 text-sm text-[var(--text-muted)] space-y-2">
+                    <li>回顧 Sem 1 成績：把成績表中拉低 CGPA 的科目標註，分析原因（知識／時間管理／遲交等）。</li>
+                    <li>整理 notes：把零散筆記整理成 concise revision sheet（必記事項、易錯題、範例題）。</li>
+                    <li>初步了解 Non‑JUPAS：泛覽心儀課程類型，記錄每類課程常見要求（GPA、實務、語文）。</li>
+                    <li>估算自己想報嘅方向：列 shortlist 並標記需補強的項目（語文、實習、特定科目）。</li>
+                    <li>心態管理：給自己休息時間，避免完全補習式過度工作，安排「半天休息、半天整理/練習」。</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-medium mb-2">要小心嘅位（實務提示）</div>
+                  <ul className="list-disc pl-5 text-sm text-[var(--text-muted)] space-y-2">
+                    <li>不要盲目塞滿時間，容易造成疲勞；設定每天固定短時段檢視與整理。</li>
+                    <li>若同時計劃報語試或外部考試，先評估準備期與報名截止，避免學期初衝突。</li>
+                    <li>整理時保留原始交付物與版本記錄（方便日後向老師或 TA 詢問）。</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-4 p-4 rounded-lg bg-[var(--surface)]/30 text-sm text-[var(--text-muted)]">
+                <div className="font-medium mb-1">同升大學的關係</div>
+                <div>利用寒假整理與計劃，有助你在 Year 2 開始時把注意力放回學業與申請策略上，讓你不會在關鍵期被雜務牽制。</div>
+              </div>
+            </div>
+          </section>
+
+          {/* Part 5：Year 1 Semester 2（2–6 月）+ 暑假：穩住 Year 1 CGPA，同時準備語文 / 補資格 */}
+          <section className="mx-auto max-w-5xl px-6 py-8 lg:py-10">
+            <div className="rounded-2xl p-6 md:p-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.03)' }}>
+              <h3 className="text-2xl font-semibold mb-3">Part 5：Year 1 Semester 2（2–6 月）+ 暑假：穩住 Year 1 CGPA，同時準備語文 / 補資格</h3>
+              <p className="text-sm text-[var(--text-muted)] mb-4 leading-relaxed">下面按月份與暑假整理策略：既要穩住 Year 1 CGPA，又要有條理地準備語文或資格考試（如果需要）。語氣實際、安撫，避免誇大承諾。</p>
+
+              <div className="space-y-6">
+                {/* February */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">2 月：看到 GPA，先冷靜評估</div>
+                  <ul className="list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>今個月大概會發生咩事：</strong>學校通常會陸續發放 Sem 1 的正式/暫定 GPA 或成績單，第一次看到累計成績。
+                    </li>
+                    <li>
+                      <strong>第一次睇到 GPA 應該點解讀？</strong>把 GPA 當作診斷工具：找出哪科拉低分數、是知識缺口還是交付/格式問題，分別制定改進計劃。
+                    </li>
+                    <li>
+                      <strong>如果想爭取競爭較大的學位，應有的大概目標：</strong>用模糊說法：目標通常要比班平均高一個層次；把目標分為保守與進取，根據可投入時間選擇追哪一條路。
+                    </li>
+                    <li>
+                      <strong>語文 / 補資格評估：</strong>在 2 月初步評估是否需要報 IELTS/IGCSE 或其他資格考，並估算準備與報名所需時間。
+                    </li>
+                  </ul>
+                </div>
+
+                {/* March-April */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">3–4 月：工作量上升（midterm / project），用 calendar 管理</div>
+                  <ul className="list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>今個月大概會發生咩事：</strong>midterm、較大型 assignment、group project 進入衝刺期；若報語文考，練習與模擬亦會密集。
+                    </li>
+                    <li>
+                      <strong>如何用 calendar / 任務清單管理：</strong>每週固定檢視日曆、把大項拆成小步放入具體時段（research / draft / review），並用高/中/低優先級標記。
+                    </li>
+                    <li>
+                      <strong>報 IGCSE / IELTS 的同學：</strong>通常 speaking 預約會在考期前幾星期安排，筆試在考期日曆上固定，請提前預留練習與考試時間。
+                    </li>
+                    <li>
+                      <strong>同升大學的關係：</strong>這段的穩定表現會影響 sem 2 的累積成績與整體學習節奏，良好管理可保留暑假做更具體的申請準備。
+                    </li>
+                  </ul>
+                </div>
+
+                {/* May-June */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">5–6 月：考試期、出成績、放暑假（大檢視）</div>
+                  <ul className="list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>今個月大概會發生咩事：</strong>final exam / final presentation、成績出爐、學校轉入暑假模式（時間視院校而定）。
+                    </li>
+                    <li>
+                      <strong>Asso 同學應該主力做咩：</strong>考前做 timed practice、整理 revision sheet、確認 group final deliverables，成績出後冷靜分析成績並訂下暑假計劃。
+                    </li>
+                    <li>
+                      <strong>如果 Year 1 已經有不錯 CGPA：</strong>可以開始挑戰心儀的 Non‑JUPAS 類型課程，準備更針對性的 PS 與補強材料。
+                    </li>
+                    <li>
+                      <strong>如果未如理想：</strong>暑假仍有補救空間（補語文、增實務經驗、或短期修補課程），重點是有計劃地改善而非臨時抱佛腳。
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Summer: Jun-Aug */}
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold text-lg mb-2">暑假（6–8 月）：語文補強、實務經驗、為 Year 2 做準備</div>
+                  <ul className="list-disc pl-5 text-sm space-y-2 text-[var(--text-muted)]">
+                    <li>
+                      <strong>補語文：</strong>安排 IELTS / IGCSE / 或其他語文考試的準備，按考期日曆預留報名與練習時間；優先補弱項（口說或寫作）。
+                    </li>
+                    <li>
+                      <strong>兼職 / 實習 / 義工：</strong>選擇與申請方向相關或能展示 teamwork、leadership、responsibility 的經驗，並記錄具體成果供 PS 使用。
+                    </li>
+                    <li>
+                      <strong>整理 Year 1 的學習方式：</strong>歸納有效方法並建立新的 weekly routine（自習、語文、申請材料時間），為 Year 2 的學習與申請佈局。
+                    </li>
+                    <li>
+                      <strong>實務提醒：</strong>平衡工作與學習，若報考外部語試或修課，留意時間衝突，避免在學期開始就超載。
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Part 7：Year 2 Semester 2（1–8 月）：Offer、條件、畢業同入大學手續 */}
+          <section className="mx-auto max-w-5xl px-6 py-8 lg:py-10">
+            <div className="rounded-2xl p-6 md:p-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.03)' }}>
+              <h3 className="text-2xl font-semibold mb-3">Part 7：Year 2 Semester 2（1–8 月）：Offer、條件、畢業同入大學手續</h3>
+              <p className="text-sm text-[var(--text-muted)] mb-4 leading-relaxed">按時間順序說明 Year 2 Sem 2 常見流程：面試／second round、Offer 類型與條件、成績與畢業手續，以及踏入大學的實務注意。</p>
+
+              <div className="space-y-6">
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold mb-2">1–2 月：面試機會與新一季 GPA</div>
+                  <ul className="list-disc pl-5 text-sm text-[var(--text-muted)] space-y-2">
+                    <li><strong>可能發生的事：</strong>會收到更多面試邀請或 second‑round 機會；同時系統可能允許你上載最新成績以補強申請。</li>
+                    <li><strong>實務建議：</strong>整理一份「面試要點清單」（常見問題、個人經歷例子、簡短成果），並準備好最新的成績表和推薦人聯絡方式。</li>
+                    <li><strong>GPA 的作用：</strong>新一季的 GPA 能夠在 Non‑JUPAS 系統中補上，增加說服力；看到最新成績後，合理評估你能爭取的名單。</li>
+                  </ul>
+                </div>
+
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold mb-2">3–7 月：Offer 派發與條件處理</div>
+                  <ul className="list-disc pl-5 text-sm text-[var(--text-muted)] space-y-2">
+                    <li>
+                      <strong>Offer 類型：</strong>常見有 <em>Conditional Offer</em>（有條件取錄）與 <em>Direct Offer</em>（直接取錄）。Conditional 常見條件包括：達到某個 CGPA 水平、語文成績達標、或提供完整文件。
+                    </li>
+                    <li>
+                      <strong>若未能達到條件會怎樣：</strong>情況會視乎學校而異——常見回應有取消 offer、要求補交或溝通、或提供 alternative（例如候補）；若遇到問題要盡快聯絡該校招生辦或負責人溝通，並保留往來紀錄。
+                    </li>
+                    <li>
+                      <strong>留位費 / 訂金：</strong>收到 offer 後會有指定的留位付款期限；務必把期限標示在日曆上，逾期可能失去該 offer。若有困難，可嘗試與學校說明但不要假設可以延遲。
+                    </li>
+                    <li>
+                      <strong>同時收到多個 offer，如何取捨：</strong>原則：先看課程匹配度（長遠目標 vs 課程內容）、實際成本（學費 + 生活）與地點、以及 offer 的穩妥性（direct vs conditional）。可列出優缺點並和家人 / 導師討論，但最後保持自己的優先序。
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold mb-2">4–6 月：畢業前最後衝刺</div>
+                  <ul className="list-disc pl-5 text-sm text-[var(--text-muted)] space-y-2">
+                    <li><strong>今期要注意的事：</strong>最後一個 sem 的考試與提交往往是最關鍵的，若已收到 offer，要確保不因鬆懈而錯過達到條件的機會。</li>
+                    <li><strong>避免「拿到 offer 就懶惰」的實務做法：</strong>設定每週學業目標並與朋友或導師定期 check‑in，把重點科目列為高優先，必要時請組員或導師幫忙監督。</li>
+                    <li><strong>處理壓力：</strong>合理分配時間做復習、同時保留短暫休息，若感到 Burnout，尋求同儕或學校支援（counselling / TA）。</li>
+                  </ul>
+                </div>
+
+                <div className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg)] shadow-sm">
+                  <div className="font-semibold mb-2">6–8 月：畢業後文件與入學準備</div>
+                  <ul className="list-disc pl-5 text-sm text-[var(--text-muted)] space-y-2">
+                    <li>
+                      <strong>成績單與畢業相關文件：</strong>通常需準備正式成績單、畢業證明、身份文件的影本或核證件；部分院校或系統可能要求你上載電子檔或帶正本到指定機構核對。
+                    </li>
+                    <li>
+                      <strong>上傳與驗證流程：</strong>注意學校要求（例如電子上傳、郵寄正本或到指定地點驗證），保留傳送收據與通訊記錄，並留意最後期限以免耽誤入學手續。
+                    </li>
+                    <li>
+                      <strong>準備進入大學生活：</strong>心理上做好轉換（課程深度、教學與評估模式會不同），期待與實際可能有落差，建議以開放態度面對新環境並預留適應期。
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Part 8：兩年全程的心態 & 人際策略總結 */}
+          <section className="mx-auto max-w-5xl px-6 py-8 lg:py-10">
+            <div className="rounded-2xl p-6 md:p-8" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.03)' }}>
+              <h3 className="text-2xl font-semibold mb-3">Part 8：兩年全程的心態 & 人際策略總結</h3>
+              <p className="text-sm text-[var(--text-muted)] mb-4 leading-relaxed">總結兩年路上實用的心態與社交策略，幫你守住節奏、建立高效團隊、同時保護自己的學習空間。</p>
+
+              <div className="space-y-4 text-sm text-[var(--text-muted)]">
+                <div>
+                  <div className="font-semibold">選 groupmates 的原則</div>
+                  <ul className="list-disc pl-5 mt-2">
+                    <li>觀察對方的出席與交付紀律（是否準時交小任務），優先選那些有穩定紀律的人。</li>
+                    <li>避免明顯不投入的人（例如常找藉口缺席），若已在組內遇到 freerider，先嘗試溝通並明確分工與證據紀錄；若無改善，及早向導師或 course coordinator 匯報。</li>
+                    <li>平衡技能互補與責任感：選擇技能互補但態度可靠的伙伴通常比只看「技術強」的同學更有利。</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="font-semibold">Ocamp / 社團 / 兼職：如何兼顧學業與生活</div>
+                  <ul className="list-disc pl-5 mt-2">
+                    <li>把參與分為「核心」與「次要」：若社團或 Ocamp 能帶來長期價值（network、leadership），可以做核心參與，否則放在次要層級。</li>
+                    <li>為自己設定上限（例如每週投入時數），用日曆明確劃分學習時段與活動時段，避免活動滲出到高優先級學業時間。</li>
+                    <li>兼職要選可調整時間或短期的工作，避免固定排班與課堂衝突；把兼職的成果（責任、溝通）記錄下來，用在 PS 或面試上。</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="font-semibold">為何兩年 Asso 有時覺得比大學更辛苦，以及如何面對</div>
+                  <ul className="list-disc pl-5 mt-2">
+                    <li>兩年制往往學期密集、評核頻繁（shorter semesters / continuous assessment），而時間壓縮令每個 assignment 影響更明顯。</li>
+                    <li>面對壓力：分解任務、保持 weekly review、適當求助（同學 / TA / 講師 / 學校支援）是關鍵。</li>
+                    <li>心理上接受「短期辛苦是為了後續選擇」，把過程視為技能訓練而非純粹成績競賽，有助減少焦慮感。</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="font-semibold">從 DSE 失利到把握第二次機會的實際建議</div>
+                  <ul className="list-disc pl-5 mt-2">
+                    <li>把過往經驗當作資料，不是標籤：分析失利原因（學習方法 / 情緒管理 / 健康等），制定具體改進計劃。</li>
+                    <li>接受身邊人節奏不同：有人會更積極、有些人可能慢熱，重點是守住自己的節奏與標準，不被別人拖垮或催眠。</li>
+                    <li>建立「可複製的例子」：參與項目 / 實習 / 義工時記錄具體成果（數字 / 角色 / 貢獻），這些比空泛承諾更能打動面試官或招生委員。</li>
+                  </ul>
+                </div>
+
+                <div className="mt-3 p-3 rounded-lg bg-[var(--surface)]/30 text-sm text-[var(--text-muted)]">
+                  <div className="font-semibold">收尾的鼓勵（真實而務實）</div>
+                  <div className="mt-1">兩年係累積與調整的時間；你或許會遇到失望，但每一次小的改善都累積價值。用計劃取代焦慮、用證據支持你的申請，並保留休息的空間，這樣你能持續走下去。</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Non-JUPAS — product-style comparison section */}
+          <section className="mx-auto max-w-5xl px-6 py-14 lg:py-18">
+            {/* Tag + title */}
+            <div className="mb-8">
+              <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">JUPAS vs Non-JUPAS</h2>
+            </div>
+
+            {/* Comparison cards */}
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* JUPAS card */}
+              <article className="group rounded-2xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-[0_0_0_1px_rgba(0,0,0,0.6)] transition hover:-translate-y-1 hover:border-red-400/80 hover:shadow-[0_0_40px_rgba(248,113,113,0.45)]">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10">
+                    <AppleEmoji emoji={"🎓"} className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">JUPAS</h3>
+                    <p className="text-xs text-neutral-400">本地 DSE 聯招</p>
+                  </div>
+                </div>
+                <ul className="space-y-2 text-sm text-neutral-300">
+                  <li>．主要對象：<span className="font-medium">本地 DSE 考生</span></li>
+                  <li>．用 <span className="font-medium">JUPAS 系統排志願</span> 申請八大／部分院校</li>
+                  <li>．以 <span className="font-medium">DSE 成績</span> 為主要收生成績</li>
+                </ul>
+              </article>
+
+              {/* Non-JUPAS card */}
+              <article className="group rounded-2xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-[0_0_0_1px_rgba(0,0,0,0.6)] transition hover:-translate-y-1 hover:border-red-400/80 hover:shadow-[0_0_40px_rgba(248,113,113,0.45)]">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10">
+                    <AppleEmoji emoji={"🔁"} className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">Non-JUPAS</h3>
+                    <p className="text-xs text-neutral-400">唔經聯招，直接報 U</p>
+                  </div>
+                </div>
+                <ul className="space-y-2 text-sm text-neutral-300">
+                  <li>．所有 <span className="font-medium">非聯招途徑</span> 入讀學士課程</li>
+                  <li>．逐間大學喺 <span className="font-medium">官網開帳戶、交表、上載文件</span></li>
+                  <li>．會一齊睇 <span className="font-medium">GPA、DSE、語文試、背景</span> 去揀人</li>
+                </ul>
+              </article>
+            </div>
+
+            {/* Example identities / pills */}
+            <div className="mt-8 space-y-3 text-center">
+              <p className="text-sm font-medium text-neutral-200">邊啲人通常走 Non-JUPAS？</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                <span className="inline-flex items-center rounded-full bg-neutral-900/80 px-3 py-1 text-xs text-neutral-200 ring-1 ring-neutral-700">副學士 / 高級文憑學生或畢業生</span>
+                <span className="inline-flex items-center rounded-full bg-neutral-900/80 px-3 py-1 text-xs text-neutral-200 ring-1 ring-neutral-700">舊制 CEE／ALE 考生</span>
+                <span className="inline-flex items-center rounded-full bg-neutral-900/80 px-3 py-1 text-xs text-neutral-200 ring-1 ring-neutral-700">海外課程（例如 IAL、OSSD 等）</span>
+                <span className="inline-flex items-center rounded-full bg-neutral-900/80 px-3 py-1 text-xs text-neutral-200 ring-1 ring-neutral-700">非本地 DSE 考生</span>
+              </div>
+            </div>
+          </section>
+
+          {/* Progress Bar */}
+          <div className="flex justify-between max-w-3xl mx-auto relative">
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[var(--border-subtle)] -z-10"></div>
+            {STAGES.map((stage, index) => (
+              <button 
+                key={stage.id}
+                onClick={() => scrollToStage(index)}
+                className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-[var(--bg)] ${
+                  activeStage >= index 
+                    ? 'border-[var(--primary)] text-[var(--primary)] scale-110 shadow-[0_0_15px_rgba(255,75,43,0.3)]' 
+                    : 'border-[var(--border-subtle)] text-[var(--text-muted)] hover:border-[var(--primary)]'
+                }`}
+              >
+                <span className="text-xs font-bold">{index}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 flex gap-12">
+        
+        {/* Sticky Sidebar (Desktop) */}
+        <div className="hidden lg:block w-64 flex-shrink-0">
+          <div className="sticky top-24 space-y-2">
+            {STAGES.map((stage, index) => (
+              <button
+                key={stage.id}
+                onClick={() => scrollToStage(index)}
+                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeStage === index 
+                    ? 'bg-[var(--surface)] shadow-sm border border-[var(--border-subtle)]' 
+                    : 'hover:bg-[var(--surface)]/50 border border-transparent'
+                }`}
+              >
+                <div className={`w-2 h-2 rounded-full transition-all ${
+                  activeStage === index ? 'bg-[var(--primary)] scale-125 shadow-[0_0_10px_var(--primary)]' : 'bg-[var(--border-subtle)]'
+                }`}></div>
+                <div className="flex-1">
+                  <div className={`text-xs font-bold uppercase tracking-wider ${
+                    activeStage === index ? 'text-[var(--primary)]' : 'text-[var(--text-muted)]'
+                  }`}>
+                    Stage {index}
+                  </div>
+                  <div className={`text-sm font-medium truncate ${
+                    activeStage === index ? 'text-[var(--text)]' : 'text-[var(--text-muted)]'
+                  }`}>
+                    {stage.title}
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 min-w-0 space-y-32">
+          {STAGES.map((stage, index) => (
+            <div key={stage.id} id={`stage-${stage.id}`} className="scroll-mt-32">
+              <FadeIn>
+                <div className="relative group">
+                  {/* Stage Header Banner */}
+                  <div className={`relative h-40 rounded-3xl bg-gradient-to-r ${stage.color} mb-8 overflow-hidden shadow-lg transition-transform duration-500 hover:scale-[1.01]`}>
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="absolute -right-8 -bottom-8 text-white/20 rotate-12 transform transition-transform duration-700 group-hover:rotate-0 group-hover:scale-110">
+                      <stage.icon size={200} />
+                    </div>
+                    <div className="absolute inset-0 flex items-center px-8 md:px-12">
+                      <div className="text-white relative z-10">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-widest border border-white/30">
+                            Stage {index}
+                          </span>
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-shadow-sm">{stage.title}</h2>
+                        <p className="text-white/90 font-medium text-lg">{stage.subtitle}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Interactive Card */}
+                  <div className="bg-[var(--surface)] rounded-[2rem] border border-[var(--border-subtle)] shadow-sm overflow-hidden">
+                    {/* Tabs Header */}
+                    <div className="flex border-b border-[var(--border-subtle)]">
+                      {stage.tabs.map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setActiveTab(prev => ({ ...prev, [stage.id]: tab.id }))}
+                          className={`flex-1 py-4 text-sm font-bold transition-all relative ${
+                            (activeTab[stage.id] || stage.tabs[0].id) === tab.id
+                              ? 'text-[var(--primary)] bg-[var(--surface-highlight)]/30'
+                              : 'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-highlight)]/10'
+                          }`}
+                        >
+                          {tab.label}
+                          {(activeTab[stage.id] || stage.tabs[0].id) === tab.id && (
+                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--primary)]"></div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Tab Content */}
+                    <div className="p-6 md:p-8 min-h-[300px]">
+                      {stage.tabs.map((tab) => (
+                        <div 
+                          key={tab.id} 
+                          className={`transition-opacity duration-300 ${
+                            (activeTab[stage.id] || stage.tabs[0].id) === tab.id ? 'block opacity-100' : 'hidden opacity-0'
+                          }`}
+                        >
+                          {tab.content}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  );
+}

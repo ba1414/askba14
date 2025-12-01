@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud, Lightbulb, Menu, X, MessageSquarePlus, Languages } from "lucide-react";
+import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud, Lightbulb, Menu, X, MessageSquarePlus, Languages, Flag, GraduationCap } from "lucide-react";
 import GPACalculatorMinimal from "./GPACalculatorNew";
 import CalendarMinimal from "./CalendarMinimalNew";
 import FlashcardsMinimal from "./FlashcardsMinimal";
 import AboutMe from "./AboutMe";
 import AssociateDegreeTips from "./AssociateDegreeTips";
+import IeltsPrep from "./IeltsPrep";
 import Footer from "./components/Footer";
 import { auth, googleProvider } from "./firebase";
 import { 
@@ -26,7 +27,7 @@ import {
  * - Clean and distraction-free
  */
 
-type View = "gpa" | "calendar" | "flashcards" | "tips" | "about";
+type View = "gpa" | "calendar" | "flashcards" | "guide" | "about" | "ielts";
 
 function useTheme() {
   const getDefault = () => {
@@ -118,13 +119,13 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA] dark:bg-[#1A1A1A] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg)] px-4">
       <div className="w-full max-w-md">
-        <div className="bg-white dark:bg-[#212121] rounded-2xl shadow-lg p-8 border border-[#E8E8E8] dark:border-[#2F2F2F]">
-          <h1 className="text-2xl font-bold text-center mb-2 text-[#0F0F0F] dark:text-[#F0F0F0]">
+        <div className="bg-[var(--surface)] rounded-2xl shadow-lg p-8 border border-[var(--border-subtle)]">
+          <h1 className="text-2xl font-bold text-center mb-2 text-[var(--text)]">
             BA14
           </h1>
-          <p className="text-center text-sm text-[#6B6B6B] dark:text-[#9B9B9B] mb-6">
+          <p className="text-center text-sm text-[var(--text-muted)] mb-6">
             {isSignUp 
               ? (lang === "EN" ? "Create your account" : "建立帳戶")
               : (lang === "EN" ? "Sign in to sync your data" : "登入以同步數據")}
@@ -132,7 +133,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[#3F3F3F] dark:text-[#D4D4D4] mb-2">
+              <label className="block text-sm font-medium text-[var(--text)] mb-2">
                 {lang === "EN" ? "Email" : "電郵"}
               </label>
               <input
@@ -140,13 +141,13 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] border border-[#E8E8E8] dark:border-[#3F3F3F] text-[#0F0F0F] dark:text-[#F0F0F0] focus:outline-none focus:ring-2 focus:ring-[#007AFF]"
+                className="w-full px-4 py-3 rounded-lg bg-[var(--bg)] border border-[var(--border-subtle)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
                 placeholder={lang === "EN" ? "you@example.com" : "你的電郵"}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#3F3F3F] dark:text-[#D4D4D4] mb-2">
+              <label className="block text-sm font-medium text-[var(--text)] mb-2">
                 {lang === "EN" ? "Password" : "密碼"}
               </label>
               <input
@@ -155,7 +156,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 rounded-lg bg-[#F3F4F6] dark:bg-[#2A2A2A] border border-[#E8E8E8] dark:border-[#3F3F3F] text-[#0F0F0F] dark:text-[#F0F0F0] focus:outline-none focus:ring-2 focus:ring-[#007AFF]"
+                className="w-full px-4 py-3 rounded-lg bg-[var(--bg)] border border-[var(--border-subtle)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
                 placeholder={lang === "EN" ? "At least 6 characters" : "最少6個字元"}
               />
             </div>
@@ -163,10 +164,10 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             {message && (
               <div className={`text-sm text-center p-3 rounded-lg ${
                 message.includes("Error") || message.includes("錯誤") || message.includes("failed") || message.includes("失敗")
-                  ? "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400"
+                  ? "bg-[var(--error)]/20 text-[var(--error)]"
                   : message.includes("success") || message.includes("成功")
-                  ? "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400"
-                  : "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                  ? "bg-[var(--success)]/20 text-[var(--success)]"
+                  : "bg-[var(--primary)]/20 text-[var(--primary)]"
               }`}>
                 {message}
               </div>
@@ -175,7 +176,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-[#007AFF] hover:bg-[#0051D5] disabled:bg-[#9B9B9B] text-white font-semibold rounded-lg transition-colors"
+              className="w-full py-3 bg-[var(--primary)] hover:bg-[var(--primary-strong)] disabled:bg-[var(--text-muted)] text-[#020617] font-bold rounded-lg transition-colors"
             >
               {loading 
                 ? (lang === "EN" ? "Loading..." : "載入中...")
@@ -189,10 +190,10 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
           <div className="mt-4">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#E8E8E8] dark:border-[#2F2F2F]"></div>
+                <div className="w-full border-t border-[var(--border-subtle)]"></div>
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-white dark:bg-[#212121] px-2 text-[#9B9B9B]">
+                <span className="bg-[var(--surface)] px-2 text-[var(--text-muted)]">
                   {lang === "EN" ? "Or" : "或"}
                 </span>
               </div>
@@ -200,7 +201,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             <button
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="mt-4 w-full py-3 bg-white dark:bg-[#2A2A2A] border border-[#E8E8E8] dark:border-[#3F3F3F] hover:bg-[#F3F4F6] dark:hover:bg-[#323232] text-[#3F3F3F] dark:text-[#D4D4D4] font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="mt-4 w-full py-3 bg-[var(--surface)] border border-[var(--border-subtle)] hover:bg-[var(--bg)] text-[var(--text)] font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -215,7 +216,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
           <div className="mt-4 text-center">
             <button
               onClick={() => setIsSignUp(!isSignUp)}
-              className="text-sm text-[#007AFF] hover:underline"
+              className="text-sm text-[var(--primary)] hover:underline"
             >
               {isSignUp
                 ? (lang === "EN" ? "Already have an account? Sign in" : "已有帳戶？登入")
@@ -224,14 +225,14 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
           </div>
 
           {/* Continue as Guest button */}
-          <div className="mt-6 pt-6 border-t border-[#E8E8E8] dark:border-[#2F2F2F]">
+          <div className="mt-6 pt-6 border-t border-[var(--border-subtle)]">
             <button
               onClick={onContinueAsGuest}
-              className="w-full py-3 bg-[#F3F4F6] dark:bg-[#2A2A2A] hover:bg-[#E5E7EB] dark:hover:bg-[#323232] text-[#3F3F3F] dark:text-[#D4D4D4] font-medium rounded-lg transition-colors"
+              className="w-full py-3 bg-[var(--bg)] hover:bg-[var(--border-subtle)] text-[var(--text)] font-medium rounded-lg transition-colors"
             >
               {lang === "EN" ? "Continue as Guest" : "訪客模式繼續"}
             </button>
-            <p className="mt-2 text-xs text-center text-[#9B9B9B] dark:text-[#6B6B6B]">
+            <p className="mt-2 text-xs text-center text-[var(--text-muted)]">
               {lang === "EN" 
                 ? "Your data will be saved locally on this device" 
                 : "數據將儲存在此裝置"}
@@ -246,7 +247,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
 export default function App() {
   const [theme, setTheme] = useTheme();
   const [lang, setLang] = useLang();
-  const [activeView, setActiveView] = useState<View>("gpa");
+  const [activeView, setActiveView] = useState<View>("guide");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -315,15 +316,16 @@ export default function App() {
     { id: "gpa" as View, icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算器" },
     { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "日曆" },
     { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
-    { id: "tips" as View, icon: Lightbulb, label: lang === "EN" ? "Tips" : "心得" },
+    { id: "ielts" as View, icon: GraduationCap, label: lang === "EN" ? "IELTS Prep" : "IELTS 準備" },
+    { id: "guide" as View, icon: Flag, label: lang === "EN" ? "Survival Guide" : "生存指南" },
     { id: "about" as View, icon: User, label: lang === "EN" ? "About Me" : "關於我" },
   ];
 
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA] dark:bg-[#1A1A1A]">
-        <div className="text-[#6B6B6B] dark:text-[#9B9B9B]">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg)]">
+        <div className="text-[var(--text-muted)]">
           {lang === "EN" ? "Loading..." : "載入中..."}
         </div>
       </div>
@@ -337,19 +339,15 @@ export default function App() {
 
   // Sidebar Content (Refined UI)
   const SidebarContent = () => (
-    <div className={`flex flex-col h-full transition-colors duration-300 ${isDark ? 'bg-black border-r border-white/10' : 'bg-white border-r border-gray-200'}`}>
+    <div className="flex flex-col h-full transition-colors duration-300 bg-[var(--bg)] border-r border-[var(--border-subtle)]">
       
       {/* Sidebar Header / BA14 Button */}
       <div className="p-6">
         <button 
-          onClick={() => { setActiveView('tips'); setMobileMenuOpen(false); }}
-          className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group
-            ${isDark 
-              ? 'hover:bg-white/5 text-white' 
-              : 'hover:bg-black/5 text-gray-900'}
-          `}
+          onClick={() => { setActiveView('guide'); setMobileMenuOpen(false); }}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group hover:bg-[var(--surface)] text-[var(--text)]"
         >
-          <div className={`p-2 rounded-lg ${isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-600'}`}>
+          <div className="p-2 rounded-lg bg-[var(--primary-soft)] text-[var(--primary-strong)]">
             <MessageSquarePlus size={20} strokeWidth={2} />
           </div>
           <span className="text-lg font-semibold tracking-tight">BA14</span>
@@ -358,7 +356,7 @@ export default function App() {
 
       {/* Navigation List */}
       <div className="flex-1 overflow-y-auto px-4 py-2 sidebar-scroll space-y-1">
-        <div className={`px-4 py-2 text-[11px] font-semibold uppercase tracking-wider mb-2 ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+        <div className="px-4 py-2 text-[11px] font-semibold uppercase tracking-wider mb-2 text-[var(--text-muted)]">
           {lang === "EN" ? "Menu" : "選單"}
         </div>
         {navItems.map((item) => {
@@ -373,37 +371,29 @@ export default function App() {
             }}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-[15px] font-medium transition-all duration-200 relative group
               ${isActive 
-                ? 'bg-[#007AFF] text-white shadow-md shadow-blue-500/25' 
-                : (isDark ? 'text-gray-400 hover:text-white hover:bg-white/10' : 'text-gray-600 hover:text-black hover:bg-black/5')}
+                ? 'bg-[var(--primary)] text-[#020617] shadow-md shadow-[var(--primary)]/20' 
+                : 'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]'}
             `}
           >
-            <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : ''} />
+            <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-[#020617]' : ''} />
             <span className="truncate">{item.label}</span>
           </button>
         )})}
       </div>
 
       {/* Sidebar Footer (User/Settings) */}
-      <div className={`p-6 border-t ${isDark ? 'border-white/5' : 'border-gray-200'}`}>
+      <div className="p-6 border-t border-[var(--border-subtle)]">
         <div className="flex items-center justify-between gap-2 mb-4">
           <button 
             onClick={toggleTheme}
-            className={`p-2 rounded-lg transition-all duration-200
-              ${isDark 
-                ? 'text-gray-400 hover:text-white hover:bg-white/10' 
-                : 'text-gray-500 hover:text-black hover:bg-black/5'}
-            `}
+            className="p-2 rounded-lg transition-all duration-200 text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
           >
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           
           <button 
             onClick={toggleLang}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border
-              ${isDark 
-                ? 'border-white/10 text-gray-300 hover:bg-white/10' 
-                : 'border-gray-200 text-gray-600 hover:bg-gray-50'}
-            `}
+            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:bg-[var(--surface)] hover:text-[var(--text)]"
           >
             {lang === 'EN' ? '中文' : 'EN'}
           </button>
@@ -412,11 +402,7 @@ export default function App() {
         {!isGuest && (
           <button
             onClick={handleLogout}
-            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200
-              ${isDark 
-                ? 'text-gray-400 hover:text-red-400 hover:bg-red-500/10' 
-                : 'text-gray-500 hover:text-red-600 hover:bg-red-50'}
-            `}
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 text-[var(--text-muted)] hover:text-[var(--primary)] hover:bg-[var(--primary)]/10"
           >
             <LogOut size={16} />
             <span>{lang === 'EN' ? 'Log out' : '登出'}</span>
@@ -435,9 +421,9 @@ export default function App() {
           <div className="relative max-w-md w-full">
             <button
               onClick={() => setShowLoginModal(false)}
-              className="absolute -top-3 -right-3 p-2 bg-white dark:bg-[#212121] rounded-full shadow-lg z-10 hover:bg-[#F3F4F6] dark:hover:bg-[#2A2A2A]"
+              className="absolute -top-3 -right-3 p-2 bg-[var(--surface)] rounded-full shadow-lg z-10 hover:bg-[var(--bg)]"
             >
-              <span className="text-2xl leading-none text-[#6B6B6B] dark:text-[#9B9B9B]">×</span>
+              <span className="text-2xl leading-none text-[var(--text-muted)]">×</span>
             </button>
             <LoginForm lang={lang} onContinueAsGuest={() => setShowLoginModal(false)} />
           </div>
@@ -445,10 +431,10 @@ export default function App() {
       )}
 
       {/* Mobile Header (Hamburger) */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-[#343541] border-b border-white/10 text-[#ECECF1] px-4 py-3 flex items-center justify-between">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-[var(--bg)] border-b border-[var(--border-subtle)] text-[var(--text)] px-4 py-3 flex items-center justify-between">
         <button 
           onClick={() => setMobileMenuOpen(true)}
-          className="p-1 -ml-1 hover:bg-[#2A2B32] rounded-md"
+          className="p-1 -ml-1 hover:bg-[var(--surface)] rounded-md"
         >
           <Menu size={24} />
         </button>
@@ -469,34 +455,30 @@ export default function App() {
         </div>
       )}
 
-      <div className="flex h-screen bg-apple-light-bg dark:bg-apple-dark-bg text-[#1D1D1F] dark:text-[#F5F5F7]">
+      <div className="flex h-screen bg-[var(--bg)] text-[var(--text)]">
         {/* Desktop Sidebar */}
         <aside className="hidden md:flex w-[280px] flex-col fixed inset-y-0 left-0 z-50">
           <SidebarContent />
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 relative h-full overflow-y-auto md:ml-[280px] transition-all duration-300">
+        <main id="main-scroll-container" className="flex-1 relative h-full overflow-y-auto md:ml-[280px] transition-all duration-300">
           {/* Mobile Header Spacer */}
           <div className="h-16 md:h-0" />
 
-          <div className="layout-grid animate-fade-in">
-            {activeView === "gpa" && (
-                <GPACalculatorMinimal lang={lang} />
-            )}
-            {activeView === "calendar" && (
-                <CalendarMinimal lang={lang} />
-            )}
-            {activeView === "flashcards" && (
-                <FlashcardsMinimal lang={lang} />
-            )}
-            {activeView === "tips" && (
-                <AssociateDegreeTips lang={lang} />
-            )}
-            {activeView === "about" && (
-                <AboutMe lang={lang} />
-            )}
-          </div>
+          {activeView === "guide" ? (
+            <div className="animate-fade-in">
+              <AssociateDegreeTips lang={lang} />
+            </div>
+          ) : (
+            <div className="layout-grid animate-fade-in">
+              {activeView === "gpa" && <GPACalculatorMinimal lang={lang} />}
+              {activeView === "calendar" && <CalendarMinimal lang={lang} />}
+              {activeView === "flashcards" && <FlashcardsMinimal lang={lang} />}
+              {activeView === "ielts" && <IeltsPrep lang={lang} />}
+              {activeView === "about" && <AboutMe lang={lang} />}
+            </div>
+          )}
           
           <Footer lang={lang} />
         </main>

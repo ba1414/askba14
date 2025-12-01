@@ -47,23 +47,23 @@ export default function Header({ activeLink }) {
   const isHome = location.pathname === "/";
 
   return (
-    <header className="sticky top-0 z-10 bg-white/90 dark:bg-[#0B0B0B]/90 backdrop-blur-sm border-b border-black/10 dark:border-white/10">
+    <header className="sticky top-0 z-50 bg-[var(--bg)]/80 backdrop-blur-md border-b border-[var(--border-subtle)] transition-colors duration-300">
       <div className="mx-auto max-w-[1400px] px-6 py-4 flex items-center justify-between">
         {/* Wordmark */}
         <Link 
           to="/" 
-          className="text-base font-normal tracking-wide hover:opacity-60 transition-opacity"
+          className="text-base font-bold tracking-wide text-[var(--text)] hover:text-[var(--primary)] transition-colors"
         >
           okalpha
         </Link>
 
         {/* Navigation */}
-        <nav className="flex items-center gap-8 text-sm">
+        <nav className="flex items-center gap-8 text-sm font-medium text-[var(--text-muted)]">
           <Link 
             to="/" 
             className={`
-              relative hover:opacity-60 transition-opacity
-              ${isHome ? 'after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[1px] after:bg-black dark:after:bg-white' : ''}
+              relative hover:text-[var(--text)] transition-colors
+              ${isHome ? 'text-[var(--text)] after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-[var(--primary)] after:shadow-[0_0_8px_var(--primary)]' : ''}
             `}
           >
             {t("Home", "主頁")}
@@ -71,35 +71,37 @@ export default function Header({ activeLink }) {
           
           <Link 
             to="/about" 
-            className="hover:opacity-60 transition-opacity"
+            className="hover:text-[var(--text)] transition-colors"
           >
             {t("About", "關於")}
           </Link>
 
           {/* Language Toggle */}
           <button
-            className="text-[10px] font-medium tracking-wider uppercase text-black/60 dark:text-white/60 hover:opacity-100 transition-opacity flex items-center gap-1"
+            className="text-[10px] font-bold tracking-wider uppercase hover:text-[var(--text)] transition-colors flex items-center gap-1"
             onClick={() => setLang(lang === "en" ? "zh" : "en")}
             aria-label="Toggle language"
           >
-            <span className={lang === "en" ? "text-black dark:text-white" : "opacity-40"}>
+            <span className={lang === "en" ? "text-[var(--primary)]" : "opacity-40"}>
               EN
             </span>
             <span className="opacity-30">/</span>
-            <span className={lang === "zh" ? "text-black dark:text-white" : "opacity-40"}>
+            <span className={lang === "zh" ? "text-[var(--primary)]" : "opacity-40"}>
               粵
             </span>
           </button>
 
           {/* Theme Toggle */}
           <button
-            className="w-7 h-7 flex items-center justify-center border border-black/20 dark:border-white/20 hover:opacity-60 transition-opacity"
+            className="w-8 h-8 flex items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--text)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:shadow-[0_0_10px_var(--primary)] transition-all"
             onClick={() => setIsDark(!isDark)}
             aria-label="Toggle theme"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="8" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/>
-            </svg>
+            {isDark ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            )}
           </button>
         </nav>
       </div>

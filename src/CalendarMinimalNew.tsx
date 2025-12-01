@@ -45,6 +45,18 @@ interface Project {
   status: string;
 }
 
+const GlassCard = ({ children, className = "", hoverEffect = false }: { children: React.ReactNode, className?: string, hoverEffect?: boolean }) => (
+  <div className={`
+    relative overflow-hidden rounded-[24px] border border-[var(--border-subtle)]
+    bg-[var(--surface)] backdrop-blur-xl shadow-xl
+    ${hoverEffect ? 'transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-[var(--primary)]/10' : ''}
+    ${className}
+  `}>
+    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+    {children}
+  </div>
+);
+
 export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
   const t = TRANSLATIONS[lang];
@@ -137,31 +149,31 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
   return (
     <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif" }}>
       
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 h-[calc(100vh-140px)] min-h-[600px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-140px)] min-h-[600px]">
         
         {/* Left Column: Calendar (macOS Calendar Style) */}
-        <div className="lg:col-span-8 flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-sm border border-black/5 dark:border-white/5 overflow-hidden">
+        <GlassCard className="lg:col-span-8 flex flex-col">
           {/* Header */}
-          <div className="px-8 py-6 flex items-center justify-between border-b border-black/5 dark:border-white/5">
+          <div className="px-8 py-6 flex items-center justify-between border-b border-[var(--border-subtle)]">
             <div className="flex items-baseline gap-3">
-              <h2 className="text-[34px] font-bold text-[#1D1D1F] dark:text-white tracking-tight">
+              <h2 className="text-[34px] font-bold text-[var(--text)] tracking-tight">
                 {currentDate.toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { month: 'long' })}
               </h2>
-              <span className="text-[34px] font-normal text-[#86868B]">
+              <span className="text-[34px] font-normal text-[var(--text-muted)]">
                 {currentDate.getFullYear()}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={prevMonth} className="p-2 text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={prevMonth} className="p-2 text-[var(--text)] hover:bg-[var(--border-subtle)] rounded-full transition-colors">
                 <ChevronLeft size={24} />
               </button>
               <button 
                 onClick={goToToday} 
-                className="px-4 py-1.5 text-[15px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 rounded-full transition-colors"
+                className="px-4 py-1.5 text-[15px] font-medium text-[var(--bg)] bg-[var(--primary)] hover:bg-[var(--primary)]/90 rounded-full transition-colors shadow-lg shadow-[var(--primary)]/20"
               >
                 {t.today}
               </button>
-              <button onClick={nextMonth} className="p-2 text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={nextMonth} className="p-2 text-[var(--text)] hover:bg-[var(--border-subtle)] rounded-full transition-colors">
                 <ChevronRight size={24} />
               </button>
             </div>
@@ -171,7 +183,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
           <div className="flex-1 px-8 pb-8 pt-4">
             <div className="grid grid-cols-7 mb-4">
               {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day) => (
-                <div key={day} className="text-center text-[12px] font-semibold text-[#86868B] tracking-wider">
+                <div key={day} className="text-center text-[12px] font-semibold text-[var(--text-muted)] tracking-wider">
                   {day}
                 </div>
               ))}
@@ -198,12 +210,12 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                       className={`
                         w-10 h-10 flex items-center justify-center rounded-full text-[19px] transition-all duration-200
                         ${isToday && isSelected 
-                          ? "bg-[#007AFF] text-white font-semibold shadow-md" // Today Selected: Blue Circle
+                          ? "bg-[var(--secondary)] text-[var(--bg)] font-bold shadow-lg shadow-[var(--secondary)]/30" // Today Selected
                           : isSelected
-                            ? "bg-[#1D1D1F] dark:bg-white text-white dark:text-black font-semibold shadow-md" // Normal Selected: Black/White Circle
+                            ? "bg-[var(--border-subtle)] text-[var(--text)] font-semibold shadow-md border border-[var(--secondary)]/50" // Normal Selected
                             : isToday
-                              ? "text-[#007AFF] font-semibold" // Today Unselected: Blue Text
-                              : "text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:bg-black/5 dark:group-hover:bg-white/10" // Normal
+                              ? "text-[var(--secondary)] font-bold" // Today Unselected
+                              : "text-[var(--text)] group-hover:bg-[var(--border-subtle)]" // Normal
                         }
                       `}
                     >
@@ -211,13 +223,12 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                     </span>
                     <div className="flex gap-1 mt-1.5 h-1.5">
                       {hasTasks && !isSelected && (
-                        <div className={`w-1.5 h-1.5 rounded-full ${isToday ? 'bg-[#007AFF]' : 'bg-[#8E8E93]'}`} />
+                        <div className={`w-1.5 h-1.5 rounded-full ${isToday ? 'bg-[var(--secondary)]' : 'bg-[var(--text-muted)]'}`} />
                       )}
                       {dayProjectsList.slice(0, 2).map((proj, idx) => (
                         <div 
                           key={idx} 
-                          className="w-1.5 h-1.5 rounded-full"
-                          style={{ backgroundColor: proj.color }}
+                          className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]"
                         />
                       ))}
                     </div>
@@ -226,43 +237,43 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
               })}
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         {/* Right Column: Reminders */}
-        <div className="lg:col-span-4 flex flex-col bg-[#F2F2F7] dark:bg-[#000000] rounded-[24px] overflow-hidden border border-black/5 dark:border-white/10">
-          <div className="p-6 bg-white dark:bg-[#1C1C1E] border-b border-black/5 dark:border-white/5">
-            <h3 className="text-[22px] font-bold text-[#1D1D1F] dark:text-white mb-1">
+        <GlassCard className="lg:col-span-4 flex flex-col">
+          <div className="p-6 border-b border-[var(--border-subtle)]">
+            <h3 className="text-[22px] font-bold text-[var(--text)] mb-1">
               {t.tasks}
             </h3>
-            <p className="text-[15px] text-[#86868B]">
+            <p className="text-[15px] text-[var(--text-muted)]">
               {selectedDate.toLocaleDateString(lang === "EN" ? "en-US" : "zh-HK", { weekday: 'long', month: 'short', day: 'numeric' })}
             </p>
           </div>
 
-          <div className="flex-1 p-4 overflow-y-auto bg-[#F2F2F7] dark:bg-[#000000]">
+          <div className="flex-1 p-4 overflow-y-auto">
             {dayTasks.length === 0 && dayProjects.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-[#86868B] opacity-60">
-                <div className="w-20 h-20 bg-white dark:bg-[#1C1C1E] rounded-full flex items-center justify-center mb-4 shadow-sm">
-                   <Check size={32} className="text-[#007AFF]" />
+              <div className="h-full flex flex-col items-center justify-center text-[var(--text-muted)] opacity-60">
+                <div className="w-20 h-20 bg-[var(--border-subtle)] rounded-full flex items-center justify-center mb-4 shadow-sm">
+                   <Check size={32} className="text-[var(--text)]" />
                 </div>
-                <p className="text-[17px] font-medium text-[#1D1D1F] dark:text-white mb-1">{t.noTasks}</p>
-                <p className="text-[15px] text-[#86868B]">Enjoy your free time!</p>
+                <p className="text-[17px] font-medium text-[var(--text)] mb-1">{t.noTasks}</p>
+                <p className="text-[15px] text-[var(--text-muted)]">Enjoy your free time!</p>
                 
                 <button 
                   onClick={() => setIsAdding(true)}
-                  className="mt-6 px-6 py-2.5 bg-[#007AFF] text-white rounded-full font-medium text-sm hover:bg-[#0062CC] transition-colors shadow-sm"
+                  className="mt-6 px-6 py-2.5 bg-[var(--primary)] text-[var(--bg)] rounded-full font-medium text-sm hover:bg-[var(--primary)]/90 transition-colors shadow-lg shadow-[var(--primary)]/20"
                 >
                   + {t.addTask}
                 </button>
               </div>
             ) : (
-              <div className="bg-white dark:bg-[#1C1C1E] rounded-xl overflow-hidden shadow-sm">
+              <div className="bg-[var(--surface)]/50 rounded-xl overflow-hidden shadow-sm border border-[var(--border-subtle)]">
                 {dayTasks.map((task, index) => (
                   <div 
                     key={task.id} 
                     className={`
-                      group flex items-center gap-3 p-3.5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors
-                      ${index !== dayTasks.length - 1 || dayProjects.length > 0 ? 'border-b border-black/5 dark:border-white/10' : ''}
+                      group flex items-center gap-3 p-3.5 hover:bg-[var(--border-subtle)] transition-colors
+                      ${index !== dayTasks.length - 1 || dayProjects.length > 0 ? 'border-b border-[var(--border-subtle)]' : ''}
                     `}
                   >
                     <button
@@ -270,17 +281,17 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                       className={`
                         flex-shrink-0 w-5 h-5 rounded-full border-[1.5px] flex items-center justify-center transition-all
                         ${task.completed
-                          ? "bg-[#007AFF] border-[#007AFF]"
-                          : "border-[#C6C6C8] dark:border-[#48484A] hover:border-[#007AFF]"
+                          ? "bg-[var(--secondary)] border-[var(--secondary)]"
+                          : "border-[var(--text-muted)] hover:border-[var(--secondary)]"
                         }
                       `}
                     >
-                      {task.completed && <Check size={12} className="text-white" strokeWidth={3} />}
+                      {task.completed && <Check size={12} className="text-[var(--bg)]" strokeWidth={3} />}
                     </button>
-                    <span className={`flex-1 text-[15px] ${task.completed ? "text-[#86868B] line-through" : "text-[#1D1D1F] dark:text-white"}`}>
+                    <span className={`flex-1 text-[15px] ${task.completed ? "text-[var(--text-muted)] line-through" : "text-[var(--text)]"}`}>
                       {task.title}
                     </span>
-                    <button onClick={() => deleteTask(task.id)} className="opacity-0 group-hover:opacity-100 text-[#FF3B30] p-1">
+                    <button onClick={() => deleteTask(task.id)} className="opacity-0 group-hover:opacity-100 text-[var(--primary)] p-1 hover:bg-[var(--primary)]/10 rounded">
                       <Trash2 size={16} />
                     </button>
                   </div>
@@ -289,13 +300,12 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                   <div 
                     key={project.id} 
                     className={`
-                      px-3.5 py-3 border-l-[4px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors
-                      ${index !== dayProjects.length - 1 ? 'border-b border-black/5 dark:border-white/10' : ''}
+                      px-3.5 py-3 border-l-[4px] border-[var(--primary)] hover:bg-[var(--border-subtle)] transition-colors
+                      ${index !== dayProjects.length - 1 ? 'border-b border-[var(--border-subtle)]' : ''}
                     `}
-                    style={{ borderLeftColor: project.color }}
                   >
-                    <p className="text-[15px] font-medium text-[#1D1D1F] dark:text-white">{project.name}</p>
-                    <p className="text-[13px] text-[#86868B] mt-0.5">
+                    <p className="text-[15px] font-medium text-[var(--text)]">{project.name}</p>
+                    <p className="text-[13px] text-[var(--text-muted)] mt-0.5">
                       {new Date(project.startDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} - {new Date(project.endDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                     </p>
                   </div>
@@ -304,11 +314,11 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
             )}
           </div>
 
-          <div className="p-4 bg-white dark:bg-[#1C1C1E] border-t border-black/5 dark:border-white/5">
+          <div className="p-4 border-t border-[var(--border-subtle)]">
             {!isAdding ? (
               <button 
                 onClick={() => setIsAdding(true)}
-                className="w-full flex items-center justify-center gap-2 bg-[#007AFF] hover:bg-[#0062CC] text-white py-3.5 rounded-xl font-semibold transition-all active:scale-95 shadow-sm"
+                className="w-full flex items-center justify-center gap-2 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--bg)] py-3.5 rounded-xl font-semibold transition-all active:scale-95 shadow-lg shadow-[var(--primary)]/20"
               >
                 <Plus size={20} strokeWidth={2.5} />
                 {t.addTask}
@@ -324,8 +334,6 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         addTask();
-                        // Keep adding mode open for rapid entry, or close? 
-                        // Let's keep it open but clear title
                       }
                       if (e.key === 'Escape') {
                         setIsAdding(false);
@@ -333,12 +341,12 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                       }
                     }}
                     placeholder={t.addTask}
-                    className="w-full bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-white px-4 py-3.5 rounded-xl border-none outline-none text-[16px] placeholder-[#86868B] focus:ring-2 focus:ring-[#007AFF]/50"
+                    className="w-full bg-[var(--surface)] text-[var(--text)] px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] outline-none text-[16px] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-[var(--secondary)] focus:border-[var(--secondary)]"
                   />
                   {newTaskTitle && (
                     <button 
                       onClick={() => setNewTaskTitle("")}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#86868B] hover:text-[#1D1D1F] dark:hover:text-white"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[var(--text-muted)] hover:text-[var(--text)]"
                     >
                       <X size={16} /> 
                     </button>
@@ -347,14 +355,14 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
                 <div className="flex gap-2">
                   <button 
                     onClick={() => { setIsAdding(false); setNewTaskTitle(""); }}
-                    className="flex-1 py-3 text-[#86868B] font-medium hover:bg-[#F2F2F7] dark:hover:bg-[#2C2C2E] rounded-xl transition-colors"
+                    className="flex-1 py-3 text-[var(--text-muted)] font-medium hover:bg-[var(--border-subtle)] rounded-xl transition-colors"
                   >
                     {t.cancel}
                   </button>
                   <button 
                     onClick={() => { addTask(); setIsAdding(false); }}
                     disabled={!newTaskTitle.trim()}
-                    className="flex-1 py-3 bg-[#007AFF] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-sm hover:bg-[#0062CC] transition-all"
+                    className="flex-1 py-3 bg-[var(--primary)] disabled:opacity-50 disabled:cursor-not-allowed text-[var(--bg)] font-semibold rounded-xl shadow-lg shadow-[var(--primary)]/20 hover:bg-[var(--primary)]/90 transition-all"
                   >
                     {t.add}
                   </button>
@@ -362,7 +370,7 @@ export default function CalendarMinimal({ lang: propLang }: { lang: string }) {
               </div>
             )}
           </div>
-        </div>
+        </GlassCard>
       </div>
     </div>
   );

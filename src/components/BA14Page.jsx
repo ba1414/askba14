@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Header from "./Header";
 
 const TILES = [
-  { en: "GPA Calculator", yue: "功績點計算", color: "#1F6FEB", icon: "calculate" },
-  { en: "Calendar + To-Do", yue: "行事曆＋待辦", color: "#F9413A", icon: "calendar" },
-  { en: "Anki Flashcards", yue: "Anki 記憶卡", color: "#FFCE00", icon: "cards" },
-  { en: "Focus Timer", yue: "專注計時", color: "#00A884", icon: "timer" },
-  { en: "Notes / Outline", yue: "筆記／大綱", color: "#6D28D9", icon: "notes" },
-  { en: "Habit & Streaks", yue: "習慣連勝", color: "#F97316", icon: "check" },
+  { en: "GPA Calculator", yue: "功績點計算", color: "#22D3EE", icon: "calculate" },
+  { en: "Calendar + To-Do", yue: "行事曆＋待辦", color: "#FACC6B", icon: "calendar" },
+  { en: "Anki Flashcards", yue: "Anki 記憶卡", color: "#050B1F", icon: "cards" },
+  { en: "Focus Timer", yue: "專注計時", color: "#1F2933", icon: "timer" },
+  { en: "Notes / Outline", yue: "筆記／大綱", color: "#22D3EE", icon: "notes" },
+  { en: "Habit & Streaks", yue: "習慣連勝", color: "#FACC6B", icon: "check" },
 ];
 
 function TileIcon({ type, className }) {
@@ -89,17 +89,17 @@ export default function BA14Page() {
   const t = (en, yue) => (lang === "en" ? en : yue);
 
   return (
-    <main className="min-h-screen bg-white text-black dark:bg-[#0B0B0B] dark:text-white">
+    <main className="min-h-screen bg-[#020617] text-[#F9FAFB]">
       <Header activeLink="ba14" lang={lang} setLang={setLang} />
 
       <section className="mx-auto max-w-[1400px] px-6 py-16 md:py-24">
         {/* Breadcrumb */}
-        <nav className="mb-12 text-sm text-black/60 dark:text-white/60">
-          <a href="/" className="hover:text-black dark:hover:text-white transition-colors">
+        <nav className="mb-12 text-sm text-[#9CA3AF]">
+          <a href="/" className="hover:text-[#F9FAFB] transition-colors">
             {t("Home", "主頁")}
           </a>
           <span className="mx-2">/</span>
-          <span className="text-black dark:text-white">BA14</span>
+          <span className="text-[#F9FAFB]">BA14</span>
         </nav>
 
         {/* 3×2 Swiss Grid */}
@@ -113,8 +113,8 @@ export default function BA14Page() {
                 transition-all duration-[120ms] ease-out
                 hover:-translate-y-px hover:shadow-[0_6px_24px_rgba(0,0,0,0.13)]
                 active:translate-y-0
-                focus-visible:ring-2 focus-visible:ring-black/80 dark:focus-visible:ring-white/80
-                ${selected === i ? 'ring-1 ring-black dark:ring-white ring-inset' : ''}
+                focus-visible:ring-2 focus-visible:ring-[#22D3EE]
+                ${selected === i ? 'ring-1 ring-[#22D3EE] ring-inset' : ''}
               `}
               style={{ 
                 backgroundColor: tile.color,
@@ -126,12 +126,20 @@ export default function BA14Page() {
               <div className="absolute top-8 left-8">
                 <TileIcon 
                   type={tile.icon} 
-                  className="w-8 h-8 text-black/25 dark:text-white/30" 
+                  className={`w-8 h-8 ${
+                    tile.color === '#050B1F' || tile.color === '#1F2933' 
+                      ? 'text-[#F9FAFB]/30' 
+                      : 'text-[#020617]/25'
+                  }`} 
                 />
               </div>
 
               {/* Sealed label at bottom */}
-              <div className="absolute bottom-8 left-8 right-8 text-black/[0.14] dark:text-white/[0.12] group-hover:text-black/[0.20] group-hover:dark:text-white/[0.18] transition-all duration-[120ms]">
+              <div className={`absolute bottom-8 left-8 right-8 transition-all duration-[120ms] ${
+                tile.color === '#050B1F' || tile.color === '#1F2933'
+                  ? 'text-[#F9FAFB]/[0.12] group-hover:text-[#F9FAFB]/[0.18]'
+                  : 'text-[#020617]/[0.14] group-hover:text-[#020617]/[0.20]'
+              }`}>
                 <SealedLabel text={t(tile.en, tile.yue)} index={i} />
               </div>
             </button>

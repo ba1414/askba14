@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Light mode - Apple Style */
+  --bg: #f5f5f7; /* Apple light gray background */
+  --surface: #ffffff; /* Pure white cards */
+  --surface-highlight: #f5f5f7; 
+  --border-subtle: rgba(0, 0, 0, 0.05); /* Very subtle border */
+  --text: #1d1d1f; /* Apple near-black */
+  --text-muted: #86868b; /* Apple gray */
+
+  --primary: #ff4b2b; /* Keep brand color */
+  --primary-strong: #e04124;
+  --primary-gradient: linear-gradient(135deg, #ff4b2b, #ff8a3c);
+  --primary-glow: radial-gradient(circle at center, rgba(255, 75, 43, 0.15), transparent 70%);
+  
+  --secondary: #ff8a3c;
+  --accent: #ffdad1;
+
+  --card-bg: #ffffff;
+  --card-border: rgba(0,0,0,0.05);
+  --surface-hover: #f5f5f7;
+}
+
+.dark {
+  /* Dark mode - Apple Style */
+  --bg: #000000; /* True black background */
+  --surface: #1c1c1e; /* Apple dark gray cards */
+  --surface-highlight: #2c2c2e;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --text: #f5f5f7;
+  --text-muted: #86868b;
+
+  --primary: #ff4b2b;
+  --primary-strong: #e04124;
+  --primary-gradient: linear-gradient(135deg, #ff4b2b, #ff8a3c);
+  --primary-glow: radial-gradient(circle at center, rgba(255, 75, 43, 0.25), transparent 70%);
+
+  --secondary: #ff8a3c;
+  --accent: #3a1d1d;
+
+  --card-bg: #1c1c1e;
+  --card-border: rgba(255,255,255,0.1);
+  --surface-hover: #2c2c2e;
+}
+
 @layer base {
   * {
     @apply antialiased;
@@ -12,22 +56,13 @@
   }
   
   body {
-    @apply font-sans text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors duration-300;
-    background: #F5F5F7;
-  }
-
-  .dark body {
-    background: #000000;
+    @apply font-sans transition-colors duration-300;
+    background-color: var(--bg);
+    color: var(--text);
   }
 
   .main-grid {
     @apply max-w-[1120px] mx-auto p-8 relative overflow-hidden transition-all duration-300;
-  }
-
-  .dark .main-grid {
-    background: transparent;
-    box-shadow: none;
-    border: none;
   }
 
   /* Typography Scale */
@@ -176,7 +211,7 @@
 
 @layer components {
   .apple-card {
-    @apply bg-apple-light-card dark:bg-apple-dark-card rounded-[24px] border border-black/5 dark:border-white/5 shadow-sm;
+    @apply bg-[var(--surface)] rounded-[24px] border border-[var(--border-subtle)] shadow-sm;
   }
   
   .apple-card-hover {
@@ -184,27 +219,15 @@
   }
 
   .apple-button-primary {
-    @apply h-[44px] px-6 rounded-full bg-apple-blue text-white font-medium transition-all active:scale-95 hover:bg-blue-600;
+    @apply h-[44px] px-6 rounded-full bg-[var(--primary)] text-[var(--text)] font-medium transition-all active:scale-95 hover:bg-[var(--primary-strong)];
   }
 
   .apple-button-secondary {
-    @apply h-[44px] px-6 rounded-full bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white font-medium transition-all active:scale-95 hover:bg-gray-200 dark:hover:bg-white/20;
+    @apply h-[44px] px-6 rounded-full bg-[var(--secondary-soft)] text-[var(--secondary-dark)] font-medium transition-all active:scale-95 hover:bg-[var(--secondary)];
   }
 
   .layout-grid {
     @apply grid grid-cols-1 md:grid-cols-12 gap-6 max-w-[1400px] mx-auto px-6 md:px-12 pt-10 pb-20;
   }
 }
-
-:root {
-    --color-primary: #000000;
-    --color-secondary: #52525B;
-    --color-muted: #71717A;
-  }
-
-  .dark {
-    --color-primary: #FFFFFF;
-    --color-secondary: #A1A1AA;
-    --color-muted: #52525B;
-  }
 

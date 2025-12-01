@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { MapPin, Mail, Github, Linkedin, Globe, Code, Heart, Coffee, Music, Camera, Book, ArrowUpRight, Sparkles, Play, Pause, SkipForward, Languages, Terminal, Cpu, Palette, Briefcase, GraduationCap } from "lucide-react";
+
+const AppleEmoji = ({ emoji, className = "w-5 h-5" }: { emoji: string, className?: string }) => (
+  <img 
+    src={`https://emojicdn.elk.sh/${emoji}?style=apple`} 
+    alt={emoji} 
+    className={`inline-block select-none pointer-events-none ${className}`} 
+  />
+);
 
 const TRANSLATIONS = {
   EN: {
     title: "About Me",
     subtitle: "DSE 14 Points • No Full Cert • HKU in 1 Year",
-    bio: "DSE 14 Points, No Full Cert. From having no university offers to getting into HKU in just one year.",
+    bio: "From a 14-point DSE score to HKU in just one year. I build digital experiences that bridge the gap between human language and machine logic.",
     location: "Hong Kong",
     skills: "Tech Stack",
     interests: "Vibe Check",
@@ -18,13 +25,14 @@ const TRANSLATIONS = {
     artist: "Chill Hop",
     experience: "Journey",
     projects: "Featured Projects",
-    philosophy: "Linguistics x Tech",
-    philosophyText: "Language is the original code. Understanding syntax, semantics, and pragmatics in human speech helps me write cleaner, more semantic code and design more intuitive user interfaces."
+    philosophy: "Philosophy",
+    philosophyText: "Language is the original code. Understanding syntax, semantics, and pragmatics in human speech helps me write cleaner, more semantic code and design more intuitive user interfaces.",
+    exchange: "Exchange at NUS (Asia's #1 University)"
   },
   粵: {
     title: "關於我",
     subtitle: "DSE 14分 • 冇Full Cert • 一年入HKU",
-    bio: "Dse 14分冇full cert 由無任何大學收，到一年入HKU",
+    bio: "由 DSE 14分、冇 Full Cert、無任何大學收，到一年入 HKU。",
     location: "香港",
     skills: "技術棧",
     interests: "生活態度",
@@ -37,102 +45,52 @@ const TRANSLATIONS = {
     artist: "Chill Hop",
     experience: "歷程",
     projects: "精選項目",
-    philosophy: "語言學 x 科技",
-    philosophyText: "語言係最原始嘅代碼。理解人類語言中嘅句法、語義同語用，幫助我編寫更簡潔、更具語義嘅代碼，並設計更直觀嘅用戶界面。"
+    philosophy: "理念",
+    philosophyText: "Hi我整呢個 website係希望可以幫到而家覺得迷惘嘅你因為我以前都經歷過同樣嘅階段。如果你有任何問題，都可以去我嘅 WhatsApp group／IG搵我傾計!",
+    exchange: "新加坡國立大學交流 (亞洲第一學府)"
   },
 };
 
-const TiltCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
-  
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const box = card.getBoundingClientRect();
-    const x = e.clientX - box.left;
-    const y = e.clientY - box.top;
-    const centerX = box.width / 2;
-    const centerY = box.height / 2;
-    const rotateX = (y - centerY) / 25;
-    const rotateY = (centerX - x) / 25;
-
-    setRotate({ x: rotateX, y: rotateY });
-  };
-
-  const onMouseLeave = () => {
-    setRotate({ x: 0, y: 0 });
-  };
-
-  return (
-    <div
-      className={`transition-all duration-200 ease-out ${className}`}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      style={{ 
-        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(1, 1, 1)`,
-        transformStyle: 'preserve-3d'
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
-const MusicPlayer = ({ t }: { t: any }) => {
-  const [playing, setPlaying] = useState(true);
-  
-  return (
-    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 flex items-center gap-4 border border-white/10">
-      <div className="relative w-12 h-12 rounded-xl overflow-hidden group cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Album Art" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-        <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
-        </div>
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-xs font-medium text-white/60 uppercase tracking-wider mb-0.5">{t.nowPlaying}</p>
-        <p className="text-sm font-bold text-white truncate">{t.song}</p>
-        <p className="text-xs text-white/80 truncate">{t.artist}</p>
-      </div>
-      <button 
-        onClick={() => setPlaying(!playing)}
-        className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 transition-transform active:scale-95"
-      >
-        {playing ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" className="ml-1" />}
-      </button>
-    </div>
-  );
-};
-
-const ExperienceItem = ({ year, title, company, desc }: any) => (
-  <div className="relative pl-6 pb-8 last:pb-0 border-l border-white/10 last:border-0 group">
-    <div className="absolute left-[-5px] top-0 w-2.5 h-2.5 rounded-full bg-apple-red-500 ring-4 ring-card group-hover:scale-125 transition-transform duration-300"></div>
-    <span className="text-[10px] font-bold text-apple-red-400 mb-1 block uppercase tracking-wider">{year}</span>
-    <h4 className="font-bold text-primary text-sm mb-0.5">{title}</h4>
-    <p className="text-xs text-secondary font-medium mb-2">{company}</p>
-    <p className="text-xs text-muted leading-relaxed opacity-80">{desc}</p>
+const GlassCard = ({ children, className = "", hoverEffect = true }: { children: React.ReactNode, className?: string, hoverEffect?: boolean }) => (
+  <div className={`relative overflow-hidden bg-[var(--surface)] border border-[var(--border-subtle)] shadow-sm rounded-[2rem] ${hoverEffect ? 'transition-all duration-300 hover:shadow-md hover:-translate-y-1' : ''} ${className}`}>
+    {children}
   </div>
 );
 
-const ProjectCard = ({ title, desc, tags, color, icon: Icon }: any) => (
-  <div className={`p-6 rounded-[32px] ${color} hover:scale-[1.02] transition-transform duration-300 flex flex-col h-full relative overflow-hidden group border border-white/5`}>
-    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:rotate-12 duration-500">
-      <Icon size={80} />
+const StatBadge = ({ emoji, label, value, color }: any) => (
+  <div className="flex items-center gap-3 p-3 rounded-2xl bg-[var(--surface)] border border-[var(--border-subtle)] shadow-sm">
+    <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center shadow-md`}>
+      <AppleEmoji emoji={emoji} className="w-5 h-5" />
     </div>
-    <div className="flex justify-between items-start mb-4 relative z-10">
-      <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/10">
-        <Icon size={20} className="text-primary" />
-      </div>
-      <ArrowUpRight className="text-white/50" />
+    <div>
+      <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{label}</div>
+      <div className="text-lg font-black text-[var(--text)] leading-none">{value}</div>
     </div>
-    <h3 className="text-xl font-bold text-primary mb-2 relative z-10">{title}</h3>
-    <p className="text-secondary text-sm mb-6 leading-relaxed relative z-10 flex-grow">{desc}</p>
-    <div className="flex gap-2 flex-wrap relative z-10">
-      {tags.map((tag: string) => (
-        <span key={tag} className="px-2.5 py-1 rounded-lg bg-white/10 text-white/90 text-[10px] font-medium backdrop-blur-sm border border-white/5">
-          {tag}
-        </span>
-      ))}
+  </div>
+);
+
+const ExperienceItem = ({ year, title, company, desc, isLast }: any) => (
+  <div className="relative pl-8 pb-8 group">
+    {!isLast && <div className="absolute left-[11px] top-2 bottom-0 w-0.5 bg-[var(--border-subtle)] group-hover:bg-[var(--primary)]/30 transition-colors"></div>}
+    <div className="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-[var(--surface)] bg-[var(--primary)] shadow-md group-hover:scale-110 transition-transform"></div>
+    
+    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 mb-2">
+      <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 w-fit">
+        {year}
+      </span>
+      <h4 className="font-bold text-[var(--text)] text-base">{title}</h4>
     </div>
+    <p className="text-xs font-bold text-[var(--secondary)] mb-2 flex items-center gap-1">
+      <AppleEmoji emoji="💼" className="w-3 h-3" /> {company}
+    </p>
+    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{desc}</p>
+  </div>
+);
+
+const SkillTag = ({ name, emoji }: any) => (
+  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[var(--bg)] border border-[var(--border-subtle)] text-xs font-bold text-[var(--text-muted)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors cursor-default">
+    {emoji && <AppleEmoji emoji={emoji} className="w-3.5 h-3.5" />}
+    {name}
   </div>
 );
 
@@ -143,196 +101,91 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
   return (
     <div className="main-grid col-span-full">
       
-      <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in p-4 md:p-8 relative z-10" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, sans-serif" }}>
-        {/* Header */}
-        <div className="mb-16 text-center relative z-10">
-          <h1 className="relative text-6xl md:text-8xl font-bold text-primary tracking-tighter mb-6">
-            {t.title}
-          </h1>
-          <p className="relative text-xl md:text-2xl text-secondary font-medium max-w-2xl mx-auto leading-relaxed">
-            {t.subtitle}
-          </p>
-        </div>
-
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 auto-rows-[minmax(180px,auto)] relative z-10">
-          
-          {/* Profile Card - Large */}
-          <TiltCard className="md:col-span-2 md:row-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-10 border border-black/5 dark:border-white/10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+      <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in p-4 md:p-8 relative z-10">
+        
+        {/* Hero Section */}
+        <div className="relative mb-20 pt-10">
+          <div className="flex flex-col md:flex-row items-end gap-8">
+            <div className="relative">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] overflow-hidden border-4 border-[var(--surface)] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
+                <img src="/askba14/profile.png" alt="Profile" className="w-full h-full object-cover" />
+              </div>
+            </div>
             
-            <div className="relative w-56 h-56 mb-10 group-hover:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
-              <div className="relative w-full h-full rounded-full p-1.5 bg-gray-100 dark:bg-zinc-800">
-                <div className="w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-inner">
-                  <img 
-                    src="/askba14/profile.png" 
-                    alt="Profile" 
-                    className="w-full h-full object-cover transition-all duration-500"
-                  />
-                </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-3 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-xs font-bold uppercase tracking-widest border border-[var(--primary)]/20">
+                  Student
+                </span>
+                <span className="px-3 py-1 rounded-full bg-[var(--surface)] text-[var(--text-muted)] text-xs font-bold border border-[var(--border-subtle)] flex items-center gap-1">
+                  <AppleEmoji emoji="📍" className="w-3 h-3" /> {t.location}
+                </span>
               </div>
-              <div className="absolute bottom-2 right-4 bg-white dark:bg-zinc-800 text-2xl shadow-lg rounded-full p-2 border border-black/5 dark:border-white/10">
-                👋
-              </div>
-            </div>
-
-            <h2 className="text-7xl font-bold mb-3 text-primary tracking-tighter">
-              BA
-            </h2>
-            <div className="flex items-center gap-2 text-secondary bg-gray-100 dark:bg-zinc-800 px-5 py-2.5 rounded-full text-sm font-semibold border border-black/5 dark:border-white/5">
-              <MapPin size={16} className="text-primary" />
-              {t.location}
-            </div>
-          </TiltCard>
-
-          {/* Bio Card - Expanded */}
-          <div className="md:col-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-10 flex flex-col justify-center relative overflow-hidden group border border-black/5 dark:border-white/10">
-            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:rotate-12 duration-500">
-              <Sparkles size={120} className="text-primary" />
-            </div>
-            <div className="relative z-10">
-              <div className="w-12 h-12 bg-gray-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center text-primary mb-6">
-                <Languages size={24} />
-              </div>
-              <p className="text-xl md:text-2xl leading-relaxed text-primary font-medium">
+              <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-[var(--text)] mb-4 leading-[0.9]">
+                BA<span className="text-[var(--primary)]">.</span>14
+              </h1>
+              <p className="text-xl text-[var(--text-muted)] font-medium max-w-2xl leading-relaxed">
                 {t.bio}
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Philosophy Card - Large */}
+          <div className="md:col-span-2">
+            <GlassCard className="h-full p-8 md:p-10 flex flex-col justify-center relative overflow-hidden group bg-gradient-to-br from-[var(--surface)] via-[var(--surface)] to-orange-500/5">
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-3 bg-orange-500/10 rounded-xl">
+                    <AppleEmoji emoji="💡" className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-bold text-xl text-[var(--text)] uppercase tracking-widest">{t.philosophy}</h3>
+                </div>
+                
+                <div className="space-y-6">
+                  {lang === "粵" ? (
+                    <>
+                      <p className="text-xl md:text-2xl font-bold leading-relaxed text-[var(--text)]">
+                        "Hi, 我整呢個 website 係希望可以幫到而家覺得迷惘嘅你，因為我以前都經歷過同樣嘅階段。"
+                      </p>
+                      <div className="inline-flex items-center gap-3 p-4 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-400 transition-colors hover:bg-orange-500/20 cursor-pointer">
+                        <AppleEmoji emoji="💬" className="w-5 h-5 shrink-0" />
+                        <p className="text-base font-bold">
+                          如果你有任何問題，都可以去我嘅 <span className="underline decoration-2 underline-offset-2">WhatsApp group / IG</span> 搵我傾計!
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <blockquote className="text-2xl md:text-3xl font-bold leading-relaxed text-[var(--text)]">
+                      "{t.philosophyText}"
+                    </blockquote>
+                  )}
+                </div>
+              </div>
+            </GlassCard>
+          </div>
 
           {/* Education Card */}
-          <div className="md:col-span-1 bg-white dark:bg-zinc-900 rounded-[40px] p-8 border border-black/5 dark:border-white/10 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 group relative overflow-hidden">
-            <div className="w-14 h-14 bg-gray-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:rotate-12 transition-transform duration-300">
-              <GraduationCap size={28} />
-            </div>
-            <div>
-              <h3 className="text-secondary text-xs font-bold uppercase tracking-widest mb-2">{t.education}</h3>
-              <p className="font-bold text-lg text-primary leading-tight mb-1">{t.university}</p>
-              <p className="text-sm font-medium text-secondary leading-snug">{t.major}</p>
-            </div>
-          </div>
-
-          {/* Experience Timeline */}
-          <div className="md:col-span-1 md:row-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-8 border border-black/5 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-gray-100 dark:bg-zinc-800 rounded-xl flex items-center justify-center text-primary">
-                <Briefcase size={20} />
-              </div>
-              <h3 className="font-bold text-lg text-primary">{t.experience}</h3>
-            </div>
-            <div className="space-y-2">
-              <ExperienceItem 
-                year="2024 - Present" 
-                title="Full Stack Developer" 
-                company="Freelance" 
-                desc="Building accessible web apps with React & Node.js."
-              />
-              <ExperienceItem 
-                year="2023 - 2024" 
-                title="Frontend Intern" 
-                company="Tech Startup HK" 
-                desc="Optimized UI/UX for high-traffic dashboard."
-              />
-              <ExperienceItem 
-                year="2020 - 2024" 
-                title="Student" 
-                company="HKU" 
-                desc="Specialized in Computational Linguistics."
-              />
-            </div>
-          </div>
-
-          {/* Tech Stack */}
-          <div className="md:col-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-8 text-primary flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 border border-black/5 dark:border-white/10 relative overflow-hidden">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-14 h-14 bg-gray-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center border border-black/5 dark:border-white/5">
-                  <Code size={28} className="text-primary" />
-                </div>
-                <ArrowUpRight className="text-secondary" />
-              </div>
-              <h3 className="text-secondary text-xs font-bold uppercase tracking-widest mb-4">{t.skills}</h3>
-              
-              <div className="space-y-4">
-                <div>
-                  <p className="text-xs font-bold text-primary mb-2 uppercase tracking-wider">Frontend</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'Next.js'].map(skill => (
-                      <span key={skill} className="px-3 py-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full text-[11px] font-semibold border border-black/5 dark:border-white/5 text-secondary">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-secondary mb-2 uppercase tracking-wider">Backend & Tools</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['Node.js', 'Python', 'Firebase', 'Git', 'Figma'].map(skill => (
-                      <span key={skill} className="px-3 py-1.5 bg-white dark:bg-zinc-900 rounded-full text-[11px] font-semibold border border-black/10 dark:border-white/10 text-secondary">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Projects Row */}
           <div className="md:col-span-1">
-            <ProjectCard 
-              title="AskBA" 
-              desc="Interactive survival guide for Associate Degree students." 
-              tags={['React', 'Vite', 'Tailwind']}
-              color="bg-white dark:bg-zinc-900"
-              icon={Terminal}
-            />
-          </div>
-          <div className="md:col-span-1">
-            <ProjectCard 
-              title="LinguaFlow" 
-              desc="NLP tool for analyzing sentence structures." 
-              tags={['Python', 'NLTK', 'Flask']}
-              color="bg-white dark:bg-zinc-900"
-              icon={Cpu}
-            />
-          </div>
-
-          {/* Philosophy Card */}
-          <div className="md:col-span-2 bg-white dark:bg-zinc-900 rounded-[40px] p-10 text-primary relative overflow-hidden group border border-black/5 dark:border-white/10">
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-gray-100 dark:bg-zinc-800 rounded-xl flex items-center justify-center text-primary">
-                  <Palette size={20} />
+            <GlassCard className="h-full p-8 flex flex-col justify-between group">
+              <div className="mb-6">
+                <div className="w-12 h-12 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <AppleEmoji emoji="🎓" className="w-6 h-6" />
                 </div>
-                <h3 className="font-bold text-lg">{t.philosophy}</h3>
+                <h3 className="text-[var(--text-muted)] text-xs font-bold uppercase tracking-widest mb-2">{t.education}</h3>
+                <p className="font-bold text-xl text-[var(--text)] leading-tight mb-1">{t.university}</p>
+                <p className="text-sm font-medium text-[var(--secondary)] mb-2">{t.major}</p>
+                <p className="text-xs font-medium text-[var(--text-muted)]">
+                  {t.exchange}
+                </p>
               </div>
-              <p className="text-lg md:text-xl leading-relaxed text-primary/90 font-medium">
-                "{t.philosophyText}"
-              </p>
-            </div>
+            </GlassCard>
           </div>
 
-          {/* Interests / Vibe Card */}
-          <div className="md:col-span-2 bg-zinc-900 dark:bg-white rounded-[40px] p-8 text-white dark:text-black shadow-xl relative overflow-hidden group flex flex-col justify-between">
-            
-            <div className="relative z-10 flex justify-between items-start mb-8">
-              <div>
-                <h3 className="text-white/60 dark:text-black/60 text-xs font-bold uppercase tracking-widest mb-1">{t.interests}</h3>
-                <p className="text-2xl font-bold">Creative Flow</p>
-              </div>
-              <div className="flex gap-2">
-                {[Camera, Coffee, Globe].map((Icon, i) => (
-                  <div key={i} className="w-10 h-10 rounded-full bg-white/10 dark:bg-black/10 flex items-center justify-center border border-white/10 dark:border-black/10">
-                    <Icon size={18} />
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            <div className="relative z-10 mt-auto">
-              <MusicPlayer t={t} />
-            </div>
-          </div>
 
         </div>
       </div>

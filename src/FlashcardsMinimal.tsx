@@ -125,12 +125,35 @@ const getCardStatus = (card: Flashcard) => {
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case 'mastered': return 'bg-[#34C759] text-[#34C759] border-[#34C759]'; // Green
-    case 'reviewing': return 'bg-[#FF9500] text-[#FF9500] border-[#FF9500]'; // Orange
-    case 'learning': return 'bg-[#FF3B30] text-[#FF3B30] border-[#FF3B30]'; // Red
-    default: return 'bg-[#007AFF] text-[#007AFF] border-[#007AFF]'; // Blue (New)
+    case 'mastered': return { bg: 'bg-[var(--primary)]', text: 'text-[var(--primary)]', border: 'border-[var(--primary)]' };
+    case 'reviewing': return { bg: 'bg-[var(--secondary)]', text: 'text-[var(--secondary)]', border: 'border-[var(--secondary)]' };
+    case 'learning': return { bg: 'bg-[var(--text-muted)]', text: 'text-[var(--text-muted)]', border: 'border-[var(--text-muted)]' };
+    default: return { bg: 'bg-[var(--border-subtle)]', text: 'text-[var(--text-muted)]', border: 'border-[var(--border-subtle)]' };
   }
 };
+
+const calculateRetention = (card: Flashcard) => {
+  if (!card.lastReviewed || !card.interval) return 0;
+  const daysElapsed = (Date.now() - card.lastReviewed) / (1000 * 60 * 60 * 24);
+  // Ebbinghaus Forgetting Curve Approximation
+  // We assume the interval is set to when retention drops to ~90%
+  // Formula: R = 0.9 ^ (t / S)
+  return Math.pow(0.9, daysElapsed / card.interval) * 100;
+};
+
+const GlassCard = ({ children, className = "", hoverEffect = false, onClick }: { children: React.ReactNode, className?: string, hoverEffect?: boolean, onClick?: () => void }) => (
+  <div 
+    onClick={onClick}
+    className={`
+    relative overflow-hidden rounded-[24px] border border-[var(--border-subtle)]
+    bg-[var(--surface)] backdrop-blur-xl shadow-xl
+    ${hoverEffect ? 'transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-[var(--primary)]/10 cursor-pointer' : ''}
+    ${className}
+  `}>
+    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+    {children}
+  </div>
+);
 
 export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) {
   const lang = (propLang === "粵" ? "粵" : "EN") as "EN" | "粵";
@@ -405,7 +428,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       // Q Label
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(8);
-      pdf.setTextColor(0, 122, 255); // Apple Blue
+      pdf.setTextColor(0, 0, 0); // Black
       pdf.text("Q", x + contentMargin, y + contentMargin + 3);
 
       // Question Text
@@ -422,7 +445,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       // A Label
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(8);
-      pdf.setTextColor(52, 199, 89); // Apple Green
+      pdf.setTextColor(0, 0, 0); // Black
       pdf.text("A", x + contentMargin, y + (cardHeight/2) + contentMargin + 3);
 
       // Answer Text
@@ -448,21 +471,21 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
     <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in">
       {/* Study Mode Overlay */}
       {studyingDeck && studyQueue.length > 0 && (
-        <div className="fixed inset-0 bg-[#F2F2F7] dark:bg-[#000000] z-50 flex flex-col animate-in fade-in duration-300">
+        <div className="fixed inset-0 bg-[var(--bg)]/95 backdrop-blur-3xl z-50 flex flex-col animate-in fade-in duration-300">
           {/* Study Header */}
-          <div className="px-6 py-4 flex items-center justify-between bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border-b border-[#E5E5EA] dark:border-[#2C2C2E] sticky top-0 z-10">
+          <div className="px-6 py-4 flex items-center justify-between bg-[var(--surface)]/50 backdrop-blur-xl border-b border-[var(--border-subtle)] sticky top-0 z-10">
             <div className="flex items-center gap-4">
-              <button onClick={finishStudy} className="p-2 hover:bg-[#F2F2F7] dark:hover:bg-[#2C2C2E] rounded-full transition-colors">
-                <CloseIcon size={24} className="text-[#86868B]" />
+              <button onClick={finishStudy} className="p-2 hover:bg-[var(--border-subtle)] rounded-full transition-colors">
+                <CloseIcon size={24} className="text-[var(--text-muted)]" />
               </button>
               <div>
-                <h2 className="text-lg font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">{studyingDeck.name}</h2>
-                <p className="text-xs text-[#86868B]">{t.cardProgress.replace('{current}', (currentCardIndex + 1).toString()).replace('{total}', studyQueue.length.toString())}</p>
+                <h2 className="text-lg font-semibold text-[var(--text)]">{studyingDeck.name}</h2>
+                <p className="text-xs text-[var(--text-muted)]">{t.cardProgress.replace('{current}', (currentCardIndex + 1).toString()).replace('{total}', studyQueue.length.toString())}</p>
               </div>
             </div>
-            <div className="w-32 h-2 bg-[#E5E5EA] dark:bg-[#2C2C2E] rounded-full overflow-hidden">
+            <div className="w-32 h-2 bg-[var(--border-subtle)] rounded-full overflow-hidden">
               <div 
-                className="h-full bg-[#007AFF] transition-all duration-500 ease-out"
+                className="h-full bg-[var(--secondary)] transition-all duration-500 ease-out"
                 style={{ width: `${((currentCardIndex + 1) / studyQueue.length) * 100}%` }}
               />
             </div>
@@ -470,6 +493,28 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
 
           {/* Study Content */}
           <div className="flex-1 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+            
+            {/* Retention Indicator */}
+            <div className="absolute top-6 left-0 right-0 flex justify-center z-10">
+              <div className="bg-[var(--surface)]/80 backdrop-blur-md border border-[var(--border-subtle)] px-4 py-2 rounded-full flex items-center gap-3 shadow-sm">
+                <Brain size={16} className="text-[var(--secondary)]" />
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">Memory Retention</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-1.5 bg-[var(--border-subtle)] rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 transition-all duration-1000"
+                        style={{ width: `${calculateRetention(studyQueue[currentCardIndex]) || 100}%` }}
+                      />
+                    </div>
+                    <span className="text-xs font-bold text-[var(--text)]">
+                      {Math.round(calculateRetention(studyQueue[currentCardIndex]) || 100)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="w-full max-w-2xl perspective-1000">
               <div 
                 className="relative w-full aspect-[4/3] md:aspect-[16/9] cursor-pointer group"
@@ -477,20 +522,24 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
               >
                 <div className={`w-full h-full transition-all duration-500 transform-style-3d relative ${showAnswer ? 'rotate-y-180' : ''}`}>
                   {/* Front */}
-                  <div className={`absolute inset-0 backface-hidden bg-white dark:bg-[#1C1C1E] rounded-[2rem] shadow-2xl border border-[#E5E5EA] dark:border-[#2C2C2E] flex flex-col items-center justify-center p-12 text-center hover:scale-[1.02] transition-transform duration-300 ${showAnswer ? 'opacity-0' : 'opacity-100'}`}>
-                    <span className="text-sm font-bold text-[#007AFF] uppercase tracking-widest mb-6">{t.front}</span>
-                    <h3 className="text-3xl md:text-5xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] leading-tight tracking-tight">
-                      {studyQueue[currentCardIndex].front}
-                    </h3>
-                    <p className="mt-8 text-[#86868B] text-sm font-medium animate-pulse">{lang === "EN" ? "Tap to flip" : "點擊翻轉"}</p>
+                  <div className={`absolute inset-0 backface-hidden bg-gradient-to-br from-[var(--surface)] to-[var(--bg)] backdrop-blur-xl rounded-[2rem] shadow-2xl border border-[var(--border-subtle)] flex flex-col items-center justify-center p-8 md:p-12 text-center hover:scale-[1.02] transition-transform duration-300 ${showAnswer ? 'opacity-0' : 'opacity-100'}`}>
+                    <span className="text-xs md:text-sm font-bold text-[var(--secondary)] uppercase tracking-widest mb-4 md:mb-6">{t.front}</span>
+                    <div className="flex-1 flex items-center justify-center w-full overflow-y-auto no-scrollbar">
+                      <h3 className="text-xl md:text-3xl font-bold text-[var(--text)] leading-snug tracking-tight break-words max-w-full px-4">
+                        {studyQueue[currentCardIndex].front}
+                      </h3>
+                    </div>
+                    <p className="mt-4 md:mt-8 text-[var(--text-muted)] text-xs md:text-sm font-medium animate-pulse">{lang === "EN" ? "Tap to flip" : "點擊翻轉"}</p>
                   </div>
 
                   {/* Back */}
-                  <div className={`absolute inset-0 backface-hidden rotate-y-180 bg-[#1C1C1E] dark:bg-white rounded-[2rem] shadow-2xl border border-[#E5E5EA] dark:border-[#2C2C2E] flex flex-col items-center justify-center p-12 text-center ${showAnswer ? 'opacity-100' : 'opacity-0'}`}>
-                    <span className="text-sm font-bold text-[#34C759] uppercase tracking-widest mb-6">{t.back}</span>
-                    <h3 className="text-3xl md:text-5xl font-bold text-white dark:text-[#1D1D1F] leading-tight tracking-tight">
-                      {studyQueue[currentCardIndex].back}
-                    </h3>
+                  <div className={`absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-[var(--bg)] to-[var(--surface)] backdrop-blur-xl rounded-[2rem] shadow-2xl border border-[var(--secondary)]/30 flex flex-col items-center justify-center p-8 md:p-12 text-center ${showAnswer ? 'opacity-100' : 'opacity-0'}`}>
+                    <span className="text-xs md:text-sm font-bold text-[var(--primary)] uppercase tracking-widest mb-4 md:mb-6">{t.back}</span>
+                    <div className="flex-1 flex items-center justify-center w-full overflow-y-auto no-scrollbar">
+                      <h3 className="text-xl md:text-3xl font-bold text-[var(--text)] leading-snug tracking-tight break-words max-w-full px-4">
+                        {studyQueue[currentCardIndex].back}
+                      </h3>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -498,27 +547,27 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
           </div>
 
           {/* Study Controls */}
-          <div className="p-6 pb-10 bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border-t border-[#E5E5EA] dark:border-[#2C2C2E]">
+          <div className="p-6 pb-10 bg-[var(--surface)]/50 backdrop-blur-xl border-t border-[var(--border-subtle)]">
             <div className="max-w-2xl mx-auto">
               {!showAnswer ? (
                 <button
                   onClick={() => setShowAnswer(true)}
-                  className="w-full py-4 bg-[#007AFF] hover:bg-[#0071E3] text-white rounded-2xl text-lg font-semibold shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="w-full py-4 bg-[var(--secondary)] hover:bg-[var(--secondary)]/90 text-[var(--bg)] rounded-2xl text-lg font-semibold shadow-lg shadow-[var(--secondary)]/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   {t.showAnswer}
                 </button>
               ) : (
                 <div className="grid grid-cols-4 gap-3">
                   {[
-                    { label: t.again, color: "bg-[#FF3B30]", hover: "hover:bg-[#D70015]", val: 0, time: 1 },
-                    { label: t.hard, color: "bg-[#FF9500]", hover: "hover:bg-[#C93400]", val: 1, time: 3 },
-                    { label: t.good, color: "bg-[#34C759]", hover: "hover:bg-[#248A3D]", val: 2, time: 6 },
-                    { label: t.easy, color: "bg-[#007AFF]", hover: "hover:bg-[#0040DD]", val: 3, time: 14 }
+                    { label: t.again, color: "bg-[#5B1220] text-[var(--text)]", hover: "hover:bg-[#5B1220]/80", val: 0, time: 1 },
+                    { label: t.hard, color: "bg-[var(--border-subtle)] text-[var(--text)]", hover: "hover:bg-[var(--border-subtle)]/80", val: 1, time: 3 },
+                    { label: t.good, color: "bg-[var(--secondary)] text-[var(--bg)]", hover: "hover:bg-[var(--secondary)]/80", val: 2, time: 6 },
+                    { label: t.easy, color: "bg-[var(--primary)] text-[var(--bg)]", hover: "hover:bg-[var(--primary)]/80", val: 3, time: 14 }
                   ].map((btn) => (
                     <button
                       key={btn.val}
                       onClick={() => rateCard(btn.val)}
-                      className={`flex flex-col items-center justify-center py-3 ${btn.color} ${btn.hover} text-white rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg`}
+                      className={`flex flex-col items-center justify-center py-3 ${btn.color} ${btn.hover} rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-lg`}
                     >
                       <span className="text-sm font-bold">{btn.label}</span>
                       <span className="text-[10px] opacity-80 mt-0.5">{formatReviewTime(btn.time)}</span>
@@ -534,10 +583,10 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       {/* Main Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight">
+          <h1 className="text-4xl font-bold text-[var(--text)] tracking-tight">
             {t.title}
           </h1>
-          <p className="text-[#86868B] dark:text-[#86868B] mt-1 text-lg">
+          <p className="text-[var(--text-muted)] mt-1 text-lg">
             {t.subtitle}
           </p>
         </div>
@@ -550,13 +599,13 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
         
         {/* Create New Deck Card (Large) */}
-        <div className="lg:col-span-4 md:col-span-6 bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-sm border border-black/5 dark:border-white/5 hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+        <GlassCard className="lg:col-span-4 md:col-span-6 p-6 flex flex-col justify-between group" hoverEffect>
           <div>
-            <div className="w-12 h-12 bg-[#007AFF] rounded-full flex items-center justify-center mb-4 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
-              <Plus size={24} className="text-white" />
+            <div className="w-12 h-12 bg-[var(--primary)] rounded-full flex items-center justify-center mb-4 shadow-lg shadow-[var(--primary)]/20 group-hover:scale-110 transition-transform duration-300">
+              <Plus size={24} className="text-[var(--bg)]" />
             </div>
-            <h3 className="text-[20px] font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-1">{t.createDeck}</h3>
-            <p className="text-[#86868B] text-[15px]">{lang === "EN" ? "Start a new subject" : "開始新主題"}</p>
+            <h3 className="text-[20px] font-bold text-[var(--text)] mb-1">{t.createDeck}</h3>
+            <p className="text-[var(--text-muted)] text-[15px]">{lang === "EN" ? "Start a new subject" : "開始新主題"}</p>
           </div>
           <div className="mt-6 relative">
             <input
@@ -565,37 +614,45 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
               onChange={(e) => setNewDeckName(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && createDeck()}
               placeholder={t.deckName}
-              className="w-full px-4 py-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-[#1D1D1F] dark:text-[#F5F5F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all pr-12"
+              className="w-full px-4 py-3 bg-[var(--surface)] rounded-xl text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] transition-all pr-12 placeholder-[var(--text-muted)] border border-[var(--border-subtle)]"
             />
             <button
               onClick={createDeck}
               disabled={!newDeckName.trim()}
-              className="absolute right-2 top-2 bottom-2 px-3 bg-[#007AFF] text-white rounded-lg text-sm font-medium disabled:opacity-0 transition-all hover:bg-[#0071E3] flex items-center"
+              className="absolute right-2 top-2 bottom-2 px-3 bg-[var(--primary)] text-[var(--bg)] rounded-lg text-sm font-medium disabled:opacity-0 transition-all hover:bg-[var(--primary)]/90 flex items-center"
             >
               <Plus size={16} />
             </button>
           </div>
-        </div>
+        </GlassCard>
 
         {/* Stats / Quick Actions (Medium) */}
         <div className="lg:col-span-8 md:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-br from-[#007AFF] to-[#0051D5] rounded-[24px] p-6 shadow-lg shadow-blue-500/20 text-white flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-10 -mt-10 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+          <div className="bg-gradient-to-br from-[var(--surface)] to-[var(--bg)] rounded-[24px] p-6 shadow-lg text-[var(--text)] flex flex-col justify-between relative overflow-hidden group border border-[var(--border-subtle)]">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--secondary)] opacity-10 rounded-full -mr-10 -mt-10 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div>
-              <div className="flex items-center gap-2 mb-1 opacity-80">
-                <Zap size={16} />
-                <span className="text-xs font-bold uppercase tracking-wider">{t.quickActions}</span>
+              <div className="flex items-center gap-2 mb-1 opacity-80 text-[var(--secondary)]">
+                <Brain size={16} />
+                <span className="text-xs font-bold uppercase tracking-wider">{lang === "EN" ? "Scientific Learning" : "科學學習"}</span>
               </div>
               <h3 className="text-[24px] font-bold">{t.studyMode}</h3>
             </div>
             <div className="mt-4">
-              <p className="text-[15px] opacity-90 mb-4">
-                {decks.reduce((acc, d) => acc + d.cards.filter(c => (c.nextReview || 0) < Date.now()).length, 0)} cards due for review
+              <div className="flex items-center gap-2 mb-4">
+                <div className="text-[32px] font-bold text-[var(--text)] leading-none">
+                  {Math.round(decks.reduce((acc, d) => acc + d.cards.reduce((sum, c) => sum + calculateRetention(c), 0), 0) / Math.max(1, decks.reduce((acc, d) => acc + d.cards.length, 0)))}%
+                </div>
+                <div className="text-xs text-[var(--text-muted)] leading-tight">
+                  Average<br/>Retention
+                </div>
+              </div>
+              <p className="text-[13px] opacity-90 mb-4 text-[var(--text-muted)]">
+                {decks.reduce((acc, d) => acc + d.cards.filter(c => (c.nextReview || 0) < Date.now()).length, 0)} cards due based on forgetting curve
               </p>
               {decks.length > 0 && (
                 <button 
                   onClick={() => startStudy(decks[0])}
-                  className="px-5 py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full text-sm font-bold transition-all flex items-center gap-2"
+                  className="px-5 py-2.5 bg-[var(--secondary)]/20 hover:bg-[var(--secondary)]/30 backdrop-blur-md rounded-full text-sm font-bold transition-all flex items-center gap-2 text-[var(--secondary)] border border-[var(--secondary)]/30"
                 >
                   <Play size={14} fill="currentColor" />
                   {lang === "EN" ? "Start Review" : "開始溫習"}
@@ -604,36 +661,36 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-sm border border-black/5 dark:border-white/5 hover:shadow-md transition-all duration-300 flex flex-col justify-center items-center text-center">
-            <div className="w-16 h-16 rounded-full border-4 border-[#34C759] flex items-center justify-center mb-2">
-              <span className="text-3xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
+          <GlassCard className="p-6 flex flex-col justify-center items-center text-center" hoverEffect>
+            <div className="w-16 h-16 rounded-full border-4 border-[var(--primary)] flex items-center justify-center mb-2 shadow-lg shadow-[var(--primary)]/10">
+              <span className="text-3xl font-bold text-[var(--text)]">
                 {decks.reduce((acc, d) => acc + d.cards.filter(c => c.mastered).length, 0)}
               </span>
             </div>
-            <p className="text-[#86868B] text-[15px] font-medium">{t.mastered} Cards</p>
-          </div>
+            <p className="text-[var(--text-muted)] text-[15px] font-medium">{t.mastered} Cards</p>
+          </GlassCard>
         </div>
 
         {/* Decks List */}
         {decks.map((deck, index) => (
-          <div 
+          <GlassCard 
             key={deck.id} 
-            className={`bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-sm border border-black/5 dark:border-white/5 hover:shadow-md transition-all duration-300 flex flex-col group animate-in fade-in slide-in-from-bottom-4 ${index === 0 ? 'lg:col-span-8 md:col-span-12' : 'lg:col-span-4 md:col-span-6'}`}
-            style={{ animationDelay: `${index * 50}ms` }}
+            className={`p-6 flex flex-col group animate-in fade-in slide-in-from-bottom-4 ${index === 0 ? 'lg:col-span-8 md:col-span-12' : 'lg:col-span-4 md:col-span-6'}`}
+            hoverEffect
           >
             <div className="flex justify-between items-start mb-6">
               <div className="flex items-center gap-4">
-                <div className={`p-3.5 rounded-2xl transition-colors duration-300 ${index === 0 ? 'bg-[#FF9500] text-white shadow-lg shadow-orange-500/30' : 'bg-[#F2F2F7] dark:bg-[#2C2C2E] group-hover:bg-[#007AFF] group-hover:text-white'}`}>
+                <div className={`p-3.5 rounded-2xl transition-colors duration-300 ${index === 0 ? 'bg-[var(--secondary)] text-[var(--bg)] shadow-lg shadow-[var(--secondary)]/20' : 'bg-[var(--border-subtle)] group-hover:bg-[var(--secondary)] text-[var(--text)] group-hover:text-[var(--bg)]'}`}>
                   <Layers size={24} />
                 </div>
                 <div>
-                  <h3 className="text-[20px] font-bold text-[#1D1D1F] dark:text-[#F5F5F7] leading-tight">{deck.name}</h3>
-                  <p className="text-[#86868B] text-[13px] font-medium mt-0.5">{deck.cards.length} {t.cards}</p>
+                  <h3 className="text-[20px] font-bold text-[var(--text)] leading-tight">{deck.name}</h3>
+                  <p className="text-[var(--text-muted)] text-[13px] font-medium mt-0.5">{deck.cards.length} {t.cards}</p>
                 </div>
               </div>
               <button 
-                onClick={() => deleteDeck(deck.id)}
-                className="p-2 text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#FF3B30]/10 rounded-full"
+                onClick={(e) => { e.stopPropagation(); deleteDeck(deck.id); }}
+                className="p-2 text-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[var(--primary)]/10 rounded-full"
               >
                 <Trash2 size={18} />
               </button>
@@ -641,25 +698,25 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
 
             {/* Stats Mini-Grid */}
             <div className="grid grid-cols-3 gap-3 mb-6">
-              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-3 text-center">
-                <div className="text-[32px] font-bold text-[#FF3B30] leading-none mb-1">{deck.cards.filter(c => (c.nextReview || 0) < Date.now()).length}</div>
-                <div className="text-[11px] text-[#86868B] font-bold uppercase tracking-wider">{t.due}</div>
+              <div className="bg-[var(--surface)] rounded-xl p-3 text-center border border-[var(--border-subtle)]">
+                <div className="text-[32px] font-bold text-[var(--text)] leading-none mb-1">{deck.cards.filter(c => (c.nextReview || 0) < Date.now()).length}</div>
+                <div className="text-[11px] text-[var(--text-muted)] font-bold uppercase tracking-wider">{t.due}</div>
               </div>
-              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-3 text-center">
-                <div className="text-[32px] font-bold text-[#007AFF] leading-none mb-1">{deck.cards.filter(c => !c.lastReviewed).length}</div>
-                <div className="text-[11px] text-[#86868B] font-bold uppercase tracking-wider">{t.new}</div>
+              <div className="bg-[var(--surface)] rounded-xl p-3 text-center border border-[var(--border-subtle)]">
+                <div className="text-[32px] font-bold text-[var(--text)] leading-none mb-1">{deck.cards.filter(c => !c.lastReviewed).length}</div>
+                <div className="text-[11px] text-[var(--text-muted)] font-bold uppercase tracking-wider">{t.new}</div>
               </div>
-              <div className="bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl p-3 text-center">
-                <div className="text-[32px] font-bold text-[#34C759] leading-none mb-1">{deck.cards.filter(c => c.mastered).length}</div>
-                <div className="text-[11px] text-[#86868B] font-bold uppercase tracking-wider">{t.mastered}</div>
+              <div className="bg-[var(--surface)] rounded-xl p-3 text-center border border-[var(--border-subtle)]">
+                <div className="text-[32px] font-bold text-[var(--text)] leading-none mb-1">{deck.cards.filter(c => c.mastered).length}</div>
+                <div className="text-[11px] text-[var(--text-muted)] font-bold uppercase tracking-wider">{t.mastered}</div>
               </div>
             </div>
 
             <div className="mt-auto space-y-2">
               <button
-                onClick={() => startStudy(deck)}
+                onClick={(e) => { e.stopPropagation(); startStudy(deck); }}
                 disabled={deck.cards.length === 0}
-                className="w-full py-3 bg-[#007AFF] hover:bg-[#0071E3] text-white rounded-xl font-semibold shadow-lg shadow-blue-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:shadow-none disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="w-full py-3 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--bg)] rounded-xl font-semibold shadow-lg shadow-[var(--primary)]/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:shadow-none disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
                 <Play size={18} fill="currentColor" />
                 {t.study}
@@ -667,16 +724,16 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
               
               <div className="grid grid-cols-2 gap-2">
                 <button
-                  onClick={() => setSelectedDeck(selectedDeck?.id === deck.id ? null : deck)}
-                  className="py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] rounded-xl font-medium hover:bg-[#E5E5EA] dark:hover:bg-[#3A3A3C] transition-colors flex items-center justify-center gap-2 text-sm"
+                  onClick={(e) => { e.stopPropagation(); setSelectedDeck(selectedDeck?.id === deck.id ? null : deck); }}
+                  className="py-2.5 bg-[var(--border-subtle)] text-[var(--text)] rounded-xl font-medium hover:bg-[var(--secondary)]/20 hover:text-[var(--secondary)] transition-colors flex items-center justify-center gap-2 text-sm border border-[var(--border-subtle)] hover:border-[var(--secondary)]/30"
                 >
                   <Plus size={16} />
                   {t.addCard}
                 </button>
                 <button
-                  onClick={() => exportToPDF(deck)}
+                  onClick={(e) => { e.stopPropagation(); exportToPDF(deck); }}
                   disabled={deck.cards.length === 0}
-                  className="py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] rounded-xl font-medium hover:bg-[#E5E5EA] dark:hover:bg-[#3A3A3C] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 text-sm"
+                  className="py-2.5 bg-[var(--border-subtle)] text-[var(--text)] rounded-xl font-medium hover:bg-[var(--secondary)]/20 hover:text-[var(--secondary)] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 text-sm border border-[var(--border-subtle)] hover:border-[var(--secondary)]/30"
                 >
                   <Download size={16} />
                   PDF
@@ -686,37 +743,37 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
 
             {/* Add Card / Import Area */}
             {selectedDeck?.id === deck.id && (
-              <div className="mt-4 pt-4 border-t border-[#E5E5EA] dark:border-[#2C2C2E] animate-in slide-in-from-top-2">
+              <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] animate-in slide-in-from-top-2" onClick={e => e.stopPropagation()}>
                 <div className="space-y-3">
                   <input
                     value={newCardFront}
                     onChange={(e) => setNewCardFront(e.target.value)}
                     placeholder={t.front}
-                    className="w-full px-3 py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF]"
+                    className="w-full px-3 py-2.5 bg-[var(--surface)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] placeholder-[var(--text-muted)] text-[var(--text)] border border-[var(--border-subtle)]"
                   />
                   <input
                     value={newCardBack}
                     onChange={(e) => setNewCardBack(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && addCard(deck.id)}
                     placeholder={t.back}
-                    className="w-full px-3 py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF]"
+                    className="w-full px-3 py-2.5 bg-[var(--surface)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] placeholder-[var(--text-muted)] text-[var(--text)] border border-[var(--border-subtle)]"
                   />
                   <div className="flex gap-2">
                     <button
                       onClick={() => addCard(deck.id)}
-                      className="flex-1 py-2.5 bg-[#007AFF] text-white rounded-xl text-xs font-bold"
+                      className="flex-1 py-2.5 bg-[var(--secondary)] text-[var(--bg)] rounded-xl text-xs font-bold hover:bg-[var(--secondary)]/90 transition-colors"
                     >
                       {t.addCard}
                     </button>
                     <label className="flex-1 cursor-pointer">
                       <input type="file" accept=".csv" onChange={(e) => handleCSVImport(deck.id, e)} className="hidden" />
-                      <div className="w-full py-2.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] rounded-xl text-xs font-bold text-center hover:bg-[#E5E5EA] transition-colors flex items-center justify-center gap-1">
+                      <div className="w-full py-2.5 bg-[var(--border-subtle)] text-[var(--text)] rounded-xl text-xs font-bold text-center hover:bg-[var(--secondary)]/20 hover:text-[var(--secondary)] transition-colors flex items-center justify-center gap-1 border border-[var(--border-subtle)]">
                         <Upload size={12} /> CSV
                       </div>
                     </label>
                     <button
                        onClick={() => setViewingCardsDeck(viewingCardsDeck === deck.id ? null : deck.id)}
-                       className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-colors ${viewingCardsDeck === deck.id ? 'bg-[#007AFF] text-white' : 'bg-[#F2F2F7] dark:bg-[#2C2C2E] text-[#1D1D1F] dark:text-[#F5F5F7] hover:bg-[#E5E5EA]'}`}
+                       className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-colors border border-[var(--border-subtle)] ${viewingCardsDeck === deck.id ? 'bg-[var(--primary)] text-[var(--bg)] border-[var(--primary)]' : 'bg-[var(--border-subtle)] text-[var(--text)] hover:bg-[var(--secondary)]/20 hover:text-[var(--secondary)]'}`}
                     >
                       {t.viewCards}
                     </button>
@@ -724,9 +781,9 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
 
                   {/* Card List View */}
                   {viewingCardsDeck === deck.id && (
-                    <div className="mt-4 pt-4 border-t border-[#E5E5EA] dark:border-[#2C2C2E] animate-in slide-in-from-top-2">
+                    <div className="mt-4 pt-4 border-t border-[var(--border-subtle)] animate-in slide-in-from-top-2">
                       {deck.cards.length === 0 ? (
-                        <div className="text-center py-4 text-gray-400 text-xs">
+                        <div className="text-center py-4 text-[var(--text-muted)] text-xs">
                           {t.noCards}
                         </div>
                       ) : (
@@ -735,28 +792,28 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                             const statusCards = deck.cards.filter(c => getCardStatus(c) === status);
                             if (statusCards.length === 0) return null;
                             
-                            const colorClass = getStatusColor(status);
+                            const colors = getStatusColor(status);
                             const label = status === 'learning' ? t.statusLearning : 
                                           status === 'reviewing' ? t.statusReviewing :
                                           status === 'mastered' ? t.statusMastered : t.statusNew;
 
                             return (
                               <div key={status}>
-                                <h4 className={`text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-2 ${colorClass.split(' ')[1]}`}>
-                                  <span className={`w-1.5 h-1.5 rounded-full ${colorClass.split(' ')[0]}`}></span>
+                                <h4 className={`text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-2 ${colors.text}`}>
+                                  <span className={`w-1.5 h-1.5 rounded-full ${colors.bg}`}></span>
                                   {label} ({statusCards.length})
                                 </h4>
                                 <div className="space-y-2">
                                   {statusCards.map(card => (
-                                    <div key={card.id} className={`p-3 rounded-xl bg-[#F2F2F7] dark:bg-[#2C2C2E] border-l-4 ${colorClass.split(' ')[2]} group relative`}>
+                                    <div key={card.id} className={`p-3 rounded-xl bg-[var(--surface)] border-l-4 ${colors.border} group relative border-t border-r border-b border-[var(--border-subtle)]`}>
                                        <div className="flex justify-between items-start gap-2">
                                          <div className="flex-1 min-w-0">
-                                           <div className="font-medium text-[#1D1D1F] dark:text-[#F5F5F7] text-sm truncate">{card.front}</div>
-                                           <div className="text-xs text-[#86868B] mt-0.5 truncate">{card.back}</div>
+                                           <div className="font-medium text-[var(--text)] text-sm truncate">{card.front}</div>
+                                           <div className="text-xs text-[var(--text-muted)] mt-0.5 truncate">{card.back}</div>
                                          </div>
                                          <button 
                                            onClick={() => deleteCard(deck.id, card.id)}
-                                           className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity"
+                                           className="text-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity"
                                          >
                                            <Trash2 size={14} />
                                          </button>
@@ -775,17 +832,17 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                 </div>
               </div>
             )}
-          </div>
+          </GlassCard>
         ))}
 
         {/* Empty State */}
         {decks.length === 0 && (
           <div className="col-span-full py-20 text-center">
-            <div className="w-20 h-20 bg-[#F2F2F7] dark:bg-[#2C2C2E] rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
-              <BookOpen size={40} className="text-[#86868B]" />
+            <div className="w-20 h-20 bg-[var(--border-subtle)] rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+              <BookOpen size={40} className="text-[var(--text-muted)]" />
             </div>
-            <h3 className="text-xl font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">{t.noCards}</h3>
-            <p className="text-[#86868B]">{lang === "EN" ? "Create a deck to start your learning journey" : "建立卡組開始你嘅學習旅程"}</p>
+            <h3 className="text-xl font-semibold text-[var(--text)] mb-2">{t.noCards}</h3>
+            <p className="text-[var(--text-muted)]">{lang === "EN" ? "Create a deck to start your learning journey" : "建立卡組開始你嘅學習旅程"}</p>
           </div>
         )}
       </div>

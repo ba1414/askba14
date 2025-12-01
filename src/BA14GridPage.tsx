@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Calendar, CheckCheck, NotebookText, Timer, BookMarked, Calculator, Sun, Moon } from "lucide-react";
-import GPACalculator from "./GPACalculator";
-import CalendarToDo from "./CalendarToDo";
-import Flashcards from "./Flashcards";
+import { Calendar, CheckCheck, NotebookText, Timer, BookMarked, Calculator, Sun, Moon, X } from "lucide-react";
+import GPACalculator from "./GPACalculatorNew";
+import CalendarToDo from "./CalendarMinimalNew";
+import Flashcards from "./FlashcardsMinimal";
 
 /**
  * BA14 Grid — Apple × Swiss blend
@@ -83,6 +83,27 @@ const STR = {
 
 const BASE = (import.meta as any).env?.BASE_URL ?? "/";
 
+// ---- Modal Wrapper ----------------------------------------------------------
+function ModalWrapper({ children, onClose }: { children: React.ReactNode, onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#020617]/80 backdrop-blur-xl animate-fadeIn">
+      <div className="relative w-full max-w-[95vw] h-[90vh] overflow-hidden rounded-[32px] bg-[#050B1F] shadow-2xl ring-1 ring-[#1F2933] animate-scaleIn flex flex-col">
+        <div className="absolute top-6 right-6 z-50">
+          <button 
+            onClick={onClose}
+            className="p-2 rounded-full bg-[#0B1220] hover:bg-[#1F2933] transition-colors backdrop-blur-md"
+          >
+            <X size={20} className="text-[#F9FAFB]" />
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 sm:p-8">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ---- Card component ---------------------------------------------------------
 function Tile({
   title,
@@ -98,21 +119,23 @@ function Tile({
   return (
     <button
       onClick={onClick}
-      className="group relative aspect-[5/4] rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/10 shadow-[0_1px_1px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_1px_rgba(0,0,0,0.6),0_10px_30px_rgba(0,0,0,0.45)] transition-all duration-150 ease-out hover:-translate-y-0.5 hover:shadow-[0_2px_2px_rgba(0,0,0,0.06),0_12px_32px_rgba(0,0,0,0.08)] active:-translate-y-px focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0B0B0D] p-4 sm:p-6 w-full text-left touch-manipulation"
+      className="group relative aspect-[5/4] rounded-[2rem] bg-gradient-to-br from-[#050B1F] to-[#0B1220] backdrop-blur-xl border border-[#1F2933] shadow-xl shadow-black/20 transition-all duration-150 ease-out hover:-translate-y-0.5 hover:shadow-2xl active:-translate-y-px focus:outline-none focus:ring-2 focus:ring-[#22D3EE]/30 p-4 sm:p-6 w-full text-left touch-manipulation overflow-hidden"
       style={{ 
-        borderColor: `color-mix(in srgb, ${accent} 0%, currentColor)`,
+        borderColor: `color-mix(in srgb, ${accent} 0%, #1F2933)`,
       }}
       aria-label={title}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = `color-mix(in srgb, ${accent} 15%, currentColor)`;
+        e.currentTarget.style.borderColor = `color-mix(in srgb, ${accent} 30%, #1F2933)`;
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = '';
+        e.currentTarget.style.borderColor = '#1F2933';
       }}
     >
+      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+
       {/* Accent diagonal wedge (top-right) */}
       <span
-        className="absolute right-0 top-0 h-16 w-24 sm:h-24 sm:w-40"
+        className="absolute right-0 top-0 h-16 w-24 sm:h-24 sm:w-40 opacity-80"
         style={{ 
           background: accent,
           clipPath: "polygon(100% 0, 0 0, 100% 100%)"
@@ -126,18 +149,18 @@ function Tile({
         style={{ color: accent }} 
         aria-hidden="true"
       >
-        <div className="scale-90 sm:scale-100 md:scale-110">
+        <div className="scale-90 sm:scale-100 md:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
           {icon}
         </div>
       </div>
 
       {/* Title (bottom-left, SF Pro Semibold 18-20px, tracking -1) */}
-      <div className="absolute left-4 bottom-4 sm:left-6 sm:bottom-6 text-base sm:text-lg md:text-[21px] font-semibold tracking-[-0.01em] leading-tight text-[#1D1D1F] dark:text-white">
+      <div className="absolute left-4 bottom-4 sm:left-6 sm:bottom-6 text-base sm:text-lg md:text-[21px] font-semibold tracking-[-0.01em] leading-tight text-[#F9FAFB]">
         {title}
       </div>
 
       {/* Chevron (bottom-right, 30-50% opacity) */}
-      <div className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6 text-xl sm:text-2xl text-[#1D1D1F]/30 dark:text-white/30 group-hover:text-[#1D1D1F]/50 dark:group-hover:text-white/50 transition-opacity duration-150">
+      <div className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6 text-xl sm:text-2xl text-[#9CA3AF] group-hover:text-[#F9FAFB] transition-opacity duration-150">
         ›
       </div>
     </button>
@@ -168,26 +191,26 @@ function ControlPill({
   );
 
   return (
-    <div className="inline-flex items-center gap-0 rounded-full border border-black/10 dark:border-white/20 bg-white dark:bg-[#1C1C1E] shadow-[0_1px_1px_rgba(0,0,0,0.04),0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_1px_rgba(0,0,0,0.6)]">
+    <div className="inline-flex items-center gap-0 rounded-full border border-[#1F2933] bg-[#050B1F]/80 backdrop-blur-xl shadow-lg">
       {/* Language toggle */}
       <button
         onClick={onLangToggle}
-        className="min-w-[44px] min-h-[44px] px-4 text-[15px] font-medium text-[#1D1D1F] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-l-full transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/30 focus:ring-inset"
+        className="min-w-[44px] min-h-[44px] px-4 text-[15px] font-medium text-[#F9FAFB] hover:bg-[#1F2933] rounded-l-full transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#22D3EE]/30 focus:ring-inset"
         aria-label={langAria}
       >
         {lang}
       </button>
 
       {/* Divider */}
-      <div className="w-px h-6 bg-black/10 dark:bg-white/20" aria-hidden="true" />
+      <div className="w-px h-6 bg-[#1F2933]" aria-hidden="true" />
 
       {/* Theme toggle */}
       <button
         onClick={onThemeToggle}
-        className="min-w-[44px] min-h-[44px] px-3 inline-flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/10 rounded-r-full transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/30 focus:ring-inset"
+        className="min-w-[44px] min-h-[44px] px-3 inline-flex items-center justify-center hover:bg-[#1F2933] rounded-r-full transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#22D3EE]/30 focus:ring-inset"
         aria-label={themeAria}
       >
-        {isDark ? <Sun size={18} className="text-[#1D1D1F] dark:text-white" /> : <Moon size={18} className="text-[#1D1D1F] dark:text-white" />}
+        {isDark ? <Sun size={18} className="text-[#F9FAFB]" /> : <Moon size={18} className="text-[#F9FAFB]" />}
       </button>
     </div>
   );
@@ -251,14 +274,14 @@ export default function BA14GridPage() {
   };
 
   const tiles = [
-    { key: "gpa", icon: <Calculator strokeWidth={2} />, accent: "#0A84FF", onClick: handleOpenGPA },
-    { key: "cal", icon: <Calendar strokeWidth={2} />, accent: "#FF9F0A", onClick: handleOpenCalendar },
-    { key: "anki", icon: <BookMarked strokeWidth={2} />, accent: "#FFD60A", onClick: handleOpenFlashcards },
+    { key: "gpa", icon: <Calculator strokeWidth={2} />, accent: "#FACC6B", onClick: handleOpenGPA },
+    { key: "cal", icon: <Calendar strokeWidth={2} />, accent: "#22D3EE", onClick: handleOpenCalendar },
+    { key: "anki", icon: <BookMarked strokeWidth={2} />, accent: "#FACC6B", onClick: handleOpenFlashcards },
   ];
 
   return (
     <main
-      className="min-h-[100svh] bg-white text-black dark:bg-[#0B0B0D] dark:text-white transition-colors duration-200"
+      className="min-h-[100svh] text-[#F9FAFB] transition-colors duration-200"
       style={{
         paddingTop: "max(12px, env(safe-area-inset-top))",
         paddingBottom: "max(12px, env(safe-area-inset-bottom))"
@@ -266,12 +289,12 @@ export default function BA14GridPage() {
     >
       {/* Page Transition Overlay */}
       {isLeavingPage && (
-        <div className="fixed inset-0 bg-white dark:bg-[#0B0B0D] z-50 animate-fadeIn" />
+        <div className="fixed inset-0 bg-[#020617] z-50 animate-fadeIn" />
       )}
 
       {/* Header - Fixed */}
       <header
-        className={`fixed left-0 right-0 z-10 bg-white/80 dark:bg-[#0B0B0D]/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10 transition-all duration-300 ${isTransitioning || isLeavingPage ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}
+        className={`fixed left-0 right-0 z-10 bg-[#020617]/80 backdrop-blur-xl border-b border-[#1F2933] transition-all duration-300 ${isTransitioning || isLeavingPage ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}
         style={{
           top: "max(0px, env(safe-area-inset-top))"
         }}
@@ -279,7 +302,7 @@ export default function BA14GridPage() {
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 py-4 sm:py-5 flex items-center justify-between gap-4">
           {/* Left: clickable BA14 label */}
           <a href={BASE} onClick={handleBackToLanding} className="min-w-0 group touch-manipulation">
-            <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-[#86868B] dark:text-white/60 group-hover:text-[#1D1D1F] dark:group-hover:text-white transition-colors">BA14</div>
+            <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-[#9CA3AF] group-hover:text-[#F9FAFB] transition-colors">BA14</div>
           </a>
 
           {/* Right: unified control pill */}
@@ -312,13 +335,25 @@ export default function BA14GridPage() {
       </section>
 
       {/* GPA Calculator Modal */}
-      {showGPA && <GPACalculator theme={theme} lang={lang} onClose={() => setShowGPA(false)} />}
+      {showGPA && (
+        <ModalWrapper onClose={() => setShowGPA(false)}>
+          <GPACalculator lang={lang} />
+        </ModalWrapper>
+      )}
       
       {/* Calendar + To-Do Modal */}
-      {showCalendar && <CalendarToDo theme={theme} lang={lang} onClose={() => setShowCalendar(false)} />}
+      {showCalendar && (
+        <ModalWrapper onClose={() => setShowCalendar(false)}>
+          <CalendarToDo lang={lang} />
+        </ModalWrapper>
+      )}
       
       {/* Flashcards Modal */}
-      {showFlashcards && <Flashcards theme={theme} lang={lang} onClose={() => setShowFlashcards(false)} />}
+      {showFlashcards && (
+        <ModalWrapper onClose={() => setShowFlashcards(false)}>
+          <Flashcards lang={lang} />
+        </ModalWrapper>
+      )}
     </main>
   );
 }
