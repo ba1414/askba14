@@ -17,7 +17,7 @@ import {
   Ghost, Zap, Gauge, FileStack,
   MousePointer2, MoveRight, Award, ChevronDown, ChevronUp
 } from 'lucide-react';
-import { BIG_PICTURE, TIMELINE_DATA, MINDSET, TimelineItem } from './content/assoRoadmap';
+import { TIMELINE_DATA, MINDSET, TimelineItem } from './content/assoRoadmap';
 
 // --- Helper Components ---
 
@@ -45,48 +45,6 @@ const FadeIn = ({ children, delay = 0 }: { children: React.ReactNode, delay?: nu
 };
 
 // --- Sub-Views ---
-
-const BigPictureView = () => {
-  return (
-    <div className="space-y-12 py-8">
-      {/* Hero Section */}
-      <div className="text-center space-y-6 max-w-3xl mx-auto px-4">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-700 text-sm font-medium mb-4">
-          <Map className="w-4 h-4" />
-          <span>{BIG_PICTURE.hero.subtitle}</span>
-        </div>
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
-          {BIG_PICTURE.hero.title}
-        </h2>
-        <p className="text-xl text-gray-600 leading-relaxed">
-          {BIG_PICTURE.hero.welcome}
-        </p>
-      </div>
-
-      {/* Simple Overview Cards */}
-      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto px-4">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
-            <Target className="w-6 h-6" />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-3">目標為本</h3>
-          <p className="text-gray-600 leading-relaxed">
-            Asso 唔係求學問嘅地方，係求學位嘅地方。每一分每一秒都要計過度過，為咗入 U 呢個目標進發。
-          </p>
-        </div>
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-6">
-            <Brain className="w-6 h-6" />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-3">心態決定境界</h3>
-          <p className="text-gray-600 leading-relaxed">
-            唔好因為入咗 Asso 而自卑，亦唔好因為 GPA 高而自滿。保持謙卑，保持飢渴，直到攞到 Offer 為止。
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const UnifiedTimelineView = () => {
   const [activeStageId, setActiveStageId] = useState<string>(TIMELINE_DATA[0].id);
@@ -308,12 +266,12 @@ const MindsetView = () => {
 // --- Main Component ---
 
 const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
-  const [activeTab, setActiveTab] = useState<'bigPicture' | 'timeline' | 'mindset'>('timeline');
+  const [activeTab, setActiveTab] = useState<'timeline' | 'mindset'>('timeline');
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+    <div className="min-h-screen bg-[var(--bg)] font-sans text-[var(--text)]">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <div className="bg-[var(--surface)] border-b border-[var(--border-subtle)] sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
@@ -328,7 +286,6 @@ const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
             {/* Desktop Tabs */}
             <div className="hidden md:flex space-x-1">
               {[
-                { id: 'bigPicture', label: 'Big Picture', icon: Map },
                 { id: 'timeline', label: '兩年路線圖', icon: Calendar },
                 { id: 'mindset', label: '爆四心法', icon: Brain },
               ].map((tab) => {
@@ -357,7 +314,6 @@ const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
         <div className="md:hidden border-t border-gray-100 overflow-x-auto">
           <div className="flex p-2 gap-2 min-w-max">
             {[
-              { id: 'bigPicture', label: 'Big Picture', icon: Map },
               { id: 'timeline', label: '兩年路線圖', icon: Calendar },
               { id: 'mindset', label: '爆四心法', icon: Brain },
             ].map((tab) => {
@@ -384,7 +340,6 @@ const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
 
       {/* Main Content */}
       <main>
-        {activeTab === 'bigPicture' && <BigPictureView />}
         {activeTab === 'timeline' && <UnifiedTimelineView />}
         {activeTab === 'mindset' && <MindsetView />}
       </main>
