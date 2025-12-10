@@ -226,10 +226,9 @@ const InterviewGuideView = () => {
                 {INTERVIEW_GUIDE.summary}
               </p>
               <div className="mt-8 pt-6 border-t border-white/20">
-                <p className="text-rose-100 text-sm mb-2 font-medium uppercase tracking-wider">Next Steps</p>
-                <p className="text-lg opacity-90">
-                  {INTERVIEW_GUIDE.footer}
-                </p>
+                    {/* Next Steps removed per request */}
+              
+                
               </div>
             </div>
           </div>
