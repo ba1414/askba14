@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Plus, Trash2, Play, Upload, Download, X as CloseIcon, BookOpen, Brain, Clock, MoreHorizontal, CheckCircle, RotateCw, Layers, Zap } from "lucide-react";
 import jsPDF from 'jspdf';
 import { saveData, loadData } from "./db";
+import { AppleEmoji } from "./components/AppleEmoji";
 
 /**
  * Apple-Style Flashcards (True Bento Grid)
@@ -476,7 +476,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
           <div className="px-6 py-4 flex items-center justify-between bg-[var(--surface)]/50 backdrop-blur-xl border-b border-[var(--border-subtle)] sticky top-0 z-10">
             <div className="flex items-center gap-4">
               <button onClick={finishStudy} className="p-2 hover:bg-[var(--border-subtle)] rounded-full transition-colors">
-                <CloseIcon size={24} className="text-[var(--text-muted)]" />
+                <AppleEmoji emoji="✖️" className="w-6 h-6" />
               </button>
               <div>
                 <h2 className="text-lg font-semibold text-[var(--text)]">{studyingDeck.name}</h2>
@@ -497,7 +497,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
             {/* Retention Indicator */}
             <div className="absolute top-6 left-0 right-0 flex justify-center z-10">
               <div className="bg-[var(--surface)]/80 backdrop-blur-md border border-[var(--border-subtle)] px-4 py-2 rounded-full flex items-center gap-3 shadow-sm">
-                <Brain size={16} className="text-[var(--secondary)]" />
+                <AppleEmoji emoji="🧠" className="w-4 h-4" />
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">Memory Retention</span>
                   <div className="flex items-center gap-2">
@@ -602,7 +602,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
         <GlassCard className="lg:col-span-4 md:col-span-6 p-6 flex flex-col justify-between group" hoverEffect>
           <div>
             <div className="w-12 h-12 bg-[var(--primary)] rounded-full flex items-center justify-center mb-4 shadow-lg shadow-[var(--primary)]/20 group-hover:scale-110 transition-transform duration-300">
-              <Plus size={24} className="text-[var(--bg)]" />
+              <AppleEmoji emoji="➕" className="w-6 h-6" />
             </div>
             <h3 className="text-[20px] font-bold text-[var(--text)] mb-1">{t.createDeck}</h3>
             <p className="text-[var(--text-muted)] text-[15px]">{lang === "EN" ? "Start a new subject" : "開始新主題"}</p>
@@ -621,7 +621,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
               disabled={!newDeckName.trim()}
               className="absolute right-2 top-2 bottom-2 px-3 bg-[var(--primary)] text-[var(--bg)] rounded-lg text-sm font-medium disabled:opacity-0 transition-all hover:bg-[var(--primary)]/90 flex items-center"
             >
-              <Plus size={16} />
+              <AppleEmoji emoji="➕" className="w-4 h-4" />
             </button>
           </div>
         </GlassCard>
@@ -632,7 +632,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
             <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--secondary)] opacity-10 rounded-full -mr-10 -mt-10 blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div>
               <div className="flex items-center gap-2 mb-1 opacity-80 text-[var(--secondary)]">
-                <Brain size={16} />
+                <AppleEmoji emoji="🧠" className="w-4 h-4" />
                 <span className="text-xs font-bold uppercase tracking-wider">{lang === "EN" ? "Scientific Learning" : "科學學習"}</span>
               </div>
               <h3 className="text-[24px] font-bold">{t.studyMode}</h3>
@@ -654,7 +654,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                   onClick={() => startStudy(decks[0])}
                   className="px-5 py-2.5 bg-[var(--secondary)]/20 hover:bg-[var(--secondary)]/30 backdrop-blur-md rounded-full text-sm font-bold transition-all flex items-center gap-2 text-[var(--secondary)] border border-[var(--secondary)]/30"
                 >
-                  <Play size={14} fill="currentColor" />
+                  <AppleEmoji emoji="▶️" className="w-3.5 h-3.5" />
                   {lang === "EN" ? "Start Review" : "開始溫習"}
                 </button>
               )}
@@ -681,7 +681,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
             <div className="flex justify-between items-start mb-6">
               <div className="flex items-center gap-4">
                 <div className={`p-3.5 rounded-2xl transition-colors duration-300 ${index === 0 ? 'bg-[var(--secondary)] text-[var(--bg)] shadow-lg shadow-[var(--secondary)]/20' : 'bg-[var(--border-subtle)] group-hover:bg-[var(--secondary)] text-[var(--text)] group-hover:text-[var(--bg)]'}`}>
-                  <Layers size={24} />
+                  <AppleEmoji emoji="📚" className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-[20px] font-bold text-[var(--text)] leading-tight">{deck.name}</h3>
@@ -692,7 +692,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                 onClick={(e) => { e.stopPropagation(); deleteDeck(deck.id); }}
                 className="p-2 text-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[var(--primary)]/10 rounded-full"
               >
-                <Trash2 size={18} />
+                <AppleEmoji emoji="🗑️" className="w-[18px] h-[18px]" />
               </button>
             </div>
 
@@ -718,7 +718,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                 disabled={deck.cards.length === 0}
                 className="w-full py-3 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--bg)] rounded-xl font-semibold shadow-lg shadow-[var(--primary)]/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:shadow-none disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
-                <Play size={18} fill="currentColor" />
+                <AppleEmoji emoji="▶️" className="w-[18px] h-[18px]" />
                 {t.study}
               </button>
               
@@ -727,7 +727,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                   onClick={(e) => { e.stopPropagation(); setSelectedDeck(selectedDeck?.id === deck.id ? null : deck); }}
                   className="py-2.5 bg-[var(--border-subtle)] text-[var(--text)] rounded-xl font-medium hover:bg-[var(--secondary)]/20 hover:text-[var(--secondary)] transition-colors flex items-center justify-center gap-2 text-sm border border-[var(--border-subtle)] hover:border-[var(--secondary)]/30"
                 >
-                  <Plus size={16} />
+                  <AppleEmoji emoji="➕" className="w-4 h-4" />
                   {t.addCard}
                 </button>
                 <button
@@ -735,7 +735,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                   disabled={deck.cards.length === 0}
                   className="py-2.5 bg-[var(--border-subtle)] text-[var(--text)] rounded-xl font-medium hover:bg-[var(--secondary)]/20 hover:text-[var(--secondary)] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 text-sm border border-[var(--border-subtle)] hover:border-[var(--secondary)]/30"
                 >
-                  <Download size={16} />
+                  <AppleEmoji emoji="📥" className="w-4 h-4" />
                   PDF
                 </button>
               </div>
@@ -768,7 +768,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                     <label className="flex-1 cursor-pointer">
                       <input type="file" accept=".csv" onChange={(e) => handleCSVImport(deck.id, e)} className="hidden" />
                       <div className="w-full py-2.5 bg-[var(--border-subtle)] text-[var(--text)] rounded-xl text-xs font-bold text-center hover:bg-[var(--secondary)]/20 hover:text-[var(--secondary)] transition-colors flex items-center justify-center gap-1 border border-[var(--border-subtle)]">
-                        <Upload size={12} /> CSV
+                        <AppleEmoji emoji="📤" className="w-3 h-3" /> CSV
                       </div>
                     </label>
                     <button
@@ -815,7 +815,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
                                            onClick={() => deleteCard(deck.id, card.id)}
                                            className="text-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity"
                                          >
-                                           <Trash2 size={14} />
+                                           <AppleEmoji emoji="🗑️" className="w-3.5 h-3.5" />
                                          </button>
                                        </div>
                                     </div>
@@ -839,7 +839,7 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
         {decks.length === 0 && (
           <div className="col-span-full py-20 text-center">
             <div className="w-20 h-20 bg-[var(--border-subtle)] rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
-              <BookOpen size={40} className="text-[var(--text-muted)]" />
+              <AppleEmoji emoji="📖" className="w-10 h-10" />
             </div>
             <h3 className="text-xl font-semibold text-[var(--text)] mb-2">{t.noCards}</h3>
             <p className="text-[var(--text-muted)]">{lang === "EN" ? "Create a deck to start your learning journey" : "建立卡組開始你嘅學習旅程"}</p>

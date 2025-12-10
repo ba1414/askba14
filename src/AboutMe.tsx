@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-
-const AppleEmoji = ({ emoji, className = "w-5 h-5" }: { emoji: string, className?: string }) => (
-  <img 
-    src={`https://emojicdn.elk.sh/${emoji}?style=apple`} 
-    alt={emoji} 
-    className={`inline-block select-none pointer-events-none ${className}`} 
-  />
-);
+import { AppleEmoji } from "./components/AppleEmoji";
 
 const TRANSLATIONS = {
   EN: {
     title: "About Me",
     subtitle: "DSE 14 Points • No Full Cert • HKU in 1 Year",
-    bio: "From a 14-point DSE score to HKU in just one year. I build digital experiences that bridge the gap between human language and machine logic.",
+    bio: "From a 14-point DSE score to HKU in just one year.",
     location: "Hong Kong",
     skills: "Tech Stack",
     interests: "Vibe Check",
@@ -26,7 +19,7 @@ const TRANSLATIONS = {
     experience: "Journey",
     projects: "Featured Projects",
     philosophy: "Philosophy",
-    philosophyText: "Language is the original code. Understanding syntax, semantics, and pragmatics in human speech helps me write cleaner, more semantic code and design more intuitive user interfaces.",
+    philosophyText: "Hi, I created this website hoping to help you if you're feeling lost right now, because I've been through the same phase myself.",
     exchange: "Exchange at NUS (Asia's #1 University)"
   },
   粵: {

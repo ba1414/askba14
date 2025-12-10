@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Calculator, Calendar, BookMarked, Sun, Moon, LogOut, User, Cloud, Lightbulb, Menu, X, MessageSquarePlus, Languages, Flag, GraduationCap } from "lucide-react";
+import { Sun, Moon, LogOut, Menu, X } from "lucide-react";
 import GPACalculatorMinimal from "./GPACalculatorNew";
-import CalendarMinimal from "./CalendarMinimalNew";
 import FlashcardsMinimal from "./FlashcardsMinimal";
 import AboutMe from "./AboutMe";
 import AssociateDegreeTips from "./AssociateDegreeTips";
+import IGCSEGuideView from "./IGCSEGuideView";
+import Yr1GuideView from "./Yr1GuideView";
+import FullCertGuideView from "./FullCertGuideView";
+import InterviewGuideView from "./InterviewGuideView";
 import IeltsPrep from "./IeltsPrep";
 import Footer from "./components/Footer";
+import { AppleEmoji } from "./components/AppleEmoji";
 import { auth, googleProvider } from "./firebase";
 import { 
   signInWithPopup,
@@ -27,7 +31,7 @@ import {
  * - Clean and distraction-free
  */
 
-type View = "gpa" | "calendar" | "flashcards" | "guide" | "about" | "ielts";
+type View = "gpa" | "flashcards" | "guide" | "igcse" | "yr1" | "fullcert" | "interview" | "about" | "ielts";
 
 function useTheme() {
   const getDefault = () => {
@@ -313,12 +317,15 @@ export default function App() {
   const toggleLang = () => setLang(lang === "EN" ? "粵" : "EN");
 
   const navItems = [
-    { id: "gpa" as View, icon: Calculator, label: lang === "EN" ? "GPA Calculator" : "GPA 計算器" },
-    { id: "calendar" as View, icon: Calendar, label: lang === "EN" ? "Calendar" : "日曆" },
-    { id: "flashcards" as View, icon: BookMarked, label: lang === "EN" ? "Flashcards" : "字卡" },
-    { id: "ielts" as View, icon: GraduationCap, label: lang === "EN" ? "IELTS Prep" : "IELTS 準備" },
-    { id: "guide" as View, icon: Flag, label: lang === "EN" ? "Survival Guide" : "生存指南" },
-    { id: "about" as View, icon: User, label: lang === "EN" ? "About Me" : "關於我" },
+    { id: "gpa" as View, emoji: "🧮", label: lang === "EN" ? "GPA Calculator" : "GPA 計算器" },
+    { id: "flashcards" as View, emoji: "🔖", label: lang === "EN" ? "Flashcards" : "字卡" },
+    { id: "ielts" as View, emoji: "🎓", label: lang === "EN" ? "IELTS Prep" : "IELTS 準備" },
+    { id: "igcse" as View, emoji: "📖", label: lang === "EN" ? "IGCSE Guide" : "IGCSE 指南" },
+    { id: "yr1" as View, emoji: "🚀", label: lang === "EN" ? "Yr1 Admission" : "Yr1 入學" },
+    { id: "fullcert" as View, emoji: "📜", label: lang === "EN" ? "Full Cert" : "Full Cert" },
+    { id: "interview" as View, emoji: "🎙️", label: lang === "EN" ? "Interview Prep" : "面試攻略" },
+    { id: "guide" as View, emoji: "🚩", label: lang === "EN" ? "Survival Guide" : "時間線" },
+    { id: "about" as View, emoji: "🧑‍💻", label: lang === "EN" ? "About Me" : "關於我" },
   ];
 
   // Show loading state
@@ -348,7 +355,7 @@ export default function App() {
           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group hover:bg-[var(--surface)] text-[var(--text)]"
         >
           <div className="p-2 rounded-lg bg-[var(--primary-soft)] text-[var(--primary-strong)]">
-            <MessageSquarePlus size={20} strokeWidth={2} />
+            <AppleEmoji emoji="💬" className="w-5 h-5" />
           </div>
           <span className="text-lg font-semibold tracking-tight">BA14</span>
         </button>
@@ -360,7 +367,6 @@ export default function App() {
           {lang === "EN" ? "Menu" : "選單"}
         </div>
         {navItems.map((item) => {
-          const Icon = item.icon;
           const isActive = activeView === item.id;
           return (
           <button
@@ -375,7 +381,7 @@ export default function App() {
                 : 'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]'}
             `}
           >
-            <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-[#020617]' : ''} />
+            <AppleEmoji emoji={item.emoji} className="w-[18px] h-[18px]" />
             <span className="truncate">{item.label}</span>
           </button>
         )})}
@@ -470,10 +476,25 @@ export default function App() {
             <div className="animate-fade-in">
               <AssociateDegreeTips lang={lang} />
             </div>
+          ) : activeView === "igcse" ? (
+            <div className="animate-fade-in">
+              <IGCSEGuideView />
+            </div>
+          ) : activeView === "yr1" ? (
+            <div className="animate-fade-in">
+              <Yr1GuideView />
+            </div>
+          ) : activeView === "fullcert" ? (
+            <div className="animate-fade-in">
+              <FullCertGuideView />
+            </div>
+          ) : activeView === "interview" ? (
+            <div className="animate-fade-in">
+              <InterviewGuideView />
+            </div>
           ) : (
-            <div className="layout-grid animate-fade-in">
+            <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-8 animate-fade-in">
               {activeView === "gpa" && <GPACalculatorMinimal lang={lang} />}
-              {activeView === "calendar" && <CalendarMinimal lang={lang} />}
               {activeView === "flashcards" && <FlashcardsMinimal lang={lang} />}
               {activeView === "ielts" && <IeltsPrep lang={lang} />}
               {activeView === "about" && <AboutMe lang={lang} />}

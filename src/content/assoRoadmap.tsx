@@ -60,7 +60,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "DSE 放榜後的抉擇期",
     chipLabel: "Pre-Asso",
     color: "text-orange-500",
-    icon: Map,
+    icon: "🗺️",
     goals: [
       "決定升學方向（Retake / Asso / HD 等）",
       "完成副學士 / 高級文憑入學註冊",
@@ -86,7 +86,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "適應大專節奏的第一學期",
     chipLabel: "Year 1 Sem 1",
     color: "text-amber-500",
-    icon: Flag,
+    icon: "🚩",
     goals: [
       "適應大專上課模式、assessment 節奏",
       "建立穩定的溫習與交功課習慣",
@@ -112,7 +112,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "第一次考試與第一個 Sem Break",
     chipLabel: "Sem 1 Exam",
     color: "text-yellow-500",
-    icon: Swords,
+    icon: "⚔️",
     goals: [
       "完成 Sem 1 所有考核並穩住 GPA",
       "好好利用第一個 Sem Break",
@@ -138,7 +138,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "建立穩定 GPA 的關鍵學期",
     chipLabel: "Year 1 Sem 2",
     color: "text-lime-500",
-    icon: BarChart3,
+    icon: "📊",
     goals: [
       "修正 Sem 1 的不足，穩定或提升 GPA",
       "學懂自己編排時間表與選科",
@@ -165,7 +165,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "銜接 Year 2 前的暑假",
     chipLabel: "Summer",
     color: "text-green-500",
-    icon: Sun,
+    icon: "☀️",
     goals: [
       "讓 Year 1 畫上一個句號",
       "規劃語文考試／補底（如需要）",
@@ -193,7 +193,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "Year 2 的申請部署與學業平衡",
     chipLabel: "Year 2 Sem 1",
     color: "text-teal-500",
-    icon: FileSignature,
+    icon: "✍️",
     goals: [
       "在維持 GPA 的同時，開始部署 Non-JUPAS 升學",
       "明確自己目標學科與大學",
@@ -219,7 +219,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "面試前的準備與調整",
     chipLabel: "Interview Prep",
     color: "text-cyan-500",
-    icon: Mail,
+    icon: "📧",
     goals: [
       "回顧 Year 2 Sem 1 成績與申請進度",
       "準備可能出現的 Interview",
@@ -245,7 +245,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     subtitle: "最後衝刺、面試與 Offer",
     chipLabel: "Offer & Grad",
     color: "text-blue-500",
-    icon: GraduationCap,
+    icon: "🎓",
     goals: [
       "在最後一個學期維持或提升 GPA，滿足 Conditional Offer 要求",
       "認真準備各大學面試",
@@ -271,7 +271,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
 export const MINDSET: MindsetItem[] = [
   {
     title: "選 Groupmates 原則",
-    icon: Users,
+    icon: "👥",
     color: "text-blue-500",
     summary: "技能互補但態度可靠比「技術強」更重要。",
     details: (
@@ -280,7 +280,7 @@ export const MINDSET: MindsetItem[] = [
   },
   {
     title: "Ocamp / 社團 / 兼職",
-    icon: Zap,
+    icon: "⚡",
     color: "text-yellow-500",
     summary: "量力而為，GPA 先係主菜。",
     details: (
@@ -289,7 +289,7 @@ export const MINDSET: MindsetItem[] = [
   },
   {
     title: "面對壓力",
-    icon: Heart,
+    icon: "❤️",
     color: "text-pink-500",
     summary: "分解任務，接受「短期辛苦」。",
     details: (
@@ -298,7 +298,7 @@ export const MINDSET: MindsetItem[] = [
   },
   {
     title: "DSE 失利之後",
-    icon: Trophy,
+    icon: "🏆",
     color: "text-purple-500",
     summary: "你唔係輸咗，只係換條路行。",
     details: (

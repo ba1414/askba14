@@ -5,10 +5,6 @@ interface BA14DB extends DBSchema {
     key: string;
     value: any;
   };
-  calendar: {
-    key: string;
-    value: any;
-  };
   flashcards: {
     key: string;
     value: any;
@@ -28,9 +24,6 @@ function getDB() {
         // Create object stores for each feature
         if (!db.objectStoreNames.contains('gpa')) {
           db.createObjectStore('gpa');
-        }
-        if (!db.objectStoreNames.contains('calendar')) {
-          db.createObjectStore('calendar');
         }
         if (!db.objectStoreNames.contains('flashcards')) {
           db.createObjectStore('flashcards');

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Header";
+import { AppleEmoji } from "./AppleEmoji";
 
 const TILES = [
   { en: "GPA Calculator", yue: "功績點計算", color: "#22D3EE", icon: "calculate" },
@@ -12,42 +13,12 @@ const TILES = [
 
 function TileIcon({ type, className }) {
   const icons = {
-    calculate: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M9 9h6M9 15h6"/>
-      </svg>
-    ),
-    calendar: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <rect x="3" y="4" width="18" height="18" rx="2"/>
-        <path d="M16 2v4M8 2v4M3 10h18"/>
-      </svg>
-    ),
-    cards: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M4 4h16v16H4z"/>
-        <path d="M8 4v16M16 4v16"/>
-      </svg>
-    ),
-    timer: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="12" cy="12" r="9"/>
-        <path d="M12 6v6l4 2"/>
-      </svg>
-    ),
-    notes: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
-      </svg>
-    ),
-    check: (
-      <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-        <path d="M22 4L12 14.01l-3-3"/>
-      </svg>
-    ),
+    calculate: <AppleEmoji emoji="🧮" className={className} />,
+    calendar: <AppleEmoji emoji="📅" className={className} />,
+    cards: <AppleEmoji emoji="🗂️" className={className} />,
+    timer: <AppleEmoji emoji="⏱️" className={className} />,
+    notes: <AppleEmoji emoji="📝" className={className} />,
+    check: <AppleEmoji emoji="✅" className={className} />,
   };
   return icons[type] || null;
 }

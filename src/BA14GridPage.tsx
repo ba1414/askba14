@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Calendar, CheckCheck, NotebookText, Timer, BookMarked, Calculator, Sun, Moon, X } from "lucide-react";
+import { CheckCheck, NotebookText, Timer, BookMarked, Calculator, Sun, Moon, X } from "lucide-react";
 import GPACalculator from "./GPACalculatorNew";
-import CalendarToDo from "./CalendarMinimalNew";
 import Flashcards from "./FlashcardsMinimal";
 
 /**
@@ -59,7 +58,6 @@ const STR = {
     home: "Home",
     ba14: "BA14",
     gpa: "GPA Calculator",
-    cal: "Calendar + To-Do",
     anki: "Flashcards",
     focus: "Focus Timer",
     notes: "Notes / Outline",
@@ -71,7 +69,6 @@ const STR = {
     home: "主頁",
     ba14: "BA14",
     gpa: "GPA計算器",
-    cal: "行事曆＋待辦",
     anki: "記憶卡",
     focus: "專注計時",
     notes: "筆記／大綱",
@@ -221,7 +218,6 @@ export default function BA14GridPage() {
   const [lang, setLang] = useLang();
   const [theme, setTheme] = useTheme();
   const [showGPA, setShowGPA] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
   const [showFlashcards, setShowFlashcards] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isLeavingPage, setIsLeavingPage] = useState(false);
@@ -249,14 +245,6 @@ export default function BA14GridPage() {
     }, 150);
   };
 
-  const handleOpenCalendar = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setShowCalendar(true);
-      setIsTransitioning(false);
-    }, 150);
-  };
-
   const handleOpenFlashcards = () => {
     setIsTransitioning(true);
     setTimeout(() => {
@@ -275,7 +263,6 @@ export default function BA14GridPage() {
 
   const tiles = [
     { key: "gpa", icon: <Calculator strokeWidth={2} />, accent: "#FACC6B", onClick: handleOpenGPA },
-    { key: "cal", icon: <Calendar strokeWidth={2} />, accent: "#22D3EE", onClick: handleOpenCalendar },
     { key: "anki", icon: <BookMarked strokeWidth={2} />, accent: "#FACC6B", onClick: handleOpenFlashcards },
   ];
 
@@ -338,13 +325,6 @@ export default function BA14GridPage() {
       {showGPA && (
         <ModalWrapper onClose={() => setShowGPA(false)}>
           <GPACalculator lang={lang} />
-        </ModalWrapper>
-      )}
-      
-      {/* Calendar + To-Do Modal */}
-      {showCalendar && (
-        <ModalWrapper onClose={() => setShowCalendar(false)}>
-          <CalendarToDo lang={lang} />
         </ModalWrapper>
       )}
       
