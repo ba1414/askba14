@@ -8,6 +8,7 @@ import IGCSEGuideView from "./IGCSEGuideView";
 import Yr1GuideView from "./Yr1GuideView";
 import FullCertGuideView from "./FullCertGuideView";
 import InterviewGuideView from "./InterviewGuideView";
+import OfferGuideView from "./OfferGuideView";
 import IeltsPrep from "./IeltsPrep";
 import Footer from "./components/Footer";
 import { AppleEmoji } from "./components/AppleEmoji";
@@ -31,7 +32,7 @@ import {
  * - Clean and distraction-free
  */
 
-type View = "gpa" | "flashcards" | "guide" | "igcse" | "yr1" | "fullcert" | "interview" | "about" | "ielts";
+type View = "gpa" | "flashcards" | "guide" | "igcse" | "yr1" | "fullcert" | "interview" | "offer" | "about" | "ielts";
 
 function useTheme() {
   const getDefault = () => {
@@ -324,6 +325,7 @@ export default function App() {
     { id: "yr1" as View, emoji: "🚀", label: lang === "EN" ? "Yr1 Admission" : "Yr1 入學" },
     { id: "fullcert" as View, emoji: "📜", label: lang === "EN" ? "Full Cert" : "Full Cert" },
     { id: "interview" as View, emoji: "🎙️", label: lang === "EN" ? "Interview Prep" : "面試攻略" },
+    { id: "offer" as View, emoji: "🎉", label: lang === "EN" ? "Offer & Deposit" : "Offer & 留位" },
     { id: "guide" as View, emoji: "🚩", label: lang === "EN" ? "Survival Guide" : "時間線" },
     { id: "about" as View, emoji: "🧑‍💻", label: lang === "EN" ? "About Me" : "關於我" },
   ];
@@ -491,6 +493,10 @@ export default function App() {
           ) : activeView === "interview" ? (
             <div className="animate-fade-in">
               <InterviewGuideView />
+            </div>
+          ) : activeView === "offer" ? (
+            <div className="animate-fade-in">
+              <OfferGuideView />
             </div>
           ) : (
             <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-8 animate-fade-in">
