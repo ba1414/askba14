@@ -48,19 +48,19 @@ export default function SwissHero() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#020617] text-[#F9FAFB]">
+    <main className="min-h-screen bg-page text-foreground">
       <Header activeLink="home" />
 
       {/* Hero Section */}
       <section className="mx-auto max-w-[1400px] px-6 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 items-center py-16 md:py-24">
         {/* Left: Headline */}
         <div className="order-2 md:order-1">
-          <h1 className="text-[clamp(64px,10vw,180px)] leading-[0.9] font-extrabold tracking-[-0.02em] select-none text-[#F9FAFB]">
-            Lock In<span className="align-top text-[#22D3EE]">.</span>
+          <h1 className="text-[clamp(64px,10vw,180px)] leading-[0.9] font-extrabold tracking-[-0.02em] select-none text-foreground">
+            Lock In<span className="align-top text-primary">.</span>
           </h1>
           
           {/* Down arrow indicator */}
-          <div className="mt-16 opacity-40 select-none text-[#FACC6B]" aria-hidden="true">
+          <div className="mt-16 opacity-40 select-none text-muted" aria-hidden="true">
             <svg width="24" height="40" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 0V36M12 36L6 30M12 36L18 30" stroke="currentColor" strokeWidth="2"/>
             </svg>

@@ -1,49 +1,52 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index-react.html",
+    "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"SF Pro Display"', '"SF Pro Text"', 'Inter', 'Helvetica Neue', 'Arial', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        // Apple Dark Theme
-        'apple-dark-bg': '#000000',
-        'apple-dark-card': '#1C1C1E',
-        'apple-dark-card-sec': '#2C2C2E',
-        // Apple Light Theme
-        'apple-light-bg': '#FFFFFF',
-        'apple-light-card': '#F2F2F7',
-        // Red Theme System
-        'page': '#050307',
-        'card': '#10040A',
-        'card-elevated': '#180713',
-        'primary': 'var(--color-primary)',
-        'secondary': 'var(--color-secondary)',
-        'muted': 'var(--color-muted)',
-        'apple-red': {
-          900: '#13030A',
-          800: '#250615',
-          700: '#3B0820',
-          600: '#5A0C2F',
-          500: '#FF375F',
-          400: '#FF5C7C',
-          300: '#FF8FA6',
-          200: '#FFC8D6',
-        },
+        // Backgrounds
+        page: 'var(--bg-app-page)',
+        card: 'var(--bg-app-card)',
+        'card-hover': 'var(--bg-app-card-hover)',
+        elevated: 'var(--bg-elevated)',
+        
+        // Text
+        foreground: 'var(--text-primary)',
+        secondary: 'var(--text-secondary)',
+        muted: 'var(--text-muted)',
+        inverted: 'var(--text-inverted)',
+
+        // Borders
+        border: 'var(--border-subtle)',
+        'border-strong': 'var(--border-strong)',
+
         // Accents
-        'apple-blue': '#007AFF',
-        'apple-blue-dark': '#0A84FF',
-        'apple-gray': '#8E8E93',
-        'apple-gray-light': '#AEAEB2',
+        primary: 'var(--primary)',
+        'primary-strong': 'var(--primary-strong)',
+        
+        // Status
+        success: 'var(--success)',
+        warning: 'var(--warning)',
+        error: 'var(--error)',
+      },
+      borderRadius: {
+        'card': 'var(--radius-card)',
+        'pill': 'var(--radius-pill)',
       },
       letterSpacing: {
-        tighter: '-0.02em',
+        tight: '-0.02em',
+        tighter: '-0.04em',
       },
+      boxShadow: {
+        'glow': '0 0 20px var(--primary-glow)',
+      }
     },
   },
   plugins: [],

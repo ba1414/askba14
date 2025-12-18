@@ -1,233 +1,232 @@
+/* Import Premium Design System - Must be first */
+@import './styles/tokens.css';
+@import './styles/base.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Legacy compatibility - Map old variables to new tokens */
 :root {
-  /* Light mode - Apple Style */
-  --bg: #f5f5f7; /* Apple light gray background */
-  --surface: #ffffff; /* Pure white cards */
-  --surface-highlight: #f5f5f7; 
-  --border-subtle: rgba(0, 0, 0, 0.05); /* Very subtle border */
-  --text: #1d1d1f; /* Apple near-black */
-  --text-muted: #86868b; /* Apple gray */
-
-  --primary: #ff4b2b; /* Keep brand color */
-  --primary-strong: #e04124;
-  --primary-gradient: linear-gradient(135deg, #ff4b2b, #ff8a3c);
-  --primary-glow: radial-gradient(circle at center, rgba(255, 75, 43, 0.15), transparent 70%);
+  /* Map old variables to new design system */
+  --bg-app-page: var(--color-bg-page);
+  --bg-app-card: var(--color-bg-elevated);
+  --bg-app-card-hover: var(--color-surface-secondary);
+  --bg-elevated: var(--color-bg-elevated);
   
-  --secondary: #ff8a3c;
-  --accent: #ffdad1;
+  --border-subtle: var(--color-border-primary);
+  --border-strong: var(--color-border-secondary);
+  
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-tertiary);
+  --text-inverted: var(--color-text-inverted);
+  
+  --primary: var(--color-primary);
+  --primary-strong: var(--color-primary-hover);
+  --primary-glow: var(--color-primary-subtle);
+  
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --error: var(--color-error);
+  
+  --radius-card: var(--radius-xl);
+  --radius-pill: var(--radius-full);
 
-  --card-bg: #ffffff;
-  --card-border: rgba(0,0,0,0.05);
-  --surface-hover: #f5f5f7;
+  /* Legacy surface variables */
+  --surface: var(--color-surface-primary);
+  --surface-hover: var(--color-surface-secondary);
+  --bg: var(--color-bg-page);
+  --text: var(--color-text-primary);
+  --primary-btn-text: white;
 }
 
 .dark {
-  /* Dark mode - Apple Style */
-  --bg: #000000; /* True black background */
-  --surface: #1c1c1e; /* Apple dark gray cards */
-  --surface-highlight: #2c2c2e;
-  --border-subtle: rgba(255, 255, 255, 0.1);
-  --text: #f5f5f7;
-  --text-muted: #86868b;
-
-  --primary: #ff4b2b;
-  --primary-strong: #e04124;
-  --primary-gradient: linear-gradient(135deg, #ff4b2b, #ff8a3c);
-  --primary-glow: radial-gradient(circle at center, rgba(255, 75, 43, 0.25), transparent 70%);
-
-  --secondary: #ff8a3c;
-  --accent: #3a1d1d;
-
-  --card-bg: #1c1c1e;
-  --card-border: rgba(255,255,255,0.1);
-  --surface-hover: #2c2c2e;
+  --primary-btn-text: white;
 }
 
-@layer base {
-  * {
-    @apply antialiased;
-  }
-  
-  html, body, #root {
-    @apply m-0 p-0 w-full min-h-full;
-  }
-  
-  body {
-    @apply font-sans transition-colors duration-300;
-    background-color: var(--bg);
-    color: var(--text);
-  }
-
-  .main-grid {
-    @apply max-w-[1120px] mx-auto p-8 relative overflow-hidden transition-all duration-300;
-  }
-
-  /* Typography Scale */
-  h1 {
-    @apply text-[32px] md:text-[40px] font-semibold tracking-tight;
-  }
-  h2 {
-    @apply text-[24px] font-semibold tracking-tight;
-  }
-  h3 {
-    @apply text-[20px] font-medium tracking-tight;
-  }
-  
-  /* Mobile-specific optimizations */
-  @supports (-webkit-touch-callout: none) {
-    html {
-      -webkit-text-size-adjust: 100%;
-      height: -webkit-fill-available;
-    }
-    
-    body {
-      -webkit-tap-highlight-color: transparent;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      min-height: -webkit-fill-available;
-    }
-  }
-  
-  /* Prevent text selection on touch devices for UI elements */
-  button, a {
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-  }
-  
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  /* Fix for iOS Safari viewport units */
-  @supports (-webkit-touch-callout: none) {
-    .h-screen {
-      height: -webkit-fill-available;
-    }
-  }
+/* Ensure proper font rendering */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-@layer utilities {
-  /* Touch-friendly utilities */
-  .touch-manipulation {
-    touch-action: manipulation;
-  }
-  
-  /* Safe area for mobile notches */
-  .safe-area-inset-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  .tap-highlight-none {
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Safe area padding for notched devices */
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
-  }
-  
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  .safe-left {
-    padding-left: env(safe-area-inset-left);
-  }
-  
-  .safe-right {
-    padding-right: env(safe-area-inset-right);
-  }
+/* Prevent horizontal overflow on all elements */
+* {
+  box-sizing: border-box;
 }
 
-@layer utilities {
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-  .transform-style-3d {
-    transform-style: preserve-3d;
-  }
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
-  .rotate-y-180 {
-    transform: rotateY(180deg);
-  }
+*:not(svg):not(path) {
+  max-width: 100%;
 }
 
-@keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: translateY(8px);
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0);
-  }
+html {
+  overflow-x: hidden;
+  width: 100%;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-/* Simulate tailwindcss-animate classes */
-.animate-in {
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+html, body, #root {
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  min-height: 100vh;
 }
 
-.fade-in {
-  animation-name: fadeIn;
+body {
+  font-family: var(--font-system);
+  transition: background-color var(--duration-normal) var(--ease-default),
+              color var(--duration-normal) var(--ease-default);
 }
 
-@keyframes slideInFromTop {
-  from { transform: translateY(-0.5rem); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.slide-in-from-top-2 {
-  animation-name: slideInFromTop;
-}
-
-/* Custom Scrollbar for Sidebar */
-.sidebar-scroll::-webkit-scrollbar {
+/* Premium scrollbar */
+::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
-.sidebar-scroll::-webkit-scrollbar-track {
+
+::-webkit-scrollbar-track {
   background: transparent;
 }
-.sidebar-scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-.sidebar-scroll::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border-radius: var(--radius-full);
 }
 
-@layer components {
-  .apple-card {
-    @apply bg-[var(--surface)] rounded-[24px] border border-[var(--border-subtle)] shadow-sm;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-quaternary);
+}
+
+/* Sidebar scrollbar thin */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Legacy utility classes for backwards compatibility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--color-border-primary);
+}
+
+.dark .glass-panel {
+  background: rgba(28, 28, 30, 0.72);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px var(--color-primary-subtle);
+}
+
+/* Legacy grain texture */
+.bg-grain {
+  position: relative;
+}
+
+.bg-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+.bg-grain > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Legacy fadeIn animation compatibility */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn var(--duration-normal) var(--ease-out);
   }
   
-  .apple-card-hover {
-    @apply transition-all duration-200 hover:scale-[1.02] hover:shadow-md;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
+  
+  .animate-scaleIn {
+    animation: scaleIn var(--duration-normal) var(--ease-spring);
+  }
+  
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn var(--duration-normal) var(--ease-out);
+  }
+}
 
-  .apple-button-primary {
-    @apply h-[44px] px-6 rounded-full bg-[var(--primary)] text-[var(--text)] font-medium transition-all active:scale-95 hover:bg-[var(--primary-strong)];
-  }
+/* Custom scrollbar for modals */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
 
-  .apple-button-secondary {
-    @apply h-[44px] px-6 rounded-full bg-[var(--secondary-soft)] text-[var(--secondary-dark)] font-medium transition-all active:scale-95 hover:bg-[var(--secondary)];
-  }
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  .layout-grid {
-    @apply grid grid-cols-1 md:grid-cols-12 gap-6 max-w-[1400px] mx-auto px-6 md:px-12 pt-10 pb-20;
-  }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border-radius: var(--radius-full);
+}
+
+/* Premium focus states */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Button press feedback */
+button:active:not(:disabled),
+[role="button"]:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Sidebar navigation scroll */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border-primary);
+  border-radius: var(--radius-full);
+}
+
+/* Premium card hover effect */
+.card-hover {
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-secondary);
+}
+
+/* Table row hover */
+.table-row-hover {
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.table-row-hover:hover {
+  background-color: var(--color-surface-secondary);
 }
 

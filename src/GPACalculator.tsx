@@ -260,6 +260,8 @@ export default function GPACalculator({ theme, lang: propLang, onClose, embedded
   const [courses, setCourses] = useState<Course[]>(savedData.courses);
   const [totalCreditsRequired, setTotalCreditsRequired] = useState(savedData.totalCreditsRequired);
   const [targetGPA, setTargetGPA] = useState(savedData.targetGPA);
+  const [processedGpaTitle, setProcessedGpaTitle] = useState<string | null>(null);
+  const [gpaImgError, setGpaImgError] = useState(false);
 
   // Save to localStorage whenever data changes
   useEffect(() => {
@@ -274,6 +276,65 @@ export default function GPACalculator({ theme, lang: propLang, onClose, embedded
       console.error('Failed to save GPA data:', error);
     }
   }, [scale, courses, totalCreditsRequired, targetGPA]);
+
+  // Process GPA title image (try png then jpg) and remove near-white background
+  useEffect(() => {
+    let cancelled = false;
+    const base = import.meta.env.BASE_URL || '/';
+    // Try multiple common filename variants (case and with/without base) to be robust
+    const candidates = [
+      `${base}gpa_title.png`, `${base}gpa_title.jpg`,
+      `${base}GPA_title.png`, `${base}GPA_title.jpg`,
+      `gpa_title.png`, `gpa_title.jpg`,
+      `GPA_title.png`, `GPA_title.jpg`
+    ];
+
+    const tryLoad = (index: number) => {
+      if (cancelled) return;
+      if (index >= candidates.length) {
+        setProcessedGpaTitle(null);
+        return;
+      }
+      const src = candidates[index];
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        if (cancelled) return;
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            setProcessedGpaTitle(src);
+            return;
+          }
+          ctx.drawImage(img, 0, 0);
+          try {
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imgData.data;
+            for (let i = 0; i < d.length; i += 4) {
+              const r = d[i], g = d[i+1], b = d[i+2];
+              if (r > 240 && g > 240 && b > 240) d[i+3] = 0;
+            }
+            ctx.putImageData(imgData, 0, 0);
+            setProcessedGpaTitle(canvas.toDataURL('image/png'));
+          } catch (e) {
+            console.warn('GPA canvas read failed', e);
+            setProcessedGpaTitle(src);
+          }
+        } catch (e) {
+          console.warn('GPA processing failed', e);
+          setProcessedGpaTitle(src);
+        }
+      };
+      img.onerror = () => tryLoad(index + 1);
+      img.src = src;
+    };
+
+    tryLoad(0);
+    return () => { cancelled = true; };
+  }, []);
 
   const handleClose = () => {
     if (embedded) return; // No close in embedded mode
@@ -380,13 +441,26 @@ export default function GPACalculator({ theme, lang: propLang, onClose, embedded
             <div className="p-1.5 sm:p-2 bg-[#0A84FF]/10 dark:bg-[#0A84FF]/20 rounded-lg sm:rounded-xl flex-shrink-0">
               <Calculator size={20} className="text-[#0A84FF] sm:w-6 sm:h-6" />
             </div>
-            <div className="min-w-0">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-white truncate">
-                {t.title}
-              </h2>
-              <p className="text-xs sm:text-sm text-[#86868B] dark:text-white/60 mt-0.5 truncate hidden sm:block">
-                {t.subtitle}
-              </p>
+            <div className="min-w-0 flex items-center">
+              {processedGpaTitle || !gpaImgError ? (
+                <img
+                  src={processedGpaTitle || `${import.meta.env.BASE_URL}gpa_title.jpg`}
+                  alt={t.title}
+                  className="h-8 sm:h-10 md:h-12 w-auto object-contain filter dark:invert"
+                  style={{ background: 'transparent' }}
+                  onError={() => setGpaImgError(true)}
+                  onLoad={() => setGpaImgError(false)}
+                />
+              ) : (
+                <div className="flex flex-col">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-white truncate">
+                    {t.title}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-[#86868B] dark:text-white/60 mt-0.5 truncate hidden sm:block">
+                    {t.subtitle}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

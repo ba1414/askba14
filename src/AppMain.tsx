@@ -6,13 +6,14 @@ import AboutMe from "./AboutMe";
 import AssociateDegreeTips from "./AssociateDegreeTips";
 import IGCSEGuideView from "./IGCSEGuideView";
 import Yr1GuideView from "./Yr1GuideView";
-import FullCertGuideView from "./FullCertGuideView";
-import InterviewGuideView from "./InterviewGuideView";
+import FullCertGuideView from "./FullCertGuideViewV2";
+import InterviewGuideView from "./InterviewGuideViewV2";
 import OfferGuideView from "./OfferGuideView";
 import IeltsPrep from "./IeltsPrep";
 import Footer from "./components/Footer";
 import { AppleEmoji } from "./components/AppleEmoji";
 import { auth, googleProvider } from "./firebase";
+import { useTheme } from "./context/ThemeContext";
 import { 
   signInWithPopup,
   signInWithRedirect,
@@ -25,35 +26,13 @@ import {
 } from "firebase/auth";
 
 /**
- * ChatGPT-style minimal UI
- * - Single page, no landing page
- * - Sidebar navigation
- * - No decorations, flat design
- * - Clean and distraction-free
+ * Premium Dark Mode UI
+ * - Apple-style aesthetic
+ * - Glassmorphism & Deep Matte Backgrounds
+ * - Pill buttons & High Contrast
  */
 
 type View = "gpa" | "flashcards" | "guide" | "igcse" | "yr1" | "fullcert" | "interview" | "offer" | "about" | "ielts";
-
-function useTheme() {
-  const getDefault = () => {
-    if (typeof window === "undefined") return "light";
-    const saved = localStorage.getItem("theme");
-    if (saved) return saved;
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
-  const [theme, setTheme] = useState(getDefault);
-
-  React.useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") root.classList.add("dark");
-    else root.classList.remove("dark");
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  return [theme, setTheme] as const;
-}
 
 function useLang() {
   const [lang, setLang] = useState<string>(() => localStorage.getItem("lang") || "EN");
@@ -75,11 +54,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
     try {
       setLoading(true);
       setMessage(lang === "EN" ? "Redirecting to Google..." : "正在轉至 Google...");
-      
-      // Use redirect for better cross-browser compatibility
-      // Safari and Firefox have issues with popup
       await signInWithRedirect(auth, googleProvider);
-      // After redirect, user will return and getRedirectResult will handle it
     } catch (error: any) {
       console.error("Google sign-in error:", error);
       if (error.code === 'auth/unauthorized-domain') {
@@ -88,7 +63,6 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
           : "錯誤：域名未授權。請在 Firebase 控制台添加此域名。");
       } else if (error.code === 'auth/popup-blocked') {
         setMessage(lang === "EN" ? "Popup blocked. Redirecting..." : "彈窗被阻擋。正在轉址...");
-        // Try redirect as fallback
         try {
           await signInWithRedirect(auth, googleProvider);
         } catch (redirectError) {
@@ -115,8 +89,6 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
         await signInWithEmailAndPassword(auth, email, password);
         setMessage(lang === "EN" ? "Sign in successful!" : "登入成功！");
       }
-      // Success - Firebase auth will trigger onAuthStateChanged
-      // Keep loading state, App component will handle the transition
     } catch (error: any) {
       setMessage(error.message);
       setLoading(false);
@@ -124,21 +96,21 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--bg)] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-app-page)] px-4">
       <div className="w-full max-w-md">
-        <div className="bg-[var(--surface)] rounded-2xl shadow-lg p-8 border border-[var(--border-subtle)]">
-          <h1 className="text-2xl font-bold text-center mb-2 text-[var(--text)]">
-            BA14
+        <div className="bg-card rounded-[24px] shadow-2xl p-8 border border-border">
+          <h1 className="text-3xl font-bold text-center mb-2 text-foreground tracking-tight">
+            <a href="https://www.instagram.com/baaa.14_?igsh=OTAwZ3Fuemx4OWg5&utm_source=qr" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">@baaa.14_</a>
           </h1>
-          <p className="text-center text-sm text-[var(--text-muted)] mb-6">
+          <p className="text-center text-sm text-secondary mb-8">
             {isSignUp 
               ? (lang === "EN" ? "Create your account" : "建立帳戶")
               : (lang === "EN" ? "Sign in to sync your data" : "登入以同步數據")}
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-[var(--text)] mb-2">
+              <label className="block text-xs font-medium text-secondary mb-2 uppercase tracking-wider">
                 {lang === "EN" ? "Email" : "電郵"}
               </label>
               <input
@@ -146,13 +118,13 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-lg bg-[var(--bg)] border border-[var(--border-subtle)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                className="w-full px-4 py-3.5 rounded-xl bg-page border border-border text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/20 transition-all"
                 placeholder={lang === "EN" ? "you@example.com" : "你的電郵"}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[var(--text)] mb-2">
+              <label className="block text-xs font-medium text-secondary mb-2 uppercase tracking-wider">
                 {lang === "EN" ? "Password" : "密碼"}
               </label>
               <input
@@ -161,7 +133,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 rounded-lg bg-[var(--bg)] border border-[var(--border-subtle)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                className="w-full px-4 py-3.5 rounded-xl bg-page border border-border text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/20 transition-all"
                 placeholder={lang === "EN" ? "At least 6 characters" : "最少6個字元"}
               />
             </div>
@@ -169,10 +141,10 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             {message && (
               <div className={`text-sm text-center p-3 rounded-lg ${
                 message.includes("Error") || message.includes("錯誤") || message.includes("failed") || message.includes("失敗")
-                  ? "bg-[var(--error)]/20 text-[var(--error)]"
+                  ? "bg-red-500/10 text-red-400 border border-red-500/20"
                   : message.includes("success") || message.includes("成功")
-                  ? "bg-[var(--success)]/20 text-[var(--success)]"
-                  : "bg-[var(--primary)]/20 text-[var(--primary)]"
+                  ? "bg-green-500/10 text-green-400 border border-green-500/20"
+                  : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
               }`}>
                 {message}
               </div>
@@ -181,7 +153,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-[var(--primary)] hover:bg-[var(--primary-strong)] disabled:bg-[var(--text-muted)] text-[#020617] font-bold rounded-lg transition-colors"
+              className="w-full py-3.5 bg-primary hover:bg-primary-strong disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all transform active:scale-[0.98]"
             >
               {loading 
                 ? (lang === "EN" ? "Loading..." : "載入中...")
@@ -192,13 +164,13 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
           </form>
 
           {/* Google Sign In */}
-          <div className="mt-4">
+          <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[var(--border-subtle)]"></div>
+                <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-[var(--surface)] px-2 text-[var(--text-muted)]">
+                <span className="bg-card px-2 text-muted">
                   {lang === "EN" ? "Or" : "或"}
                 </span>
               </div>
@@ -206,7 +178,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             <button
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="mt-4 w-full py-3 bg-[var(--surface)] border border-[var(--border-subtle)] hover:bg-[var(--bg)] text-[var(--text)] font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="mt-6 w-full py-3.5 bg-page border border-border hover:bg-card-hover text-foreground font-medium rounded-xl transition-all flex items-center justify-center gap-3"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -218,10 +190,10 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
             </button>
           </div>
 
-          <div className="mt-4 text-center">
+          <div className="mt-6 text-center">
             <button
               onClick={() => setIsSignUp(!isSignUp)}
-              className="text-sm text-[var(--primary)] hover:underline"
+              className="text-sm text-secondary hover:text-foreground transition-colors"
             >
               {isSignUp
                 ? (lang === "EN" ? "Already have an account? Sign in" : "已有帳戶？登入")
@@ -230,18 +202,13 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
           </div>
 
           {/* Continue as Guest button */}
-          <div className="mt-6 pt-6 border-t border-[var(--border-subtle)]">
+          <div className="mt-6 pt-6 border-t border-border">
             <button
               onClick={onContinueAsGuest}
-              className="w-full py-3 bg-[var(--bg)] hover:bg-[var(--border-subtle)] text-[var(--text)] font-medium rounded-lg transition-colors"
+              className="w-full py-3 bg-transparent hover:bg-card-hover text-secondary hover:text-foreground font-medium rounded-xl transition-colors"
             >
               {lang === "EN" ? "Continue as Guest" : "訪客模式繼續"}
             </button>
-            <p className="mt-2 text-xs text-center text-[var(--text-muted)]">
-              {lang === "EN" 
-                ? "Your data will be saved locally on this device" 
-                : "數據將儲存在此裝置"}
-            </p>
           </div>
         </div>
       </div>
@@ -250,7 +217,7 @@ function LoginForm({ lang, onContinueAsGuest }: { lang: string; onContinueAsGues
 }
 
 export default function App() {
-  const [theme, setTheme] = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [lang, setLang] = useLang();
   const [activeView, setActiveView] = useState<View>("guide");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -258,6 +225,9 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [isGuest, setIsGuest] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const isDark = theme === "dark";
+  // const toggleTheme is now from context
 
   // Check authentication on mount
   useEffect(() => {
@@ -268,24 +238,21 @@ export default function App() {
       return;
     }
 
-    // Check for redirect result first
     getRedirectResult(auth)
       .then((result) => {
         if (result?.user) {
-          console.log("Redirect result user:", result.user.email);
           setUser(result.user);
           setIsGuest(false);
           localStorage.removeItem("guestMode");
         }
-        setLoading(false); // Set loading false even if no redirect result
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Redirect error:", error);
-        setLoading(false); // Set loading false on error too
+        setLoading(false);
       });
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("Auth state changed:", user?.email || "null");
       setUser(user);
       setLoading(false);
       if (user) {
@@ -309,12 +276,6 @@ export default function App() {
     setIsGuest(false);
   };
 
-  const handleUpgradeToCloud = () => {
-    setShowLoginModal(true);
-  };
-
-  const isDark = theme === "dark";
-  const toggleTheme = () => setTheme(isDark ? "light" : "dark");
   const toggleLang = () => setLang(lang === "EN" ? "粵" : "EN");
 
   const navItems = [
@@ -333,8 +294,8 @@ export default function App() {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--bg)]">
-        <div className="text-[var(--text-muted)]">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-app-page)]">
+        <div className="text-muted animate-pulse">
           {lang === "EN" ? "Loading..." : "載入中..."}
         </div>
       </div>
@@ -348,24 +309,24 @@ export default function App() {
 
   // Sidebar Content (Refined UI)
   const SidebarContent = () => (
-    <div className="flex flex-col h-full transition-colors duration-300 bg-[var(--bg)] border-r border-[var(--border-subtle)]">
+    <div className="flex flex-col h-full bg-[var(--bg-app-page)] border-r border-[var(--border-subtle)]">
       
       {/* Sidebar Header / BA14 Button */}
       <div className="p-6">
         <button 
           onClick={() => { setActiveView('guide'); setMobileMenuOpen(false); }}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group hover:bg-[var(--surface)] text-[var(--text)]"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left group hover:bg-card-hover text-primary"
         >
-          <div className="p-2 rounded-lg bg-[var(--primary-soft)] text-[var(--primary-strong)]">
+          <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
             <AppleEmoji emoji="💬" className="w-5 h-5" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">BA14</span>
+          <span className="text-lg font-bold tracking-tight text-primary">@baaa.14_</span>
         </button>
       </div>
 
       {/* Navigation List */}
       <div className="flex-1 overflow-y-auto px-4 py-2 sidebar-scroll space-y-1">
-        <div className="px-4 py-2 text-[11px] font-semibold uppercase tracking-wider mb-2 text-[var(--text-muted)]">
+        <div className="px-4 py-2 text-[11px] font-bold uppercase tracking-widest mb-2 text-muted">
           {lang === "EN" ? "Menu" : "選單"}
         </div>
         {navItems.map((item) => {
@@ -377,31 +338,34 @@ export default function App() {
               setActiveView(item.id);
               setMobileMenuOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-[15px] font-medium transition-all duration-200 relative group
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-medium transition-all duration-200 relative group
               ${isActive 
-                ? 'bg-[var(--primary)] text-[#020617] shadow-md shadow-[var(--primary)]/20' 
-                : 'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]'}
+                ? 'bg-primary/10 text-primary shadow-lg shadow-primary/5' 
+                : 'text-secondary hover:text-primary hover:bg-card-hover'}
             `}
           >
             <AppleEmoji emoji={item.emoji} className="w-[18px] h-[18px]" />
             <span className="truncate">{item.label}</span>
+            {isActive && (
+              <div className="absolute right-3 w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_var(--primary-glow)]" />
+            )}
           </button>
         )})}
       </div>
 
       {/* Sidebar Footer (User/Settings) */}
-      <div className="p-6 border-t border-[var(--border-subtle)]">
+      <div className="p-6 border-t border-border">
         <div className="flex items-center justify-between gap-2 mb-4">
           <button 
             onClick={toggleTheme}
-            className="p-2 rounded-lg transition-all duration-200 text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
+            className="p-2 rounded-lg transition-all duration-200 text-muted hover:text-primary hover:bg-card-hover"
           >
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           
           <button 
             onClick={toggleLang}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border border-[var(--border-subtle)] text-[var(--text-muted)] hover:bg-[var(--surface)] hover:text-[var(--text)]"
+            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 border border-border text-muted hover:bg-card-hover hover:text-primary hover:border-primary/30"
           >
             {lang === 'EN' ? '中文' : 'EN'}
           </button>
@@ -410,7 +374,7 @@ export default function App() {
         {!isGuest && (
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 text-[var(--text-muted)] hover:text-[var(--primary)] hover:bg-[var(--primary)]/10"
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 text-muted hover:text-red-400 hover:bg-red-500/10"
           >
             <LogOut size={16} />
             <span>{lang === 'EN' ? 'Log out' : '登出'}</span>
@@ -425,13 +389,13 @@ export default function App() {
     <>
       {/* Login Modal for Guest users */}
       {showLoginModal && isGuest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
           <div className="relative max-w-md w-full">
             <button
               onClick={() => setShowLoginModal(false)}
-              className="absolute -top-3 -right-3 p-2 bg-[var(--surface)] rounded-full shadow-lg z-10 hover:bg-[var(--bg)]"
+              className="absolute -top-3 -right-3 p-2 bg-card rounded-full shadow-lg z-10 hover:bg-card-hover text-secondary hover:text-foreground border border-border"
             >
-              <span className="text-2xl leading-none text-[var(--text-muted)]">×</span>
+              <X size={20} />
             </button>
             <LoginForm lang={lang} onContinueAsGuest={() => setShowLoginModal(false)} />
           </div>
@@ -439,14 +403,14 @@ export default function App() {
       )}
 
       {/* Mobile Header (Hamburger) */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-[var(--bg)] border-b border-[var(--border-subtle)] text-[var(--text)] px-4 py-3 flex items-center justify-between">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-[var(--bg-app-page)]/80 backdrop-blur-md border-b border-[var(--border-subtle)] text-[var(--text-primary)] px-4 py-3 flex items-center justify-between">
         <button 
           onClick={() => setMobileMenuOpen(true)}
-          className="p-1 -ml-1 hover:bg-[var(--surface)] rounded-md"
+          className="p-2 -ml-2 hover:bg-card-hover rounded-lg transition-colors"
         >
           <Menu size={24} />
         </button>
-        <div className="font-medium">BA14</div>
+        <a href="https://www.instagram.com/baaa.14_?igsh=OTAwZ3Fuemx4OWg5&utm_source=qr" target="_blank" rel="noopener noreferrer" className="font-bold tracking-tight hover:text-primary transition-colors">@baaa.14_</a>
         <div className="w-8" /> {/* Spacer for balance */}
       </div>
 
@@ -454,23 +418,23 @@ export default function App() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity" 
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="relative w-72 h-full shadow-xl transform transition-transform duration-300 ease-in-out">
+          <div className="relative w-72 h-full shadow-2xl transform transition-transform duration-300 ease-in-out bg-[var(--bg-app-page)] border-r border-[var(--border-subtle)]">
             <SidebarContent />
           </div>
         </div>
       )}
 
-      <div className="flex h-screen bg-[var(--bg)] text-[var(--text)]">
+      <div className="flex h-screen bg-[var(--bg-app-page)] text-[var(--text-primary)] overflow-hidden">
         {/* Desktop Sidebar */}
         <aside className="hidden md:flex w-[280px] flex-col fixed inset-y-0 left-0 z-50">
           <SidebarContent />
         </aside>
 
         {/* Main Content */}
-        <main id="main-scroll-container" className="flex-1 relative h-full overflow-y-auto md:ml-[280px] transition-all duration-300">
+        <main id="main-scroll-container" className="flex-1 relative h-full overflow-y-auto md:ml-[280px] transition-all duration-300 scroll-smooth">
           {/* Mobile Header Spacer */}
           <div className="h-16 md:h-0" />
 

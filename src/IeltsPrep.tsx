@@ -14,25 +14,6 @@ const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
       description: isEn ? "Comprehensive study materials for all sections." : "涵蓋所有部分的綜合學習材料。",
       emoji: "📄",
       items: []
-    },
-    {
-      title: isEn ? "English Channels" : "英語頻道",
-      description: isEn ? "YouTube channels to improve your listening and speaking." : "提高聽力和口語的 YouTube 頻道。",
-      emoji: "📺",
-      items: [
-        { name: "English with Lucy", url: "https://www.youtube.com/c/EnglishwithLucy" },
-        { name: "BBC Learning English", url: "https://www.youtube.com/user/bbclearningenglish" },
-        { name: "IELTS Ryan", url: "https://www.youtube.com/user/EnglishRyan" }
-      ]
-    },
-    {
-      title: isEn ? "Free Trial" : "免費試用",
-      description: isEn ? "Try out premium courses for free." : "免費試用高級課程。",
-      emoji: "🎓",
-      items: [
-        { name: "E2Language", url: "https://www.e2language.com/" },
-        { name: "Magoosh", url: "https://ielts.magoosh.com/" }
-      ]
     }
   ];
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { saveData, loadData } from "./db";
 import { AppleEmoji } from "./components/AppleEmoji";
+import GradePrediction from "./GradePrediction";
 
 const TRANSLATIONS = {
   EN: {
@@ -12,6 +13,7 @@ const TRANSLATIONS = {
     tab_tgpa: "This Sem (TGPA)",
     tab_cgpa: "Cumulative (CGPA)",
     tab_target: "Goal / Target",
+    tab_prediction: "Grade Prediction",
 
     // TGPA Section
     tgpa_title: "This Semester",
@@ -55,6 +57,7 @@ const TRANSLATIONS = {
     tab_tgpa: "本學期 TGPA",
     tab_cgpa: "累積 CGPA",
     tab_target: "目標 / 追分",
+    tab_prediction: "成績預測",
 
     // TGPA Section
     tgpa_title: "本學期規劃",
@@ -183,8 +186,10 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
   const t = TRANSLATIONS[lang];
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [activeTab, setActiveTab] = useState<'tgpa' | 'cgpa' | 'target'>('tgpa');
+  const [activeTab, setActiveTab] = useState<'tgpa' | 'cgpa' | 'target' | 'prediction'>('tgpa');
   const [scale, setScale] = useState<GPAScale>("4.0");
+  const [processedGpaTitle, setProcessedGpaTitle] = useState<string | null>(null);
+  const [gpaImgError, setGpaImgError] = useState(false);
   
   // Inputs
   const [currentCGPA, setCurrentCGPA] = useState("");
@@ -226,6 +231,64 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
       saveData('gpa', 'inputs', { currentCGPA, completedCredits, targetCGPA, nextCredits });
     }
   }, [courses, scale, currentCGPA, completedCredits, targetCGPA, nextCredits, isLoaded]);
+
+  // Process GPA title image (try png then jpg) and remove near-white background
+  useEffect(() => {
+    let cancelled = false;
+    const base = import.meta.env.BASE_URL || '/';
+    const candidates = [
+      `${base}gpa_title.png`, `${base}gpa_title.jpg`,
+      `${base}GPA_title.png`, `${base}GPA_title.jpg`,
+      `gpa_title.png`, `gpa_title.jpg`,
+      `GPA_title.png`, `GPA_title.jpg`
+    ];
+
+    const tryLoad = (index: number) => {
+      if (cancelled) return;
+      if (index >= candidates.length) {
+        setProcessedGpaTitle(null);
+        return;
+      }
+      const src = candidates[index];
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        if (cancelled) return;
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            setProcessedGpaTitle(src);
+            return;
+          }
+          ctx.drawImage(img, 0, 0);
+          try {
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imgData.data;
+            for (let i = 0; i < d.length; i += 4) {
+              const r = d[i], g = d[i+1], b = d[i+2];
+              if (r > 240 && g > 240 && b > 240) d[i+3] = 0;
+            }
+            ctx.putImageData(imgData, 0, 0);
+            setProcessedGpaTitle(canvas.toDataURL('image/png'));
+          } catch (e) {
+            console.warn('GPA canvas read failed', e);
+            setProcessedGpaTitle(src);
+          }
+        } catch (e) {
+          console.warn('GPA processing failed', e);
+          setProcessedGpaTitle(src);
+        }
+      };
+      img.onerror = () => tryLoad(index + 1);
+      img.src = src;
+    };
+
+    tryLoad(0);
+    return () => { cancelled = true; };
+  }, []);
 
   // --- Calculations ---
 
@@ -481,15 +544,28 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-[var(--text)] tracking-tight">{t.title}</h1>
-          <p className="text-[var(--text-muted)] font-medium">{t.subtitle}</p>
+          {processedGpaTitle || !gpaImgError ? (
+            <img
+              src={processedGpaTitle || `${import.meta.env.BASE_URL}gpa_title.jpg`}
+              alt={t.title}
+              className="h-16 sm:h-20 md:h-24 w-auto object-contain filter dark:invert mb-2"
+              style={{ background: 'transparent' }}
+              onError={() => setGpaImgError(true)}
+              onLoad={() => setGpaImgError(false)}
+            />
+          ) : (
+            <div>
+              <h1 className="text-3xl font-black text-[var(--text)] tracking-tight">{t.title}</h1>
+              <p className="text-[var(--text-muted)] font-medium">{t.subtitle}</p>
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-3 bg-[var(--surface)] p-1.5 rounded-xl border border-[var(--border-subtle)] self-start md:self-auto shadow-sm">
           <span className="text-xs font-bold text-[var(--text-muted)] px-2">{t.scale}</span>
           <button
             onClick={() => setScale("4.0")}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              scale === "4.0" ? "bg-[var(--primary)] text-[var(--bg)] shadow-sm" : "text-[var(--text-muted)] hover:text-[var(--text)]"
+              scale === "4.0" ? "bg-[var(--primary)] text-[var(--primary-btn-text)] shadow-sm" : "text-[var(--text-muted)] hover:text-[var(--text)]"
             }`}
           >
             4.0
@@ -497,7 +573,7 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
           <button
             onClick={() => setScale("4.3")}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              scale === "4.3" ? "bg-[var(--primary)] text-[var(--bg)] shadow-sm" : "text-[var(--text-muted)] hover:text-[var(--text)]"
+              scale === "4.3" ? "bg-[var(--primary)] text-[var(--primary-btn-text)] shadow-sm" : "text-[var(--text-muted)] hover:text-[var(--text)]"
             }`}
           >
             4.3
@@ -505,17 +581,43 @@ export default function GPACalculatorNew({ lang: propLang }: { lang: string }) {
         </div>
       </div>
 
-      {/* Content - Single View Dashboard */}
+      {/* Tab Navigation */}
+      <div className="flex gap-2 border-b border-[var(--border-subtle)] overflow-x-auto">
+        {[
+          { key: 'tgpa' as const, label: t.tab_tgpa },
+          { key: 'cgpa' as const, label: t.tab_cgpa },
+          { key: 'target' as const, label: t.tab_target },
+          { key: 'prediction' as const, label: t.tab_prediction }
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`px-4 py-3 font-medium text-sm whitespace-nowrap transition-all border-b-2 ${
+              activeTab === tab.key
+                ? 'border-[var(--primary)] text-[var(--primary)]'
+                : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text)]'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Content - Tabbed Views */}
       <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 min-h-[500px]">
-            {renderCourseTable()}
+        {activeTab === 'prediction' ? (
+          <GradePrediction lang={lang} scale={scale} />
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 min-h-[500px]">
+              {renderCourseTable()}
+            </div>
+            <div className="space-y-6">
+              {renderCGPASummary()}
+              {renderTargetCalculator()}
+            </div>
           </div>
-          <div className="space-y-6">
-            {renderCGPASummary()}
-            {renderTargetCalculator()}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

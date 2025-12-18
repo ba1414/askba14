@@ -1,54 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FULL_CERT_GUIDE } from './content/fullCertGuide';
-import { ExternalLink, ChevronRight, Menu, X, ArrowUp } from 'lucide-react';
-import { AppleEmoji } from './components/AppleEmoji';
+import { GuideLayout } from './components/GuideLayout';
+// import { ExternalLink, ChevronRight, Menu, X, ArrowUp } from 'lucide-react';
+// import { AppleEmoji } from './components/AppleEmoji';
 
 const FullCertGuideView = () => {
-  const [activeSection, setActiveSection] = useState<string>("");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  // Handle scroll spy for active section
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = FULL_CERT_GUIDE.sections.map((_, index) => document.getElementById(`section-${index}`));
-      const scrollPosition = window.scrollY + 150;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(`section-${i}`);
-          break;
-        }
-      }
-
-      setShowBackToTop(window.scrollY > 500);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      setActiveSection(id);
-      setMobileMenuOpen(false);
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="min-h-screen bg-[var(--bg)] relative overflow-hidden">
       {/* Background Decoration */}
@@ -127,12 +83,26 @@ const FullCertGuideView = () => {
               <AppleEmoji emoji="📜" className="w-12 h-12" />
             </div>
             <div className="space-y-4">
-              <h1 className="text-3xl md:text-5xl font-bold text-[var(--text)] tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-br from-[var(--text)] to-[var(--text-muted)]">
-                {FULL_CERT_GUIDE.title}
-              </h1>
-              <p className="text-lg text-[var(--text-muted)] max-w-2xl mx-auto leading-relaxed">
-                {FULL_CERT_GUIDE.intro}
-              </p>
+              <div className="w-full max-w-3xl mx-auto px-4">
+                <a href={`${import.meta.env.BASE_URL}fullcert_title.jpg`} target="_blank" rel="noopener noreferrer" className="inline-block w-full">
+                  <img
+                    src={processedFullTitle || `${import.meta.env.BASE_URL}fullcert_title.jpg`}
+                    alt={FULL_CERT_GUIDE.title}
+                    className="w-full h-auto object-contain filter dark:invert"
+                    style={{ background: 'transparent' }}
+                    onError={() => setFullImgError(true)}
+                    onLoad={() => setFullImgError(false)}
+                  />
+                </a>
+                {fullImgError && (
+                  <div className="mt-2 text-sm text-red-500">Unable to load title image — click to open it directly.</div>
+                )}
+              </div>
+              {!processedFullTitle && !fullImgError && (
+                <p className="text-lg text-[var(--text-muted)] max-w-2xl mx-auto leading-relaxed">
+                  {FULL_CERT_GUIDE.intro}
+                </p>
+              )}
             </div>
           </div>
 

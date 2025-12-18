@@ -1,6 +1,6 @@
-aimport React from "react";
+import React from "react";
 
-const PALETTE = ["#FACC6B", "#22D3EE"];
+const PALETTE = ["#FF3B30", "#D70015"];
 
 function nextDistinctColor(index) {
   // Pick a different vibrant color for the shaded side

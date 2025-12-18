@@ -1,0 +1,238 @@
+/**
+ * Debug Panel Styles
+ */
+
+.debug-panel {
+  margin-bottom: 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.debug-panel summary {
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.debug-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.debug-panel summary:hover {
+  background: var(--bg-tertiary);
+}
+
+.debug-panel[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.debug-content {
+  padding: 20px;
+}
+
+.debug-section {
+  margin-bottom: 24px;
+}
+
+.debug-section:last-child {
+  margin-bottom: 0;
+}
+
+.debug-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.debug-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.debug-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.debug-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.debug-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.debug-value.success {
+  color: var(--success);
+}
+
+.debug-value.warning {
+  color: #ff9500;
+}
+
+.debug-value.muted {
+  color: var(--text-secondary);
+}
+
+.debug-value.accent {
+  color: var(--accent);
+}
+
+.debug-code {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.debug-line {
+  display: flex;
+  gap: 12px;
+  padding: 2px 0;
+}
+
+.line-number {
+  color: var(--text-secondary);
+  min-width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.line-content {
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.debug-rejections {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.rejection-item {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--error);
+}
+
+.rejection-reason {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--error);
+  margin-bottom: 4px;
+}
+
+.rejection-line {
+  font-size: 12px;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  color: var(--text-secondary);
+  word-break: break-all;
+}
+
+.debug-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tip {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tip strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.tip p {
+  margin: 4px 0 0 0;
+  color: var(--text-secondary);
+}
+
+.tip.error {
+  background: rgba(255, 59, 48, 0.1);
+  border-left: 3px solid var(--error);
+}
+
+.tip.error strong {
+  color: var(--error);
+}
+
+.tip.warning {
+  background: rgba(255, 149, 0, 0.1);
+  border-left: 3px solid #ff9500;
+}
+
+.tip.warning strong {
+  color: #ff9500;
+}
+
+.tip.info {
+  background: rgba(0, 122, 255, 0.1);
+  border-left: 3px solid var(--accent);
+}
+
+.tip.info strong {
+  color: var(--accent);
+}
+
+.tip.success {
+  background: rgba(52, 199, 89, 0.1);
+  border-left: 3px solid var(--success);
+}
+
+.tip.success strong {
+  color: var(--success);
+}
+
+@media (prefers-color-scheme: dark) {
+  .tip.error {
+    background: rgba(255, 59, 48, 0.15);
+  }
+  
+  .tip.warning {
+    background: rgba(255, 149, 0, 0.15);
+  }
+  
+  .tip.info {
+    background: rgba(0, 122, 255, 0.15);
+  }
+  
+  .tip.success {
+    background: rgba(52, 199, 89, 0.15);
+  }
+}

@@ -1,0 +1,202 @@
+/**
+ * Import Screen Styles
+ */
+
+.import-screen {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --accent: #007aff;
+  --error: #ff3b30;
+  
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .import-screen {
+    --bg-primary: #1c1c1e;
+    --bg-secondary: #2c2c2e;
+    --text-primary: #f5f5f7;
+    --text-secondary: #8e8e93;
+  }
+}
+
+.import-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.import-header h1 {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.import-header p {
+  font-size: 17px;
+  color: var(--text-secondary);
+  margin: 0 0 16px 0;
+}
+
+.demo-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.demo-button:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* Progress */
+.import-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  margin-bottom: 32px;
+}
+
+.progress-bar {
+  width: 100%;
+  max-width: 300px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.progress-stage {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Error */
+.import-error {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin-top: 16px;
+  background: rgba(255, 59, 48, 0.1);
+  border-radius: 12px;
+  color: var(--error);
+  font-size: 14px;
+}
+
+.import-error svg {
+  flex-shrink: 0;
+}
+
+/* Formats grid */
+.import-formats {
+  margin-top: 48px;
+}
+
+.import-formats h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 16px 0;
+}
+
+.format-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .format-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.format-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.format-item:hover {
+  transform: translateY(-2px);
+}
+
+.format-icon {
+  font-size: 24px;
+}
+
+.format-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Tips */
+.import-tips {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+}
+
+.import-tips h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 12px 0;
+}
+
+.import-tips ul {
+  margin: 0;
+  padding: 0 0 0 20px;
+}
+
+.import-tips li {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.import-tips li:last-child {
+  margin-bottom: 0;
+}

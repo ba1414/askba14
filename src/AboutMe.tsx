@@ -115,7 +115,14 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
                 </span>
               </div>
               <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-[var(--text)] mb-4 leading-[0.9]">
-                BA<span className="text-[var(--primary)]">.</span>14
+                <a 
+                  href="https://www.instagram.com/baaa.14_?igsh=OTAwZ3Fuemx4OWg5&utm_source=qr" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  BA<span className="text-[var(--primary)]">.</span>14
+                </a>
               </h1>
               <p className="text-xl text-[var(--text-muted)] font-medium max-w-2xl leading-relaxed">
                 {t.bio}
@@ -161,22 +168,7 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
             </GlassCard>
           </div>
 
-          {/* Education Card */}
-          <div className="md:col-span-1">
-            <GlassCard className="h-full p-8 flex flex-col justify-between group">
-              <div className="mb-6">
-                <div className="w-12 h-12 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <AppleEmoji emoji="🎓" className="w-6 h-6" />
-                </div>
-                <h3 className="text-[var(--text-muted)] text-xs font-bold uppercase tracking-widest mb-2">{t.education}</h3>
-                <p className="font-bold text-xl text-[var(--text)] leading-tight mb-1">{t.university}</p>
-                <p className="text-sm font-medium text-[var(--secondary)] mb-2">{t.major}</p>
-                <p className="text-xs font-medium text-[var(--text-muted)]">
-                  {t.exchange}
-                </p>
-              </div>
-            </GlassCard>
-          </div>
+          
 
 
 

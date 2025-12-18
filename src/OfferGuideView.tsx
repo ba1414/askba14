@@ -220,19 +220,6 @@ const OfferGuideView = () => {
               </div>
             </div>
           ))}
-
-          {/* Summary Card */}
-          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl p-8 md:p-10 text-white shadow-lg relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
-            <div className="relative z-10">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                <AppleEmoji emoji="🎉" /> 總結
-              </h2>
-              <p className="text-lg md:text-xl opacity-90 leading-relaxed font-medium">
-                {OFFER_GUIDE.summary}
-              </p>
-            </div>
-          </div>
         </div>
       </div>
 

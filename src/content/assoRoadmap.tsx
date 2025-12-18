@@ -53,39 +53,65 @@ export const BIG_PICTURE = {
 
 export const TIMELINE_DATA: TimelineItem[] = [
   {
-    id: "stage-0",
-    stage: "Stage 0",
-    timeframe: "7–8 月",
-    title: "DSE 放榜 & Pre-Asso",
-    subtitle: "DSE 放榜後的抉擇期",
-    chipLabel: "Pre-Asso",
-    color: "text-orange-500",
-    icon: "🗺️",
+    id: "stage-1",
+    stage: "9月",
+    timeframe: "Year 1 Sem 1 開始",
+    title: "開學與適應期",
+    subtitle: "進入大專學習模式的第一個月",
+    chipLabel: "9月開學",
+    color: "text-primary",
+    icon: "🚀",
     goals: [
-      "決定升學方向（Retake / Asso / HD 等）",
-      "完成副學士 / 高級文憑入學註冊",
-      "調整心態迎接新階段"
+      "掌握每科評核比重與提交格式",
+      "建立人際網絡與小組",
+      "適應大專上課節奏"
     ],
     actions: [
-      "評估 DSE 成績同目標學科，決定讀 Asso / HD 定重考",
-      "按院校指示交學費、上載證件相片、完成網上註冊程序",
-      "如果參加 OCamp / O-day，認識校園資源、導師、同系同學",
-      "初步留意將來 Non-JUPAS 升學大概時間線（知道有呢件事就已經足夠）"
+      "仔細閱讀每科 Course Outline，了解評核比重與 Deadline",
+      "及早識一至兩位「讀書拍檔」，對小組作業同時間安排會有幫助",
+      "參加 Orientation 活動，認識同學與校園資源",
+      "初步了解圖書館、自修室、打印服務等校園設施"
     ],
     risks: [
-      "錯過註冊或交費 Deadline",
-      "過度依賴坊間 / 非官方群組流言",
-      "一直停留喺「放榜失落」情緒，未整理好心情就開學"
+      "以為課程簡單而輕視開學準備",
+      "錯過組隊關鍵期，後期難以找到合適 Groupmates",
+      "未記錄 Deadline，後期手忙腳亂"
     ]
   },
   {
-    id: "stage-1",
+    id: "stage-2",
+    stage: "9月—12月",
+    timeframe: "Year 1 Sem 1",
+    title: "學期運作期",
+    subtitle: "功課、小測、報告、簡報逐步出現",
+    chipLabel: "Sem 1 運作",
+    color: "text-primary",
+    icon: "📚",
+    goals: [
+      "建立穩定的學習節奏",
+      "優先處理比重高的評核",
+      "預留修訂時間避免趕工"
+    ],
+    actions: [
+      "將時間投放喺「比重高」嘅評核項目",
+      "低比重項目亦不可完全放棄，但要分清主次",
+      "提早預留「修訂時間」，避免臨近截止日期先趕工影響質素",
+      "建立每週溫習時間表，平衡各科進度"
+    ],
+    risks: [
+      "平均分配時間，忽略高比重項目",
+      "臨急抱佛腳，質素受影響",
+      "缺席太多，影響 Participation 分數"
+    ]
+  },
+  {
+    id: "stage-3",
     stage: "Stage 1",
     timeframe: "9–12 月",
     title: "Year 1 Sem 1",
     subtitle: "適應大專節奏的第一學期",
     chipLabel: "Year 1 Sem 1",
-    color: "text-amber-500",
+    color: "text-primary",
     icon: "🚩",
     goals: [
       "適應大專上課模式、assessment 節奏",
@@ -111,7 +137,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     title: "Sem 1 考試 ＋ Sem Break",
     subtitle: "第一次考試與第一個 Sem Break",
     chipLabel: "Sem 1 Exam",
-    color: "text-yellow-500",
+    color: "text-primary",
     icon: "⚔️",
     goals: [
       "完成 Sem 1 所有考核並穩住 GPA",
@@ -132,136 +158,265 @@ export const TIMELINE_DATA: TimelineItem[] = [
   },
   {
     id: "stage-3",
-    stage: "Stage 3",
-    timeframe: "1 月底～6 月初",
-    title: "Year 1 Sem 2",
-    subtitle: "建立穩定 GPA 的關鍵學期",
-    chipLabel: "Year 1 Sem 2",
-    color: "text-lime-500",
-    icon: "📊",
+    stage: "12月中—1月",
+    timeframe: "Sem Break",
+    title: "第一個學期空檔",
+    subtitle: "休息、調整與反思的關鍵時期",
+    chipLabel: "Sem Break",
+    color: "text-primary",
+    icon: "🌟",
     goals: [
-      "修正 Sem 1 的不足，穩定或提升 GPA",
-      "學懂自己編排時間表與選科",
-      "建立一至兩位長期學習夥伴"
+      "回顧 Sem 1 失分位",
+      "休息調整狀態",
+      "為下學期作準備"
     ],
     actions: [
-      "Sem 開始時自行 Reg 科，編排適合自己的 timetable（留意 campus / 時段分佈）",
-      "盡量同可靠同學夾時間表，方便做 group project",
-      "Midterm 前：整理溫習範圍、估算不同 assessment 比重",
-      "5 月中開始進入考試季，平均分配溫習時間，避免某科完全冇溫",
-      "Sem 結束後檢視正式 GPA，認真了解每科 grade 分佈"
+      "先回顧上學期失分位：係時間安排問題、方法問題、定係理解不足？",
+      "休息調整、回復狀態",
+      "兼職／短期工作（如有需要）",
+      "補底與預習、整理筆記，為下學期作準備",
+      "若目標係爭取升讀，Sem Break 係你重整策略最有效的一段時間"
     ],
     risks: [
-      "timetable 排得過於緊密，導致沒有完整溫習時間",
-      "重複犯 Sem 1 同樣錯誤（例如經常遲交、拖延 group work）",
-      "只跟從朋友選科，而冇考慮自己能力與興趣"
+      "完全放空，沒有反思 Sem 1 不足",
+      "過度自責或過度樂觀",
+      "錯過調整學習方法的黃金時機"
     ]
   },
   {
     id: "stage-4",
-    stage: "Stage 4",
-    timeframe: "6–8 月",
-    title: "Year 1 暑假",
-    subtitle: "銜接 Year 2 前的暑假",
-    chipLabel: "Summer",
-    color: "text-green-500",
-    icon: "☀️",
+    stage: "1月—6月",
+    timeframe: "Year 1 Sem 2",
+    title: "第二學期",
+    subtitle: "選科、編排時間表、小組合作更頻繁",
+    chipLabel: "Sem 2",
+    color: "text-primary",
+    icon: "📊",
     goals: [
-      "讓 Year 1 畫上一個句號",
-      "規劃語文考試／補底（如需要）",
-      "累積實務經驗與履歷"
+      "學懂自行選科與編排時間表",
+      "與可信賴同學協調合作",
+      "穩定或提升 GPA"
     ],
     actions: [
-      "可以先休息一至兩星期，調整狀態",
-      "考慮返暑期工或實習，累積工作／職場經驗",
-      "參與義工活動，為日後 Personal Statement 增加素材",
-      "就 DSE 語文不足的同學，考慮報名 IELTS / IGCSE 等（視乎日後心儀課程要求）",
-      "部分院校提供 Summer Sem：可用作重讀追分，或預先修讀下一學年科目",
-      "如果就讀課程包含實習要求（例如社工／教育），需預先了解實習時間及要求"
+      "自行選科與編排時間表（通常學期初一至兩星期較忙）",
+      "選科與時間表不只看「易唔易」，亦要考慮自己能否應付評核模式",
+      "盡量與可信賴同學協調時間表，方便同組作業，提高效率",
+      "小組合作更頻繁，亦更依賴固定拍檔協調"
     ],
     risks: [
-      "暑假完全空過，沒有任何與未來升學／工作相關的累積",
-      "過遲處理語文資格問題，導致將來 Non-JUPAS 報名時時間非常緊迫",
-      "同時嘗試太多事情（實習、補習、考試），導致身心透支"
+      "timetable 排得過於緊密",
+      "只跟朋友選科，忽略自己能力",
+      "重複 Sem 1 同樣錯誤"
     ]
   },
   {
     id: "stage-5",
-    stage: "Stage 5",
-    timeframe: "9–12 月",
-    title: "Year 2 Sem 1",
-    subtitle: "Year 2 的申請部署與學業平衡",
-    chipLabel: "Year 2 Sem 1",
-    color: "text-teal-500",
-    icon: "✍️",
+    stage: "5月—6月",
+    timeframe: "Year 1 Sem 2 期末",
+    title: "考核高峰",
+    subtitle: "報告、簡報、考試集中出現",
+    chipLabel: "期末考核",
+    color: "text-primary",
+    icon: "⚡",
     goals: [
-      "在維持 GPA 的同時，開始部署 Non-JUPAS 升學",
-      "明確自己目標學科與大學",
-      "收集及整理所有需要上載的文件"
+      "完成所有考核",
+      "避免多線同時爆煲",
+      "穩住 Year 1 整體 GPA"
     ],
     actions: [
-      "9 月開始：再次熟讀各科 course outline，保持穩定表現；檢視目前 Cumulative GPA，設定目標",
-      "10–11 月：確認心儀課程及 backup 科目；了解各大學入學要求；整理及撰寫 Personal Statement；準備獎項證書；決定邀請哪位 Lecturer 寫推薦信",
-      "11 月尾～翌年 1 月：留意 Non-JUPAS 報名系統開放時間；採取「大包圍」策略；一有機會就先提交現有成績；主動跟進 Transcript 發放"
+      "多科同時收尾：報告、簡報、考試集中出現",
+      "以「先交先鬆」為原則，優先處理比重高、提交時間早嘅科目",
+      "避免多線同時爆煲：能提前完成嘅部分，越早完成越好",
+      "確保所有檔案已備份，避免遺失"
     ],
     risks: [
-      "只專注於申請，忽略當下學科，導致 Year 2 Sem 1 成績下跌",
-      "太遲開始撰寫 Personal Statement，臨近截止日才倉促完成",
-      "完全沒有 backup 科目，只報一個「夢想科」，增加整體風險",
-      "不清楚各大學的 Deadline，以為「之後再填都仲有位」"
+      "臨急抱佛腳，完全沒有平時累積",
+      "多科同時 Deadline，時間分配失衡",
+      "忽略備份，檔案遺失"
     ]
   },
   {
     id: "stage-6",
-    stage: "Stage 6",
-    timeframe: "1 月",
-    title: "Year 2 Sem Break",
-    subtitle: "面試前的準備與調整",
-    chipLabel: "Interview Prep",
-    color: "text-cyan-500",
-    icon: "📧",
+    stage: "6月—8月",
+    timeframe: "暑假",
+    title: "Year 1 與 Year 2 之間",
+    subtitle: "調整、補充經歷與準備的窗口",
+    chipLabel: "暑假",
+    color: "text-primary",
+    icon: "☀️",
     goals: [
-      "回顧 Year 2 Sem 1 成績與申請進度",
-      "準備可能出現的 Interview",
-      "在休息與準備之間取得平衡"
+      "休息與調整狀態",
+      "累積實務經驗",
+      "處理語文資格（如需要）"
     ],
     actions: [
-      "檢視 Year 2 Sem 1 的正式 GPA，估算整體 Cumulative GPA",
-      "確認自己已完成或即將完成的 Non-JUPAS 申請步驟，補齊任何漏交文件",
-      "如果收到面試邀請：整理常見面試問題與自己要點；回顧過往實習／活動經驗",
-      "如有需要，可繼續返短期實習或兼職，但要預留時間應付面試及下學期課程"
+      "對大部分同學：休息、短期工作、實習、提升技能等",
+      "對部分同學（暑期修讀／重修）：利用暑期修讀補回失分科目，或提早修讀以減輕下學期負擔",
+      "若你需要實習或希望增強履歷，暑假宜早規劃，避免撞期",
+      "若 Year 1 成績未理想，暑假亦可用作「補底＋重整方法」的過渡期",
+      "處理語文考試（IELTS / IGCSE），如有需要"
     ],
     risks: [
-      "Sem Break 完全不理申請進度，Email 不常檢查，錯過面試通知",
-      "過度工作或兼職，令身心狀態不利於之後應付最後一個學期",
-      "沒有整理任何面試要點，臨場只作即興發揮"
+      "暑假完全空過，沒有任何累積",
+      "過遲處理語文資格問題",
+      "同時做太多事情導致透支"
     ]
   },
   {
     id: "stage-7",
-    stage: "Stage 7",
-    timeframe: "2–8 月",
-    title: "Year 2 Sem 2 ＋ 畢業前後",
-    subtitle: "最後衝刺、面試與 Offer",
-    chipLabel: "Offer & Grad",
-    color: "text-blue-500",
-    icon: "🎓",
+    stage: "9月—11月",
+    timeframe: "Year 2 Sem 1 前段",
+    title: "開始進入升讀節奏",
+    subtitle: "申請文件準備與學業並行",
+    chipLabel: "Year 2 開始",
+    color: "text-primary",
+    icon: "📝",
     goals: [
-      "在最後一個學期維持或提升 GPA，滿足 Conditional Offer 要求",
-      "認真準備各大學面試",
-      "完成畢業及入讀大學前的所有手續"
+      "準備申請所需文件",
+      "整理個人材料與經歷",
+      "維持 GPA"
     ],
     actions: [
-      "2–4 月：正常應付學科、assignment、midterm；若收到面試邀請，預先準備及模擬練習",
-      "4–6 月：陸續收到 Offer；評估能否達到 Conditional 要求；按指示繳交留位費；繼續穩定完成最後一個學期的 assessment",
-      "6 月左右：完成最後考試，處理畢業相關手續；準備大學註冊文件",
-      "6–8 月：留意電郵及院校系統任何更新；準備大學開學前事宜"
+      "申請所需文件（例如：成績紀錄、個人陳述、推薦信、獎項證明等）",
+      "整理個人材料與經歷，建立一套一致嘅申請敘事（動機、能力、方向）",
+      "先準備「可即時上載」嘅版本；新成績出咗再補交更新",
+      "文件出得慢就要主動跟進，越早完成基本申請流程，越有機會遇到面試或較早審批"
     ],
     risks: [
-      "收到 Conditional Offer 後鬆懈，最後 Sem 成績未達要求",
-      "忘記於期限內繳交留位費或完成文件驗證程序",
-      "因一時失利而過早放棄，未等候候補機會",
-      "畢業及入學文件處理不當，導致註冊程序延誤"
+      "過遲準備文件",
+      "申請敘事不一致",
+      "遞交後不再跟進"
+    ]
+  },
+  {
+    id: "stage-8",
+    stage: "11月—1月",
+    timeframe: "申請期高峰",
+    title: "遞交、補件、更新",
+    subtitle: "Non-JUPAS 申請的關鍵時期",
+    chipLabel: "申請高峰",
+    color: "text-primary",
+    icon: "📮",
+    goals: [
+      "完成遞交申請",
+      "補齊所需文件",
+      "更新最新成績"
+    ],
+    actions: [
+      "不同院校／課程開放申請時間不一，審批節奏亦不一",
+      "成績單／學期成績更新往往有時間差，需要後續補交",
+      "先遞交再完善：有咩就先上載，之後再補交最新成績或文件",
+      "申請策略上，可同時申請主選方向及一至兩個後備選項，以分散風險"
+    ],
+    risks: [
+      "錯過申請 Deadline",
+      "文件不齊全影響審批",
+      "只申請一個課程，風險過高"
+    ]
+  },
+  {
+    id: "stage-9",
+    stage: "12月—2月",
+    timeframe: "面試期",
+    title: "Sem Break 前後最常見",
+    subtitle: "面試直接影響取錄結果",
+    chipLabel: "面試期",
+    color: "text-primary",
+    icon: "🎤",
+    goals: [
+      "認真準備面試",
+      "展示課程理解與學術能力",
+      "說明銜接計劃"
+    ],
+    actions: [
+      "面試準備應以「課程理解＋學術能力證據＋銜接計劃」為核心",
+      "你理解課程訓練方式？",
+      "你有無作品／作業／專題證明你跟得上？",
+      "你不足之處如何補？",
+      "若同時要兼顧實習／學業，需預留時間，避免臨急抱佛腳"
+    ],
+    risks: [
+      "完全無準備，臨場發揮",
+      "無法展示學術能力證據",
+      "時間安排不當，與學業／實習衝突"
+    ]
+  },
+  {
+    id: "stage-10",
+    stage: "1月—5月",
+    timeframe: "Year 2 Sem 2",
+    title: "條件取錄與最後衝刺",
+    subtitle: "保持 GPA、滿足條件",
+    chipLabel: "Sem 2 衝刺",
+    color: "text-primary",
+    icon: "🎯",
+    goals: [
+      "滿足 Conditional Offer 要求",
+      "保持 GPA 不失速",
+      "完成最後學期所有評核"
+    ],
+    actions: [
+      "你可能陸續收到有條件取錄（Conditional Offer），條件多與最終成績／語文要求等相關",
+      "同期亦係你最需要保持 GPA、避免失速嘅階段",
+      "接受取錄前，先評估：達標可能性、財務安排、以及你對該方向是否仍然認同",
+      "若仍未有 offer：保持節奏，因為有些名額會隨後釋出；輪候名單亦可能後補上"
+    ],
+    risks: [
+      "收到 Offer 後鬆懈",
+      "最後成績未達要求",
+      "過早放棄輪候機會"
+    ]
+  },
+  {
+    id: "stage-11",
+    stage: "6月",
+    timeframe: "畢業",
+    title: "畢業與收尾",
+    subtitle: "兩年課程正式結束",
+    chipLabel: "畢業",
+    color: "text-primary",
+    icon: "🎓",
+    goals: [
+      "完成所有畢業手續",
+      "準備大學註冊文件",
+      "等待最終確認"
+    ],
+    actions: [
+      "兩年課程正式結束，進入畢業與過渡期",
+      "即使到暑假仍可能有人陸續收到取錄通知；未到最後階段之前，不宜過早放棄",
+      "處理畢業相關手續",
+      "準備大學註冊所需文件"
+    ],
+    risks: [
+      "過早放棄輪候",
+      "畢業手續處理不當",
+      "文件準備不足"
+    ]
+  },
+  {
+    id: "stage-12",
+    stage: "7月—8月",
+    timeframe: "入學前準備",
+    title: "最終確認與入學前準備",
+    subtitle: "準備進入大學",
+    chipLabel: "入學準備",
+    color: "text-primary",
+    icon: "✨",
+    goals: [
+      "完成註冊安排",
+      "準備開學事宜",
+      "整理時間表與文件"
+    ],
+    actions: [
+      "文件核實、註冊安排、迎新資訊、學期前準備等",
+      "一邊等正式確認，一邊整理時間表、預備入學所需文件與生活安排，避免臨近開學手忙腳亂",
+      "參加大學迎新活動（如有）",
+      "了解新校園設施與資源"
+    ],
+    risks: [
+      "臨近開學手忙腳亂",
+      "文件不齊全影響註冊",
+      "錯過迎新活動"
     ]
   }
 ];
@@ -270,39 +425,93 @@ export const TIMELINE_DATA: TimelineItem[] = [
 
 export const MINDSET: MindsetItem[] = [
   {
-    title: "選 Groupmates 原則",
-    icon: "👥",
-    color: "text-blue-500",
-    summary: "技能互補但態度可靠比「技術強」更重要。",
+    title: "先了解「遊戲規則」",
+    icon: "🎮",
+    color: "text-primary",
+    summary: "掌握制度與規則，優先照顧比重較高的評核。",
     details: (
-      <p>觀察出席率與交付紀律。一個肯學肯做嘅普通人，好過一個成日失蹤嘅天才。主動約出來傾計，試探下大家對 Grade 嘅期望係咪一致。</p>
+      <ul className="space-y-2 text-sm text-muted">
+        <li>• 清楚 <strong>GPA 計算方式</strong> (A=4.0, A-=3.7)，一科 C 會嚴重拉低整體成績。</li>
+        <li>• 細閱 <strong>Syllabus</strong>，了解評核比重，將時間優先分配給高比重項目。</li>
+      </ul>
     )
   },
   {
-    title: "Ocamp / 社團 / 兼職",
-    icon: "⚡",
-    color: "text-yellow-500",
-    summary: "量力而為，GPA 先係主菜。",
+    title: "Deadline 向前推",
+    icon: "⏳",
+    color: "text-primary",
+    summary: "自行提早 3–5 日設定「內部截止日期」。",
     details: (
-      <p>上莊 / 參加活動係好，可以識人同減壓，但切記唔好本末倒置。Asso 只有兩年，GPA 跌咗好難追。兼職最好搵同你讀嗰科有關嘅，或者時間彈性嘅。</p>
+      <ul className="space-y-2 text-sm text-muted">
+        <li>• 預留時間作最後檢查、修改內容及潤飾格式。</li>
+        <li>• 提升最終遞交作品的整體質素，避免臨急抱佛腳。</li>
+      </ul>
     )
   },
   {
-    title: "面對壓力",
-    icon: "❤️",
-    color: "text-pink-500",
-    summary: "分解任務，接受「短期辛苦」。",
+    title: "每日一件事",
+    icon: "✅",
+    color: "text-primary",
+    summary: "追求有效率的練習與輸出，而非單純堆砌時間。",
     details: (
-      <p>分解任務、保持 Weekly Review。接受「短期辛苦是為了後續選擇」。當你覺得好攰嗰陣，諗下你入 U 嗰一刻嘅畫面。搵朋友傾訴，唔好鬱埋喺心。</p>
+      <ul className="space-y-2 text-sm text-muted">
+        <li>• 每天至少完成一項具體任務 (e.g. 練習題、修訂報告、整理筆記)。</li>
+        <li>• 持續累積能減少拖延，避免臨近考核時出現嚴重壓力。</li>
+      </ul>
     )
   },
   {
-    title: "DSE 失利之後",
-    icon: "🏆",
-    color: "text-purple-500",
-    summary: "你唔係輸咗，只係換條路行。",
+    title: "善用零碎時間",
+    icon: "🧩",
+    color: "text-primary",
+    summary: "將學習內容拆細，穿插於每天的空檔之中。",
     details: (
-      <p>DSE 只係一場考試，唔代表你嘅人生。Asso 係一個 Second Chance。好多人經 Asso 入返 U，甚至讀得比 DSE 直入嘅同學更好，因為佢哋更珍惜機會。</p>
+      <ul className="space-y-2 text-sm text-muted">
+        <li>• 搭車、等車時快速重溫概念、公式或檢視待辦事項。</li>
+        <li>• 不應只等待「一大段完整時間」才開始學習。</li>
+      </ul>
+    )
+  },
+  {
+    title: "失手要懂得「拉分」",
+    icon: "💪",
+    color: "text-primary",
+    summary: "一次失手不代表整科完結，專注後續評核。",
+    details: (
+      <ul className="space-y-2 text-sm text-muted">
+        <li>• 冷靜分析問題，在之後的評核 (期中、期末) 加倍準備。</li>
+        <li>• 透過後續評核拉高整體分數，減低早前失手的影響。</li>
+      </ul>
+    )
+  },
+  {
+    title: "Group Project 角色",
+    icon: "🤝",
+    color: "text-primary",
+    summary: "合適分工、互相配合，避免成為隱形組員。",
+    details: (
+      <ul className="space-y-2 text-sm text-muted">
+        <li>• 及早商討分工與時間表，說明負責範圍。</li>
+        <li>• 不做 Free-rider，亦不單方面攬上身，以免難以兼顧其他科目。</li>
+      </ul>
+    )
+  },
+  {
+    title: "長遠視角：打好地基",
+    icon: "🏗️",
+    color: "text-primary",
+    summary: "第一學期盡量爭取高 GPA，建立緩衝空間。",
+    details: (
+      <div className="space-y-4 text-sm text-muted">
+        <div>
+          <strong className="text-foreground block mb-1">第一學期策略：</strong>
+          <p>盡量爭取理想 GPA，為日後實習或突發狀況建立「緩衝空間」。</p>
+        </div>
+        <div>
+          <strong className="text-foreground block mb-1">特別注意：</strong>
+          <p>若首個學期成績太低，日後要拉升至 3.3+ 會非常困難。越早建立穩定學習模式，壓力越小。</p>
+        </div>
+      </div>
     )
   }
 ];

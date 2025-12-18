@@ -7,6 +7,8 @@ const IGCSEGuideView = () => {
   const [activeSection, setActiveSection] = useState<string>("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [processedTitle, setProcessedTitle] = useState<string | null>(null);
+  const [imgError, setImgError] = useState(false);
 
   // Handle scroll spy for active section
   useEffect(() => {
@@ -27,6 +29,75 @@ const IGCSEGuideView = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Process title image: try png then jpg, remove near-white background by drawing to canvas
+  useEffect(() => {
+    let cancelled = false;
+    const base = import.meta.env.BASE_URL || '/';
+    const candidates = [
+      `${base}igcse_title.png`,
+      `${base}igcse_title.jpg`
+    ];
+
+    const tryLoad = (index: number) => {
+      if (cancelled) return;
+      if (index >= candidates.length) {
+        // no image found
+        setProcessedTitle(null);
+        return;
+      }
+      const src = candidates[index];
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        if (cancelled) return;
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            setProcessedTitle(src);
+            return;
+          }
+          ctx.drawImage(img, 0, 0);
+          try {
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imgData.data;
+            // Make near-white pixels transparent
+            for (let i = 0; i < d.length; i += 4) {
+              const r = d[i];
+              const g = d[i + 1];
+              const b = d[i + 2];
+              // threshold: treat very light pixels as background
+              if (r > 240 && g > 240 && b > 240) {
+                d[i + 3] = 0;
+              }
+            }
+            ctx.putImageData(imgData, 0, 0);
+            const dataUrl = canvas.toDataURL('image/png');
+            setProcessedTitle(dataUrl);
+          } catch (e) {
+            // getImageData may fail if CORS blocks it; fallback to original src
+            console.warn('Canvas read failed, using original source', e);
+            setProcessedTitle(src);
+          }
+        } catch (e) {
+          console.warn('IGCSE title processing failed', e);
+          setProcessedTitle(src);
+        }
+      };
+      img.onerror = () => {
+        // try next candidate
+        tryLoad(index + 1);
+      };
+      img.src = src;
+    };
+
+    tryLoad(0);
+
+    return () => { cancelled = true; };
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -127,9 +198,24 @@ const IGCSEGuideView = () => {
               <AppleEmoji emoji="📖" className="w-12 h-12" />
             </div>
             <div className="space-y-4">
-              <h1 className="text-4xl md:text-6xl font-bold text-[var(--text)] tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-br from-[var(--text)] to-[var(--text-muted)]">
-                {IGCSE_GUIDE.title}
-              </h1>
+              <div className="w-full max-w-3xl mx-auto px-4">
+                <a href={`${import.meta.env.BASE_URL}igcse_title.jpg`} target="_blank" rel="noopener noreferrer" className="inline-block w-full">
+                  <img 
+                    src={processedTitle || `${import.meta.env.BASE_URL}igcse_title.jpg`} 
+                    alt={IGCSE_GUIDE.title}
+                    className="w-full h-auto object-contain filter dark:invert"
+                    style={{ background: 'transparent' }}
+                    onError={(e) => {
+                      console.warn('IGCSE title img error', e);
+                      setImgError(true);
+                    }}
+                    onLoad={() => setImgError(false)}
+                  />
+                </a>
+                {imgError && (
+                  <div className="mt-2 text-sm text-red-500">Unable to load title image — click to open it directly.</div>
+                )}
+              </div>
               <div className="flex flex-wrap items-center justify-center gap-3 text-[var(--text-muted)] text-sm md:text-base">
                 <span className="font-medium px-4 py-1.5 rounded-full bg-[var(--surface)] border border-[var(--border-subtle)] shadow-sm">
                   By {IGCSE_GUIDE.author}

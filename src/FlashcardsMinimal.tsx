@@ -559,10 +559,10 @@ export default function FlashcardsMinimal({ lang: propLang }: { lang: string }) 
               ) : (
                 <div className="grid grid-cols-4 gap-3">
                   {[
-                    { label: t.again, color: "bg-[#5B1220] text-[var(--text)]", hover: "hover:bg-[#5B1220]/80", val: 0, time: 1 },
+                    { label: t.again, color: "bg-[#5B1220] text-white", hover: "hover:bg-[#5B1220]/80", val: 0, time: 1 },
                     { label: t.hard, color: "bg-[var(--border-subtle)] text-[var(--text)]", hover: "hover:bg-[var(--border-subtle)]/80", val: 1, time: 3 },
                     { label: t.good, color: "bg-[var(--secondary)] text-[var(--bg)]", hover: "hover:bg-[var(--secondary)]/80", val: 2, time: 6 },
-                    { label: t.easy, color: "bg-[var(--primary)] text-[var(--bg)]", hover: "hover:bg-[var(--primary)]/80", val: 3, time: 14 }
+                    { label: t.easy, color: "bg-[var(--primary)] text-[var(--primary-btn-text)]", hover: "hover:bg-[var(--primary)]/80", val: 3, time: 14 }
                   ].map((btn) => (
                     <button
                       key={btn.val}
