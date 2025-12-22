@@ -140,6 +140,11 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
   const isEn = lang === "EN";
   const t = TRANSLATIONS[isEn ? "EN" : "粵"];
 
+  // Grade options based on scale
+  const gradeOptions = scale === "4.3" ? 
+    ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"] :
+    ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
+
   const [courses, setCourses] = useState<Course[]>([]);
 
   // Load and Migrate Data
@@ -256,31 +261,31 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
       const score = parseScoreInput(a.grade, scale);
       if (score !== null) {
         completedWeight += w;
+        // earnedPoints is the weighted sum (e.g., if you got 90% on a 30% weight, add 27)
         earnedPoints += (score / 100) * w;
       }
     });
 
-    // Current Standing: Grade based only on what's completed
+    // Current Standing: What you have so far out of what you've completed
     const currentStanding = completedWeight > 0 ? (earnedPoints / completedWeight) * 100 : 0;
 
-    // Projected Final: Two scenarios
-    // 1. If total weight = 100%, show what you'd get if you maintain current performance
-    // 2. If total weight < 100%, we can't reliably project
-    // 3. If total weight > 100%, normalize it
-    
+    // Projected Final: What your final grade will be
     let projectedScore = 0;
     
     if (completedWeight === 0) {
-      // Nothing completed yet - can't predict
+      // Nothing completed yet
       projectedScore = 0;
-    } else if (Math.abs(totalWeight - 100) < 0.1) {
-      // Total weight is 100% - project based on current average
-      const currentAvgPercentage = currentStanding;
-      const remainingWeight = 100 - completedWeight;
-      projectedScore = earnedPoints + (currentAvgPercentage / 100) * remainingWeight;
     } else if (totalWeight > 0) {
-      // Weights don't add to 100 - show current standing normalized
-      projectedScore = currentStanding;
+      // Calculate based on what's completed
+      // If weights add to 100, this is your final grade (assuming remaining = 0)
+      // If weights don't add to 100, show what you have so far
+      if (Math.abs(totalWeight - 100) < 0.1) {
+        // Weights sum to 100% - earnedPoints is directly the final percentage
+        projectedScore = earnedPoints;
+      } else {
+        // Weights don't sum to 100% - normalize to show current performance
+        projectedScore = currentStanding;
+      }
     }
     
     const projectedLetter = getLetterGrade(projectedScore, scale);
@@ -416,13 +421,16 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
                             <div className="flex-1 sm:hidden">
                               <label className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.grade}</label>
                             </div>
-                            <input
-                              type="text"
+                            <select
                               value={assessment.grade}
                               onChange={(e) => updateAssessment(course.id, assessment.id, { grade: e.target.value })}
-                              placeholder={t.gradePlaceholder}
-                              className="flex-1 sm:flex-none px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm text-center outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all font-semibold"
-                            />
+                              className="flex-1 sm:flex-none px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm text-center outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all font-semibold appearance-none cursor-pointer"
+                            >
+                              <option value="">—</option>
+                              {gradeOptions.map(grade => (
+                                <option key={grade} value={grade}>{grade}</option>
+                              ))}
+                            </select>
                             <button
                               onClick={() => deleteAssessment(course.id, assessment.id)}
                               className="sm:hidden p-2 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
