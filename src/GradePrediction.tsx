@@ -260,26 +260,29 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
       }
     });
 
-    // Current Standing: Grade based only on what's done
+    // Current Standing: Grade based only on what's completed
     const currentStanding = completedWeight > 0 ? (earnedPoints / completedWeight) * 100 : 0;
 
-    // Estimated Final: Assume remaining weight is 0 (worst case) or average?
-    // User prompt: "Estimated final course grade... assuming unknown components are still 0 or left out"
-    // Usually students want to know "What do I have right now out of 100?" (Accumulated)
-    // AND "What is my grade likely to be?" (Projected)
+    // Projected Final: Two scenarios
+    // 1. If total weight = 100%, show what you'd get if you maintain current performance
+    // 2. If total weight < 100%, we can't reliably project
+    // 3. If total weight > 100%, normalize it
     
-    // Let's show "Projected" assuming current performance continues for the rest
-    // If completedWeight < totalWeight, we project the rest
-    let projectedPoints = earnedPoints;
-    if (completedWeight > 0 && completedWeight < totalWeight) {
-      const remainingWeight = totalWeight - completedWeight;
-      const currentAvg = earnedPoints / completedWeight; // 0 to 1
-      projectedPoints += currentAvg * remainingWeight;
-    } else if (completedWeight === 0) {
-      projectedPoints = 0; // Or 100? Or 75? Let's say 0 if nothing done.
+    let projectedScore = 0;
+    
+    if (completedWeight === 0) {
+      // Nothing completed yet - can't predict
+      projectedScore = 0;
+    } else if (Math.abs(totalWeight - 100) < 0.1) {
+      // Total weight is 100% - project based on current average
+      const currentAvgPercentage = currentStanding;
+      const remainingWeight = 100 - completedWeight;
+      projectedScore = earnedPoints + (currentAvgPercentage / 100) * remainingWeight;
+    } else if (totalWeight > 0) {
+      // Weights don't add to 100 - show current standing normalized
+      projectedScore = currentStanding;
     }
-
-    const projectedScore = totalWeight > 0 ? (projectedPoints / totalWeight) * 100 : 0;
+    
     const projectedLetter = getLetterGrade(projectedScore, scale);
 
     return {
@@ -311,11 +314,11 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
   }, [courses, scale]);
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-5xl mx-auto space-y-6">
       {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-[var(--text)] mb-2">{t.title}</h2>
-        <p className="text-[var(--text-muted)]">{t.subtitle}</p>
+      <div className="text-center md:text-left">
+        <h2 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">{t.title}</h2>
+        <p className="text-[var(--color-text-secondary)]">{t.subtitle}</p>
       </div>
 
       {/* Disclaimer */}
@@ -334,37 +337,39 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
             <div key={course.id} className="bg-[var(--surface)] rounded-2xl border border-[var(--border-subtle)] overflow-hidden shadow-sm">
               {/* Course Header */}
               <div 
-                className="p-4 flex items-center justify-between bg-[var(--bg-subtle)] cursor-pointer hover:bg-[var(--bg-hover)] transition-colors"
+                className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[var(--color-surface-primary)] cursor-pointer hover:bg-[var(--color-surface-secondary)] transition-colors"
                 onClick={() => toggleCourseOpen(course.id)}
               >
-                <div className="flex items-center gap-3 flex-1">
-                  {course.isOpen ? <ChevronUp size={20} className="text-[var(--text-muted)]" /> : <ChevronDown size={20} className="text-[var(--text-muted)]" />}
-                  <div className="flex-1">
+                <div className="flex items-center gap-3 flex-1 w-full sm:w-auto">
+                  {course.isOpen ? <ChevronUp size={20} className="text-[var(--color-text-tertiary)] flex-shrink-0" /> : <ChevronDown size={20} className="text-[var(--color-text-tertiary)] flex-shrink-0" />}
+                  <div className="flex-1 min-w-0">
                     <input
                       type="text"
                       value={course.name}
                       onChange={(e) => updateCourse(course.id, { name: e.target.value })}
                       onClick={(e) => e.stopPropagation()}
                       placeholder={t.courseName}
-                      className="bg-transparent font-bold text-lg text-[var(--text)] outline-none placeholder-[var(--text-muted)] w-full"
+                      className="bg-transparent font-bold text-lg text-[var(--color-text-primary)] outline-none placeholder-[var(--color-text-quaternary)] w-full focus:ring-2 focus:ring-[var(--color-primary)]/20 rounded px-2 -ml-2"
                     />
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-                    <span className="text-xs font-medium text-[var(--text-muted)] uppercase">{t.credits}</span>
+                    <span className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider">{t.credits}</span>
                     <input
                       type="number"
                       value={course.credits}
                       onChange={(e) => updateCourse(course.id, { credits: parseFloat(e.target.value) || 0 })}
-                      className="w-12 px-2 py-1 bg-[var(--bg)] rounded border border-[var(--border-subtle)] text-center text-sm font-medium"
+                      className="w-14 px-2 py-1.5 bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-center text-sm font-semibold focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none"
+                      min="0"
+                      max="10"
                     />
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-[var(--primary)]">
+                    <div className="text-3xl font-bold text-[var(--color-primary)]">
                       {stats.projectedLetter.grade}
                     </div>
-                    <div className="text-xs text-[var(--text-muted)]">
+                    <div className="text-xs text-[var(--color-text-tertiary)] font-medium">
                       {stats.projectedScore.toFixed(1)}%
                     </div>
                   </div>
@@ -375,41 +380,59 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
               {course.isOpen && (
                 <div className="p-4 border-t border-[var(--border-subtle)]">
                   {/* Assessments Table */}
-                  <div className="mb-4">
-                    <div className="grid grid-cols-[1fr_80px_120px_40px] gap-2 mb-2 px-2">
-                      <div className="text-xs font-bold text-[var(--text-muted)] uppercase">{t.componentName}</div>
-                      <div className="text-xs font-bold text-[var(--text-muted)] uppercase">{t.weight}</div>
-                      <div className="text-xs font-bold text-[var(--text-muted)] uppercase">{t.grade}</div>
+                  <div className="mb-6">
+                    <div className="hidden sm:grid grid-cols-[1fr_100px_140px_44px] gap-3 mb-3 px-2">
+                      <div className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider">{t.componentName}</div>
+                      <div className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider text-center">{t.weight}</div>
+                      <div className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider text-center">{t.grade}</div>
                       <div></div>
                     </div>
                     
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {course.assessments.map(assessment => (
-                        <div key={assessment.id} className="grid grid-cols-[1fr_80px_120px_40px] gap-2 items-center">
+                        <div key={assessment.id} className="grid grid-cols-1 sm:grid-cols-[1fr_100px_140px_44px] gap-2 sm:gap-3 items-start sm:items-center bg-[var(--color-bg-elevated)] sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
                           <input
                             type="text"
                             value={assessment.name}
                             onChange={(e) => updateAssessment(course.id, assessment.id, { name: e.target.value })}
                             placeholder="Assignment"
-                            className="px-3 py-2 bg-[var(--bg)] rounded-lg border border-[var(--border-subtle)] text-sm outline-none focus:border-[var(--primary)]"
+                            className="px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all"
                           />
-                          <input
-                            type="number"
-                            value={assessment.weight || ""}
-                            onChange={(e) => updateAssessment(course.id, assessment.id, { weight: parseFloat(e.target.value) || 0 })}
-                            placeholder="0"
-                            className="px-3 py-2 bg-[var(--bg)] rounded-lg border border-[var(--border-subtle)] text-sm outline-none focus:border-[var(--primary)]"
-                          />
-                          <input
-                            type="text"
-                            value={assessment.grade}
-                            onChange={(e) => updateAssessment(course.id, assessment.id, { grade: e.target.value })}
-                            placeholder={t.gradePlaceholder}
-                            className="px-3 py-2 bg-[var(--bg)] rounded-lg border border-[var(--border-subtle)] text-sm outline-none focus:border-[var(--primary)] font-medium"
-                          />
+                          <div className="flex gap-2 sm:block">
+                            <div className="flex-1 sm:hidden">
+                              <label className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.weight}</label>
+                            </div>
+                            <input
+                              type="number"
+                              value={assessment.weight || ""}
+                              onChange={(e) => updateAssessment(course.id, assessment.id, { weight: parseFloat(e.target.value) || 0 })}
+                              placeholder="0"
+                              className="flex-1 sm:flex-none px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm text-center outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all font-semibold"
+                              min="0"
+                              max="100"
+                            />
+                          </div>
+                          <div className="flex gap-2 items-center">
+                            <div className="flex-1 sm:hidden">
+                              <label className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.grade}</label>
+                            </div>
+                            <input
+                              type="text"
+                              value={assessment.grade}
+                              onChange={(e) => updateAssessment(course.id, assessment.id, { grade: e.target.value })}
+                              placeholder={t.gradePlaceholder}
+                              className="flex-1 sm:flex-none px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm text-center outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all font-semibold"
+                            />
+                            <button
+                              onClick={() => deleteAssessment(course.id, assessment.id)}
+                              className="sm:hidden p-2 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </div>
                           <button
                             onClick={() => deleteAssessment(course.id, assessment.id)}
-                            className="p-2 text-[var(--text-muted)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                            className="hidden sm:block p-2 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -477,19 +500,22 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
       </div>
 
       {/* Overall Summary */}
-      {courses.length > 0 && (
-        <div className="bg-[var(--surface)] rounded-2xl p-6 border border-[var(--border-subtle)] shadow-sm">
-          <h3 className="text-lg font-bold text-[var(--text)] mb-4">{t.overallSummary}</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div>
-              <div className="text-sm text-[var(--text-muted)] mb-1">{t.predictedGPA}</div>
-              <div className="text-3xl font-black text-[var(--primary)]">
+      {courses.length > 0 && overallStats.validCourses > 0 && (
+        <div className="bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-primary)]/5 rounded-2xl p-6 md:p-8 border border-[var(--color-primary)]/20 shadow-lg">
+          <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-6 flex items-center gap-2">
+            <Calculator className="w-5 h-5" />
+            {t.overallSummary}
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="bg-[var(--color-bg-elevated)] rounded-xl p-5 border border-[var(--color-border-primary)]">
+              <div className="text-sm font-semibold text-[var(--color-text-tertiary)] mb-2 uppercase tracking-wider">{t.predictedGPA}</div>
+              <div className="text-5xl font-black text-[var(--color-primary)]">
                 {overallStats.gpa.toFixed(2)}
               </div>
             </div>
-            <div>
-              <div className="text-sm text-[var(--text-muted)] mb-1">{t.totalCredits}</div>
-              <div className="text-2xl font-bold text-[var(--text)]">
+            <div className="bg-[var(--color-bg-elevated)] rounded-xl p-5 border border-[var(--color-border-primary)]">
+              <div className="text-sm font-semibold text-[var(--color-text-tertiary)] mb-2 uppercase tracking-wider">{t.totalCredits}</div>
+              <div className="text-4xl font-bold text-[var(--color-text-primary)]">
                 {overallStats.totalCredits}
               </div>
             </div>
