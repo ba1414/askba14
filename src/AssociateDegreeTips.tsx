@@ -326,17 +326,21 @@ const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
                   { id: 'timeline', label: 'Roadmap', emoji: "📅" },
                   { id: 'mindset', label: 'Mindset', emoji: "🧠" },
                   { id: 'ps', label: 'Statement', emoji: "📝" },
-                  { id: 'referencing', label: 'Citation', emoji: "📚" },
+                  { id: 'referencing', label: 'Citation', emoji: "📚", isNew: true },
                 ].map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id as any)}
-                      className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${isActive ? 'bg-[var(--color-bg-elevated)] text-[var(--color-text-primary)] shadow-sm' : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)]'}`}
+                      className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 relative ${isActive ? 'bg-[var(--color-bg-elevated)] text-[var(--color-text-primary)] shadow-sm' : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)]'}`}
                     >
                       <span className="hidden sm:inline">{tab.label}</span>
                       <span className="sm:hidden">{tab.emoji}</span>
+                      {/* @ts-ignore */}
+                      {tab.isNew && (
+                        <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                      )}
                     </button>
                   );
                 })}
