@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { BIG_PICTURE, TIMELINE_DATA, MINDSET, TimelineItem } from './content/assoRoadmap';
 import { PERSONAL_STATEMENT_GUIDE } from './content/personalStatement';
+import { REFERENCING_GUIDE } from './content/referencingGuide';
 import { AppleEmoji } from './components/AppleEmoji';
 
 // --- Helper Components ---
@@ -244,10 +245,73 @@ const PersonalStatementView = () => {
   );
 };
 
+const ReferencingView = () => {
+  const { title, intro, modules, tasks } = REFERENCING_GUIDE;
+
+  return (
+    <div className="max-w-3xl mx-auto px-6 py-12 space-y-12">
+      {/* Header */}
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold text-[var(--color-text-primary)]">{title}</h1>
+        <p className="text-[17px] text-[var(--color-text-secondary)] leading-relaxed">
+          {intro}
+        </p>
+      </div>
+
+      {/* Modules */}
+      <div className="space-y-12">
+        {modules.map((module, idx) => (
+          <FadeIn key={idx} delay={idx * 100}>
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-[var(--color-text-primary)] border-b border-[var(--color-border-primary)] pb-2">
+                {module.title}
+              </h2>
+              <div className="space-y-6">
+                {module.lessons.map((lesson, lIdx) => (
+                  <div key={lIdx} className="bg-[var(--color-bg-elevated)] rounded-2xl p-8 shadow-sm border border-[var(--color-border-primary)]">
+                    <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-4">
+                      {lesson.title}
+                    </h3>
+                    <div className="mb-4 p-3 bg-[var(--color-surface-secondary)] rounded-xl text-sm text-[var(--color-text-secondary)]">
+                      <strong>目標：</strong>{lesson.goals}
+                    </div>
+                    <div className="space-y-2 text-[17px] text-[var(--color-text-secondary)] leading-relaxed">
+                      {lesson.content.map((line, i) => (
+                        <p key={i} className={line.startsWith('•') ? 'pl-4' : ''}>{line}</p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        ))}
+      </div>
+
+      {/* Tasks */}
+      <FadeIn delay={500}>
+        <div className="bg-[var(--color-surface-secondary)] rounded-2xl p-8 border border-[var(--color-border-primary)]">
+          <h2 className="text-2xl font-bold text-[var(--color-text-primary)] mb-6">你的開學前任務</h2>
+          <div className="space-y-4">
+            {tasks.map((task, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-[var(--color-text-primary)] text-[var(--color-bg-page)] flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  {i + 1}
+                </div>
+                <p className="text-[17px] text-[var(--color-text-secondary)]">{task}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </FadeIn>
+    </div>
+  );
+};
+
 // --- Main Component ---
 
 const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
-  const [activeTab, setActiveTab] = useState<'timeline' | 'mindset' | 'ps'>('timeline');
+  const [activeTab, setActiveTab] = useState<'timeline' | 'mindset' | 'ps' | 'referencing'>('timeline');
 
   return (
     <div className="min-h-screen bg-[var(--color-bg-page)] font-sans text-[var(--color-text-primary)]">
@@ -262,6 +326,7 @@ const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
                   { id: 'timeline', label: 'Roadmap', emoji: "📅" },
                   { id: 'mindset', label: 'Mindset', emoji: "🧠" },
                   { id: 'ps', label: 'Statement', emoji: "📝" },
+                  { id: 'referencing', label: 'Citation', emoji: "📚" },
                 ].map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
@@ -286,6 +351,7 @@ const AssociateDegreeTips = ({ lang }: { lang?: string }) => {
         {activeTab === 'timeline' && <UnifiedTimelineView />}
         {activeTab === 'mindset' && <MindsetView />}
         {activeTab === 'ps' && <PersonalStatementView />}
+        {activeTab === 'referencing' && <ReferencingView />}
       </main>
     </div>
   );
