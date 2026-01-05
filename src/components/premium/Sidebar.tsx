@@ -44,30 +44,27 @@ export function Sidebar({
         key={item.id}
         onClick={() => onNavigate(item.id)}
         className={`
-          group relative w-full flex items-center gap-3 px-3 py-2.5 rounded-[var(--radius-md)]
-          text-[var(--text-body-sm)] font-medium
+          group relative w-full flex items-center gap-3.5 px-3.5 py-3 rounded-[var(--radius-lg)]
+          text-[15px] font-medium
           transition-all duration-[var(--duration-fast)]
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/30
           ${isActive 
-            ? 'bg-[var(--color-primary-subtle)] text-[var(--color-primary)]' 
+            ? 'bg-black text-white dark:bg-white dark:text-black shadow-sm' 
             : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)]'
           }
         `}
       >
-        {/* Active Indicator Bar */}
-        {isActive && (
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[var(--color-primary)] rounded-r-full" />
-        )}
+        {/* Active Indicator Bar - Removed for cleaner look */}
         
         <div className={`
-          flex items-center justify-center w-7 h-7 rounded-[var(--radius-sm)]
+          flex items-center justify-center w-8 h-8 rounded-[var(--radius-md)]
           transition-colors duration-[var(--duration-fast)]
           ${isActive 
-            ? 'bg-[var(--color-primary-muted)]' 
+            ? 'bg-white/20 dark:bg-black/10' 
             : 'bg-[var(--color-surface-secondary)] group-hover:bg-[var(--color-surface-tertiary)]'
           }
         `}>
-          <AppleEmoji emoji={item.emoji} className="w-4 h-4" />
+          <AppleEmoji emoji={item.emoji} className="w-[18px] h-[18px]" />
         </div>
         
         {!collapsed && (

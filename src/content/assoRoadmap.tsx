@@ -59,7 +59,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     title: "開學與適應期",
     subtitle: "進入大專學習模式的第一個月",
     chipLabel: "9月開學",
-    color: "text-primary",
+    color: "text-gray-900",
     icon: "🚀",
     goals: [
       "掌握每科評核比重與提交格式",
@@ -85,7 +85,7 @@ export const TIMELINE_DATA: TimelineItem[] = [
     title: "學期運作期",
     subtitle: "功課、小測、報告、簡報逐步出現",
     chipLabel: "Sem 1 運作",
-    color: "text-primary",
+    color: "text-gray-900",
     icon: "📚",
     goals: [
       "建立穩定的學習節奏",

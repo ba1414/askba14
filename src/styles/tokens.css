@@ -109,13 +109,13 @@
 
 :root {
   /* Level 1: Subtle - Cards, containers */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
   
   /* Level 2: Medium - Hover elevation, dropdowns */
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
   
   /* Level 3: Large - Modals, popovers */
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.12), 0 12px 24px rgba(0, 0, 0, 0.08);
   
   /* Focus ring */
   --shadow-focus: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
@@ -123,9 +123,9 @@
 
 /* Dark mode shadows */
 .dark {
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 10px 15px -3px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.5), 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
 /* =====================================================
@@ -136,7 +136,7 @@
   color-scheme: light;
   
   /* Primary RGB for alpha operations */
-  --primary-rgb: 255, 59, 48;
+  --primary-rgb: 29, 29, 31;
   
   /* Page Backgrounds */
   --color-bg-page: #F5F5F7;           /* Apple's signature gray */
@@ -161,12 +161,12 @@
   --color-text-quaternary: #86868B;
   --color-text-inverted: #FFFFFF;
   
-  /* Accent - Premium Red */
-  --color-primary: #FF3B30;
-  --color-primary-hover: #E6352B;
-  --color-primary-active: #CC2F26;
-  --color-primary-subtle: rgba(255, 59, 48, 0.08);
-  --color-primary-muted: rgba(255, 59, 48, 0.15);
+  /* Accent - Premium Black */
+  --color-primary: #1D1D1F;
+  --color-primary-hover: #000000;
+  --color-primary-active: #333333;
+  --color-primary-subtle: rgba(29, 29, 31, 0.05);
+  --color-primary-muted: rgba(29, 29, 31, 0.1);
   
   /* Semantic */
   --color-success: #34C759;
@@ -175,16 +175,16 @@
   --color-warning-subtle: rgba(255, 149, 0, 0.1);
   --color-error: #FF3B30;
   --color-error-subtle: rgba(255, 59, 48, 0.1);
-  --color-info: #007AFF;
-  --color-info-subtle: rgba(0, 122, 255, 0.1);
+  --color-info: #1D1D1F;
+  --color-info-subtle: rgba(29, 29, 31, 0.05);
   
   /* Grade Colors */
   --color-grade-a: #34C759;
   --color-grade-a-bg: rgba(52, 199, 89, 0.12);
-  --color-grade-b: #007AFF;
-  --color-grade-b-bg: rgba(0, 122, 255, 0.12);
-  --color-grade-c: #FF9500;
-  --color-grade-c-bg: rgba(255, 149, 0, 0.12);
+  --color-grade-b: #1D1D1F;
+  --color-grade-b-bg: rgba(29, 29, 31, 0.08);
+  --color-grade-c: #86868B;
+  --color-grade-c-bg: rgba(134, 134, 139, 0.12);
   --color-grade-d: #FF3B30;
   --color-grade-d-bg: rgba(255, 59, 48, 0.12);
 }
@@ -197,15 +197,15 @@
   color-scheme: dark;
   
   /* Page Backgrounds */
-  --color-bg-page: #000000;            /* True black for OLED */
-  --color-bg-elevated: #1C1C1E;
+  --color-bg-page: #050509;            /* Deep black-blue */
+  --color-bg-elevated: #111118;        /* Card background */
   --color-bg-inset: #0D0D0D;
   --color-bg-overlay: rgba(0, 0, 0, 0.6);
   
   /* Surface */
-  --color-surface-primary: #1C1C1E;
-  --color-surface-secondary: #2C2C2E;
-  --color-surface-tertiary: #3A3A3C;
+  --color-surface-primary: #111118;
+  --color-surface-secondary: #1C1C1E;
+  --color-surface-tertiary: #2C2C2E;
   
   /* Borders - Hairline */
   --color-border-primary: rgba(255, 255, 255, 0.08);
@@ -219,12 +219,12 @@
   --color-text-quaternary: #636366;
   --color-text-inverted: #000000;
   
-  /* Accent - Premium Red (adjusted for dark) */
-  --color-primary: #FF453A;
-  --color-primary-hover: #FF5C52;
-  --color-primary-active: #FF726A;
-  --color-primary-subtle: rgba(255, 69, 58, 0.12);
-  --color-primary-muted: rgba(255, 69, 58, 0.2);
+  /* Accent - Premium White (adjusted for dark) */
+  --color-primary: #FFFFFF;
+  --color-primary-hover: #F5F5F7;
+  --color-primary-active: #E5E5EA;
+  --color-primary-subtle: rgba(255, 255, 255, 0.1);
+  --color-primary-muted: rgba(255, 255, 255, 0.15);
   
   /* Semantic */
   --color-success: #30D158;
@@ -233,8 +233,8 @@
   --color-warning-subtle: rgba(255, 214, 10, 0.15);
   --color-error: #FF453A;
   --color-error-subtle: rgba(255, 69, 58, 0.15);
-  --color-info: #0A84FF;
-  --color-info-subtle: rgba(10, 132, 255, 0.15);
+  --color-info: #FFFFFF;
+  --color-info-subtle: rgba(255, 255, 255, 0.15);
 }
 
 /* =====================================================

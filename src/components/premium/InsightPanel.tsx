@@ -72,171 +72,173 @@ export function InsightPanel({
   // Feasibility calculation
   const getFeasibility = (required: number | null) => {
     if (required === null) return null;
-    if (required > maxGPA) return { label: labels.feasibility.impossible, color: 'var(--color-error)', progress: 100 };
-    if (required > maxGPA - 0.3) return { label: labels.feasibility.hard, color: 'var(--color-warning)', progress: 85 };
-    if (required > maxGPA - 0.7) return { label: labels.feasibility.medium, color: '#FFD60A', progress: 65 };
-    return { label: labels.feasibility.easy, color: 'var(--color-success)', progress: 40 };
+    if (required > maxGPA) return { label: labels.feasibility.impossible, color: 'text-gray-400', bg: 'bg-gray-400', progress: 100 };
+    if (required > maxGPA - 0.3) return { label: labels.feasibility.hard, color: 'text-gray-600', bg: 'bg-gray-600', progress: 85 };
+    if (required > maxGPA - 0.7) return { label: labels.feasibility.medium, color: 'text-gray-800', bg: 'bg-gray-800', progress: 65 };
+    return { label: labels.feasibility.easy, color: 'text-black', bg: 'bg-black', progress: 40 };
   };
 
   const feasibility = getFeasibility(requiredGPA);
 
+  // Helper for Donut Chart
+  const radius = 36;
+  const circumference = 2 * Math.PI * radius;
+  const progress = (thisSemGPA / maxGPA) * 100;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+  
+  // Color based on GPA
+  const getGPAColor = (gpa: number) => {
+    if (gpa >= 3.7) return '#34C759'; // Green
+    if (gpa >= 3.0) return '#007AFF'; // Blue
+    if (gpa >= 2.0) return '#FF9500'; // Orange
+    return '#FF3B30'; // Red
+  };
+
+  const gpaColor = getGPAColor(thisSemGPA);
+
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-6 ${className}`}>
       
       {/* This Semester GPA - Hero Card */}
-      <div className="card p-5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[var(--color-primary)]/10 to-transparent rounded-bl-[100px]" />
-        
-        <div className="relative">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="p-2 rounded-[var(--radius-md)] bg-[var(--color-primary-subtle)]">
-              <AppleEmoji emoji="📊" className="w-4 h-4" />
+      <div className="card p-6 relative overflow-hidden bg-[var(--color-bg-elevated)] border-[var(--color-border-primary)]">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 rounded-lg bg-[var(--color-surface-secondary)]">
+                <AppleEmoji emoji="📊" className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider">
+                {labels.semesterGPA}
+              </span>
             </div>
-            <span className="text-[var(--text-label)] text-[var(--color-text-tertiary)]">
-              {labels.semesterGPA}
-            </span>
+            
+            <div className="flex items-baseline gap-1">
+              <span className="text-4xl font-black tracking-tight text-[var(--color-text-primary)] font-mono">
+                {thisSemGPA.toFixed(2)}
+              </span>
+              <span className="text-sm font-medium text-[var(--color-text-tertiary)]">
+                / {maxGPA.toFixed(1)}
+              </span>
+            </div>
+            
+            <div className="mt-2 inline-flex items-center px-2.5 py-1 rounded-full bg-[var(--color-surface-secondary)] text-xs font-medium text-[var(--color-text-secondary)]">
+              {thisSemCredits} {labels.semCredits}
+            </div>
           </div>
-          
-          <div className="flex items-baseline gap-2">
-            <span className="text-[3rem] font-bold text-[var(--color-text-primary)] font-mono tracking-tight leading-none">
-              {thisSemGPA.toFixed(2)}
-            </span>
-            <span className="text-[var(--text-h4)] text-[var(--color-text-quaternary)]">
-              / {maxGPA.toFixed(1)}
-            </span>
-          </div>
-          
-          <div className="mt-3 flex items-center gap-2 text-[var(--text-body-sm)] text-[var(--color-text-tertiary)]">
-            <span>{thisSemCredits}</span>
-            <span>{labels.semCredits}</span>
+
+          {/* Donut Chart */}
+          <div className="relative w-24 h-24 flex items-center justify-center">
+            <svg className="transform -rotate-90 w-full h-full">
+              <circle
+                cx="48"
+                cy="48"
+                r={radius}
+                stroke="currentColor"
+                strokeWidth="8"
+                fill="transparent"
+                className="text-[var(--color-surface-secondary)]"
+              />
+              <circle
+                cx="48"
+                cy="48"
+                r={radius}
+                stroke={gpaColor}
+                strokeWidth="8"
+                fill="transparent"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                strokeLinecap="round"
+                className="transition-all duration-1000 ease-out"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+               <span className="text-xs font-bold" style={{ color: gpaColor }}>
+                 {Math.round(progress)}%
+               </span>
+            </div>
           </div>
         </div>
       </div>
-
       {/* Cumulative Progress */}
-      <div className="card p-5">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-2 rounded-[var(--radius-md)] bg-[var(--color-info-subtle)]">
-            <TrendingUp size={14} className="text-[var(--color-info)]" />
+      <div className="card p-6 bg-[var(--color-bg-elevated)] border-[var(--color-border-primary)]">
+        <div className="flex items-center gap-2 mb-6">
+          <div className="p-2 rounded-lg bg-[var(--color-surface-secondary)]">
+            <TrendingUp className="w-4 h-4 text-[var(--color-text-primary)]" />
           </div>
-          <span className="text-[var(--text-label)] text-[var(--color-text-tertiary)]">
+          <span className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider">
             {labels.cumulativeProgress}
           </span>
         </div>
-        
-        <div className="space-y-4">
-          {/* Current CGPA */}
-          <div className="flex items-center justify-between">
-            <span className="text-[var(--text-body-sm)] text-[var(--color-text-secondary)]">
-              {labels.currentCGPA}
-            </span>
-            <span className="text-[var(--text-h3)] font-bold text-[var(--color-text-primary)] font-mono">
-              {currentCGPA || '—'}
-            </span>
-          </div>
-          
-          {/* Projected CGPA */}
-          {projectedCGPA !== null && (
-            <div className="p-4 rounded-[var(--radius-lg)] bg-[var(--color-primary-subtle)] border border-[var(--color-primary)]/20">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[var(--text-caption)] text-[var(--color-primary)] font-medium">
-                  {labels.afterSemester}
-                </span>
-                <Sparkles size={14} className="text-[var(--color-primary)]" />
-              </div>
-              <span className="text-[var(--text-h2)] font-bold text-[var(--color-primary)] font-mono">
-                {projectedCGPA.toFixed(2)}
-              </span>
+
+        <div className="space-y-6">
+          <div>
+            <div className="flex justify-between items-baseline mb-2">
+              <span className="text-sm text-[var(--color-text-secondary)]">{labels.currentCGPA}</span>
+              <span className="text-xl font-bold text-[var(--color-text-primary)] font-mono">{currentCGPA || '—'}</span>
             </div>
-          )}
-          
-          {/* Progress Bar */}
-          {currentCGPA && (
-            <div className="space-y-2">
-              <div className="flex justify-between text-[var(--text-micro)] text-[var(--color-text-quaternary)]">
-                <span>0.00</span>
-                <span>{maxGPA.toFixed(1)}</span>
+            <div className="w-full h-2 bg-[var(--color-surface-secondary)] rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-[var(--color-text-primary)] rounded-full transition-all duration-1000"
+                style={{ width: `${(parseFloat(currentCGPA || '0') / maxGPA) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          {projectedCGPA !== null && (
+            <div>
+              <div className="flex justify-between items-baseline mb-2">
+                <span className="text-sm text-[#86868B]">{labels.afterSemester}</span>
+                <span className="text-xl font-bold text-black">{projectedCGPA.toFixed(2)}</span>
               </div>
-              <div className="h-2 rounded-full bg-[var(--color-surface-tertiary)] overflow-hidden">
+              <div className="w-full h-2 bg-[#F5F5F7] rounded-full overflow-hidden">
                 <div 
-                  className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-info)] transition-all duration-500"
-                  style={{ width: `${Math.min((parseFloat(currentCGPA) / maxGPA) * 100, 100)}%` }}
+                  className="h-full bg-black rounded-full transition-all duration-1000"
+                  style={{ width: `${(projectedCGPA / maxGPA) * 100}%` }}
                 />
               </div>
             </div>
           )}
+          </div>
         </div>
-      </div>
 
       {/* Goal Tracking */}
-      <div className="card p-5">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-2 rounded-[var(--radius-md)] bg-[var(--color-success-subtle)]">
-            <Target size={14} className="text-[var(--color-success)]" />
-          </div>
-          <span className="text-[var(--text-label)] text-[var(--color-text-tertiary)]">
-            {labels.goalTracking}
-          </span>
-        </div>
-
-        <div className="space-y-4">
-          {/* Target CGPA */}
-          <div className="flex items-center justify-between">
-            <span className="text-[var(--text-body-sm)] text-[var(--color-text-secondary)]">
-              {labels.targetCGPA}
-            </span>
-            <span className="text-[var(--text-h4)] font-semibold text-[var(--color-text-primary)] font-mono">
-              {targetCGPA || '—'}
-            </span>
-          </div>
-
-          {/* Required GPA */}
-          {requiredGPA !== null && feasibility && (
-            <div 
-              className="p-4 rounded-[var(--radius-lg)] border"
-              style={{ 
-                backgroundColor: `color-mix(in srgb, ${feasibility.color} 10%, transparent)`,
-                borderColor: `color-mix(in srgb, ${feasibility.color} 30%, transparent)`
-              }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[var(--text-caption)] font-medium" style={{ color: feasibility.color }}>
-                  {labels.requiredGPA}
-                </span>
-                <span 
-                  className="px-2 py-0.5 rounded-[var(--radius-sm)] text-[var(--text-micro)] font-bold"
-                  style={{ 
-                    backgroundColor: `color-mix(in srgb, ${feasibility.color} 20%, transparent)`,
-                    color: feasibility.color
-                  }}
-                >
-                  {feasibility.label}
-                </span>
-              </div>
-              
-              <span 
-                className="text-[var(--text-h2)] font-bold font-mono"
-                style={{ color: feasibility.color }}
-              >
-                {requiredGPA.toFixed(2)}
-              </span>
-              
-              {/* Difficulty gauge */}
-              <div className="mt-3 h-1.5 rounded-full bg-white/20 overflow-hidden">
-                <div 
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ 
-                    width: `${feasibility.progress}%`,
-                    backgroundColor: feasibility.color
-                  }}
-                />
-              </div>
+      {targetCGPA && (
+        <div className="card p-6 bg-[var(--color-bg-elevated)] border-[var(--color-border-primary)]">
+          <div className="flex items-center gap-2 mb-6">
+            <div className="p-2 rounded-lg bg-[var(--color-surface-secondary)]">
+              <Target className="w-4 h-4 text-[var(--color-text-primary)]" />
             </div>
-          )}
+            <span className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider">
+              {labels.goalTracking}
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-3 rounded-xl bg-[var(--color-surface-secondary)]">
+              <span className="text-sm text-[var(--color-text-secondary)]">{labels.targetCGPA}</span>
+              <span className="text-lg font-bold text-[var(--color-text-primary)] font-mono">{targetCGPA}</span>
+            </div>
+
+            {requiredGPA !== null && feasibility && (
+              <>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-[var(--color-surface-secondary)]">
+                  <span className="text-sm text-[var(--color-text-secondary)]">{labels.requiredGPA}</span>
+                  <span className={`text-lg font-bold ${feasibility.color}`}>
+                    {requiredGPA.toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2 mt-2">
+                  <div className={`w-2 h-2 rounded-full ${feasibility.bg}`} />
+                  <span className={`text-sm font-medium ${feasibility.color}`}>
+                    {feasibility.label}
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
-
-export default InsightPanel;

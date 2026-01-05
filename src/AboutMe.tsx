@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AppleEmoji } from "./components/AppleEmoji";
+import { MapPin, GraduationCap, Briefcase, MessageCircle } from "lucide-react";
 
 const TRANSLATIONS = {
   EN: {
@@ -44,47 +45,11 @@ const TRANSLATIONS = {
   },
 };
 
-const GlassCard = ({ children, className = "", hoverEffect = true }: { children: React.ReactNode, className?: string, hoverEffect?: boolean }) => (
-  <div className={`relative overflow-hidden bg-[var(--surface)] border border-[var(--border-subtle)] shadow-sm rounded-[2rem] ${hoverEffect ? 'transition-all duration-300 hover:shadow-md hover:-translate-y-1' : ''} ${className}`}>
+const SectionTitle = ({ children, icon: Icon }: { children: React.ReactNode, icon?: any }) => (
+  <h3 className="text-[13px] font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+    {Icon && <Icon className="w-4 h-4" />}
     {children}
-  </div>
-);
-
-const StatBadge = ({ emoji, label, value, color }: any) => (
-  <div className="flex items-center gap-3 p-3 rounded-2xl bg-[var(--surface)] border border-[var(--border-subtle)] shadow-sm">
-    <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center shadow-md`}>
-      <AppleEmoji emoji={emoji} className="w-5 h-5" />
-    </div>
-    <div>
-      <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)]">{label}</div>
-      <div className="text-lg font-black text-[var(--text)] leading-none">{value}</div>
-    </div>
-  </div>
-);
-
-const ExperienceItem = ({ year, title, company, desc, isLast }: any) => (
-  <div className="relative pl-8 pb-8 group">
-    {!isLast && <div className="absolute left-[11px] top-2 bottom-0 w-0.5 bg-[var(--border-subtle)] group-hover:bg-[var(--primary)]/30 transition-colors"></div>}
-    <div className="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-[var(--surface)] bg-[var(--primary)] shadow-md group-hover:scale-110 transition-transform"></div>
-    
-    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 mb-2">
-      <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20 w-fit">
-        {year}
-      </span>
-      <h4 className="font-bold text-[var(--text)] text-base">{title}</h4>
-    </div>
-    <p className="text-xs font-bold text-[var(--secondary)] mb-2 flex items-center gap-1">
-      <AppleEmoji emoji="💼" className="w-3 h-3" /> {company}
-    </p>
-    <p className="text-sm text-[var(--text-muted)] leading-relaxed">{desc}</p>
-  </div>
-);
-
-const SkillTag = ({ name, emoji }: any) => (
-  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[var(--bg)] border border-[var(--border-subtle)] text-xs font-bold text-[var(--text-muted)] hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors cursor-default">
-    {emoji && <AppleEmoji emoji={emoji} className="w-3.5 h-3.5" />}
-    {name}
-  </div>
+  </h3>
 );
 
 export default function AboutMe({ lang: propLang }: { lang: string }) {
@@ -92,87 +57,141 @@ export default function AboutMe({ lang: propLang }: { lang: string }) {
   const t = TRANSLATIONS[lang];
 
   return (
-    <div className="main-grid col-span-full">
-      
-      <div className="col-span-full w-full max-w-7xl mx-auto animate-fade-in p-4 md:p-8 relative z-10">
+    <div className="min-h-screen bg-[var(--color-bg-page)] font-sans text-[var(--color-text-primary)] py-12 px-6">
+      <div className="max-w-3xl mx-auto space-y-8">
         
         {/* Hero Section */}
-        <div className="relative mb-20 pt-10">
-          <div className="flex flex-col md:flex-row items-end gap-8">
-            <div className="relative">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] overflow-hidden border-4 border-[var(--surface)] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
-                <img src="/askba14/profile.png" alt="Profile" className="w-full h-full object-cover" />
-              </div>
+        <div className="flex flex-col items-center text-center space-y-6 mb-12">
+          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white dark:border-white/10 shadow-lg">
+            <img src="/askba14/profile.png" alt="Profile" className="w-full h-full object-cover" />
+          </div>
+          
+          <div className="space-y-2">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest">
+                Student
+              </span>
+              <span className="px-3 py-1 rounded-full bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 text-xs font-bold flex items-center gap-1">
+                <MapPin className="w-3 h-3" /> {t.location}
+              </span>
             </div>
-            
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-xs font-bold uppercase tracking-widest border border-[var(--primary)]/20">
-                  Student
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[var(--surface)] text-[var(--text-muted)] text-xs font-bold border border-[var(--border-subtle)] flex items-center gap-1">
-                  <AppleEmoji emoji="📍" className="w-3 h-3" /> {t.location}
-                </span>
-              </div>
-              <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-[var(--text)] mb-4 leading-[0.9]">
-                <a 
-                  href="https://www.instagram.com/baaa.14_?igsh=OTAwZ3Fuemx4OWg5&utm_source=qr" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:opacity-80 transition-opacity"
-                >
-                  BA<span className="text-[var(--primary)]">.</span>14
-                </a>
-              </h1>
-              <p className="text-xl text-[var(--text-muted)] font-medium max-w-2xl leading-relaxed">
-                {t.bio}
-              </p>
-            </div>
+            <h1 className="text-5xl font-bold tracking-tight text-[var(--color-text-primary)]">
+              <a 
+                href="https://www.instagram.com/baaa.14_?igsh=OTAwZ3Fuemx4OWg5&utm_source=qr" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                BA<span className="text-blue-500">.</span>14
+              </a>
+            </h1>
+            <p className="text-[19px] text-[var(--color-text-secondary)] max-w-xl mx-auto leading-relaxed">
+              {t.bio}
+            </p>
           </div>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Philosophy Card - Large */}
-          <div className="md:col-span-2">
-            <GlassCard className="h-full p-8 md:p-10 flex flex-col justify-center relative overflow-hidden group bg-gradient-to-br from-[var(--surface)] via-[var(--surface)] to-orange-500/5">
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 bg-orange-500/10 rounded-xl">
-                    <AppleEmoji emoji="💡" className="w-6 h-6" />
+        {/* Philosophy Card */}
+        <div className="bg-[var(--color-bg-elevated)] rounded-2xl p-8 shadow-sm border border-[var(--color-border-primary)]">
+            <SectionTitle icon={MessageCircle}>{t.philosophy}</SectionTitle>
+            <div className="space-y-6">
+              {lang === "粵" ? (
+                <>
+                  <p className="text-xl font-medium leading-relaxed text-[var(--color-text-primary)]">
+                    "Hi, 我整呢個 website 係希望可以幫到而家覺得迷惘嘅你，因為我以前都經歷過同樣嘅階段。"
+                  </p>
+                  <div className="inline-flex items-center gap-3 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 transition-colors hover:bg-blue-100 dark:hover:bg-blue-900/30 cursor-pointer w-full">
+                    <AppleEmoji emoji="💬" className="w-5 h-5 shrink-0" />
+                    <p className="text-[15px] font-bold">
+                      如果你有任何問題，都可以去我嘅 <span className="underline decoration-2 underline-offset-2">WhatsApp group / IG</span> 搵我傾計!
+                    </p>
                   </div>
-                  <h3 className="font-bold text-xl text-[var(--text)] uppercase tracking-widest">{t.philosophy}</h3>
-                </div>
-                
-                <div className="space-y-6">
-                  {lang === "粵" ? (
-                    <>
-                      <p className="text-xl md:text-2xl font-bold leading-relaxed text-[var(--text)]">
-                        "Hi, 我整呢個 website 係希望可以幫到而家覺得迷惘嘅你，因為我以前都經歷過同樣嘅階段。"
-                      </p>
-                      <div className="inline-flex items-center gap-3 p-4 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-400 transition-colors hover:bg-orange-500/20 cursor-pointer">
-                        <AppleEmoji emoji="💬" className="w-5 h-5 shrink-0" />
-                        <p className="text-base font-bold">
-                          如果你有任何問題，都可以去我嘅 <span className="underline decoration-2 underline-offset-2">WhatsApp group / IG</span> 搵我傾計!
-                        </p>
-                      </div>
-                    </>
-                  ) : (
-                    <blockquote className="text-2xl md:text-3xl font-bold leading-relaxed text-[var(--text)]">
-                      "{t.philosophyText}"
-                    </blockquote>
-                  )}
-                </div>
-              </div>
-            </GlassCard>
-          </div>
-
-          
-
-
-
+                </>
+              ) : (
+                <blockquote className="text-xl font-medium leading-relaxed text-[var(--color-text-primary)]">
+                  "{t.philosophyText}"
+                </blockquote>
+              )}
+            </div>
         </div>
+
+        {/* Education Card */}
+        <div className="bg-[var(--color-bg-elevated)] rounded-2xl p-8 shadow-sm border border-[var(--color-border-primary)]">
+          <SectionTitle icon={GraduationCap}>{t.education}</SectionTitle>
+          <div className="space-y-8">
+            
+            {/* Research Assistant */}
+            <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-white/10 p-1 border border-gray-100 dark:border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+                    <img 
+                        src="/askba14/samp_logo.jpg" 
+                        className="w-full h-full object-contain" 
+                        alt="SaMP Lab" 
+                    />
+                </div>
+                <div>
+                    <h4 className="text-lg font-bold text-[var(--color-text-primary)]">Undergraduate Researcher</h4>
+                    <p className="text-[15px] text-[var(--color-text-secondary)]">Speech and Music Perception Lab</p>
+                    <p className="text-sm text-[var(--color-text-tertiary)]">Research Assistant</p>
+                </div>
+            </div>
+
+            {/* HKU */}
+            <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-white/10 p-1 border border-gray-100 dark:border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+                     <img src="/askba14/hku_logo.jpg" className="w-full h-full object-contain" alt="HKU" />
+                </div>
+                <div>
+                    <h4 className="text-lg font-bold text-[var(--color-text-primary)]">University of Hong Kong</h4>
+                    <p className="text-[15px] text-[var(--color-text-secondary)]">Bachelor of Arts</p>
+                    <ul className="list-disc list-inside text-sm text-[var(--color-text-tertiary)] mt-1 space-y-0.5">
+                        <li>Double Major: English Studies, General Linguistics</li>
+                        <li>Minor: Urban Studies</li>
+                    </ul>
+                </div>
+            </div>
+
+            {/* HKUSPACE */}
+            <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-white/10 p-1 border border-gray-100 dark:border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+                     <img src="/askba14/hkuspace_logo.png" className="w-full h-full object-contain" alt="HKU SPACE" />
+                </div>
+                <div>
+                    <h4 className="text-lg font-bold text-[var(--color-text-primary)]">HKUSPACE</h4>
+                    <p className="text-[15px] text-[var(--color-text-secondary)]">Associate of Arts</p>
+                </div>
+            </div>
+
+            {/* NUS */}
+            <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-white/10 p-1 border border-gray-100 dark:border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+                     <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/NUS_coat_of_arms.svg" className="w-full h-full object-contain" alt="NUS" />
+                </div>
+                <div>
+                    <h4 className="text-lg font-bold text-[var(--color-text-primary)]">National University of Singapore</h4>
+                    <p className="text-[15px] text-[var(--color-text-secondary)]">Exchange Student</p>
+                    <p className="text-sm text-[var(--color-text-tertiary)]">Faculty of Arts and Social Sciences</p>
+                </div>
+            </div>
+
+             {/* DSE */}
+            <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-white/10 p-1 border border-gray-100 dark:border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+                     <img src="/askba14/HKEAA_logo.jpg" className="w-full h-full object-contain" alt="HKEAA" />
+                </div>
+                <div>
+                    <h4 className="text-lg font-bold text-[var(--color-text-primary)]">DSE</h4>
+                    <p className="text-[15px] text-[var(--color-text-secondary)]">Best 5 only 14 lol</p>
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+
       </div>
     </div>
   );

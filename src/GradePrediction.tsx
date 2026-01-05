@@ -319,7 +319,7 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
   }, [courses, scale]);
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6 pb-24">
       {/* Header */}
       <div className="text-center md:text-left">
         <h2 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">{t.title}</h2>
@@ -327,9 +327,9 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
       </div>
 
       {/* Disclaimer */}
-      <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4 flex gap-3">
-        <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
-        <p className="text-sm text-yellow-800 dark:text-yellow-300">{t.disclaimer}</p>
+      <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-2xl p-4 flex gap-3 backdrop-blur-md">
+        <AlertCircle className="w-5 h-5 text-[var(--color-text-secondary)] flex-shrink-0 mt-0.5" />
+        <p className="text-sm text-[var(--color-text-secondary)] font-medium">{t.disclaimer}</p>
       </div>
 
       {/* Courses List */}
@@ -339,10 +339,10 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
           const isWeightInvalid = Math.abs(stats.totalWeight - 100) > 0.1;
 
           return (
-            <div key={course.id} className="bg-[var(--surface)] rounded-2xl border border-[var(--border-subtle)] overflow-hidden shadow-sm">
+            <div key={course.id} className="bg-[var(--color-bg-elevated)] rounded-3xl border border-[var(--color-border)] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
               {/* Course Header */}
               <div 
-                className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[var(--color-surface-primary)] cursor-pointer hover:bg-[var(--color-surface-secondary)] transition-colors"
+                className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[var(--color-bg-elevated)] border-b border-[var(--color-border)] cursor-pointer hover:bg-[var(--color-bg-secondary)] transition-colors"
                 onClick={() => toggleCourseOpen(course.id)}
               >
                 <div className="flex items-center gap-3 flex-1 w-full sm:w-auto">
@@ -354,27 +354,27 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
                       onChange={(e) => updateCourse(course.id, { name: e.target.value })}
                       onClick={(e) => e.stopPropagation()}
                       placeholder={t.courseName}
-                      className="bg-transparent font-bold text-lg text-[var(--color-text-primary)] outline-none placeholder-[var(--color-text-quaternary)] w-full focus:ring-2 focus:ring-[var(--color-primary)]/20 rounded px-2 -ml-2"
+                      className="bg-transparent font-bold text-xl text-[var(--color-text-primary)] outline-none placeholder-[var(--color-text-tertiary)] w-full focus:ring-2 focus:ring-[var(--color-primary)]/20 rounded px-2 -ml-2 transition-all"
                     />
                   </div>
                 </div>
                 <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-                    <span className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider">{t.credits}</span>
+                    <span className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider">{t.credits}</span>
                     <input
                       type="number"
                       value={course.credits}
                       onChange={(e) => updateCourse(course.id, { credits: parseFloat(e.target.value) || 0 })}
-                      className="w-14 px-2 py-1.5 bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-center text-sm font-semibold focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none"
+                      className="w-16 px-3 py-2 bg-[var(--color-bg-secondary)] rounded-xl border-none text-center text-sm font-bold text-[var(--color-text-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none transition-all"
                       min="0"
                       max="10"
                     />
                   </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-[var(--color-primary)]">
+                  <div className="text-right min-w-[60px]">
+                    <div className="text-3xl font-black text-[var(--color-text-primary)] tracking-tight">
                       {stats.projectedLetter.grade}
                     </div>
-                    <div className="text-xs text-[var(--color-text-tertiary)] font-medium">
+                    <div className="text-xs text-[var(--color-text-secondary)] font-medium mt-0.5">
                       {stats.projectedScore.toFixed(1)}%
                     </div>
                   </div>
@@ -383,10 +383,10 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
 
               {/* Course Body */}
               {course.isOpen && (
-                <div className="p-4 border-t border-[var(--border-subtle)]">
+                <div className="p-6 bg-[var(--color-bg-elevated)]">
                   {/* Assessments Table */}
                   <div className="mb-6">
-                    <div className="hidden sm:grid grid-cols-[1fr_100px_140px_44px] gap-3 mb-3 px-2">
+                    <div className="hidden sm:grid grid-cols-[1fr_100px_140px_44px] gap-4 mb-3 px-2">
                       <div className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider">{t.componentName}</div>
                       <div className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider text-center">{t.weight}</div>
                       <div className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider text-center">{t.grade}</div>
@@ -395,54 +395,59 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
                     
                     <div className="space-y-3">
                       {course.assessments.map(assessment => (
-                        <div key={assessment.id} className="grid grid-cols-1 sm:grid-cols-[1fr_100px_140px_44px] gap-2 sm:gap-3 items-start sm:items-center bg-[var(--color-bg-elevated)] sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
+                        <div key={assessment.id} className="grid grid-cols-1 sm:grid-cols-[1fr_100px_140px_44px] gap-3 items-start sm:items-center bg-[var(--color-bg-secondary)] sm:bg-transparent p-4 sm:p-0 rounded-2xl sm:rounded-none">
                           <input
                             type="text"
                             value={assessment.name}
                             onChange={(e) => updateAssessment(course.id, assessment.id, { name: e.target.value })}
                             placeholder="Assignment"
-                            className="px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all"
+                            className="w-full px-4 py-3 bg-[var(--color-bg-secondary)] rounded-xl border-none text-[var(--color-text-primary)] text-sm font-medium outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all placeholder-[var(--color-text-tertiary)]"
                           />
-                          <div className="flex gap-2 sm:block">
+                          <div className="flex gap-3 sm:block">
                             <div className="flex-1 sm:hidden">
-                              <label className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.weight}</label>
+                              <label className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.weight}</label>
                             </div>
                             <input
                               type="number"
                               value={assessment.weight || ""}
                               onChange={(e) => updateAssessment(course.id, assessment.id, { weight: parseFloat(e.target.value) || 0 })}
                               placeholder="0"
-                              className="flex-1 sm:flex-none px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm text-center outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all font-semibold"
+                              className="w-full px-4 py-3 bg-[var(--color-bg-secondary)] rounded-xl border-none text-center text-[var(--color-text-primary)] text-sm font-medium outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all placeholder-[var(--color-text-tertiary)]"
                               min="0"
                               max="100"
                             />
                           </div>
-                          <div className="flex gap-2 items-center">
+                          <div className="flex gap-3 items-center">
                             <div className="flex-1 sm:hidden">
-                              <label className="text-xs font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.grade}</label>
+                              <label className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.grade}</label>
                             </div>
-                            <select
-                              value={assessment.grade}
-                              onChange={(e) => updateAssessment(course.id, assessment.id, { grade: e.target.value })}
-                              className="flex-1 sm:flex-none px-4 py-2.5 bg-[var(--color-bg-page)] sm:bg-[var(--color-bg-elevated)] rounded-lg border border-[var(--color-border-primary)] text-sm text-center outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all font-semibold appearance-none cursor-pointer"
-                            >
-                              <option value="">—</option>
-                              {gradeOptions.map(grade => (
-                                <option key={grade} value={grade}>{grade}</option>
-                              ))}
-                            </select>
+                            <div className="relative w-full">
+                              <select
+                                value={assessment.grade}
+                                onChange={(e) => updateAssessment(course.id, assessment.id, { grade: e.target.value })}
+                                className="w-full px-4 py-3 bg-[var(--color-bg-secondary)] rounded-xl border-none text-center text-[var(--color-text-primary)] text-sm font-medium outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all appearance-none cursor-pointer"
+                              >
+                                <option value="">—</option>
+                                {gradeOptions.map(grade => (
+                                  <option key={grade} value={grade}>{grade}</option>
+                                ))}
+                              </select>
+                              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--color-text-tertiary)]">
+                                <ChevronDown size={14} />
+                              </div>
+                            </div>
                             <button
                               onClick={() => deleteAssessment(course.id, assessment.id)}
-                              className="sm:hidden p-2 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                              className="sm:hidden p-3 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-colors"
                             >
                               <Trash2 size={18} />
                             </button>
                           </div>
                           <button
                             onClick={() => deleteAssessment(course.id, assessment.id)}
-                            className="hidden sm:block p-2 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                            className="hidden sm:flex items-center justify-center w-10 h-10 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
                           >
-                            <Trash2 size={16} />
+                            <Trash2 size={18} />
                           </button>
                         </div>
                       ))}
@@ -450,28 +455,28 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
                   </div>
 
                   {/* Actions & Warnings */}
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-4 px-2">
                     <button
                       onClick={() => addAssessment(course.id)}
-                      className="flex items-center gap-2 text-sm font-medium text-[var(--primary)] hover:opacity-80 px-2 py-1"
+                      className="flex items-center gap-2 text-sm font-bold text-[var(--color-text-primary)] hover:opacity-70 transition-opacity px-2 py-1"
                     >
                       <Plus size={16} />
                       {t.addAssessment}
                     </button>
                     {isWeightInvalid && (
-                      <span className="text-xs font-medium text-orange-500">
+                      <span className="text-xs font-bold text-orange-500 bg-orange-500/10 px-2 py-1 rounded-lg">
                         {t.weightWarning} ({stats.totalWeight}%)
                       </span>
                     )}
                   </div>
 
                   {/* Course Summary Footer */}
-                  <div className="bg-[var(--bg-subtle)] rounded-xl p-4 flex flex-wrap gap-6 items-center justify-between">
+                  <div className="bg-[var(--color-bg-secondary)] rounded-2xl p-5 flex flex-wrap gap-6 items-center justify-between border border-[var(--color-border)]">
                     <div>
-                      <div className="text-xs text-[var(--text-muted)] mb-1">{t.currentStanding}</div>
-                      <div className="text-lg font-bold text-[var(--text)]">
+                      <div className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider mb-1">{t.currentStanding}</div>
+                      <div className="text-xl font-black text-[var(--color-text-primary)]">
                         {stats.currentStanding.toFixed(1)}%
-                        <span className="text-xs font-normal text-[var(--text-muted)] ml-2">
+                        <span className="text-xs font-medium text-[var(--color-text-secondary)] ml-2">
                           ({t.basedOn} {stats.completedWeight}% {t.completed})
                         </span>
                       </div>
@@ -479,7 +484,7 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => deleteCourse(course.id)}
-                        className="text-xs text-red-500 hover:underline"
+                        className="text-xs font-bold text-[var(--color-text-tertiary)] hover:text-red-500 transition-colors"
                       >
                         {t.deleteCourse}
                       </button>
@@ -492,15 +497,15 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
         })}
 
         {courses.length === 0 && (
-          <div className="text-center py-12 text-[var(--text-muted)] border-2 border-dashed border-[var(--border-subtle)] rounded-2xl">
+          <div className="text-center py-16 text-[var(--color-text-tertiary)] border-2 border-dashed border-[var(--color-border)] rounded-3xl bg-[var(--color-bg-secondary)]">
             <BookOpen className="w-12 h-12 mx-auto mb-3 opacity-50" />
-            <p className="font-medium">{t.noCourses}</p>
+            <p className="font-bold">{t.noCourses}</p>
           </div>
         )}
 
         <button
           onClick={addCourse}
-          className="w-full py-4 bg-[var(--surface)] border-2 border-dashed border-[var(--border-subtle)] rounded-2xl text-[var(--text-muted)] font-medium hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all flex items-center justify-center gap-2"
+          className="w-full py-5 bg-[var(--color-bg-elevated)] border-2 border-dashed border-[var(--color-border)] rounded-3xl text-[var(--color-text-secondary)] font-bold hover:border-[var(--color-text-primary)] hover:text-[var(--color-text-primary)] transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
         >
           <Plus size={20} />
           {t.addCourse}
@@ -509,21 +514,23 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
 
       {/* Overall Summary */}
       {courses.length > 0 && overallStats.validCourses > 0 && (
-        <div className="bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-primary)]/5 rounded-2xl p-6 md:p-8 border border-[var(--color-primary)]/20 shadow-lg">
-          <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-6 flex items-center gap-2">
-            <Calculator className="w-5 h-5" />
+        <div className="fixed bottom-6 left-4 right-4 md:left-auto md:right-8 md:w-96 bg-[var(--color-bg-elevated)]/80 backdrop-blur-xl border border-[var(--color-border)] rounded-3xl p-6 shadow-2xl z-50">
+          <h3 className="text-lg font-bold mb-4 flex items-center gap-3 text-[var(--color-text-primary)]">
+            <div className="p-2 bg-[var(--color-bg-secondary)] rounded-xl">
+              <Calculator className="w-4 h-4" />
+            </div>
             {t.overallSummary}
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="bg-[var(--color-bg-elevated)] rounded-xl p-5 border border-[var(--color-border-primary)]">
-              <div className="text-sm font-semibold text-[var(--color-text-tertiary)] mb-2 uppercase tracking-wider">{t.predictedGPA}</div>
-              <div className="text-5xl font-black text-[var(--color-primary)]">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-[var(--color-bg-secondary)] rounded-2xl p-4 border border-[var(--color-border)]">
+              <div className="text-[10px] font-bold text-[var(--color-text-tertiary)] mb-1 uppercase tracking-wider">{t.predictedGPA}</div>
+              <div className="text-4xl font-black tracking-tighter text-[var(--color-text-primary)]">
                 {overallStats.gpa.toFixed(2)}
               </div>
             </div>
-            <div className="bg-[var(--color-bg-elevated)] rounded-xl p-5 border border-[var(--color-border-primary)]">
-              <div className="text-sm font-semibold text-[var(--color-text-tertiary)] mb-2 uppercase tracking-wider">{t.totalCredits}</div>
-              <div className="text-4xl font-bold text-[var(--color-text-primary)]">
+            <div className="bg-[var(--color-bg-secondary)] rounded-2xl p-4 border border-[var(--color-border)]">
+              <div className="text-[10px] font-bold text-[var(--color-text-tertiary)] mb-1 uppercase tracking-wider">{t.totalCredits}</div>
+              <div className="text-3xl font-bold text-[var(--color-text-primary)]">
                 {overallStats.totalCredits}
               </div>
             </div>

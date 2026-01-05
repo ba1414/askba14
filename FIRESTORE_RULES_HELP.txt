@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /journal_entries/{document=**} {
+      // Allow reading by anyone
+      allow read: if true;
+      
+      // Allow writing ONLY if the document contains the correct secret code
+      allow create: if request.resource.data.secretCode == "ba14";
+      
+      // Allow deleting if the user knows the code (you might need to adjust this for delete)
+      // Since delete doesn't send data, we usually rely on Auth. 
+      // But for a simple password system, we can allow delete if the EXISTING doc has the code?
+      // No, that's not secure. 
+      // For simple password delete, we usually need a Cloud Function or just allow all writes for now if you accept the risk.
+      
+      // OPTION 1: Secure Create, Open Delete (Risky but simple)
+      allow delete: if true; 
+      
+      // OPTION 2: The "Simple Password" compromise
+      // Allow anyone to write/delete. The app hides the UI behind the password.
+      // allow write: if true;
+    }
+  }
+}
