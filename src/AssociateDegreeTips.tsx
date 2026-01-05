@@ -287,23 +287,6 @@ const ReferencingView = () => {
           </FadeIn>
         ))}
       </div>
-
-      {/* Tasks */}
-      <FadeIn delay={500}>
-        <div className="bg-[var(--color-surface-secondary)] rounded-2xl p-8 border border-[var(--color-border-primary)]">
-          <h2 className="text-2xl font-bold text-[var(--color-text-primary)] mb-6">你的開學前任務</h2>
-          <div className="space-y-4">
-            {tasks.map((task, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-[var(--color-text-primary)] text-[var(--color-bg-page)] flex items-center justify-center text-sm font-bold flex-shrink-0">
-                  {i + 1}
-                </div>
-                <p className="text-[17px] text-[var(--color-text-secondary)]">{task}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </FadeIn>
     </div>
   );
 };
