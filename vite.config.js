@@ -2,15 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: '/askba14/',
   plugins: [react()],
+  base: '/',  // <--- This MUST be just a slash
   build: {
-    outDir: 'docs',
-    emptyOutDir: true
-  },
-  server: {
-    port: 8000
+    outDir: 'dist',
   }
 })
-
-
