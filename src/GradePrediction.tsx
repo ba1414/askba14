@@ -395,32 +395,68 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
                     
                     <div className="space-y-3">
                       {course.assessments.map(assessment => (
-                        <div key={assessment.id} className="grid grid-cols-1 sm:grid-cols-[1fr_100px_140px_44px] gap-3 items-start sm:items-center bg-[var(--color-bg-secondary)] sm:bg-transparent p-4 sm:p-0 rounded-2xl sm:rounded-none">
-                          <input
-                            type="text"
-                            value={assessment.name}
-                            onChange={(e) => updateAssessment(course.id, assessment.id, { name: e.target.value })}
-                            placeholder="Assignment"
-                            className="w-full px-4 py-3 bg-[var(--color-bg-secondary)] rounded-xl border-none text-[var(--color-text-primary)] text-sm font-medium outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all placeholder-[var(--color-text-tertiary)]"
-                          />
-                          <div className="flex gap-3 sm:block">
-                            <div className="flex-1 sm:hidden">
-                              <label className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.weight}</label>
+                        <div key={assessment.id} className="bg-[var(--color-bg-secondary)] sm:bg-transparent p-4 sm:p-0 rounded-2xl sm:rounded-none sm:grid sm:grid-cols-[1fr_100px_140px_44px] sm:gap-4 sm:items-center mb-3 sm:mb-0">
+                          
+                          {/* Mobile View */}
+                          <div className="sm:hidden space-y-3">
+                            <div className="flex items-center gap-2">
+                                <input 
+                                  type="text"
+                                  value={assessment.name}
+                                  onChange={(e) => updateAssessment(course.id, assessment.id, { name: e.target.value })}
+                                  placeholder="Assignment"
+                                  className="flex-1 bg-transparent text-lg font-bold text-[var(--color-text-primary)] outline-none placeholder-[var(--color-text-tertiary)]"
+                                />
+                                <button onClick={() => deleteAssessment(course.id, assessment.id)} className="p-2 text-red-500 bg-red-500/10 rounded-lg">
+                                    <Trash2 size={18} />
+                                </button>
                             </div>
-                            <input
-                              type="number"
-                              value={assessment.weight || ""}
-                              onChange={(e) => updateAssessment(course.id, assessment.id, { weight: parseFloat(e.target.value) || 0 })}
-                              placeholder="0"
-                              className="w-full px-4 py-3 bg-[var(--color-bg-secondary)] rounded-xl border-none text-center text-[var(--color-text-primary)] text-sm font-medium outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all placeholder-[var(--color-text-tertiary)]"
-                              min="0"
-                              max="100"
-                            />
+                            <div className="flex gap-3">
+                                <div className="flex-1 bg-[var(--color-bg-elevated)] p-2 rounded-xl">
+                                    <div className="text-[10px] uppercase font-bold text-[var(--color-text-tertiary)] mb-1">{t.weight}</div>
+                                    <input 
+                                        type="number"
+                                        value={assessment.weight || ""}
+                                        onChange={(e) => updateAssessment(course.id, assessment.id, { weight: parseFloat(e.target.value) || 0 })}
+                                        placeholder="0"
+                                        className="w-full bg-transparent font-bold text-center text-[var(--color-text-primary)] outline-none"
+                                    />
+                                </div>
+                                <div className="flex-1 bg-[var(--color-bg-elevated)] p-2 rounded-xl relative">
+                                    <div className="text-[10px] uppercase font-bold text-[var(--color-text-tertiary)] mb-1">{t.grade}</div>
+                                    <select 
+                                        value={assessment.grade}
+                                        onChange={(e) => updateAssessment(course.id, assessment.id, { grade: e.target.value })}
+                                        className="w-full bg-transparent font-bold text-center text-[var(--color-text-primary)] outline-none appearance-none relative z-10"
+                                    >
+                                        <option value="">—</option>
+                                        {gradeOptions.map(g => <option key={g} value={g}>{g}</option>)}
+                                    </select>
+                                    <ChevronDown size={14} className="absolute right-2 bottom-3 text-[var(--color-text-tertiary)]" />
+                                </div>
+                            </div>
                           </div>
-                          <div className="flex gap-3 items-center">
-                            <div className="flex-1 sm:hidden">
-                              <label className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-wider block mb-1">{t.grade}</label>
-                            </div>
+
+                          {/* Desktop View */}
+                          <div className="hidden sm:contents">
+                            <input
+                              type="text"
+                              value={assessment.name}
+                              onChange={(e) => updateAssessment(course.id, assessment.id, { name: e.target.value })}
+                              placeholder="Assignment"
+                              className="w-full px-4 py-3 bg-[var(--color-bg-secondary)] rounded-xl border-none text-[var(--color-text-primary)] text-sm font-medium outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all placeholder-[var(--color-text-tertiary)]"
+                            />
+                            
+                            <input
+                                type="number"
+                                value={assessment.weight || ""}
+                                onChange={(e) => updateAssessment(course.id, assessment.id, { weight: parseFloat(e.target.value) || 0 })}
+                                placeholder="0"
+                                className="w-full px-4 py-3 bg-[var(--color-bg-secondary)] rounded-xl border-none text-center text-[var(--color-text-primary)] text-sm font-medium outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all placeholder-[var(--color-text-tertiary)]"
+                                min="0"
+                                max="100"
+                            />
+                            
                             <div className="relative w-full">
                               <select
                                 value={assessment.grade}
@@ -436,19 +472,15 @@ export default function GradePrediction({ lang, scale }: GradePredictionProps) {
                                 <ChevronDown size={14} />
                               </div>
                             </div>
+                            
                             <button
                               onClick={() => deleteAssessment(course.id, assessment.id)}
-                              className="sm:hidden p-3 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-colors"
+                              className="flex items-center justify-center w-10 h-10 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
                             >
                               <Trash2 size={18} />
                             </button>
                           </div>
-                          <button
-                            onClick={() => deleteAssessment(course.id, assessment.id)}
-                            className="hidden sm:flex items-center justify-center w-10 h-10 text-[var(--color-text-tertiary)] hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
-                          >
-                            <Trash2 size={18} />
-                          </button>
+                          
                         </div>
                       ))}
                     </div>

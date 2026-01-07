@@ -1,20 +1,181 @@
 import React, { useState } from 'react';
 import { AppleEmoji } from './components/AppleEmoji';
 import { IELTS_DATA, IeltsEssay } from './content/ieltsData';
-import { ChevronLeft, AlertCircle, CheckCircle2, BookOpen, PenTool, BrainCircuit, ArrowRight } from 'lucide-react';
+import { IELTS_COURSE, CourseModule } from './content/ieltsCourseData';
+import { ChevronLeft, AlertCircle, CheckCircle2, BookOpen, PenTool, BrainCircuit, ArrowRight, GraduationCap, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface IeltsPrepProps {
   lang: string;
 }
 
+const SimpleMarkdown: React.FC<{ content: string }> = ({ content }) => {
+  // Simple parser for the specific format we used
+  // Supports ### Headers, **Bold**, * Lists, and tables (basic)
+  
+  const lines = content.split('\n');
+  const elements: React.ReactNode[] = [];
+  let listBuffer: React.ReactNode[] = [];
+  let inTable = false;
+  let tableHeader: string[] = [];
+  let tableRows: string[][] = [];
+
+  const flushList = () => {
+    if (listBuffer.length > 0) {
+      elements.push(
+        <ul key={`ul-${elements.length}`} className="list-disc pl-5 mb-4 space-y-1 text-gray-700 dark:text-gray-300">
+          {listBuffer}
+        </ul>
+      );
+      listBuffer = [];
+    }
+  };
+
+  const flushTable = () => {
+    if (inTable) {
+        elements.push(
+            <div key={`table-${elements.length}`} className="overflow-x-auto mb-6 rounded-lg border border-gray-200 dark:border-gray-700">
+                <table className="w-full text-sm text-left">
+                    <thead className="bg-gray-50 dark:bg-white/5 text-xs font-bold uppercase text-gray-500 dark:text-gray-400">
+                        <tr>
+                            {tableHeader.map((h, i) => <th key={i} className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">{h}</th>)}
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                        {tableRows.map((row, i) => (
+                            <tr key={i} className="bg-white dark:bg-[#1C1C1E]">
+                                {row.map((cell, j) => <td key={j} className="px-4 py-3 text-gray-700 dark:text-gray-300">{cell}</td>)}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+        inTable = false;
+        tableHeader = [];
+        tableRows = [];
+    }
+  };
+
+  const processText = (text: string) => {
+    const parts = text.split(/(\*\*.*?\*\*)|(`.*?`)/g).filter(Boolean);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i} className="font-bold text-gray-900 dark:text-white">{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith('`') && part.endsWith('`')) {
+        return <code key={i} className="bg-gray-100 dark:bg-white/10 px-1 py-0.5 rounded text-sm font-mono">{part.slice(1, -1)}</code>;
+      }
+      return part;
+    });
+  };
+
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+       flushList();
+       flushTable();
+       return; 
+    }
+
+    if (trimmed.startsWith('|')) {
+        if (!inTable) {
+            inTable = true;
+            tableHeader = trimmed.split('|').filter(Boolean).map(s => s.trim().replace(/\*\*/g, ''));
+            // Skip the separator line |---|---|
+            return;
+        }
+        if (trimmed.includes('---')) return; // Skip separator
+        tableRows.push(trimmed.split('|').filter(Boolean).map(s => s.trim().replace(/\*\*/g, '')));
+        return;
+    } else {
+        flushTable();
+    }
+
+    if (trimmed.startsWith('### ')) {
+      elements.push(<h3 key={index} className="text-lg font-bold text-gray-900 dark:text-white mt-6 mb-3">{trimmed.slice(4)}</h3>);
+    } else if (trimmed.startsWith('**') && !trimmed.includes('**')) { // Whole line bold roughly (header like) or just paragraph
+       // Actually check if it looks like a header (short)
+       if (trimmed.length < 50) {
+         elements.push(<h4 key={index} className="text-base font-bold text-gray-800 dark:text-gray-200 mt-4 mb-2">{trimmed.replace(/\*\*/g, '')}</h4>);
+       } else {
+         elements.push(<p key={index} className="mb-2 leading-relaxed text-gray-700 dark:text-gray-300">{processText(trimmed)}</p>);
+       }
+    } else if (trimmed.startsWith('* ')) {
+      listBuffer.push(<li key={`li-${index}`}>{processText(trimmed.slice(2))}</li>);
+    } else {
+      flushList();
+      elements.push(<p key={index} className="mb-2 leading-relaxed text-gray-700 dark:text-gray-300">{processText(trimmed)}</p>);
+    }
+  });
+
+  flushList();
+  flushTable();
+
+  return <div className="text-[15px]">{elements}</div>;
+};
+
 const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
-  const [activeTab, setActiveTab] = useState<'task1' | 'task2'>('task1');
+  const [activeTab, setActiveTab] = useState<'task1' | 'task2' | 'course'>('course'); // Default to course since user asked for content
   const [selectedEssay, setSelectedEssay] = useState<IeltsEssay | null>(null);
+  const [selectedModule, setSelectedModule] = useState<CourseModule | null>(null);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const isEn = lang === "EN";
 
   // Filter essays by tab
   const essays = IELTS_DATA.filter(e => e.type === activeTab);
+
+  const toggleSection = (idx: string) => {
+    setExpandedSection(expandedSection === idx ? null : idx);
+  };
+
+  // --- Course Module View ---
+  if (selectedModule) {
+      return (
+        <div className="max-w-4xl mx-auto px-4 py-12 animate-fade-in">
+           <button 
+                onClick={() => setSelectedModule(null)}
+                className="flex items-center gap-2 text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors mb-8 font-medium"
+            >
+                <ChevronLeft size={20} />
+                {isEn ? "Back to Modules" : "返回課程單元"}
+            </button>
+            
+            <div className="mb-10">
+                <span className="px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-4 inline-block">
+                    Writing Masterclass
+                </span>
+                <h1 className="text-3xl font-bold text-[var(--color-text-primary)] leading-tight">
+                    {selectedModule.title}
+                </h1>
+            </div>
+
+            <div className="space-y-4">
+                {selectedModule.sections.map((section, idx) => (
+                    <div key={idx} className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md">
+                        <button 
+                            onClick={() => toggleSection(String(idx))}
+                            className="w-full text-left p-6 flex items-start justify-between gap-4 bg-gray-50/50 dark:bg-white/[0.02]"
+                        >
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white pr-8">
+                                {section.title}
+                            </h3>
+                            <div className={`p-2 rounded-full bg-white dark:bg-white/10 transition-transform duration-300 flex-shrink-0 ${expandedSection === String(idx) ? 'rotate-180' : ''}`}>
+                                <ChevronDown size={20} className="text-gray-500" />
+                            </div>
+                        </button>
+                        
+                        {expandedSection === String(idx) && (
+                            <div className="p-6 md:p-8 border-t border-gray-100 dark:border-white/5 bg-white dark:bg-[#1C1C1E] animate-fade-in">
+                                <SimpleMarkdown content={section.content} />
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+      );
+  }
 
   // --- Detail View ---
   if (selectedEssay) {
@@ -187,10 +348,21 @@ const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
 
       {/* Tabs */}
       <div className="flex justify-center mb-12">
-        <div className="bg-gray-100 dark:bg-white/10 p-1.5 rounded-2xl inline-flex">
+        <div className="bg-gray-100 dark:bg-white/10 p-1.5 rounded-2xl inline-flex flex-wrap justify-center gap-1">
+          <button
+            onClick={() => setActiveTab('course')}
+            className={`px-6 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+              activeTab === 'course'
+                ? 'bg-white dark:bg-[#1C1C1E] text-purple-600 dark:text-purple-400 shadow-sm'
+                : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'
+            }`}
+          >
+            <GraduationCap size={16} />
+            Masterclass
+          </button>
           <button
             onClick={() => setActiveTab('task1')}
-            className={`px-8 py-3 rounded-xl text-sm font-bold transition-all ${
+            className={`px-6 py-3 rounded-xl text-sm font-bold transition-all ${
               activeTab === 'task1'
                 ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm'
                 : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'
@@ -200,7 +372,7 @@ const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
           </button>
           <button
             onClick={() => setActiveTab('task2')}
-            className={`px-8 py-3 rounded-xl text-sm font-bold transition-all ${
+            className={`px-6 py-3 rounded-xl text-sm font-bold transition-all ${
               activeTab === 'task2'
                 ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm'
                 : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'
@@ -211,9 +383,53 @@ const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
         </div>
       </div>
 
-      {/* Essay Grid */}
+      {/* Content Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {essays.map((essay) => (
+        {activeTab === 'course' ? (
+             IELTS_COURSE.map((module) => (
+                <div 
+                    key={module.id}
+                    onClick={() => setSelectedModule(module)}
+                    className="group bg-white dark:bg-[#1C1C1E] rounded-3xl p-8 border border-gray-200 dark:border-white/10 hover:border-purple-500/30 dark:hover:border-purple-500/30 hover:shadow-xl transition-all duration-300 cursor-pointer relative overflow-hidden"
+                >
+                    <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500 text-purple-600">
+                        <GraduationCap size={140} />
+                    </div>
+                    
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="px-3 py-1 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">
+                                Writing Module
+                            </span>
+                            <span className="px-3 py-1 rounded-lg bg-gray-100 dark:bg-white/10 text-xs font-bold text-gray-500 dark:text-gray-400">
+                                {module.sections.length} Sections
+                            </span>
+                        </div>
+                        
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
+                            {module.title}
+                        </h3>
+                        
+                        <div className="space-y-2 mb-8">
+                            {module.sections.slice(0, 3).map((s, i) => (
+                                <div key={i} className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-purple-200 dark:bg-purple-900 flex-shrink-0" />
+                                    <span className="truncate">{s.title}</span>
+                                </div>
+                            ))}
+                            {module.sections.length > 3 && (
+                                <div className="text-xs text-gray-400 pl-4 py-1">+ {module.sections.length - 3} more topics</div>
+                            )}
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sm font-bold text-purple-600 dark:text-purple-400 group-hover:translate-x-2 transition-transform">
+                            Start Learning <ArrowRight size={16} />
+                        </div>
+                    </div>
+                </div>
+             ))
+        ) : (
+             essays.map((essay) => (
           <div 
             key={essay.id}
             onClick={() => setSelectedEssay(essay)}
@@ -247,9 +463,10 @@ const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
             </div>
           </div>
         ))}
+        )}
 
         {/* Empty State */}
-        {essays.length === 0 && (
+        {activeTab !== 'course' && essays.length === 0 && (
           <div className="col-span-full text-center py-20 border-2 border-dashed border-gray-200 dark:border-white/10 rounded-3xl">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-50 dark:bg-white/5 mb-4">
               <PenTool className="w-8 h-8 text-gray-300" />
