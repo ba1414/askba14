@@ -11,714 +11,664 @@ export interface CourseModule {
 
 export const IELTS_COURSE: CourseModule[] = [
   {
-    id: "m1",
-    title: "MODULE 1: Formal Logic & Argumentation Theory 形式邏輯與論證理論",
+    id: "intro",
+    title: "Introduction: Band 9 Mastery",
     sections: [
       {
-        title: "1.1 Deductive Validity & Counterexample Construction 演繹有效性與反例構造",
+        title: "Course Overview & Structure 課程概覽與結構",
         content: `
-### Theoretical Foundation 理論基礎
-An argument is deductively valid iff there exists no possible world (consistent with the meanings of terms) in which all premises are true and the conclusion false. For IELTS purposes, approximate validity by:
-*   Explicating hidden premises (making enthymemes transparent)
-*   Testing for counterexamples via thought experiments
-*   Ensuring logical closure of premise sets
+### IELTS Band 9 Mastery Course: Complete Separation for Task 1 & Task 2
+**Cambridge-Oxford Linguistics PhD Level • For English Literature Majors & C2 Learners**
 
-**Cantonese 廣東話**
-一個論證係「演繹有效」，當且僅當冇任何可能世界（同字詞意義一致）令到所有前提都真但結論假。喺 IELTS 入面，你可以咁做嚟接近有效性：
-*   明講隱藏前提（將 enthymeme 變透明）
-*   用思想實驗測試有冇反例
-*   確保前提集合有邏輯閉包
+### Course Structure 課程結構
 
-### Example Analysis 範例分析
-**Weak Argument (Band 7):**
-"Governments should fund the arts because culture is important."
+**PART A: TASK 1 (Academic: Visual Data Description)**
+→ Band 9 Criteria: Task Achievement, Coherence & Cohesion, Lexical Resource, Grammatical Range & Accuracy
 
-**Logical Analysis:**
-*   Premise 1 (explicit): Culture is important.
-*   Premise 2 (hidden): Governments should fund all important things.
-*   Conclusion: Governments should fund the arts.
-*   **Counterexample (refutes Premise 2):** Individual autonomy is important, but governments should not "fund" it directly—that would entail paternalistic overreach.
+**PART B: TASK 2 (Argumentative Essay)**
+→ Band 9 Criteria: Task Response, Coherence & Cohesion, Lexical Resource, Grammatical Range & Accuracy
 
-**Band 9 Reconstruction:**
-"While cultural vitality is indisputably important for social cohesion and individual flourishing, the inference that governments should fund the arts does not automatically follow. Such a conclusion requires an additional premise: that the arts constitute a public good exhibiting positive externalities and market failures that justify state intervention. Empirical evidence supports this premise—arts programming in underserved communities correlates with reduced crime (0.3 SD effect size in longitudinal studies) and enhanced educational outcomes. However, the strength of this justification is contingent upon demonstrating that private patronage alone is insufficient, a condition that varies by national context."
-
-**廣東話分析:**
-*   明確講出隱藏前提：「藝術係 public good」
-*   提供 empirical evidence：犯罪率下降 0.3 SD
-*   用 "contingent upon" 表示條件性
-*   用 "private patronage alone is insufficient" address 反駁論點
-`
-      },
-      {
-        title: "1.2 Logical Fallacies: Advanced Taxonomy 邏輯謬誤：進階分類",
-        content: `
-Beyond basic fallacies (ad hominem, straw man), Band 9 writers avoid:
-
-### 1.2.1 Affirming the Consequent 肯定後件謬誤
-**Form:**
-If P, then Q.
-Q.
-∴ P. (INVALID)
-
-**IELTS Example:**
-"Countries with high literacy rates tend to be economically prosperous. Finland is prosperous. Therefore, Finland must have high literacy."
-*Problem:* Prosperity could stem from other factors (natural resources, trade networks).
-
-**Band 9 Correction:**
-"While high literacy is correlated with economic prosperity—and Finland indeed exhibits both—the causal arrow may run in the opposite direction (prosperity → investment in education) or involve confounding variables (Scandinavian governance quality). Cross-national regression analyses suggest literacy explains approximately 30% of variance in GDP per capita, indicating it is one contributory factor among several."
-
-**廣東話:**
-*   用 "correlated with" 而唔係 "causes"
-*   明講 "causal arrow may run in opposite direction"（因果方向可能相反）
-*   提供 quantified estimate："30% of variance"
-*   結論用 "one contributory factor among several"（眾多因素之一）
-
-### 1.2.2 Composition & Division Fallacies 合成與分解謬誤
-**Composition:** What's true of parts is true of the whole.
-**Division:** What's true of the whole is true of parts.
-
-**IELTS Example (Composition):**
-"Each musician in the orchestra is excellent. Therefore, the orchestra is excellent."
-*Problem:* Collective performance depends on coordination, not just individual talent.
-
-**Band 9 Correction:**
-"While individual virtuosity is a necessary condition for ensemble excellence, it is not sufficient. Orchestral quality emerges from coordination dynamics—entrainment of rhythmic patterns, blend of timbres, and interpretive unity—that transcend individual skill. This explains why ad hoc assemblies of soloists often underperform established ensembles despite superior average talent."
-
-**廣東話:**
-*   用 "necessary but not sufficient" 做核心 distinction
-*   引入 "coordination dynamics"（協調動力學）解釋 emergent properties
-*   用 "ad hoc assemblies vs established ensembles" 做對比
-
-### 1.2.3 Base Rate Neglect (Probabilistic Fallacy) 基率忽略謬誤
-**Definition:** Ignoring prior probabilities when assessing conditional probabilities.
-
-**IELTS Example:**
-"Drug tests for athletes are 95% accurate. An athlete tests positive. Therefore, they are 95% likely to have used drugs."
-*Problem:* If only 1% of athletes use drugs, Bayes' Theorem shows the posterior probability is much lower (~16%, not 95%).
-
-**Band 9 Correction:**
-"While the test's sensitivity (95% true positive rate) appears compelling, the posterior probability of drug use given a positive test depends crucially on the base rate. Assuming 1% prevalence and 95% specificity, Bayes' Theorem yields a posterior probability of approximately 16%—far below the test's sensitivity. This discrepancy underscores why mass testing in low-prevalence populations generates substantial false positive rates, potentially stigmatizing innocent athletes."
-
-**廣東話:**
-*   明確分 "sensitivity" (敏感度) 同 "posterior probability" (後驗概率)
-*   引用 Bayes' Theorem（貝葉斯定理）
-*   用數字 "16%" 而唔係 vague "much lower"
-*   講出實際後果："stigmatizing innocent athletes"
-`
-      },
-      {
-        title: "1.3 Argument from Analogy: Structural Analysis 類比論證：結構分析",
-        content: `
-**Validity Criteria:**
-*   Relevant similarities outweigh disanalogies.
-*   No critical disanalogy undermines the inference.
-*   Analogical domain is well-understood.
-
-**Band 7 Analogy (Weak):**
-"Banning junk food is like banning cars—both can be harmful, so we shouldn't ban either."
-
-**Critical Disanalogies:**
-*   Cars have irreplaceable utility (transport infrastructure); junk food has substitutes (nutritious alternatives).
-*   Car harms are extrinsic (accidents, emissions), amenable to regulation; junk food harms are intrinsic (nutritional composition).
-
-**Band 9 Refinement:**
-"The car-junk food analogy is structurally flawed. While both pose health risks, cars serve infrastructurally essential functions lacking viable near-term substitutes, whereas nutritious food alternatives abound. Moreover, automotive harms (emissions, collisions) can be mitigated through engineering and policy (emissions standards, safety features), but junk food's inherent nutritional deficits resist analogous fixes short of reformulation—which effectively eliminates the original product. A more defensible analogy would compare junk food to tobacco: both deliver hedonic value without essential nutrition/function, both impose negative health externalities, and both are regulated via taxation and marketing restrictions rather than prohibition."
-
-**廣東話:**
-*   用 "structurally flawed" 而唔係 "wrong"
-*   明講 critical disanalogies："irreplaceable utility" vs "substitutes"
-*   Propose better analogy: junk food ↔ tobacco
-*   用 "negative health externalities" 係經濟學術語
-`
-      },
-      {
-        title: "1.4 Modal Logic in Hedging: Epistemic & Deontic Modality 情態邏輯與語氣緩和",
-        content: `
-*   **Epistemic Modality (知識情態):** Speaker's degree of certainty
-*   **Deontic Modality (道義情態):** Obligation, permission
-
-**Epistemic Modal Hierarchy (Certainty Scale)**
-Certain ← "must > will > should > would > may > might > could" → Uncertain
-
-**IELTS Application Examples:**
-
-| Modal | Context | Example |
-| :--- | :--- | :--- |
-| **must** | Logical necessity | "If fossil fuels are finite, alternatives must eventually replace them." |
-| **will** | High empirical confidence | "Unchecked emissions will destabilize climate systems." |
-| **should** | Reasonable expectation | "Evidence-based interventions should reduce recidivism." |
-| **would** | Counterfactual/hypothetical | "Were subsidies eliminated, renewables would become competitive." |
-| **may/might** | Possibility | "AI may displace routine labor, though effects might be offset by new sectors." |
-| **could** | Potential/capability | "Policy reforms could address inequality if implemented comprehensively." |
-
-**廣東話解釋:**
-*   **must:** 邏輯必然（如果前提真，結論必真）
-*   **will:** 高度經驗信心（接近確定）
-*   **should:** 合理預期（有證據支撐）
-*   **would:** 反事實/假設（"如果...就會..."）
-*   **may/might:** 可能性（未確定）
-*   **could:** 潛力/能力（「有能力做但未必會做」）
-
-### Common Errors 常見錯誤
-❌ **Overconfident:** "AI will eliminate all jobs."
-✅ **Calibrated:** "AI is likely to automate routine cognitive tasks, though the net employment effect remains contested, with some models predicting job displacement and others highlighting complementarity effects."
-
-**廣東話:**
-*   用 "is likely to" 而唔係 "will"
-*   明講 "remains contested"（仍有爭議）
-*   提出兩種 models：displacement vs complementarity
+**PART C: Shared Advanced Foundations**
+→ Logical reasoning, discourse architecture, syntactic sophistication (applicable to both tasks)
 `
       }
     ]
   },
   {
-    id: "m2",
-    title: "MODULE 2: Advanced Discourse Architecture 進階語篇結構",
+    id: "part-a",
+    title: "PART A: TASK 1 MASTERY (Visual Data Description)",
     sections: [
       {
-        title: "2.1 Information Structure: Theme-Rheme & Given-New 信息結構：主位-述位與已知-新知",
+        title: "Official Band 9 Descriptors 官方 Band 9 標準",
         content: `
-### Theoretical Background
-*   **Theme (主位):** The starting point of the clause (typically leftmost constituent)
-*   **Rheme (述位):** What is said about the theme (new information)
+### 1. Task Achievement (Band 9):
+"All the requirements of the task are fully and appropriately satisfied. There may be extremely rare lapses in content."
+**廣東話解讀:**
+*   完全滿足所有要求（150 字以上、所有 key features 覆蓋、有 overview）
+*   極罕有內容疏漏（即係幾乎完美）
 
-**Principle:** Place given information in Theme position, new information in Rheme position to maintain cohesive flow.
+### 2. Coherence & Cohesion (Band 9):
+"The message can be followed effortlessly. Cohesion is used in such a way that it very rarely attracts attention. Any lapses in coherence or cohesion are minimal. Paragraphing is skilfully managed."
+**廣東話解讀:**
+*   讀者可以「毫不費力」跟隨你嘅論述
+*   Cohesive devices「幾乎唔引人注意」（即係用得好自然，唔似背 template）
+*   分段「巧妙」（唔係機械式）
 
-**Band 7 (Poor Information Flow):**
-"Climate change is a serious threat. Governments need to act urgently. Renewable energy is one solution. Fossil fuel subsidies should be eliminated."
-*Problem:* Each sentence introduces a new Theme without linking to prior Rheme → cohesion gap.
+### 3. Lexical Resource (Band 9):
+"Full flexibility and precise use are evident within the scope of the task. A wide range of vocabulary is used accurately and appropriately with very natural and sophisticated control of lexical features. Minor errors in spelling and word formation are extremely rare and have minimal impact on communication."
+**廣東話解讀:**
+*   「完全靈活」同「精確使用」
+*   詞彙範圍廣、準確、自然、sophisticated
+*   幾乎冇拼寫錯誤
 
-**Band 9 (Optimal Theme-Rheme Progression):**
-"Climate change poses an existential threat to human civilization. This threat demands urgent governmental action, particularly in energy policy. Such action should prioritize two measures: accelerating renewable energy deployment and phasing out fossil fuel subsidies. These subsidies, which annually exceed $500 billion globally, constitute a perverse incentive structure that perpetuates carbon dependence. Eliminating them would not only reduce emissions but also free fiscal resources for green infrastructure investment."
-
-**廣東話分析:**
-*   Sentence 2 Theme: "This threat"（指返 Sentence 1 嘅 Rheme）
-*   Sentence 3 Theme: "Such action"（指返 Sentence 2 嘅 Rheme）
-*   Sentence 4 Theme: "These subsidies"（指返 Sentence 3 嘅 Rheme）
-*   Sentence 5 Theme: "Eliminating them"（指返 Sentence 4 嘅 Rheme）
-*   呢種 progression 叫做 linear progression（線性推進）
+### 4. Grammatical Range & Accuracy (Band 9):
+"A wide range of structures within the scope of the task is used with full flexibility and control. Punctuation and grammar are used appropriately throughout. Minor errors are extremely rare and have minimal impact on communication."
+**廣東話解讀:**
+*   句式範圍廣、靈活、準確
+*   標點同語法「全程適當」
+*   幾乎冇錯誤
 `
       },
       {
-        title: "2.2 Cohesion Devices: Beyond Mechanical Connectors 銜接手段：超越機械連接詞",
+        title: "MODULE A1: Task Achievement 任務完成度",
         content: `
-**Cohesion Types (Halliday & Hasan, 1976):**
-*   Reference (指稱): pronouns, demonstratives
-*   Substitution (替代): one, do so
-*   Ellipsis (省略): clause remnants
-*   Conjunction (連接): logical connectors
-*   Lexical cohesion (詞彙銜接): repetition, synonymy, collocation
+### A1.1 The Analytical Overview (Not Descriptive Summary) 分析性概覽
 
-### 2.2.1 Lexical Cohesion: Synonym Chains 詞彙銜接：同義詞鏈
-**Band 7 (Repetitive):**
-"Education is important. Education helps people get jobs. Education also improves critical thinking. Therefore, we should invest in education."
+**Band 7 Overview (Descriptive, list-like):**
+"The chart shows data for five countries from 2010 to 2020. Country A had the highest value in both years. Country E had the lowest. All countries increased except Country D."
+*Problems:* Lists data points (not analysis), No interpretation of patterns, Reads like mechanical summary.
 
-**Band 9 (Varied Lexical Chains):**
-"Education is indispensable for individual and societal flourishing. Such learning equips individuals with both vocational skills and cognitive capacities—critical thinking, problem-solving, analytical reasoning. These competencies enhance employability while fostering informed citizenship. Consequently, educational investment constitutes a high-return public expenditure."
+**Band 9 Overview (Analytical, pattern-focused):**
+"The data reveal divergent trajectories across five economies, with advanced nations (A, B) exhibiting decelerating growth consistent with diminishing marginal returns, while emerging economies (C, D, E) demonstrate accelerated expansion characteristic of convergence dynamics. Notably, absolute gaps widened despite proportional convergence, suggesting scale effects in economic development."
 
 **廣東話分析:**
-*   "Education" → "such learning" → "these competencies" → "educational investment"
-*   用 near-synonyms 而唔係重複同一個字
-*   每個 synonym 都有少少唔同 connotation："learning"（過程）、"competencies"（結果）、"investment"（經濟視角）
+*   用「divergent trajectories」（分歧軌跡）而唔係 "different changes"
+*   引入經濟理論：「diminishing marginal returns」、「convergence dynamics」
+*   指出 paradox：「absolute gaps widened」vs「proportional convergence」
+*   提供 interpretation：「scale effects」
+*   冇具體數字（overview 唔應該有數字）
 
-### 2.2.2 Avoiding Cohesion Gaps 避免銜接斷裂
-**Definition:** A cohesion gap occurs when a sentence's Theme lacks clear anaphoric linkage to prior discourse, forcing readers to infer connections.
+**Key Principles 核心原則:**
+*   Identify 2–3 dominant patterns (convergence, divergence, volatility, saturation)
+*   Group data conceptually (high performers vs low, stable vs volatile)
+*   Avoid specific numbers in overview
+*   Use theoretical language where appropriate (lifecycle, maturity, catch-up)
 
-**Band 7 (Cohesion Gap):**
-"Remote work increased during COVID-19. Many companies adopted Zoom. Productivity metrics varied. Mental health concerns emerged."
-*Problem:* No explicit links between sentences—each introduces a new, unconnected Theme.
+### A1.2 Comprehensive Coverage of Key Features 全面覆蓋關鍵特徵
+**What counts as "all requirements"?**
+✅ Every category/country/time period addressed
+✅ Highest and lowest values identified
+✅ Major trends described (increases, decreases, stability)
+✅ Notable comparisons made (between groups, across time)
+✅ Exceptions/outliers acknowledged
 
-**Band 9 (Explicit Linkage):**
-"Remote work surged during COVID-19, with this shift compelling many employers to adopt videoconferencing platforms such as Zoom. These new modalities generated mixed productivity outcomes: while some workers reported efficiency gains, others experienced coordination difficulties due to asynchronous communication. Moreover, the isolation inherent in remote work precipitated mental health concerns, particularly among employees lacking dedicated home office spaces. Such heterogeneous effects suggest that remote work's viability is contingent on individual and organizational contexts."
+**Band 7 Error (Incomplete coverage):**
+"Countries A, B, and C all increased. Country D decreased."
+*Problem:* Country E not mentioned → incomplete coverage → max Band 7.
 
-**廣東話分析:**
-*   "this shift" 指返 "Remote work surged"
-*   "These new modalities" 指返 "videoconferencing platforms"
-*   "the isolation inherent in remote work" 指返 implicit consequence
-*   "Such heterogeneous effects" summarize 前面提到嘅 mixed outcomes
-*   每句都有 explicit Theme linkage，冇 cohesion gap
-`
-      },
-      {
-        title: "2.3 Semantic Drift & Conceptual Precision 語義漂移與概念精確性",
-        content: `
-**Definition:** Semantic drift occurs when a term's meaning shifts imperceptibly across a text, creating logical inconsistencies.
-
-**Band 7 (Semantic Drift):**
-"Technology enhances productivity, so businesses should embrace it. However, technology in schools often distracts students, so it should be limited."
-*Problem:* "Technology" means different things (workplace automation vs classroom devices), creating an apparent contradiction.
-
-**Band 9 (Conceptually Precise):**
-"Enterprise technology—automation systems, data analytics platforms—demonstrably enhances organizational productivity by streamlining workflows and reducing human error. In contrast, consumer technology in educational settings—particularly social media and entertainment apps—often fragments attention and displaces cognitively demanding tasks. These divergent outcomes reflect differences in deployment context: enterprise systems are task-aligned and access-controlled, whereas classroom device usage frequently permits unrestricted browsing. Thus, the appropriate policy is not wholesale adoption or rejection but rather context-sensitive implementation that maximizes task alignment while minimizing distraction vectors."
-
-**廣東話分析:**
-*   明確 distinguish "enterprise technology" vs "consumer technology in educational settings"
-*   解釋點解有 divergent outcomes："deployment context"
-*   避免 binary thinking：唔係 "all good" or "all bad"，而係 "context-sensitive"
-*   冇 semantic drift：每次用 "technology" 都 qualified 佢嘅具體意思
-`
-      },
-      {
-        title: "2.4 Presupposition & Pragmatic Implicature 預設與語用含義",
-        content: `
-### 2.4.1 Factive Presuppositions 事實預設
-Factive verbs (regret, realize, acknowledge) presuppose their complements are true.
-
-**Example:**
-"Policymakers regret that fossil fuel subsidies persist."
-*Presupposition:* Fossil fuel subsidies do persist (taken as established fact).
-
-**Strategic Use in IELTS:**
-"Critics rightly acknowledge that universal basic income poses implementation challenges, yet deny that these challenges are insurmountable."
-*Effect:* Framing opposing concerns as "acknowledged facts" (via factive verb) while maintaining your counterargument.
+**Band 9 Correction:**
+"Countries A, B, and C exhibited upward trajectories, while Country D contracted and Country E stagnated, maintaining near-constant levels throughout the period."
 
 **廣東話:**
-*   "Rightly acknowledge" 係 factive verb，暗示對方嘅 concern 係真實存在
-*   但用 "yet deny that... insurmountable" 反駁佢嘅 conclusion
-*   呢種寫法令你 sound more fair-minded（更公正）
+Band 9 要求「all requirements fully satisfied」，即係冇任何 category 漏講。即使係 minor feature 都要 mention，可以簡短但唔可以完全唔講。
 
-### 2.4.2 Scalar Implicature 級差含義
-**Principle:** Using a weaker term implicates the stronger term doesn't apply.
+### A1.3 Proportional + Absolute Reasoning 比例與絕對值雙重分析
+**Scenario (GDP Growth):**
+Country A: $2 trillion → $3 trillion (+$1T, +50%)
+Country B: $100 billion → $200 billion (+$100B, +100%)
 
-**Example:**
-"Some students passed the exam."
-*Implicature:* Not all students passed (otherwise speaker would say "all").
+**Band 7 (Absolute only):**
+"Country A grew more than Country B ($1 trillion vs $100 billion)."
+*Problem:* Ignores proportional growth, which tells a different story.
 
-**IELTS Application (Nuanced Claims):**
-"Many developing nations have achieved substantial literacy gains, though progress remains uneven across regions and demographic groups."
-*Effect:* "Many" (not "most" or "all") signals some didn't, while "uneven" acknowledges heterogeneity—both enhance precision.
+**Band 9 (Dual analysis):**
+"In absolute terms, Country A's GDP expansion ($1 trillion) dwarfed Country B's ($100 billion) tenfold. However, proportionally, Country B exhibited a 100% growth rate—double that of Country A's 50%—indicating more dynamic economic expansion relative to baseline. This proportional-absolute divergence likely reflects conditional convergence: lower-income economies grow faster than affluent ones due to technology transfer, institutional catch-up, and higher marginal productivity of capital."
+
+**廣東話分析:**
+*   同時講 absolute ("dwarfed tenfold") 同 proportional ("double")
+*   解釋 divergence：「conditional convergence」
+*   引用經濟學概念：「technology transfer」、「marginal productivity of capital」
+*   呢種雙重分析係 Band 9 standard
+
+### A1.4 Strategic Data Selection (Not Exhaustive Listing) 策略性數據選擇
+**Band 7 Error (Data dumping):**
+"In 2010, Country A was 80, Country B was 75, Country C was 50, Country D was 45, Country E was 30. In 2015, Country A was 85, Country B was 80..."
+*Problem:* Listing all numbers → reader exhausted, no analysis.
+
+**Band 9 Strategy (Selective + Comparative):**
+"Country A maintained consistently elevated levels (80→95), while Countries C and D—starting from lower baselines (50 and 45 respectively)—experienced steeper proportional gains, with C more than doubling to 110. Country E, by contrast, inched up marginally (30→35), suggesting structural impediments to growth."
 
 **廣東話:**
-*   "Many" 隱含「唔係 most 或 all」
-*   "Uneven" 明講有 variation
-*   呢種精確度令 examiner 覺得你好 careful
+*   唔係 list 所有數字，而係 select meaningful comparisons
+*   用 "maintained elevated levels"（保持高位）、"starting from lower baselines"（較低基線）
+*   用 "more than doubling"（超過雙倍）、"inched up marginally"（微升）
+*   最後加 interpretation：「structural impediments」（結構性障礙）
+`
+      },
+      {
+        title: "MODULE A2: Coherence & Cohesion (Task 1) 連貫與銜接",
+        content: `
+### A2.1 Theme-Rheme Progression (Linear Flow) 主位-述位推進
+**Principle:** Each sentence's Theme (starting point) should link to the previous sentence's Rheme (end point).
+
+**Band 7 (Choppy, disconnected):**
+"Country A increased. Country B also increased. Country C decreased. Country D was stable."
+*Problem:* Each sentence introduces a new Theme with no linkage → cohesion gap.
+
+**Band 9 (Smooth linear progression):**
+"Country A's GDP surged 40% over the decade. This surge positioned it as the regional leader by 2020. Such leadership, however, was challenged by Country B's accelerating growth trajectory, which narrowed the gap from $500 billion to $200 billion. This convergence suggests that B's policy reforms and structural adjustments are bearing fruit, potentially reshaping regional economic hierarchies."
+
+**廣東話分析:**
+*   Sentence 1 Rheme: "surged 40%"
+*   Sentence 2 Theme: "This surge"（指返 Rheme）
+*   Sentence 3 Theme: "Such leadership"（指返 Sentence 2 嘅 Rheme）
+*   Sentence 4 Theme: "This convergence"（指返 Sentence 3 嘅 "narrowed the gap"）
+*   每句都有 explicit linkage，冇 gap
+
+### A2.2 Avoiding Mechanical Cohesion 避免機械銜接
+**Band 7 Error (Overuse of connectors):**
+"Firstly, Country A increased. Secondly, Country B also increased. Thirdly, Country C decreased. In conclusion, the chart shows different trends."
+*Problem:* "Firstly, Secondly, Thirdly" → sounds like template. "In conclusion" in Task 1 → inappropriate.
+
+**Band 9 (Natural, varied cohesion):**
+"Country A exhibited robust growth throughout the period. By contrast, Country C contracted sharply post-2015. Meanwhile, Country B oscillated between expansion and stagnation, reflecting volatile policy environments."
+
+**廣東話:**
+*   用 "By contrast"（對比）、"Meanwhile"（同時）而唔係 "Firstly, Secondly"
+*   Cohesive devices 用得 sparse (稀疏) 同 natural (自然)
+*   Band 9 descriptor 講「cohesion very rarely attracts attention」—— 即係唔會 overuse
+
+### A2.3 Skilful Paragraphing (Conceptual, Not Mechanical) 巧妙分段
+**Band 7 Structure (Mechanical):**
+*   Paragraph 1: Overview
+*   Paragraph 2: 2010 data
+*   Paragraph 3: 2015 data
+*   Paragraph 4: 2020 data
+*   *Problem:* Paragraphing by years → mechanical, descriptive.
+
+**Band 9 Structure (Conceptual):**
+*   Paragraph 1: Analytical overview
+*   Paragraph 2: High performers (Countries A, B) + their patterns
+*   Paragraph 3: Emerging economies (Countries C, D) + catch-up dynamics
+*   Paragraph 4: Outliers (Country E) + structural impediments
+
+**廣東話:**
+*   按 conceptual groups 分段，唔係按 mechanical order（年份、類別）
+*   每段有 clear thematic focus
+*   呢種分段叫做「skilfully managed」（巧妙管理）
+`
+      },
+      {
+        title: "MODULE A3: Lexical Resource (Task 1) 詞彙資源",
+        content: `
+### A3.1 Precise Trend Verbs (Not "increase/decrease") 精確趨勢動詞
+
+**Upward Movement 上升**
+*   **Dramatic:** surge, soar, skyrocket, rocket, leap
+*   **Strong:** climb, rise sharply, jump, accelerate, shoot up
+*   **Moderate:** increase, grow, advance, rise, expand, edge up
+*   **Minimal:** inch up, creep up, nudge higher, tick up
+
+**Downward Movement 下降**
+*   **Dramatic:** plummet, plunge, collapse, nosedive, crash
+*   **Strong:** decline sharply, fall steeply, drop significantly, contract
+*   **Moderate:** decrease, decline, drop, dip, fall, reduce
+*   **Minimal:** edge down, slip, ease, slide slightly
+
+**Stability & Fluctuation 穩定與波動**
+*   **Stable:** remain steady, plateau, level off, stabilize, hold constant
+*   **Volatile:** fluctuate, oscillate, vary, swing, seesaw
+*   **Peak:** peak, reach a high, hit a maximum, crest
+*   **Trough:** hit a low, bottom out, reach a minimum
+
+**Band 9 Sentence (Multiple trend verbs):**
+"Export volumes surged 40% between 2015 and 2018, then plateaued for two years before edging down modestly in 2020—a trajectory suggesting initial expansion, subsequent saturation, and mild contraction attributable to pandemic disruptions."
+
+**廣東話:**
+*   用三個唔同 intensity 嘅動詞：surged (劇烈上升) → plateaued (穩定) → edging down (微降)
+*   加 interpretation：「initial expansion」→「saturation」→「mild contraction」
+*   最後解釋原因：「pandemic disruptions」
+
+### A3.2 Academic Noun Phrases for Phenomena 學術名詞短語
+**Band 7 (Simple nouns):** "The numbers went up."
+**Band 9 (Nominalized + Precise):** "The data reveal sustained upward momentum / accelerated expansion / precipitous decline / structural convergence / cyclical volatility."
+
+| Phenomenon | Band 9 Phrase |
+| :--- | :--- |
+| **Fast growth** | sustained expansion, rapid acceleration, exponential growth |
+| **Slow growth** | incremental gains, modest advancement, marginal increases |
+| **Decrease** | sharp contraction, precipitous decline, gradual erosion |
+| **Stability** | stagnation, equilibrium, plateau, steady state |
+| **Volatility** | pronounced fluctuations, cyclical oscillations, erratic movement |
+| **Difference** | divergence, disparity, gap, differential |
+| **Similarity** | convergence, alignment, parity, homogeneity |
+| **Highest/Lowest** | apex, zenith, peak / nadir, trough, minimum |
+
+**Band 9 Example:**
+"The period witnessed pronounced divergence between high-income and low-income cohorts, with the former experiencing sustained expansion while the latter endured protracted stagnation."
+
+### A3.3 Hedged Causal Language (Appropriate for Task 1) 緩和的因果語言
+**Principle:** Task 1 should avoid strong causal claims (you don't have causal data), but hedged speculation is acceptable.
+
+**Band 7 Error (Over-assertive):**
+❌ "Country X's GDP grew because of government policy." (*Problem:* Causal claim without supporting evidence.)
+
+**Band 9 (Hedged):**
+✅ "Country X's GDP growth may be partially attributable to fiscal stimulus introduced in Year Y, though confounding factors—including favorable commodity prices and regional trade agreements—complicate causal attribution. The temporal coincidence is suggestive but not conclusive."
+
+**Hedging Phrases:**
+*   "may be attributable to"
+*   "likely reflects"
+*   "suggests"
+*   "is consistent with"
+*   "could be explained by"
+*   "possibly stems from"
+*   "appears to be associated with"
+
+**廣東話:**
+*   Task 1 唔可以 100% 肯定因果關係（冇足夠數據）
+*   但可以用 hedged language 提出 合理推測
+*   呢個叫做「cautious interpretation」（謹慎詮釋）
+`
+      },
+      {
+        title: "MODULE A4: Grammatical Range & Accuracy (Task 1) 語法範圍與準確度",
+        content: `
+### A4.1 Variety in Sentence Openings 句首變化
+**Band 7 Error (Monotonous):**
+"Country A increased. Country B decreased. Country C remained stable. Country D fluctuated."
+*Problem:* Every sentence starts with "Country X + verb".
+
+**Band 9 Variety:**
+*   **Prepositional phrase opening:** "Over the decade, Country A's GDP expanded by 60%."
+*   **Adverbial opening:** "Notably, Country B outpaced all peers in proportional terms."
+*   **Participial phrase opening:** "Starting from a low base, Country C achieved triple-digit growth."
+*   **Subordinate clause opening:** "While Country D stagnated, Country E experienced a modest uptick."
+*   **Nominalization opening:** "The most striking feature is the convergence between Groups A and B."
+
+### A4.2 Relative Clauses for Data Integration 關係從句整合數據
+**Band 7 (Separate sentences):**
+"Country A had the highest GDP. It grew by 50%."
+
+**Band 9 (Integrated with relative clause):**
+"Country A, which had the highest GDP, grew by 50%."
+
+**Advanced Examples:**
+*   **Non-defining relative clause:** "Country C, which started from a base of $50 billion, more than tripled its GDP to $170 billion."
+*   **Defining relative clause:** "Countries that exhibited double-digit growth were predominantly emerging economies."
+*   **Reduced relative clause (participle):** "The trend observed in high-income nations contrasts sharply with that seen in developing countries."
+
+### A4.3 Comparative Structures 比較結構
+**Simple Comparison (Band 7):**
+"Country A is higher than Country B."
+
+**Advanced Comparisons (Band 9):**
+*   **Proportional comparison:** "Country A's GDP is three times that of Country B."
+*   **Rate comparison:** "Country C grew at twice the rate of Country D."
+*   **Multiple comparison:** "While Country E outpaced Country F in absolute terms, it lagged behind in proportional growth."
+*   **Superlative + quantification:** "Country G registered the steepest decline, contracting by more than 20%—far exceeding the average contraction of 8%."
+
+**廣東話:**
+*   用 "three times that of" 而唔係 "three times more"（後者有歧義）
+*   用 "outpaced" / "lagged behind" 而唔係 "faster" / "slower"
+*   用 "far exceeding" 加強對比
+`
+      },
+      {
+        title: "MODULE A5: Task 1 Complete Model Answer 完整範例",
+        content: `
+### Data: Mixed Chart (Pie Chart + Table)
+*   **Pie Chart:** Anthropology graduates' destinations (Full-time work 52%, Part-time work 15%, Unemployed 12%, Part-time+postgrad 8%, Full-time postgrad 8%, Unknown 5%)
+*   **Table:** Salary distribution after 5 years (Freelance, Government, Private companies × 4 salary brackets)
+
+### Band 9 Model Answer (193 words)
+
+**[Overview Paragraph]**
+The data illustrate the occupational trajectories and earnings profiles of anthropology graduates from one institution. Overall, the majority transitioned directly into full-time employment (52%), while postgraduate study—whether full-time or combined with work—remained relatively uncommon (16% combined). Salary outcomes after five years reveal substantial sectoral variation, with freelance consultants and government employees disproportionately represented in higher income brackets, whereas private-sector anthropologists exhibited more dispersed earnings.
+
+**[Body Paragraph 1: Pie Chart]**
+Regarding initial destinations, over half secured full-time employment (52%), suggesting relatively robust labour-market demand for anthropological skills. In contrast, part-time work accounted for 15%, with an additional 8% combining part-time roles with postgraduate study—a pattern potentially reflecting portfolio career strategies. Notably, full-time postgraduate study attracted only 8%, indicating that advanced training was not the default pathway. Unemployment stood at 12%, while 5% had unknown destinations, likely due to non-response in tracking surveys.
+
+**[Body Paragraph 2: Table]**
+Salary data reveal pronounced earnings hierarchies contingent upon sector. Freelance consultants and government-sector anthropologists clustered heavily in upper brackets: 80% of freelancers and 80% of government workers earned above $75,000, with half of government employees surpassing $100,000. By contrast, private-company anthropologists exhibited a more graduated distribution, with only 55% earning above $75,000. This sectoral divergence likely reflects differential valuation of anthropological expertise, with government and consulting roles commanding premiums due to specialized applications.
+
+### Analysis of Why This Is Band 9
+**Task Achievement (9/9):**
+✅ All categories covered (pie chart: all 6 destinations; table: all 3 sectors)
+✅ Analytical overview (patterns, not data list)
+✅ Key features selected strategically (80% in top brackets, 55% in private)
+✅ Comparisons made (freelance/gov vs private; full-time work vs postgrad)
+
+**Coherence & Cohesion (9/9):**
+✅ Theme-Rheme progression: "majority transitioned" → "Such majority" → "This employment"
+✅ Natural cohesion: "By contrast", "Notably", "Meanwhile" (not "Firstly, Secondly")
+✅ Skilful paragraphing: Overview → Pie (destinations) → Table (salaries)
+✅ Message "followed effortlessly"
+
+**Lexical Resource (9/9):**
+✅ "Occupational trajectories" (not "what they did")
+✅ "Disproportionately represented" (not "many")
+✅ "Dispersed earnings" (not "spread out")
+✅ "Pronounced hierarchies" (not "big differences")
+✅ "Commanding premiums" (not "earn more")
+✅ No repetition: "graduates" → "individuals" → "employees"
+
+**Grammatical Range & Accuracy (9/9):**
+✅ Variety: "Over half secured..." / "Notably, full-time postgrad..." / "By contrast, private-company..."
+✅ Relative clauses: "postgraduate study—whether full-time or combined with work—remained uncommon"
+✅ Comparative structures: "80% vs 55%", "more graduated distribution"
+✅ Non-finite clauses: "suggesting robust demand", "reflecting portfolio strategies"
+✅ No errors
 `
       }
     ]
   },
   {
-    id: "m3",
-    title: "MODULE 3: Syntactic Complexity & Readability Balance 句法複雜度與可讀性平衡",
+    id: "part-b",
+    title: "PART B: TASK 2 MASTERY (Argumentative Essay)",
     sections: [
       {
-        title: "3.1 The Syntactic Complexity Paradox 句法複雜度悖論",
+        title: "Official Band 9 Descriptors 官方 Band 9 標準",
         content: `
-**Key Insight:** Band 9 requires high syntactic range but not maximal complexity in every sentence. Optimal prose alternates complex and simple structures.
-**Psycholinguistic Principle:** Working memory constraints favor periodic simple sentences to allow cognitive processing of prior complex material.
+### 1. Task Response (Band 9):
+"The prompt is appropriately addressed and explored in depth. A clear and fully developed position is presented which directly answers the questions. Ideas are relevant, fully extended and well supported. Any lapses in content or support are extremely rare."
+**廣東話解讀:**
+*   「深入探討」prompt（唔係表面處理）
+*   立場「清晰且充分展開」
+*   觀點「相關、充分延伸、有力支撐」
+*   幾乎冇內容疏漏
 
-**Band 7 (Monotonous Complexity):**
-"Although governments, which are constrained by fiscal limitations that stem from competing budgetary priorities, often struggle to allocate sufficient resources to education, which is widely regarded as a cornerstone of economic development and social mobility, evidence suggests that strategic investment in teacher quality, curriculum reform, and infrastructure improvement can yield substantial returns."
-*Problem:* 78-word sentence with multiple embedded clauses → processing overload.
+### 2. Coherence & Cohesion (Band 9):
+"The message can be followed effortlessly. Cohesion is used in such a way that it very rarely attracts attention. Any lapses in coherence or cohesion are minimal. Paragraphing is skilfully managed."
 
-**Band 9 (Varied Complexity):**
-"Governments face severe fiscal constraints, stemming from competing budgetary priorities. Nevertheless, education remains a cornerstone of economic development and social mobility. Evidence suggests that strategic investment—targeting teacher quality, curriculum reform, and infrastructure—can yield substantial returns. Such investment need not be fiscally prohibitive. Cross-national analyses indicate that efficiency gains from administrative streamlining and evidence-based resource allocation often exceed the marginal costs of enhanced educational provision."
+### 3. Lexical Resource (Band 9):
+"Full flexibility and precise use are widely evident. A wide range of vocabulary is used accurately and appropriately with very natural and sophisticated control of lexical features. Minor errors in spelling and word formation are extremely rare and have minimal impact on communication."
 
-**廣東話分析:**
-*   Sentence 1: Complex (25 words, subordinate clause)
-*   Sentence 2: Simple (12 words)
-*   Sentence 3: Complex (19 words, appositive phrase)
-*   Sentence 4: Simple (8 words)
-*   Sentence 5: Complex (25 words, two subordinate clauses)
-*   Pattern: Complex → Simple → Complex → Simple → Complex
-*   呢種 rhythm 令讀者唔會 overload
+### 4. Grammatical Range & Accuracy (Band 9):
+"A wide range of structures is used with full flexibility and control. Punctuation and grammar are used appropriately throughout. Minor errors are extremely rare and have minimal impact on communication."
 `
       },
       {
-        title: "3.2 Non-finite Clauses for Compression 非限定分句用於壓縮",
+        title: "MODULE B1: Task Response for Task 2 任務回應",
         content: `
-Non-finite clauses (infinitives, gerunds, participles) allow information compression while maintaining sophistication.
+### B1.1 "Appropriately Addressed and Explored in Depth"
+**What "in depth" means:**
+*   Unpacking assumptions (making implicit premises explicit)
+*   Addressing counterarguments (steel man, not straw man)
+*   Providing theoretical grounding (human capital theory, convergence dynamics)
+*   Offering nuanced synthesis (not binary agree/disagree)
 
-**Band 7 (Finite Clauses Only):**
-"She submitted the report and she hoped that it would be approved."
+**Band 7 (Superficial):** "Education is important because it helps people get jobs. Therefore, governments should invest in education."
+*Problems:* Hidden premise not addressed, No counterarguments, No theoretical grounding.
 
-**Band 9 (Non-finite Compression):**
-"She submitted the report, hoping it would be approved."
-*Effect:* 5-word gerund clause replaces 7-word finite clause → 30% compression without information loss.
+**Band 9 (In-depth):**
+"While educational attainment correlates robustly with employment outcomes—OECD data indicate tertiary-educated individuals earn 65% more—the inference that governments should universally expand access requires unpacking three assumptions: (1) that labor markets reward credentials, (2) that educational quality is maintained, and (3) that credential inflation is avoided. Human capital theory supports premise (1), but credential saturation—evident in South Korea's 70% tertiary attainment—complicates (3). Thus, the optimal policy is not wholesale expansion but targeted investment in high-demand fields combined with vocational alternatives, ensuring both access and labor-market alignment."
 
-**Advanced Example: Multiple Non-finite Clauses**
-**Band 7:**
-"After the government introduced the policy, and after it was implemented across multiple sectors, unemployment rates began to decline. This decline surprised analysts who had predicted that job losses would occur."
+### B1.2 "Clear and Fully Developed Position"
+**Band 7 Error (Vague position):**
+"I partly agree with this statement because there are advantages and disadvantages."
+*Problem:* "Partly agree" = 冇立場。
+
+**Band 9 (Precise position):**
+"This essay contends that effort-based messaging yields conditional benefits—contingent upon whether it is paired with structural awareness and acknowledgment that effort, while necessary, is rarely sufficient for success."
+
+**Key Features:**
+*   Precise thesis: "conditional benefits"
+*   Qualification: "contingent upon"
+*   Logical distinction: "necessary but not sufficient"
+*   Clear conditions: "paired with structural awareness"
+
+### B1.3 "Ideas are Relevant, Fully Extended and Well Supported"
+**What "fully extended" means:**
+1.  **Claim** (topic sentence)
+2.  **Explanation** (why this claim matters)
+3.  **Evidence** (data, examples, research)
+4.  **Analysis** (interpretation of evidence)
+5.  **Link back to thesis** (how this supports your position)
+
+**Band 9 (Fully extended) Example:**
+*   **[Claim]** Education mitigates poverty primarily through enhancing human capital—the stock of skills, knowledge, and competencies that determine labor productivity and thus earning potential.
+*   **[Explanation]** This mechanism operates via two pathways: (1) direct skill acquisition (literacy, numeracy, technical expertise), and (2) signaling to employers that individuals possess trainability and cognitive capacity.
+*   **[Evidence]** Longitudinal data from the OECD demonstrate that tertiary-educated individuals earn, on average, 65% more than secondary-educated counterparts, with this premium remaining stable across two decades—suggesting persistent labor-market valuation of credentials.
+*   **[Analysis]** Critically, this does not imply that education suffices to eliminate poverty; rather, it increases the probability of upward mobility provided labor markets reward credentials and educational quality is maintained.
+*   **[Link]** Thus, while education is a powerful anti-poverty tool, its efficacy is contingent on complementary conditions—including demand for skilled labor and avoidance of credential inflation.
+`
+      },
+      {
+        title: "MODULE B2: Coherence & Cohesion (Task 2) 連貫與銜接",
+        content: `
+### B2.1 Effortless Message Flow (Theme-Rheme)
+
+**Band 7 (Choppy):**
+"Remote work has benefits. It reduces commuting. Mental health is also affected. Productivity varies."
+
+**Band 9 (Smooth):**
+"Remote work offers substantial benefits, chief among them the elimination of commuting—a source of both time loss and stress. This elimination enhances work-life balance for many employees. However, such gains must be weighed against potential mental health costs: isolation, blurred work-home boundaries, and reduced social capital. These psychological risks suggest that remote work's viability is highly individual, contingent on factors like household composition and intrinsic motivation."
+
+### B2.2 Natural Cohesion (Not Mechanical)
+**Band 7 Error:**
+"Firstly, education is important. Secondly, it helps people get jobs. Thirdly, it reduces inequality. In conclusion, education should be funded."
 
 **Band 9:**
-"Following the policy's cross-sectoral implementation, unemployment rates declined, surprising analysts who had predicted job losses."
+"Education is indispensable for both individual flourishing and societal welfare. Beyond its intrinsic value, it serves instrumental functions: enhancing employability, fostering critical thinking, and mitigating inequality. Nevertheless, these benefits are not automatic—they hinge on educational quality and labor-market alignment."
 
-**廣東話分析:**
-*   "Following the policy's cross-sectoral implementation" = 壓縮兩個 finite clauses
-*   "Surprising analysts..." = participle clause 做 result
-*   19 words vs 32 words (40% compression)
+### B2.3 Skilful Paragraphing for Task 2
+**Band 9 Structure (for "Discuss both views and give your opinion"):**
+*   **Introduction (50–60 words):** Paraphrase prompt, Thesis statement (your position)
+*   **Body 1 (100–120 words):** Steel man opposing view + acknowledge strengths. Present strongest version regarding opposing argument, Evidence, Acknowledge validity.
+*   **Body 2 (100–120 words):** Counter with your view + limitations of opposing view. Present your argument, Address weaknesses of opposing view, Provide evidence.
+*   **Body 3 (80–100 words, optional):** Synthesis / Conditions under which both are true. Nuanced middle ground, Specify conditions.
+*   **Conclusion (40–50 words):** Restate thesis (paraphrased), Final implication.
 `
       },
       {
-        title: "3.3 Cleft Constructions for Focus & Contrast 分裂句用於聚焦與對比",
+        title: "MODULE B3: Lexical Resource (Task 2) 詞彙資源",
         content: `
-**It-Cleft:** Highlights one constituent by making it the focus.
+### B3.1 Academic Verb Precision
+**Avoid vague verbs:**
 
-**Band 7:**
-"Systemic inequality, not individual effort, explains persistent poverty."
+| Vague (Band 7) | Academic Alternative (Band 9) | Example |
+| :--- | :--- | :--- |
+| **make, cause** | precipitate, engender, foster, catalyze, induce | "Poverty precipitates social instability." |
+| **reduce, lower** | mitigate, attenuate, diminish, erode, curtail | "Education mitigates inequality." |
+| **increase, raise** | augment, amplify, enhance, bolster, intensify | "Technology augments productivity." |
+| **show, prove** | demonstrate, establish, evince, corroborate | "Data demonstrate a correlation." |
+| **affect, impact** | influence, shape, modulate, condition | "Policy shapes outcomes." |
+| **help, support** | facilitate, enable, expedite, promote | "Infrastructure facilitates trade." |
+| **stop, prevent** | impede, constrain, inhibit, preclude, forestall | "Regulation precludes exploitation." |
+| **keep, maintain** | sustain, preserve, perpetuate, uphold | "Institutions sustain norms." |
 
-**Band 9 (It-Cleft):**
-"It is systemic inequality, not individual effort, that explains persistent poverty."
-*Effect:* "Systemic inequality" moves to focus position, explicitly contrasting with "individual effort."
+### B3.2 Nominalization for Academic Register
+**Principle:** Convert verbs/adjectives to nouns to achieve formal register.
+*   reduce → reduction, grow → growth, fail → failure, intervene → intervention
 
-**Wh-Cleft (Pseudo-Cleft) for Emphasis**
-**Band 7:**
-"Governments should prioritize renewable energy investment."
+**But avoid excessive nominalization:**
+❌ Too nominal: "The implementation of the policy resulted in the improvement of outcomes."
+✅ Balanced: "When policymakers implemented the policy, outcomes improved."
 
-**Band 9 (Wh-Cleft):**
-"What governments must prioritize is renewable energy investment, not incremental adjustments to fossil fuel efficiency."
-
-**廣東話分析:**
-*   Wh-cleft 將 "renewable energy investment" 放喺 focus position
-*   同時 add contrast："not incremental adjustments..."
-*   呢種結構好適合用嚟 counter 對方論點
-`
-      },
-      {
-        title: "3.4 Avoiding Center-Embedding Overload 避免中心嵌入過載",
-        content: `
-**Center-embedding:** Inserting a subordinate clause in the middle of the main clause.
-
-**Problematic (Triple Center-Embedding):**
-❌ "The claim that the study that the researchers who the university hired conducted validates is controversial."
-*Problem:* Readers must hold three incomplete clauses in working memory → unprocessable.
-
-**Solution:** Right-branching structures
-
-**Band 9 (Right-Branching):**
-"The claim is controversial—namely, that the study validates a hypothesis advanced by researchers whom the university hired for this project."
-
-**廣東話:**
-*   用 dash + "namely" introduce elaboration
-*   所有 subordination 都係 right-branching（向右分支）
-*   冇 center-embedding，易讀好多
-`
-      }
-    ]
-  },
-  {
-    id: "m4",
-    title: "MODULE 4: Task 1 Advanced Analytics 任務一進階分析",
-    sections: [
-      {
-        title: "4.1 From Description to Interpretation: The Analytical Overview 從描述到詮釋：分析性概覽",
-        content: `
-**Band 7 Overview (Descriptive):**
-"The chart shows data for five countries from 2010 to 2020. Country A had the highest value. Country E had the lowest. All countries increased."
-
-**Band 9 Overview (Analytical):**
-"The data reveal divergent growth trajectories across five economies, with advanced nations exhibiting decelerating growth consistent with diminishing marginal returns, while emerging economies demonstrate accelerated expansion characteristic of convergence dynamics. Notably, absolute gaps widened despite proportional convergence, a pattern implicating scale effects in economic development."
-
-**廣東話分析:**
-*   唔係 list 數據，而係 identify patterns："divergent trajectories", "convergence dynamics"
-*   用經濟學理論："diminishing marginal returns"
-*   指出 paradox："absolute gaps widened" + "proportional convergence"
-*   提供 theoretical explanation："scale effects"
-`
-      },
-      {
-        title: "4.2 Proportional vs Absolute Reasoning 比例與絕對值推理",
-        content: `
-**Scenario:**
-Country A GDP: $2 trillion → $3 trillion (+50%)
-Country B GDP: $100 billion → $200 billion (+100%)
-
-**Band 7 (Absolute Only):**
-"Country A grew more ($1 trillion vs $100 billion)."
-
-**Band 9 (Dual Analysis):**
-"In absolute terms, Country A's GDP expansion ($1 trillion) dwarfed Country B's ($100 billion) tenfold. However, proportionally, Country B exhibited a 100% growth rate—double Country A's 50%—indicating more dynamic economic expansion relative to baseline. This proportional-absolute divergence likely reflects convergence phenomena: lower-income economies (Country B) grow faster than affluent ones (Country A) due to technology transfer, institutional catch-up, and higher marginal productivity of capital. Consequently, while absolute gaps persist or widen, relative gaps narrow, a pattern consistent with conditional convergence theory in development economics."
-
-**廣東話分析:**
-*   同時講 absolute 同 proportional："dwarfed tenfold" (absolute) vs "double" (proportional)
-*   解釋 divergence："convergence phenomena"
-*   引用理論："conditional convergence theory"
-*   指出 policy implication："absolute gaps persist" vs "relative gaps narrow"
-`
-      },
-      {
-        title: "4.3 Causal Speculation with Hedging 因果推測與語氣緩和",
-        content: `
-**Principle:** Task 1 should avoid strong causal claims but can offer hedged explanations.
-
-**Band 7 (Over-Assertive):**
-❌ "Country X's GDP grew because of government policy."
-*Problem:* Causal claim without data to support it.
-
-**Band 9 (Hedged Speculation):**
-"Country X's GDP growth may be partially attributable to fiscal stimulus measures introduced in Year Y, though confounding factors—including favorable commodity prices and regional trade agreements—complicate causal attribution. The temporal coincidence of policy implementation and growth acceleration is suggestive but not conclusive."
-
-**廣東話:**
-*   用 "may be partially attributable to"（可能部分歸因於）
-*   明講 "confounding factors"（混淆因素）
-*   "Temporal coincidence... suggestive but not conclusive"（時間巧合...提示但唔係結論）
-*   全部都係 appropriate hedging for Task 1
-`
-      },
-      {
-        title: "4.4 Lexical Precision in Describing Trends 趨勢描述的詞彙精確性",
-        content: `
-Avoid Vague Verbs ("increase", "decrease")—use specific, nuanced alternatives:
-
-**Upward Movement**
-*   **Dramatic:** surge, soar, skyrocket, rocket ("Cryptocurrency valuations surged 400% in Q4.")
-*   **Strong:** climb, rise sharply, accelerate, jump ("Enrollment climbed steadily over the decade.")
-*   **Moderate:** increase, grow, advance, edge up ("Real wages advanced modestly (+2% annually).")
-*   **Minimal:** inch up, creep up, nudge higher ("Inflation inched up from 2.1% to 2.3%.")
-
-**Downward Movement**
-*   **Dramatic:** plummet, plunge, collapse, nosedive ("Stock prices plummeted in the wake of the scandal.")
-*   **Strong:** decline sharply, fall steeply, contract ("Manufacturing output contracted by 15%.")
-*   **Moderate:** decrease, decline, drop, dip ("Consumer confidence dipped post-election.")
-*   **Minimal:** edge down, slip, ease ("Interest rates eased by 25 basis points.")
-
-**Stability & Fluctuation**
-*   **Stable:** remain steady, plateau, level off, stabilize ("Unemployment plateaued at 6% for three years.")
-*   **Volatile:** fluctuate, oscillate, vary, swing ("Oil prices oscillated between $60 and $80/barrel.")
+### B3.3 Collocations (Natural Word Partnerships)
+| Topic | Band 7 (Unnatural) | Band 9 (Natural Collocation) |
+| :--- | :--- | :--- |
+| **Economy** | "make economic growth" | "foster / spur / stimulate economic growth" |
+| **Policy** | "do a policy" | "implement / enact / formulate a policy" |
+| **Problem** | "solve the problem" | "address / tackle / resolve the issue" |
+| **Evidence** | "give evidence" | "provide / present / marshal evidence" |
+| **Effect** | "have an effect" | "exert / yield / produce an effect" |
+| **Attention** | "give attention" | "devote / direct / draw attention to" |
 
 **Band 9 Sentence:**
-"Export volumes surged 40% between 2015 and 2018, then plateaued for two years before edging down modestly in 2020—a trajectory suggesting initial expansion followed by market saturation."
-
-**廣東話:**
-*   "Surged" (dramatic increase)
-*   "Plateaued" (stable)
-*   "Edging down" (minimal decrease)
-*   用三個唔同 intensity 嘅動詞 capture nuanced movement
-`
-      }
-    ]
-  },
-  {
-    id: "m5",
-    title: "MODULE 5: Task 2 Advanced Argumentation 任務二進階論證",
-    sections: [
-      {
-        title: "5.1 Necessary vs Sufficient Conditions: Precise Causal Claims 必要與充分條件：精確因果主張",
-        content: `
-**Definitions:**
-*   X is necessary for Y: ¬X → ¬Y (without X, no Y)
-*   X is sufficient for Y: X → Y (X guarantees Y)
-
-**Common Error:** Confusing correlation with necessity/sufficiency.
-
-**Band 7 (Confused):**
-"University education is necessary for success because most successful people have degrees."
-*Problem:* "Most successful people have degrees" shows sufficiency (or correlation), not necessity. Counterexamples (Bill Gates, Steve Jobs) prove it's not necessary.
-
-**Band 9 (Precise):**
-"University education is neither necessary nor sufficient for career success. It is not necessary, as demonstrated by numerous high-achieving entrepreneurs (Gates, Zuckerberg) who succeeded without degrees. Nor is it sufficient—many graduates face underemployment, particularly in over-saturated fields. Rather, higher education is facilitative: it increases the probability of favorable outcomes (e.g., 60% higher lifetime earnings on average) without guaranteeing them. Thus, educational attainment is best conceptualized as one probabilistic factor among multiple determinants—including social capital, cognitive ability, and labor market conditions."
-
-**廣東話分析:**
-*   明確講 "neither necessary nor sufficient"
-*   提供 counterexamples (Gates, Zuckerberg) 證明 "not necessary"
-*   指出 "many graduates face underemployment" 證明 "not sufficient"
-*   用 "facilitative" 同 "increases the probability" 做精確表達
-*   Conclusion: "one probabilistic factor among multiple determinants"
+"To tackle this pressing issue, governments must implement comprehensive policies that address root causes rather than merely treating symptoms."
 `
       },
       {
-        title: "5.2 Toulmin Model: Six-Element Argument Construction 圖爾敏模型：六元素論證構建",
+        title: "MODULE B4: Grammatical Range & Accuracy (Task 2) 語法範圍與準確度",
         content: `
-Every Band 9 body paragraph should contain:
+### B4.1 Mandative Subjunctive (Formal Recommendations)
+**Structure:** Verb (demand, recommend, suggest, propose, insist, require) + that + subject + base form
+
+**Examples:**
+*   I recommend that the government **invest** in early education. (NOT "invests")
+*   It is essential that universities **adopt** transparent criteria. (NOT "adopts")
+*   The report proposes that emissions standards **be** tightened. (NOT "are")
+
+**Band 9 Application:**
+"To mitigate climate change, I propose that governments implement carbon pricing, phase out fossil fuel subsidies, and mandate renewable energy targets—measures that collectively constitute a coherent policy framework."
+
+### B4.2 Cleft Sentences for Emphasis
+**It-Cleft:** "It is systemic inequality, not individual deficits, that explains persistent poverty."
+**Wh-Cleft:** "What governments must prioritize is renewable energy investment, not incremental fossil fuel efficiency gains."
+
+### B4.3 Conditional Sentences (Hypothetical Reasoning)
+**Type 2 (Present unreal):** "If governments invested more in education, inequality would decline."
+**Type 3 (Past unreal):** "Had governments invested more in education, inequality would have declined."
+**Mixed conditional:** "If governments had invested more in education in the 1990s, inequality would be lower today."
+
+**Band 9 Application (Inverted):**
+"Were governments to eliminate fossil fuel subsidies, renewable energy would become immediately competitive, accelerating the energy transition and reducing emissions by an estimated 20% within a decade."
+`
+      },
+      {
+        title: "MODULE B5: Advanced Argumentation 圖爾敏六元素論證",
+        content: `
+### B5.1 Toulmin Model (Six-Element Argument)
+Every body paragraph should contain:
 1.  **Claim (主張):** Your main point
 2.  **Data (數據):** Evidence
 3.  **Warrant (保證):** Why Data supports Claim
-4.  **Backing (支撐):** Support for Warrant
-5.  **Qualifier (限定):** Scope/strength of Claim
-6.  **Rebuttal (反駁):** Acknowledge counterarguments
+4.  **Backing (支撐):** Theory/research supporting Warrant
+5.  **Qualifier (限定):** Conditions/scope
+6.  **Rebuttal (反駁):** Counterargument + response
 
-**Full Example: Education & Inequality**
-*   **Claim:** Expanding access to higher education can mitigate income inequality, but only under specific institutional conditions.
-*   **Data:** OECD longitudinal data indicate that tertiary-educated individuals earn, on average, 65% more than those with secondary education alone, with this premium remaining stable across two decades.
-*   **Warrant:** If income differentials align with educational attainment, then broadening university access should enable upward mobility for individuals from low-income backgrounds, provided labor markets reward credentials and educational quality is maintained.
-*   **Backing:** This logic reflects human capital theory, which conceptualizes education as productivity-enhancing investment. Empirical validation comes from difference-in-differences analyses of college expansion programs (e.g., UK's 1992 polytechnic-to-university conversions), which show statistically significant income gains for cohorts gaining access.
-*   **Qualifier:** However, these effects are contingent on two conditions: (1) avoiding credential inflation (degrees retaining signaling value), and (2) aligning curricula with labor market demands.
-*   **Rebuttal:** Critics argue that when degrees become ubiquitous, their signaling power erodes—a concern validated by credential inflation in saturated markets (e.g., South Korea's 70% tertiary attainment rate). Yet this does not invalidate the education-inequality link; rather, it suggests that quality assurance and labor market coordination are necessary complements to access expansion. Countries maintaining robust vocational tracks alongside academic degrees (e.g., Germany's dual system) avoid credential inflation while preserving educational returns.
+**Full Example (Education & Inequality):**
+*   **[Claim]** Expanding access to higher education can mitigate income inequality, but only under specific conditions.
+*   **[Data]** OECD data indicate tertiary-educated individuals earn 65% more than secondary-educated counterparts, with this premium stable across two decades.
+*   **[Warrant]** If income differentials align with educational attainment, then broadening access should enable upward mobility for low-income individuals, provided labor markets reward credentials and quality is maintained.
+*   **[Backing]** This logic reflects human capital theory, which conceptualizes education as productivity-enhancing investment. Empirical validation comes from difference-in-differences analyses of college expansion programs, showing statistically significant income gains.
+*   **[Qualifier]** However, these effects are contingent on: (1) avoiding credential inflation, and (2) aligning curricula with labor demands.
+*   **[Rebuttal]** Critics argue that ubiquitous degrees erode signaling power—a concern validated by South Korea's credential saturation. Yet this does not invalidate the education-inequality link; rather, it suggests that quality assurance and vocational alternatives are necessary complements to access expansion.
 
-**廣東話分析:**
-*   每個 element 都 explicitly present
-*   Data: 用具體數字 "65% more"
-*   Warrant: 明講 "provided" conditions
-*   Backing: 引用 theory (human capital) + empirical method (difference-in-differences)
-*   Qualifier: "contingent on two conditions"
-*   Rebuttal: Acknowledge "credential inflation" 但 counter 佢
+### B5.2 Inference to the Best Explanation (IBE)
+**Structure:** Present multiple explanations → Compare → Select best.
+**Criteria:** Explanatory power, Parsimony (simplicity), Consistency with established knowledge, Testability.
+
+**Example (Digital Divide):**
+*   **[Phenomenon]** Low-income communities exhibit lower digital literacy.
+*   **[Explanation 1]** Cognitive deficits → ❌ Fails consistency (contradicts cognitive science)
+*   **[Explanation 2]** Device access gaps → ⚠️ Partial explanatory power
+*   **[Explanation 3]** Structural barriers (access + education + time) → ✅ Best (Explanation 3 has superior explanatory power and is testable).
+
+### B5.3 Steel Man (Not Straw Man)
+**Straw Man (Band 6-7):** Distort opposing view → easily refute
+**Steel Man (Band 9):** Strengthen opposing view → address strongest form
+
+**Example (Technology & Social Isolation):**
+*   **Steel Man:** "Critics of digital connectivity advance a sophisticated concern: that constant smartphone use fragments attention, displaces face-to-face interaction, and cultivates algorithmic dependency via dopamine-driven feedback loops..."
+*   **Counter:** "Nevertheless, this critique overlooks countervailing evidence... it may be that anxious individuals self-select into heavy use... Thus, while concerns merit serious consideration, they do not justify wholesale rejection..."
 `
       },
       {
-        title: "5.3 Inference to the Best Explanation (IBE) 最佳解釋推論",
+        title: "MODULE B6: Complete Task 2 Model Answer 完整範例",
         content: `
-**Structure:** Present multiple explanations → Compare by criteria → Select best.
+### Prompt:
+"In some cultures, children are often told that they can achieve anything if they try hard enough. What are the advantages and disadvantages of giving children this message?"
 
-**Criteria for "Best" Explanation:**
-*   **Explanatory power:** Accounts for more phenomena
-*   **Parsimony:** Simpler (Occam's Razor)
-*   **Consistency:** Aligns with established knowledge
-*   **Testability:** Generates falsifiable predictions
+### Band 9 Model Answer (342 words)
 
-**Example: Digital Divide**
-*Phenomenon:* Low-income communities exhibit lower digital literacy than affluent communities.
-*   **Explanation 1 (Weak): Cognitive deficits**
-    ❌ Fails consistency: Contradicts cognitive science (intelligence normally distributed across SES).
-*   **Explanation 2 (Moderate): Device access gaps**
-    ⚠️ Partial explanatory power: Explains access but not skill disparities among those with devices.
-*   **Explanation 3 (Best): Structural barriers (access + education + time constraints)**
-    ✅ High explanatory power: Accounts for both access and skill gaps
-    ✅ Consistency: Aligns with sociological research on cumulative disadvantage
-    ✅ Testability: Predicts that targeted interventions (device provision + digital literacy training + time subsidies) will narrow gaps more than device provision alone.
+**[Introduction]**
+The adage that "hard work guarantees success" pervades many cultural contexts, particularly in meritocratic societies that valorise individual effort. While this message can cultivate resilience and intrinsic motivation, it risks obscuring structural barriers and fostering self-blame when success remains elusive. This essay contends that the advantages of this messaging are conditional—contingent upon whether it is accompanied by realistic assessments of external constraints and an acknowledgement that effort, though necessary, is rarely sufficient.
 
-**Band 9 Argument:**
-"The digital divide is best explained not by individual deficits but by structural barriers. While device access gaps are necessary conditions, they are insufficient: even when devices are provided, low-income students often lack digital literacy curricula in underfunded schools and face time constraints from economic pressures (part-time work, caregiving). This multi-causal model demonstrates superior explanatory power compared to monocausal accounts and is empirically testable—interventions addressing all three barriers (Community Technology Centers providing devices, training, and flexible scheduling) show significantly larger effect sizes (0.6 SD vs 0.2 SD for device provision alone) on digital skill acquisition."
+**[Body 1: Advantages]**
+The primary advantage of instilling a belief in effort-based achievement lies in its capacity to foster intrinsic motivation and psychological resilience. Research in developmental psychology demonstrates that children who attribute success to controllable factors—such as effort rather than innate talent—exhibit greater persistence in the face of setbacks. This orientation, often termed a "growth mindset", correlates with improved academic performance and reduced helplessness when confronted with challenges. If children believe that outcomes are contingent upon their own actions, they are more likely to invest sustained effort, viewing failure as informative feedback rather than a terminal verdict on their abilities. However, this benefit presupposes that effort genuinely translates into outcomes—an assumption that does not uniformly hold across socioeconomic contexts.
 
-**廣東話分析:**
-*   明講 "best explained by"
-*   拆解 necessary vs insufficient: device access 係 necessary 但唔 sufficient
-*   用 "multi-causal model" 同 "monocausal accounts" 對比
-*   提供 empirical evidence: effect sizes (0.6 vs 0.2 SD)
-`
-      },
-      {
-        title: "5.4 Steel Man vs Straw Man: Intellectual Honesty 鋼鐵人與稻草人：知識誠實",
-        content: `
-*   **Straw Man (Band 6-7):** Distort opposing view → easily refute it
-*   **Steel Man (Band 9):** Strengthen opposing view → address its strongest form
+**[Body 2: Disadvantages]**
+Conversely, this messaging harbours significant risks, particularly when it elides structural inequalities. Framing achievement purely as a function of effort individualises systemic failures, implying that those who do not succeed have simply not tried hard enough. For children from disadvantaged backgrounds—who face resource deficits, discrimination, and limited social capital—such messaging can engender corrosive self-blame. A working-class child who studies diligently yet fails to access elite universities due to inadequate school funding may internalise this as personal inadequacy rather than recognising the institutional barriers at play. Moreover, the "effort equals success" narrative can foster intolerance of failure, wherein children equate setbacks with insufficient willpower, a cognitive distortion linked to anxiety and burnout in psychological literature.
 
-**Example: Technology & Social Isolation**
-**Straw Man (Bad):**
-"Some people say technology is bad. This is ridiculous—technology has brought many benefits like medical advances."
-*Problem:* No one argues "technology is bad" simpliciter. You're attacking a caricature.
+**[Body 3: Synthesis]**
+A more defensible position recognises effort as a necessary but not sufficient condition for success. The message should be recalibrated to emphasise that hard work increases the probability of achieving one's goals while simultaneously equipping children to identify and challenge structural obstacles. Educational systems that pair effort-based messaging with critical consciousness—teaching students to analyse how race, class, and geography shape opportunity—mitigate the psychological harms of the meritocratic myth without abandoning the motivational benefits of agency beliefs. This dual approach fosters both personal resilience and awareness of the need for systemic reform.
 
-**Steel Man (Good):**
-"Critics of pervasive digital connectivity advance a sophisticated concern: that constant smartphone use fragments sustained attention, displaces face-to-face interaction, and cultivates algorithmic dependency via dopamine-driven feedback loops. These concerns are empirically grounded—longitudinal studies demonstrate correlations between heavy social media use and increased anxiety (r = 0.31) and reduced in-person social time (–2.5 hours/week). Moreover, neuroscientific evidence reveals that social media triggers reward circuitry akin to addictive substances."
+**[Conclusion]**
+In summation, the advantages of effort-based messaging—enhanced motivation and resilience—are not intrinsic but contingent upon contextual factors. When divorced from structural awareness, such messages risk perpetuating inequality by misattributing systemic failures to individual shortcomings. A sophisticated approach pairs the psychological empowerment of agency beliefs with critical literacy about societal constraints, thereby fostering both personal agency and collective action.
 
-**[Now Counter It]:**
-"Nevertheless, this critique overlooks countervailing evidence. Digital platforms also facilitate distributed collaboration, global connectivity, and access to information previously unattainable. Crucially, the causal arrow remains contested: it may be that anxious individuals self-select into heavy social media use rather than use causing anxiety—a possibility consistent with cross-lagged panel analyses showing bidirectional associations. Thus, while the concerns merit serious consideration, they do not justify wholesale rejection but rather thoughtful regulation (e.g., design ethics, digital literacy education, and self-regulation tools)."
-
-**廣東話分析:**
-*   Steel man: "sophisticated concern", "empirically grounded", "neuroscientific evidence"
-*   用 specific evidence: "r = 0.31", "–2.5 hours/week"
-*   Counter: "overlooks countervailing evidence"
-*   指出 causality problem: "self-select" vs "causing"
-*   引用 method: "cross-lagged panel analyses"
-*   Synthesis: "thoughtful regulation" 而唔係 "wholesale rejection"
+### Why This Is Band 9
+*   **Task Response (9/9):** Prompt "appropriately addressed and explored in depth", "Clear and fully developed position" (conditional benefits), Ideas "fully extended".
+*   **Coherence & Cohesion (9/9):** Theme-Rheme (this message → Such messaging), Natural cohesion (Conversely, Moreover), Skilful paragraphing.
+*   **Lexical Resource (9/9):** "Valorise", "elides", "engender", "corrosive", "recalibrated", "mitigate". Collocations: "foster resilience", "cultivate motivation".
+*   **Grammatical Range & Accuracy (9/9):** Mandative subjunctive, Complex sentences, Conditionals, Nominalization.
 `
       }
     ]
   },
   {
-    id: "m6",
-    title: "MODULE 6: Linguistic Pitfalls to Avoid 語言學陷阱需避免",
+    id: "part-c",
+    title: "PART C: SHARED ADVANCED FOUNDATIONS",
     sections: [
       {
-        title: "6.2 Dangling Modifiers 懸空修飾語",
+        title: "MODULE C1: Logical Fallacies to Avoid 邏輯謬誤需避免",
         content: `
-**Definition:** A modifier that doesn't clearly modify any specific word.
+### C1.1 Affirming the Consequent 肯定後件謬誤
+**Form:** If P, then Q. Q. ∴ P. (INVALID)
+**Example:** "Countries with high literacy tend to be prosperous. Finland is prosperous. Therefore, Finland must have high literacy."
+*Problem:* Prosperity could stem from other factors.
 
-**Error:**
-❌ "Having finished the report, the computer was shut down."
-*Problem:* "Having finished the report" should modify a person, but the subject is "the computer."
+### C1.2 False Dilemma 虛假二分
+**Form:** Presenting only two options when more exist.
+**Example:** "Either we ban junk food or accept rising obesity."
+**Correction:** "Rather than a binary choice between prohibition and laissez-faire, intermediate policies—such as sugar taxes, transparent labeling, and nutrition education—offer more proportionate responses."
 
-**Correction:**
-✅ "Having finished the report, she shut down the computer."
-
-**IELTS Example:**
-❌ "After analyzing the data, significant trends were observed."
-*Problem:* "After analyzing" needs a human agent, but subject is "trends."
-
-**Band 9 Correction:**
-✅ "After analyzing the data, researchers observed significant trends."
+### C1.3 Base Rate Neglect 基率忽略
+**Example:** "Drug tests are 95% accurate. An athlete tests positive. Therefore, 95% chance they used drugs."
+**Problem:** Ignores prior probability (base rate). With 1% prevalence, posterior is ~16%.
 `
       },
       {
-        title: "6.3 Illogical Comparisons 不合邏輯的比較",
+        title: "MODULE C2: Information Structure (Theme-Rheme) 信息結構",
         content: `
-**Error:**
-❌ "Country A's GDP is higher than Country B."
-*Problem:* Comparing GDP (a quantity) to a country (an entity).
+### C2.1 Linear Progression 線性推進
+Each Theme links to prior Rheme:
+"Climate change poses an existential threat. This threat demands urgent action. Such action should prioritize renewable energy. Renewable energy, however, faces infrastructure constraints. These constraints require substantial investment."
 
-**Correction:**
-✅ "Country A's GDP is higher than that of Country B."
-✅ "Country A's GDP is higher than Country B's."
-
-**IELTS Example:**
-❌ "The results of this study are more conclusive than the previous one."
-*Problem:* Comparing "results" to "one" (study).
-
-**Band 9 Correction:**
-✅ "The results of this study are more conclusive than those of the previous one."
+### C2.2 Avoiding Cohesion Gaps 避免銜接斷裂
+**Cohesion Gap (Band 7):** "Remote work increased. Many companies use Zoom. Productivity varied. Mental health declined."
+**No Gap (Band 9):** "Remote work surged during COVID-19. This shift compelled employers to adopt videoconferencing. These modalities generated mixed productivity outcomes. Moreover, the isolation inherent in remote work precipitated mental health concerns."
 `
       },
       {
-        title: "6.4 False Parallelism 錯誤平行結構",
+        title: "MODULE C3: Self-Editing Checklist (Band 9) 自我編輯清單",
         content: `
-**Principle:** Elements in a series must be grammatically parallel.
+### Task 1:
+*   [ ] Analytical overview (patterns, not data list)
+*   [ ] All categories covered
+*   [ ] Proportional + absolute reasoning
+*   [ ] Trend verbs varied (surge, plateau, inch up)
+*   [ ] Hedged causal speculation
+*   [ ] Theme-Rheme linkage (no cohesion gaps)
+*   [ ] Skilful paragraphing (conceptual, not mechanical)
 
-**Error:**
-❌ "The policy aims to reduce poverty, increasing employment, and education improvement."
-*Problem:* Mixed forms (infinitive, gerund, noun phrase).
+### Task 2:
+*   [ ] Position clear + nuanced (not binary)
+*   [ ] All parts of prompt addressed
+*   [ ] Toulmin elements in body paragraphs
+*   [ ] Steel man (not straw man) for counterarguments
+*   [ ] Necessary vs sufficient distinction
+*   [ ] Mandative subjunctive used
+*   [ ] At least one cleft sentence
+*   [ ] Theme-Rheme linkage
+*   [ ] Natural cohesion (not "Firstly, Secondly")
 
-**Correction:**
-✅ "The policy aims to reduce poverty, increase employment, and improve education."
-✅ "The policy aims at reducing poverty, increasing employment, and improving education."
-`
-      }
-    ]
-  },
-  {
-    id: "m7",
-    title: "MODULE 7: Self-Editing Checklist (Band 9 Standard) 自我編輯清單",
-    sections: [
-      {
-        title: "Checklist",
-        content: `
-**Logical Integrity 邏輯完整性**
-*   [ ] No hidden premises left unstated
-*   [ ] No affirming the consequent or denying the antecedent
-*   [ ] All analogies checked for critical disanalogies
-*   [ ] Necessary/sufficient conditions correctly distinguished
-*   [ ] No base rate neglect in probabilistic claims
+### Both Tasks:
+*   [ ] Wide lexical range (no repetition)
+*   [ ] Academic verbs (precipitate, mitigate, augment)
+*   [ ] Sentence variety (simple + complex)
+*   [ ] No logical fallacies
+*   [ ] No grammatical errors
 
-**Cohesion & Coherence 銜接與連貫**
-*   [ ] Each sentence's Theme links to prior Rheme (no cohesion gaps)
-*   [ ] Lexical chains vary (synonyms, not repetition)
-*   [ ] No semantic drift (terms maintain consistent meaning)
-*   [ ] Presuppositions and implicatures are intentional, not accidental
-
-**Syntactic Sophistication 句法精密度**
-*   [ ] Mix of simple and complex sentences (not all complex)
-*   [ ] At least one mandative subjunctive (Task 2)
-*   [ ] At least one cleft construction for emphasis
-*   [ ] Non-finite clauses used for compression
-*   [ ] No center-embedding overload (max 2 levels)
-
-**Lexical Precision 詞彙精確度**
-*   [ ] Epistemic modals calibrated to certainty level
-*   [ ] Trend verbs specify intensity (surge vs edge up)
-*   [ ] No vague quantifiers ("many" → "approximately 60%")
-*   [ ] Academic register maintained (valorize, mitigate, precipitate)
-
-**Task Achievement 任務完成度**
-*   **Task 1:**
-    *   [ ] Analytical overview (patterns, not data list)
-    *   [ ] Data grouped by logic (not by year/category mechanically)
-    *   [ ] Proportional + absolute reasoning where relevant
-    *   [ ] Hedged causal speculation (may be attributable to)
-*   **Task 2:**
-    *   [ ] All parts of question addressed
-    *   [ ] Toulmin elements present in body paragraphs
-    *   [ ] Steel man (not straw man) for counterarguments
-    *   [ ] Synthesis/nuanced position (not binary agree/disagree)
-
-### CONCLUSION: From Band 7 to Band 9
-Band 7 demonstrates competence: correct grammar, clear paragraphing, relevant examples.
-Band 9 demonstrates mastery: logical precision, theoretical grounding, syntactic elegance, lexical exactitude, and meta-discursive awareness.
-
-The journey from 7 to 9 is qualitative, not quantitative. It requires:
-*   Internalizing formal logic (validity, fallacies, modality)
-*   Mastering discourse architecture (Theme-Rheme, cohesion, presupposition)
-*   Calibrating syntactic complexity (variety without overload)
-*   Achieving lexical precision (hedging, trend verbs, academic register)
-*   Integrating theoretical frameworks (human capital, convergence, Toulmin)
-
-*This course provides the conceptual tools. Mastery requires deliberate practice.*
+### CONCLUSION 結論
+Band 9 係 質的飛躍，唔係量的提升。From Band 7 to Band 9:
+*   **Task 1:** Description → Analysis
+*   **Task 2:** Listing points → Toulmin argumentation
+*   **Cohesion:** Mechanical connectors → Natural Theme-Rheme
+*   **Lexis:** Common words → Academic precision
+*   **Grammar:** Correct → Sophisticated + varied
 `
       }
     ]
