@@ -10,22 +10,32 @@ interface IeltsPrepProps {
 
 const SimpleMarkdown: React.FC<{ content: string }> = ({ content }) => {
   // Simple parser for the specific format we used
-  // Supports ### Headers, **Bold**, * Lists, and tables (basic)
+  // Supports ### Headers, **Bold**, * Lists, 1. Lists, and tables (basic)
+  // Added support for Band 9 / Band 7 highlighted boxes
   
   const lines = content.split('\n');
   const elements: React.ReactNode[] = [];
   let listBuffer: React.ReactNode[] = [];
+  let listType: 'ul' | 'ol' = 'ul';
   let inTable = false;
   let tableHeader: string[] = [];
   let tableRows: string[][] = [];
 
   const flushList = () => {
     if (listBuffer.length > 0) {
-      elements.push(
-        <ul key={`ul-${elements.length}`} className="list-disc pl-5 mb-4 space-y-1 text-gray-700 dark:text-gray-300">
-          {listBuffer}
-        </ul>
-      );
+      if (listType === 'ul') {
+          elements.push(
+            <ul key={`list-${elements.length}`} className="list-disc pl-5 mb-4 space-y-1 text-gray-700 dark:text-gray-300 marker:text-purple-500">
+              {listBuffer}
+            </ul>
+          );
+      } else {
+          elements.push(
+            <ol key={`list-${elements.length}`} className="list-decimal pl-5 mb-4 space-y-1 text-gray-700 dark:text-gray-300 marker:text-purple-500 font-medium">
+              {listBuffer}
+            </ol>
+          );
+      }
       listBuffer = [];
     }
   };
@@ -63,7 +73,7 @@ const SimpleMarkdown: React.FC<{ content: string }> = ({ content }) => {
         return <strong key={i} className="font-bold text-gray-900 dark:text-white">{part.slice(2, -2)}</strong>;
       }
       if (part.startsWith('`') && part.endsWith('`')) {
-        return <code key={i} className="bg-gray-100 dark:bg-white/10 px-1 py-0.5 rounded text-sm font-mono">{part.slice(1, -1)}</code>;
+        return <code key={i} className="bg-gray-100 dark:bg-white/10 px-1 py-0.5 rounded text-sm font-mono text-purple-600 dark:text-purple-400">{part.slice(1, -1)}</code>;
       }
       return part;
     });
@@ -77,41 +87,109 @@ const SimpleMarkdown: React.FC<{ content: string }> = ({ content }) => {
        return; 
     }
 
+    // Table Processing
     if (trimmed.startsWith('|')) {
         if (!inTable) {
             inTable = true;
             tableHeader = trimmed.split('|').filter(Boolean).map(s => s.trim().replace(/\*\*/g, ''));
-            // Skip the separator line |---|---|
             return;
         }
-        if (trimmed.includes('---')) return; // Skip separator
+        if (trimmed.includes('---')) return; 
         tableRows.push(trimmed.split('|').filter(Boolean).map(s => s.trim().replace(/\*\*/g, '')));
         return;
     } else {
         flushTable();
     }
 
+    // Header Processing
     if (trimmed.startsWith('### ')) {
-      elements.push(<h3 key={index} className="text-lg font-bold text-gray-900 dark:text-white mt-6 mb-3">{trimmed.slice(4)}</h3>);
-    } else if (trimmed.startsWith('**') && !trimmed.includes('**')) { // Whole line bold roughly (header like) or just paragraph
-       // Actually check if it looks like a header (short)
-       if (trimmed.length < 50) {
-         elements.push(<h4 key={index} className="text-base font-bold text-gray-800 dark:text-gray-200 mt-4 mb-2">{trimmed.replace(/\*\*/g, '')}</h4>);
-       } else {
-         elements.push(<p key={index} className="mb-2 leading-relaxed text-gray-700 dark:text-gray-300">{processText(trimmed)}</p>);
-       }
-    } else if (trimmed.startsWith('* ')) {
-      listBuffer.push(<li key={`li-${index}`}>{processText(trimmed.slice(2))}</li>);
-    } else {
       flushList();
-      elements.push(<p key={index} className="mb-2 leading-relaxed text-gray-700 dark:text-gray-300">{processText(trimmed)}</p>);
+      elements.push(<h3 key={index} className="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4 flex items-center gap-2">
+        <span className="w-1.5 h-6 bg-purple-500 rounded-full inline-block"></span>
+        {trimmed.slice(4)}
+      </h3>);
+    } 
+    // Special Layouts for Band 9 / Band 7 / Key Features
+    else if (trimmed.startsWith('**Band 9') || trimmed.startsWith('**Band 8')) {
+        flushList();
+        elements.push(
+            <div key={index} className="bg-green-50/50 dark:bg-green-900/10 border border-green-100 dark:border-green-500/20 rounded-2xl p-5 mb-4">
+                <div className="flex items-center gap-2 text-green-700 dark:text-green-400 font-bold mb-2">
+                    <CheckCircle2 size={18} />
+                    {trimmed.split(':')[0].replace(/\*\*/g, '')}
+                </div>
+                <p className="text-gray-800 dark:text-gray-200 leading-relaxed font-medium">
+                   {processText(trimmed.split(':').slice(1).join(':').trim())}
+                </p>
+            </div>
+        );
+    }
+    else if (trimmed.startsWith('**Band 7') || trimmed.startsWith('**Band 6') || trimmed.startsWith('**Band 5')) {
+        flushList();
+        elements.push(
+            <div key={index} className="bg-red-50/50 dark:bg-red-900/10 border border-red-100 dark:border-red-500/20 rounded-2xl p-5 mb-4">
+                <div className="flex items-center gap-2 text-red-700 dark:text-red-400 font-bold mb-2">
+                    <AlertCircle size={18} />
+                    {trimmed.split(':')[0].replace(/\*\*/g, '')}
+                </div>
+                <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
+                   {processText(trimmed.split(':').slice(1).join(':').trim())}
+                </p>
+            </div>
+        );
+    }
+    else if (trimmed.startsWith('**Key') || trimmed.startsWith('**What')) {
+        flushList();
+        elements.push(
+            <div key={index} className="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-500/20 rounded-2xl p-5 mb-4">
+                <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400 font-bold mb-2">
+                    <BrainCircuit size={18} />
+                    {trimmed.split(':')[0].replace(/\*\*/g, '')}
+                </div>
+                <div className="text-gray-800 dark:text-gray-200 leading-relaxed">
+                   {processText(trimmed.split(':').slice(1).join(':').trim())}
+                </div>
+            </div>
+        );
+    }
+    // Blockquote
+    else if (trimmed.startsWith('> ') || trimmed.startsWith('"')) {
+        flushList();
+        const content = trimmed.startsWith('> ') ? trimmed.slice(2) : trimmed;
+        elements.push(
+            <div key={index} className="pl-4 border-l-4 border-gray-200 dark:border-gray-700 py-1 my-4 italic text-gray-600 dark:text-gray-400">
+                {processText(content)}
+            </div>
+        );
+    }
+    // Lists
+    else if (trimmed.startsWith('* ')) {
+      if (listType !== 'ul') flushList();
+      listType = 'ul';
+      listBuffer.push(<li key={`li-${index}`}>{processText(trimmed.slice(2))}</li>);
+    } 
+    else if (/^\d+\.\s/.test(trimmed)) {
+      if (listType !== 'ol') flushList();
+      listType = 'ol';
+      const cleanText = trimmed.replace(/^\d+\.\s/, '');
+      listBuffer.push(<li key={`li-${index}`}>{processText(cleanText)}</li>);
+    }
+    // Regular Paragraphs
+    else if (trimmed.startsWith('**') && trimmed.endsWith('**') && trimmed.length < 60) {
+       // Subheader
+       flushList();
+       elements.push(<h4 key={index} className="text-lg font-bold text-gray-800 dark:text-gray-200 mt-6 mb-2">{trimmed.slice(2, -2)}</h4>);
+    }
+    else {
+      flushList();
+      elements.push(<p key={index} className="mb-3 leading-relaxed text-gray-700 dark:text-gray-300">{processText(trimmed)}</p>);
     }
   });
 
   flushList();
   flushTable();
 
-  return <div className="text-[15px]">{elements}</div>;
+  return <div className="text-[16px]">{elements}</div>;
 };
 
 const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
@@ -462,8 +540,7 @@ const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
               </div>
             </div>
           </div>
-        ))}
-        )}
+        )))}
 
         {/* Empty State */}
         {activeTab !== 'course' && essays.length === 0 && (
