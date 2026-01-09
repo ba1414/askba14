@@ -1591,7 +1591,7 @@ Don't overuse. Balance with verbs for clarity.
 
 ---
 
-## SECTION 1: RHETORICAL DEVICES (ä¿®è¾­æ‰‹æ®µ)
+## SECTION 1: RHETORICAL DEVICES (ä¿®è¾­æ‰‹段)
 
 ### 1. CHIASMUS (äº¤éŒ¯é…åˆ—æ³•)
 
@@ -1627,7 +1627,7 @@ Don't overuse. Balance with verbs for clarity.
 2.  **Step 2:** Write sentence with A-B structure -> "Education improves society"
 3.  **Step 3:** Reverse to B-A in second clause -> "...and society, through shared knowledge, improves education"
 
-**å»£æ±è©±:** Chiasmus = äº¤éŒ¯é…åˆ—ï¼ŒA-B ç„¶å¾Œ B-Aã€‚éžå¸¸ memorable åŒ elegantã€‚JFK ç”¨éŽï¼Œä½ éƒ½å¯ä»¥ç”¨ã€‚
+**å»£æ±è©±:** Chiasmus = äº¤éŒ¯é…åˆ—ï¼ŒA-B ç„¶å¾Œ B-Aã€‚éž常 memorable åŒ elegantã€‚JFK ç”¨éŽï¼Œä½ éƒ½å¯ä»¥ç”¨ã€‚
 
 ---
 
@@ -1660,7 +1660,7 @@ Don't overuse. Balance with verbs for clarity.
 *   **Bad Example (Overdone):** "Education is important. Education is necessary. Education is vital. Education is crucial. Education is essential..."
     *   *Why Bad: Becomes annoying, not emphatic.*
 
-**å»£æ±è©±:** Anaphora = é¦–èªžé‡è¤‡ï¼Œå–º successive clauses é–‹é å‡ºç¾åŒä¸€å€‹è©žã€‚MLK ç”¨éŽ ("I have a dream...")ã€‚Max 1 æ¬¡ per essayï¼Œ3-4 æ¬¡é‡è¤‡ã€‚
+**å»£æ±è©±:** Anaphora = é¦–èªžé‡è¤‡ï¼Œå–º successive clauses é–‹é å‡ºç¾åŒä¸€å€‹è©žã€‚MLK ç”¨éŽ ("I have a dream...")ã€‚Max 1 次 per essayï¼Œ3-4 æ¬¡é‡è¤‡ã€‚
 
 ---
 
@@ -1699,7 +1699,7 @@ Don't overuse. Balance with verbs for clarity.
 *   **Standard:** "Country A grew rapidly and steadily."
 *   **With Tricolon (Band 9+):** "Country A's growth was **rapid**, **sustained**, and **export-driven**."
 
-**å»£æ±è©±:** Tricolon = ä¸‰é‡å¥æ³•ï¼Œç”¨ä¸‰å€‹ parallel elementsã€‚äººè…¦è¦ºå¾— groups of three å¥½ memorableã€‚å¯ä»¥ escalating (è¶ŠåšŸè¶Šå¼·) æˆ– diminishing (è¶ŠåšŸè¶Šå¼±)ã€‚
+**å»£æ±è©±:** Tricolon = ä¸‰é‡å¥æ³•ï¼Œç”¨ä¸‰å€‹ parallel elementsã€‚äººè…¦è¦ºå¾— groups of three 好 memorableã€‚可以 escalating (è¶ŠåšŸè¶Š強) æˆ– diminishing (è¶ŠåšŸè¶Š弱)ã€‚
 
 ---
 
@@ -1744,7 +1744,7 @@ Don't overuse. Balance with verbs for clarity.
 **CRITICAL WARNING âš ï¸**
 *   **Don't overuse:** Max 2-3 litotes per essay. Too many = sounds affected.
 
-**å»£æ±è©±:** Litotes = ç”¨ double negative è¡¨é ” positive ("not unintelligent" = quite intelligent)ã€‚å¥½ sophisticatedï¼Œä½†å””å¥½ overuseã€‚Max 2-3 æ¬¡ per essayã€‚
+**å»£æ±è©±:** Litotes = ç”¨ double negative è¡¨é ” positive ("not unintelligent" = quite intelligent)ã€‚好 sophisticatedï¼Œä½†å””好 overuseã€‚Max 2-3 次 per essayã€‚
 
 ---
 
@@ -1781,7 +1781,7 @@ Don't overuse. Balance with verbs for clarity.
 **WARNING: Use Sparingly**
 *   **Frequency:** Max 1 per essay. Zeugma is highly literaryâ€”overuse = pretentious.
 
-**å»£æ±è©±:** Zeugma = ä¸€å€‹å‹•è©ž govern å…©å€‹ objectsï¼Œä½† applies in different sensesã€‚å¥½ literaryï¼Œéžå¸¸ rareã€‚Max 1 æ¬¡ per essayã€‚
+**å»£æ±è©±:** Zeugma = ä¸€å€‹å‹•è©ž govern å…©å€‹ objectsï¼Œä½† applies in different sensesã€‚好 literaryï¼Œéž常 rareã€‚Max 1 次 per essayã€‚
 `
       },
       {
@@ -1932,7 +1932,7 @@ Don't overuse. Balance with verbs for clarity.
 **Task 2 Full Example:**
 > "It is **not the presence of technology but its mode of deployment** that determines social outcomes. **What distinguishes addictive from empowering platforms** is not their underlying architecture but their alignment with human flourishing. **Not wholesale rejection** should guide policy, **but thoughtful regulation**."
 
-**å»£æ±è©±:** Contrastive focus = ç”¨ syntax å¼·èª¿ contrastã€‚ä¸‰ç¨®æ–¹æ³•ï¼šIt-cleft ("It is not X but Y that"), Wh-cleft ("What matters is not X but Y"), Fronting ("Not X but Y do we need")ã€‚
+**å»£æ±è©±:** Contrastive focus = ç”¨ syntax 強調 contrastã€‚ä¸‰ç¨®æ–¹æ³•ï¼šIt-cleft ("It is not X but Y that"), Wh-cleft ("What matters is not X but Y"), Fronting ("Not X but Y do we need")ã€‚
 
 ---
 
@@ -1968,7 +1968,7 @@ Don't overuse. Balance with verbs for clarity.
     *   âŒ **Mixed (Confusing):** "We must plant the seeds of educational investment so the economy can navigate turbulent waters." (EDUCATION IS PLANT + ECONOMY IS SHIP = incoherent)
     *   âœ… **Consistent:** "We must plant the seeds of educational reform, cultivate innovative pedagogy, and reap the harvest of enhanced outcomes." (All PLANT metaphors)
 
-**å»£æ±è©±:** Conceptual metaphor = ç”¨ä¸€è‡´å˜… metaphorical domain ç †è§£ abstract conceptsã€‚ä¾‹å¦‚ï¼šEDUCATION IS INVESTMENT, INEQUALITY IS DISEASEã€‚å””å¥½ mix metaphorsã€‚
+**å»£æ±è©±:** Conceptual metaphor = ç”¨ä¸€è‡´å˜… metaphorical domain ç †解 abstract conceptsã€‚ä¾‹å¦‚ï¼šEDUCATION IS INVESTMENT, INEQUALITY IS DISEASEã€‚å””好 mix metaphorsã€‚
 
 ---
 
@@ -1994,7 +1994,7 @@ Don't overuse. Balance with verbs for clarity.
 *   **Standard:** "Country A's growth was rapid."
 *   **With Gradation (Band 9+):** "Country A's trajectory was **impressive**, **unprecedented**, and, in comparative terms, **exceptional**â€”growth unmatched in the region, rarely equaled globally, and never sustained at such magnitude for so long."
 
-**å»£æ±è©±:** Parallel syntax with gradation = ç”¨ parallel structures ä½†æ¯å€‹ element é€æ­¥ escalate intensity or scopeã€‚ä¾‹å¦‚ï¼šindividual â†’ community â†’ society â†’ civilizationã€‚éžå¸¸ rhetoricalã€‚
+**å»£æ±è©±:** Parallel syntax with gradation = ç”¨ parallel structures ä½†æ¯å€‹ element é€æ­¥ escalate intensity or scopeã€‚ä¾‹å¦‚ï¼šindividual â†’ community â†’ society â†’ civilizationã€‚éž常 rhetoricalã€‚
 `
       },
       {
@@ -2133,7 +2133,7 @@ You'll learn 50+ sentence templates organized by function:
 7.  Describing outliers/exceptions (8 variants)
 8.  Concluding observations (6 variants)
 
-**å»£æ±è©±:** å‘¢å€‹ module æ•™ä½  50+ å€‹ sentence templatesï¼Œorganized by functionã€‚Under exam pressureï¼Œä½ å””éœ€è¦ creativeï¼Œåªéœ€è¦ plug data into templates = consistent Band 9ã€‚
+**å»£æ±è©±:** å‘¢å€‹ module æ•™ä½  50+ å€‹ sentence templatesï¼Œorganized by functionã€‚Under exam pressureï¼Œä½ å””éœ€要 creativeï¼Œåªéœ€要 plug data into templates = consistent Band 9ã€‚
 
 ---
 
@@ -2479,7 +2479,7 @@ You'll learn 50+ sentence templates organized by function:
 *   âœ… Proportional + absolute reasoning
 *   âœ… Natural cohesion (theme-rheme links)
 
-**å»£æ±è©±:** å‘¢ç¯‡ model answer æ¯ä¸€å¥éƒ½ç”¨å–º templatesã€‚ä½ åªéœ€è¦ plug in your dataï¼Œå°±å¯ä»¥ consistently generate Band 9 sentencesã€‚
+**å»£æ±è©±:** å‘¢ç¯‡ model answer æ¯ä¸€å¥éƒ½ç”¨å–º templatesã€‚ä½ åªéœ€要 plug in your dataï¼Œ就可以 consistently generate Band 9 sentencesã€‚
 
 ---
 
@@ -2574,324 +2574,1560 @@ You'll learn 50+ sentence templates organized by function:
   },
   {
     id: "part-h",
-    title: "Part H: Task 1 - Flow Charts & Maps Mastery",
-    description: "Complete grammar system, advanced patterns, and line-by-line generation for Process Diagrams and Maps.",
+    title: "IELTS Band 9: Advanced Grammar & C2 Sentence Patterns",
+    description: "For English Literature Majors • Sophisticated Academic Structures • Beyond Standard Grammar: Elite-Level Constructions",
     sections: [
       {
-        id: "chap-29",
-        title: "Flow Charts: Grammar Foundations",
+        id: "grammar-intro",
+        title: "INTRODUCTION: What Makes Grammar Advanced?",
         content: `
-# SECTION A: FLOW CHARTS éŽç¨‹åœ–å®Œæ•´æ•™å­¸
+# INTRODUCTION: What Makes Grammar "Advanced"?
 
-## PART A1: GRAMMAR FOUNDATIONS æ–‡æ³•åŸºç¤Ž
+**Common Misconception:** Advanced grammar = very long, complex sentences.
+**Reality:** Advanced grammar = strategic deployment of sophisticated structures that native academics use in scholarly writing.
 
-### GRAMMAR POINT 1: PASSIVE VOICE è¢«å‹•èªžæ…‹ (THE MOST CRITICAL)
-
-**Why Passive Voice? é»žè§£è¦ç”¨è¢«å‹•èªžæ…‹?**
-*   **åŽŸå›  Reason:** Process diagrams describe **WHAT HAPPENS TO** materials, not **WHO** does the action.
-*   **âŒ éŒ¯èª¤ Wrong (Active):** "Workers harvest cocoa beans. They ferment them. Workers then dry them."
-    *   *å•é¡Œ Problem: Focuses on "workers" (WHO) instead of the process itself.*
-*   **âœ… æ­£ç¢º Correct (Passive):** "Cocoa beans are harvested. They are fermented. They are then dried."
-
-**å»£æ±è©±:** éŽç¨‹åœ–è¦è¬›ã€Œææ–™ç¶“æ­·å’©å˜¢è™•ç †ã€ï¼Œå””ä¿‚ã€Œé‚Šå€‹å’ºå‘¢å•²è™•ç †ã€ã€‚æ‰€ä»¥ä¸€å®šè¦ç”¨ passive voiceï¼ˆè¢«å‹•èªžæ…‹ï¼‰ã€‚
-
-**Pattern 1: Simple Present Passive (Most Common)**
-*   **çµæ§‹ Structure:** is/are + past participle
-*   **ç”¨é€” Usage:** Describing general/repeated processes
-*   **Examples:**
-    *   "Cocoa beans **are harvested** from trees."
-    *   "The mixture **is heated** to 150Â°C."
-    *   "Impurities **are removed** through filtration."
-*   **å»£æ±è©±:** æœ€å¸¸ç”¨å˜… passive formã€‚è¬›ä¸€èˆ¬éŽç¨‹ç”¨å‘¢å€‹ patternã€‚
-
-**Pattern 2: Present Continuous Passive (Ongoing Process)**
-*   **çµæ§‹ Structure:** is/are being + past participle
-*   **ç”¨é€” Usage:** Emphasizing process is ongoing/continuous
-*   **Examples:**
-    *   "While fermentation is occurring, the beans **are being monitored**."
-    *   "As the mixture travels through the pipes, impurities **are being filtered** continuously."
-*   **å»£æ±è©±:** å¼·èª¿ã€ŒéŽç¨‹æ­£åœ¨é€²è¡Œä¸ã€ã€‚æ¯”è¼ƒå°‘ç”¨ï¼Œä½†é‡åˆ° continuous process å¯ä»¥ç”¨ã€‚
-
-**Pattern 3: Modal Passive (Possibility/Necessity)**
-*   **çµæ§‹ Structure:** can be/may be/must be + past participle
-*   **Examples:**
-    *   "The mixture **can be heated** to various temperatures."
-    *   "Additional ingredients **may be added**."
-    *   "The product **must be cooled** to below 10Â°C."
-
-**Pattern 4: Present Perfect Passive (Completed Before Next Step)**
-*   **çµæ§‹ Structure:** has/have been + past participle
-*   **Examples:**
-    *   "Once the beans **have been fermented**, they undergo drying."
-    *   "After the mixture **has been ground**, it is transferred."
-*   **å»£æ±è©±:** å¼·èª¿ã€ŒæŸæ­¥é©Ÿå®Œæˆå’Ÿä¹‹å¾Œå…ˆé€²è¡Œä¸‹ä¸€æ­¥ã€ã€‚
-
-**Pattern 5: Passive with Agent (Use sparingly!)**
-*   **çµæ§‹ Structure:** is/are + past participle + by [agent]
-*   **Examples:** "The beans are crushed **by heavy rollers**."
-*   **å»£æ±è©±:** éœ€è¦è¬›æ˜Žã€Œç”±å’©å˜¢/é‚Šå€‹å’ºã€å…ˆç”¨ byã€‚ä½†éŽç¨‹åœ–é€šå¸¸å””éœ€è¦ã€‚
-
-**Pattern 6: Passive Infinitive (Purpose)**
-*   **çµæ§‹ Structure:** to be + past participle
-*   **Examples:** "The mixture is cooled **to be solidified** before packaging."
-
-**Pattern 7: Passive Gerund (After Prepositions)**
-*   **çµæ§‹ Structure:** being + past participle
-*   **Examples:** "Before **being dried**, the beans are washed."
-*   **å»£æ±è©±:** å–º prepositionï¼ˆä¾‹å¦‚ before, after, withoutï¼‰å¾Œé ¢è¦ç”¨ being + éŽåŽ»åˆ†è©žã€‚
-
-**Pattern 8: Causative Passive (X Causes Y to be Done)**
-*   **çµæ§‹ Structure:** causes/allows [material] to be + past participle
-*   **Examples:** "High temperatures **cause** the proteins **to be denatured**."
-
----
-
-### GRAMMAR POINT 2: SEQUENCING LANGUAGE é †åºé€£æŽ¥è©ž
-
-**Why Sequencing Matters é»žè§£é †åºå¥½é‡è¦?**
-*   **åŽŸå›  Reason:** Process diagrams are **CHRONOLOGICAL**. You must show clear order of stages.
-
-**Category 1: FIRST STAGE ç¬¬ä¸€å€‹éšŽæ®µ**
-*   **Pattern 1:** "The process begins/commences/starts with"
-*   **Pattern 2:** "Initially" / "At the outset"
-*   **Pattern 3:** "The first stage involves/entails"
-
-**Category 2: SUBSEQUENT STAGES ä¹‹å¾Œå˜…éšŽæ®µ**
-*   **Pattern 1:** "Subsequently" / "Following this" / "Next"
-*   **Pattern 2:** "After [noun/gerund]" / "Following [noun/gerund]" (e.g., "Following fermentation...")
-*   **Pattern 3:** "Once [clause]" (e.g., "Once fermentation is complete...")
-*   **Pattern 4:** "The [material] then undergoes"
-
-**Category 3: FINAL STAGE æœ€å¾ŒéšŽæ®µ**
-*   **Pattern 1:** "Finally" / "Ultimately" / "Lastly"
-*   **Pattern 2:** "In the final stage" / "As a final step"
-*   **Pattern 3:** "The process culminates in/with"
-
-**Category 4: SIMULTANEOUS ACTIONS åŒæ™‚ç™¼ç”Ÿ**
-*   **Pattern 1:** "Simultaneously" / "Concurrently"
-*   **Pattern 2:** "While [clause]"
-
----
-
-### GRAMMAR POINT 3: PURPOSE & RESULT CLAUSES ç›®çš„èˆ‡çµæžœå­å¥
-
-**Category 1: PURPOSE CLAUSES ç›®çš„å­å¥ (INTENTION)**
-*   **Pattern 1:** "in order to + verb" / "so as to + verb"
-    *   *Example:* "Beans are fermented **in order to develop** flavor."
-*   **Pattern 2:** "to + verb" (Simplest)
-*   **Pattern 3:** "for the purpose of + gerund"
-*   **Pattern 4:** "so that + clause"
-
-**Category 2: RESULT CLAUSES çµæžœå­å¥ (OUTCOME)**
-*   **Pattern 1:** "thereby + gerund"
-    *   *Example:* "The beans are ground, **thereby producing** cocoa liquor."
-*   **Pattern 2:** "resulting in + noun/gerund"
-*   **Pattern 3:** "which causes/leads to + noun"
-*   **Pattern 4:** "thus/hence/therefore + clause"
-
-**Key Difference:**
-*   **PURPOSE:** "Beans are roasted **to develop** aroma." (Why we do it)
-*   **RESULT:** "Beans are roasted, **thereby developing** aroma." (What happens)
-
----
-
-### GRAMMAR POINT 4: RELATIVE CLAUSES IN PROCESSES
-*   **Non-defining:** ", which + verb" -> "fermentation, **which takes** 5-7 days."
-*   **Location/Stage:** "where" -> "a chamber **where** it is heated."
-*   **Method (Formal):** "whereby" -> "conching, **whereby** they are mixed."
-*   **Inside (Formal):** "wherein" -> "heating, **wherein** water evaporates."
-
----
-
-### GRAMMAR POINT 5: PARTICIPLE CLAUSES åˆ†è©žå­å¥
-*   **Simultaneous Action (-ing):** "**Passing** through filters, the liquid is purified."
-*   **Passive Participle (-ed):** "**Heated** to 150Â°C, the mixture undergoes transformation."
-*   **Result (-ing at end):** "The beans are ground, **producing** cocoa liquor."
+**What You'll Learn:**
+**廣東話:** Advanced grammar 唔係「好⻑好複雜」，而係 strategic deployment of sophisticated structures。呢個 section 教你 10 種 elite-level constructions，native academics 都會用。
 `
       },
       {
-        id: "chap-30",
-        title: "Flow Charts: Advanced Patterns & Model",
+        id: "grammar-task-1",
+        title: "PART 1: ADVANCED GRAMMAR FOR TASK 1",
         content: `
-## PART A2: ADVANCED SENTENCE PATTERNS FOR FLOW CHARTS
+# PART 1: ADVANCED GRAMMAR FOR TASK 1
 
-### ADVANCED PATTERN 1: ABSOLUTE CONSTRUCTIONS
-*   **Definition:** Noun + participle (without main verb) to add information.
-*   **Examples:**
-    *   "**Moisture content reduced to 7%**, the beans are ready for roasting."
-    *   "**The mixture heated to 150Â°C**, chemical reactions commence."
-*   **How to Form:** Remove "is/was". ("Moisture is reduced" -> "Moisture reduced")
-*   **å»£æ±è©±:** ç”¨å¢Ÿå®Œå…¨å–ä»£ç”¨ be å‹•è©žå˜…å¥å­ï¼Œä»¤å¥å­æ›´ç°¡æ½”å°ˆæ¥ã€‚
+## 1. ABSOLUTE PHRASES (獨立主格結構)
 
-### ADVANCED PATTERN 2: NOMINALIZATION CHAINS
-*   **Definition:** Converting verbs/adjectives into abstract nouns (e.g., *heat* -> *heating*, *ferment* -> *fermentation*).
-*   **Example:** "**Fermentation**, **drying**, and **roasting** collectively contribute to **flavor development**."
-*   **å»£æ±è©±:** å°‡å‹•è©žè®Šåè©žï¼Œä»¤æ–‡å¥æ›´ academicã€‚
+### What Are Absolute Phrases?
+*   **Structure:** Noun + participle (+ modifiers)
+*   **Function:** Adds descriptive detail without creating a new clause
+*   **Key feature:** No conjunction needed; stands "absolutely" (independently)
 
-### ADVANCED PATTERN 3: EMBEDDED CLAUSES
-*   **Example:** "The beans, **which have been fermented for 7 days**, undergo roasting, **a process wherein temperatures of 120-140Â°C cause reactions**."
+**Standard Sentence (Band 7):**
+"Country A's GDP grew by 50%. This growth was the highest among all nations."
 
-### ADVANCED PATTERN 4: FRONTED ADVERBIALS WITH INVERSION
-*   **Structure:** Adverbial + Auxiliary + Subject + Verb
-*   **Example:** "**Rarely does** the mixture undergo more than three grinding cycles."
-*   **âš ï¸ Warning:** Use max 1 per essay.
+**With Absolute Phrase (Band 9):**
+"Country A's GDP grew by 50%, **its expansion the highest among all nations**."
 
-### ADVANCED PATTERN 5: PARALLEL STRUCTURE
-*   **Example:** "The process involves **harvesting** pods, **extracting** beans, **fermenting** them, and **drying** them." (All -ing)
+**Analysis:**
+*   "Its expansion" (noun) + "the highest" (participial phrase implied "being")
+*   No verb needed (no "was")
+*   More concise, more sophisticated
+
+**廣東話:** Absolute phrase = 名詞 + 分詞，冇動詞，獨立於主句但提供額外信息。好似中文嘅「獨立主格」。
+
+### Absolute Phrases in Task 1: Multiple Examples
+
+**Example 1: Describing Multiple Features**
+*   **Standard (Band 7):** "Exports surged 40% in Q3. This surge was driven by increased demand. Manufacturing contracted by 15%. This contraction was the steepest since 2008."
+    *   *Problem:* Choppy, repetitive.
+*   **With Absolute Phrases (Band 9):** "Exports surged 40% in Q3, **the surge driven by increased demand**, while manufacturing contracted by 15%, **this contraction the steepest since 2008**."
+
+**Example 2: Adding Context**
+*   **Standard (Band 7):** "Country C exhibited the fastest growth rate. Its economy expanded at 8% annually."
+*   **With Absolute Phrase (Band 9):** "Country C exhibited the fastest growth rate, **its economy expanding at 8% annually**."
+
+**Example 3: Describing Pie Chart**
+*   **Standard (Band 7):** "Housing accounted for 45% of expenditure. This percentage was the largest share. Food comprised 20%. Entertainment was only 8%."
+*   **With Absolute Phrases (Band 9):** "Housing accounted for 45% of expenditure, **this percentage representing the largest share**, with food comprising 20% and entertainment a mere 8%, **the latter figure reflecting discretionary nature**."
+
+### How to Form Absolute Phrases (Step-by-Step)
+1.  **Identify a detail you want to add.** ("The growth was substantial.")
+2.  **Take the noun.** ("the growth")
+3.  **Convert verb to participle.** ("was substantial" → "being substantial" → omit "being" → "substantial")
+4.  **Attach with comma.** ("Country A's GDP grew, the growth substantial.")
+
+### Practice Template for Task 1
+**Template:** "[Main clause], [noun] + [participle] + [modifiers]."
+
+**廣東話:** Absolute phrase 造法：(1) 搵要加嘅細節，(2) 攞第二句嘅名詞，(3) 將動詞變 participle，(4) 用逗號連接。
 
 ---
 
-## PART A3: COMPLETE FLOW CHART MODEL ANSWER
+## 2. FRONTED ADVERBIALS (前置狀語)
 
-**MODEL ANSWER: Chocolate Production (Linear Process)**
-*   **Chart:** Harvesting -> Fermentation -> Drying -> Roasting -> Grinding -> Conching -> Tempering & Molding
+### What Are Fronted Adverbials?
+*   **Standard Word Order:** Subject + Verb + Object + Adverbial ("Country A surged dramatically in Q3.")
+*   **Fronted:** Adverbial + Subject + Verb + Object ("**Dramatically**, Country A surged in Q3.")
+*   **Why Use It?:** Creates emphasis and variety in sentence openings.
 
-**COMPLETE BAND 9 ANSWER (242 words)**
+### Task 1 Examples
 
-**[INTRODUCTION]**
-The diagram illustrates the process by which chocolate is manufactured from cocoa beans, comprising seven sequential stages from initial harvesting through final packaging.
+**Example 1: Emphasizing Contrast**
+*   **Standard (Band 7):** "Country A increased by 50%. Country B decreased by 20%. Country C remained stable."
+*   **With Fronted Adverbials (Band 9):** "Country A increased by 50%. **In stark contrast**, Country B declined 20%. **Notably**, Country C remained stable, its constancy suggesting structural resilience."
 
-**[OVERVIEW]**
-Overall, chocolate production comprises seven discrete stages, beginning with manual cocoa pod collection and culminating in tempered chocolate molding, with five intermediate processing operationsâ€”fermentation, drying, roasting, grinding, and conchingâ€”progressively transforming raw beans into refined confection.
+**Example 2: Emphasizing Time**
+*   **Standard:** "Exports grew modestly from 2010 to 2015. They surged dramatically after 2015."
+*   **Fronted:** "Exports grew modestly from 2010 to 2015. **Post-2015, however**, they surged dramatically, this acceleration likely reflecting trade liberalization."
 
-**[BODY 1 - Stages 1-4]**
-The process commences with cocoa bean harvesting, **wherein** ripe pods are manually collected from cacao trees and split open to extract beans surrounded by sweet pulp. **Following harvesting**, the beans undergo fermentation, a stage **whereby** they are placed in wooden containers covered with banana leaves for 5-7 days, **during which** enzymatic reactions develop flavor precursors and reduce astringency. **Subsequently**, beans are sun-dried for approximately two weeks, **this operation reducing** moisture content from 55% to 7% **in order to prevent** mold growth during storage and transportation. The dried beans then undergo roasting at 120-140Â°C for 30-90 minutes, **wherein** Maillard reactions between amino acids and sugars generate characteristic chocolate aroma and darken color, **the beans thereby acquiring** the chemical profile necessary for further processing.
+**Example 3: Emphasizing Extent**
+*   **Standard:** "Country D contracted by over 30%, which was the steepest decline."
+*   **Fronted:** "**By over 30%**, Country D contracted—the steepest decline among all nations surveyed."
 
-**[BODY 2 - Stages 5-7]**
-**Following roasting**, beans are ground using industrial mills, **wherein** friction and pressure produce liquid cocoa liquor containing cocoa solids and butter. This liquor **subsequently undergoes** conchingâ€”prolonged mixing at 70-80Â°C for 24-72 hoursâ€”**which refines** texture by reducing particle size and aerating the mixture, **thereby developing** smooth mouthfeel and complex flavor. **Finally**, the chocolate is tempered through controlled cooling and heating cycles **so as to stabilize** cocoa butter crystals into the desired form, then molded into bars or shapes before packaging, **the finished products exhibiting** glossy appearance, satisfying snap, and characteristic flavor ready for commercial distribution.
+### Common Fronted Adverbials for Task 1
+*   **Temporal:** Throughout the period, By 2020, Over the decade, Initially, Subsequently
+*   **Contrastive:** Conversely, In contrast, By comparison, Notably
+*   **Quantitative:** By over 50%, To a lesser extent, Substantially, Marginally
+*   **Causal:** Consequently, As a result, Hence, Thus
 
-**GRAMMAR HIGHLIGHTS:**
-*   âœ… **Passive Voice:** 12 instances ("is manufactured", "are collected")
-*   âœ… **Sequencing:** "Commences with", "Following", "Subsequently", "Then", "Finally"
-*   âœ… **Relatives:** "Wherein", "Whereby", "Which", "During which"
-*   âœ… **Absolute Constructions:** "this operation reducing", "the beans thereby acquiring", "the finished products exhibiting"
-*   âœ… **Purpose/Result:** "in order to prevent", "thereby developing", "so as to stabilize"
+**Band 9 Application:**
+"**Throughout the period**, Country A maintained elevated levels. **By 2020, however**, it had ceded its lead to Country C. **Conversely**, Country E stagnated, its trajectory suggesting structural impediments."
+
+**廣東話:** Fronted adverbials = 將狀語提前到句首，create emphasis 同 sentence variety。常見類型：時間、對比、數量、因果。
+
+---
+
+## 3. INVERSION (倒裝句)
+
+### What Is Inversion?
+*   **Standard Order:** Subject + Verb
+*   **Inversion:** Verb (auxiliary) + Subject
+*   **Used for:** Formal emphasis, dramatic effect, after negative adverbials.
+
+### Type 1: Negative Inversion (After Negative Adverbials)
+*   **Trigger Words:** Never, Rarely, Seldom, Not only, Under no circumstances, At no point, Only when/after
+
+**Example:**
+*   **Standard (Band 7):** "Country E has rarely exhibited such volatility."
+*   **Inverted (Band 9):** "**Rarely has** Country E exhibited such volatility."
+
+**More Examples:**
+*   "**Never before had** unemployment fallen below 5%."
+*   "**Seldom has** the gap between rich and poor been wider."
+
+### Type 2: "Not only... but also" Inversion
+*   **Standard:** "Country A not only maintained its lead but also widened the gap."
+*   **Inverted (Band 9):** "**Not only did** Country A maintain its lead, but it also widened the gap to unprecedented levels."
+
+### Type 3: "Only" Inversion
+*   **Standard:** "Inflation stabilized only after the central bank intervened."
+*   **Inverted (Band 9):** "**Only after** the central bank intervened **did** inflation stabilize."
+*   **Standard:** "The true magnitude became apparent only when data were released."
+*   **Inverted (Band 9):** "**Only when** year-end data were released **did** the true magnitude of the decline become apparent."
+
+### Type 4: Locational Inversion (For Descriptive Effect)
+*   **Standard:** "The highest growth rates are in emerging economies."
+*   **Inverted (Band 9):** "**In emerging economies are** the highest growth rates." (Or: "**Among emerging economies lies** the greatest potential...")
+
+**廣東話:** Inversion = 倒裝句，將助動詞 / be 動詞提前到主語前。用於 negative adverbials (Rarely, Never, Seldom) 或 "Only" 句型。非常 formal。
+
+---
+
+## 4. APPOSITION (同位語)
+
+### What Is Apposition?
+*   **Definition:** Placing two noun phrases side-by-side, where the second renames or elaborates the first.
+*   **Key:** Use commas or em-dashes to set off the appositive.
+
+**Standard (Band 7):**
+"Country A is the regional leader. Its GDP is $3 trillion."
+
+**With Apposition (Band 9):**
+"Country A, **the regional leader with a GDP of $3 trillion**, exhibited robust growth."
+
+### Task 1 Examples
+
+**Example 1: Describing Entities**
+*   **Standard:** "Freelance consultants earned the highest salaries. 80% of them earned over $75k."
+*   **With Apposition (Band 9):** "Freelance consultants—**a cohort characterized by 80% earning above $75k**—commanded the highest salaries."
+
+**Example 2: Clarifying Data**
+*   **Standard:** "The most striking feature is the convergence. Countries C and D overtook Country B."
+*   **With Apposition (Band 9):** "The most striking feature—**the convergence whereby Countries C and D overtook Country B**—reflects catch-up dynamics."
+
+**Example 3: Adding Context**
+*   **Standard:** "Inflation peaked in 2022 at 8%. This was the highest rate in 40 years."
+*   **With Apposition (Band 9):** "Inflation peaked in 2022 at 8%—**the highest rate in four decades**—before moderating in subsequent quarters."
+
+### Punctuation Options
+1.  **Commas** (most common): "Country A, the regional leader, grew by 50%."
+2.  **Em-dashes** (more emphatic): "Country A—the regional leader—grew by 50%."
+3.  **Colon** (for explanation): "One feature stands out: the pronounced sectoral divergence."
+
+**廣東話:** Apposition = 同位語，用兩個名詞短語 side-by-side，第二個 rename 或 elaborate 第一個。用 commas, em-dashes, 或 colon 隔開。
+
+---
+
+## 5. PARTICIPIAL ADJECTIVES (分詞形容詞串)
+
+### What Are Participial Adjectives?
+*   **Definition:** Using past/present participles as adjectives to compress information.
+
+**Standard (Band 7):**
+"The data reveal a trend. This trend is accelerating and is characterized by convergence."
+
+**With Participial Adjectives (Band 9):**
+"The data reveal an **accelerating, convergence-driven** trend."
+
+### Task 1 Examples
+
+**Example 1: Describing Trends**
+*   **Standard:** "Country A exhibited growth. The growth was sustained and was driven by exports."
+*   **Compressed (Band 9):** "Country A exhibited **sustained, export-driven** growth."
+
+**Example 2: Multiple Descriptors**
+*   **Standard:** "The pattern was volatile, it fluctuated unpredictably, and it was driven by external shocks."
+*   **Compressed (Band 9):** "The **volatile, externally-driven, unpredictably-fluctuating** pattern reflected market instability."
+
+**Example 3: Describing Data**
+*   **Standard:** "These figures are revealing. They were previously unreported. They suggest..."
+*   **Compressed (Band 9):** "These **previously-unreported, revealing** figures suggest structural transformation."
+
+### How to Create Participial Adjective Strings
+1.  **Identify descriptors.** (Strong, sustained, export-led)
+2.  **Convert to participles.** (Strong, sustained, export-led)
+3.  **String together.** ("Strong, sustained, export-led growth...")
+
+**廣東話:** Participial adjectives = 用 past/present participles 做形容詞，可以 string together 多個 descriptors，非常 concise。
+
+---
+
+## 6. SENTENCE FRAGMENTS (For Rhetorical Effect)
+
+### What Are Sentence Fragments?
+*   **Definition:** Grammatically incomplete sentences (no main verb or no subject).
+*   **Academic Rule:** Usually forbidden.
+*   **Elite Usage:** Used strategically for emphasis.
+
+### When Fragments Are Effective (Task 1)
+
+**Type 1: Dramatic Emphasis**
+*   **Standard:** "The divergence between rich and poor nations was unprecedented."
+*   **With Fragment (Band 9):** "The divergence between rich and poor nations was stark. **Unprecedented, even.**"
+
+**Type 2: Echoing Key Point**
+*   **Standard:** "Country E stagnated throughout the period. This stagnation persisted despite reforms."
+*   **With Fragment (Band 9):** "Country E stagnated throughout the period. **Despite reforms. Despite investment. Despite favorable external conditions.**"
+
+**Type 3: Qualifying Fragment**
+*   **Standard:** "Inflation stabilized, though this stability was tentative and fragile."
+*   **With Fragment (Band 9):** "Inflation stabilized. **Tentatively. Fragilely.**"
+
+**âš ï¸ CRITICAL WARNING:**
+Use fragments **SPARINGLY** (max 1–2 per essay). Overuse sounds choppy.
+**Safe Pattern:** [Complex sentence]. [Fragment for emphasis]. [Complex sentence].
+
+**廣東話:** Sentence fragments = 語法上唔完整嘅句子，但 used strategically 可以 create dramatic emphasis。一定要 sparingly use（一篇最多 1–2 個），唔係會 sound choppy。
 `
       },
       {
-        id: "chap-31",
-        title: "Maps: Grammar & Master Guide",
+        id: "grammar-task-2",
+        title: "PART 2: ADVANCED GRAMMAR FOR TASK 2",
         content: `
-# SECTION B: MAPS åœ°åœ–å®Œæ•´æ•™å­¸
+# PART 2: ADVANCED GRAMMAR FOR TASK 2
 
-## PART B1: GRAMMAR FOUNDATIONS FOR MAPS
+## 7. MANDATIVE SUBJUNCTIVE (命令式虛擬語氣)
 
-### GRAMMAR POINT 1: TENSE SELECTION æ™‚æ…‹é¸æ“‡ (CRITICAL!)
+### What Is Mandative Subjunctive?
+*   **Structure:** Verb (recommend, suggest, propose, insist, demand, require, essential, crucial, imperative) + that + subject + **base form verb**
+*   **Key:** Use base form (infinitive without "to"), **NOT** present tense.
 
-**Rule 1: Before/After Maps**
-*   **BEFORE Map (e.g., 1990):** Use **PAST TENSE** (was/were).
-    *   *Example:* "In 1990, there **was** a farm." / "Houses **were located** along Main Road."
-*   **AFTER Map (e.g., 2025):** Use **PRESENT TENSE** (is/are).
-    *   *Example:* "In 2025, there **is** a shopping mall." / "Buildings **are situated** along the road."
-*   **CHANGES (Transformation):** Use **PRESENT PERFECT** (has/have been).
-    *   *Example:* "The farm **has been replaced**." / "Areas **have been expanded**."
+### Examples for Task 2
 
-**Rule 2: Proposed Changes Maps**
-*   **PROPOSED Changes:** Use **FUTURE** (will be) or "is planned to be".
-    *   *Example:* "Parking **will be relocated**." / "A new plaza **is planned to be** constructed."
+**Wrong (Band 7):** "I recommend that the government **invests** in education."
+**Correct (Band 9):** "I recommend that the government **invest** in education."
 
-**å»£æ±è©±:** Before ç”¨ Pastï¼ŒAfter ç”¨ Presentï¼Œè®ŠåŒ–ç”¨ Present Perfectï¼Œè¨ˆåˆ’ç”¨ Futureã€‚
+**Standard (Band 7):** "It is important that universities **improve** transparency."
+**Mandative Subjunctive (Band 9):** "It is **imperative** that universities **be** transparent in admissions." (Note: "be", not "are")
 
-### GRAMMAR POINT 2: LOCATION PREPOSITIONS ä½ç½®ä»‹è©ž
-*   **Cardinal:** "in the north", "to the north of", "north of"
-*   **Adjacency:** "adjacent to", "next to", "beside", "opposite"
-*   **Between:** "between X and Y", "in the center"
-*   **Enclosing:** "surrounding", "encircling"
-*   **Along:** "along the river", "distributed throughout"
-*   **Corners/Junctions:** "at the intersection", "in the southeastern corner"
-*   **Boundaries:** "on the western boundary"
+**Negative Example:**
+*   **Standard:** "The committee suggests that governments **don't subsidize** fossil fuels."
+*   **Mandative (Band 9):** "The committee suggests that governments **not subsidize** fossil fuels." (Note: "not subsidize", no "don't")
 
-### GRAMMAR POINT 3: TRANSFORMATION VERBS è½‰è®Šå‹•è©ž
-*   **Construction:** "was built", "was constructed", "was established", "emerged"
-*   **Demolition:** "was demolished", "was knocked down", "was removed", "gave way to"
-*   **Replacement:** "was replaced by", "was converted into", "was transformed into"
-*   **Expansion/Reduction:** "was expanded", "was extended", "was reduced", "was narrowed"
-*   **Relocation:** "was relocated to", "was moved to"
+### Full Sentence Examples
 
-### GRAMMAR POINT 4: COMPARATIVE STRUCTURES
-*   "The mall is **three times larger than** the farm."
-*   "Residential area **has increased by 60%**."
-*   "**Whereas** the north was agricultural, it is now commercial."
+**Opinion Essay:**
+"To mitigate climate change, I propose that governments **implement** carbon pricing, that corporations **disclose** emissions transparently, and that individuals **adopt** sustainable consumption patterns."
+
+**Problem-Solution:**
+"It is essential that policymakers **recognize** the multi-causal nature of obesity, that public health campaigns **target** structural barriers, and that food subsidies **be recalibrated** to favor nutritious options."
+
+**Recommendation in Conclusion:**
+"In summation, it is imperative that educational systems **pair** effort-based messaging with critical consciousness, that institutions **acknowledge** structural inequalities, and that curricula **equip** students to challenge systemic barriers."
+
+**廣東話:** Mandative subjunctive = 用 base form verb（原形動詞）喺 that-clause。適合用喺 recommendations，非常 formal。記住用 "be" (唔係 is/are)，用 "not do" (唔係 don't)。
 
 ---
 
-## PART B2: ADVANCED SENTENCE PATTERNS FOR MAPS
+## 8. FRONTED CONDITIONALS (前置條件句)
 
-### ADVANCED PATTERN 1: ABSOLUTE PHRASES
-*   **Example:** "**The farmland cleared entirely**, a shopping mall was constructed in its place."
-*   **Structure:** [Feature] + [participle], [main clause]. (No "was")
+### Standard vs Fronted
+*   **Standard (Band 7):** "**If** governments were to invest more in education, inequality would decline."
+*   **Fronted (Band 9):** "**Were** governments to invest more in education, inequality would decline."
+*   **Why It's Advanced:** Omits "if" and inverts subject-verb order → more formal.
 
-### ADVANCED PATTERN 2: PARTICIPIAL MODIFIERS
-*   **Opening:** "**Located** in the northern section, the mall occupies 5 hectares."
-*   **Result:** "Residential areas expanded, **creating** a continuous urban sprawl."
+### Three Types of Inversion
 
-### ADVANCED PATTERN 3: INVERSION (Use sparingly!)
-*   **Example:** "**At the town center was located** the railway station." (Standard: The station was located at the town center.)
+**Type 1 (Present Unreal / "Were"):**
+*   **Standard:** "If I were a policymaker, I would prioritize..."
+*   **Inverted:** "**Were I** a policymaker, I would prioritize..."
+*   **Task 2:** "**Were** societies to prioritize collective well-being over individual wealth accumulation, income inequality would decline substantially."
 
-### ADVANCED PATTERN 4: COMPLEX NOUN PHRASES
-*   **Example:** "A **large, multi-story shopping complex featuring over 50 retail units** was constructed."
+**Type 2 (Past Unreal / "Had"):**
+*   **Standard:** "If governments had invested earlier, the crisis could have been averted."
+*   **Inverted:** "**Had governments invested** earlier, the crisis could have been averted."
+*   **Task 2:** "**Had** such priorities been established earlier, current disparities might have been avoided."
+
+**Type 3 (Future Possibility / "Should"):**
+*   **Standard:** "If this policy should fail, alternatives must be considered."
+*   **Inverted:** "**Should** this policy fail, alternatives must be considered."
+*   **Task 2:** "**Should** effort-based messaging be paired with structural awareness, it can foster both personal agency and systemic critique."
+
+**廣東話:** Fronted conditionals = 倒裝條件句，省略 "if"，將助動詞提前。三種類型：Were, Had, Should。非常 formal。
 
 ---
 
-## PART B3: COMPLETE MAP MODEL ANSWER
+## 9. CORRELATIVE CONSTRUCTIONS (對應結構)
 
-**MODEL ANSWER: Town Development 1990 -> 2020**
+### What Are Correlative Constructions?
+*   **Definition:** Paired conjunctions that create balanced, parallel structures.
+*   **Common Pairs:**
+    *   Not only... but also
+    *   Neither... nor
+    *   The more... the more
+    *   Not... but rather
 
-**[INTRODUCTION]**
-The two maps illustrate Rivertown in 1990 and 2020, revealing extensive infrastructural and spatial transformations over a 30-year span.
+### Advanced Usage Examples
 
-**[OVERVIEW]**
-The most striking transformation is the northern area's evolution from predominantly agricultural land to a major commercial district, **with a large shopping complex replacing** farmland entirely and residential zones expanding substantially eastward and southward. Additionally, the railway **was demolished and replaced** by a bypass road circumventing the town to the north, **while** the park was significantly expanded.
+**Not Only... But Also (with Inversion):**
+*   **Standard:** "Education improves employment. It also reduces inequality."
+*   **Band 9:** "**Not only does** education improve employment prospects, **but it also** reduces structural inequality and fosters civic engagement."
 
-**[BODY 1 - 1990 Layout]**
-In 1990, Rivertown featured predominantly agricultural and low-density residential character. The northern section, **comprising approximately 60% of the total area**, **was characterized by** extensive farmland spanning 15 hectares, **which provided** the economic base for the rural settlement. **To the south**, residential housing **was situated along** Main Road, **which ran** north-south through the settlement as the sole thoroughfare, with dwellings consisting of single-story structures. In the town center, a railway line **bisected** the area east-west, with a small station **positioned centrally** at the intersection of the railway and Main Road. A river **formed** the western boundary, with a cluster of small shops **located** at the western end of Main Road, **adjacent to** the residential area. A modest public park **was situated** in the southeastern corner.
+**Neither... Nor:**
+*   **Standard:** "University education is not necessary for success. It is not sufficient either."
+*   **Band 9:** "University education is **neither** necessary **nor** sufficient for success."
+*   **Advanced:** "**Neither has** credential expansion solved inequality, **nor has** vocational training been adequately resourced."
 
-**[BODY 2 - 2020 Changes]**
-By 2020, the configuration **had been comprehensively reconfigured**. Most notably, the northern farmland **was entirely cleared and replaced by** a large shopping mall complex, **which occupies** a similar footprint but features multi-story construction, **surrounded by** extensive parking lots **accommodating** approximately 400 vehicles. The railway **was demolished entirely**, **with a bypass road constructed** along the northern periphery **to redirect** through-traffic. Residential areas **expanded significantly**, **with new housing estates extending** eastward beyond the original boundary and density increasing along Main Road, where original single-story dwellings **have been replaced** by two- and three-story structures. The park **was expanded threefold** to cover the entire southeastern quarter. A pedestrian footbridge **was added** across the river, **connecting** the western and eastern sections. These transformations **collectively altered** the town's character from a quiet agricultural community to a regional commercial hub, **reflecting** rapid urbanization and economic development.
+**The More... The More (Proportional):**
+*   **Standard:** "When inequality increases, social instability increases too."
+*   **Band 9:** "**The greater** the inequality, **the more pronounced** the social instability."
+*   **Task 2:** "**The more pervasive** digital connectivity becomes, **the more imperative** digital literacy education becomes."
 
-**GRAMMAR HIGHLIGHTS:**
-*   âœ… **Tense Control:** Past (1990), Present (2020), Present Perfect/Past Passive (Changes).
-*   âœ… **Map Vocab:** Bisected, situated along, adjacent to, formed boundary, demolished, replaced, expanded.
-*   âœ… **Advanced:** Absolute phrases ("with new housing estates extending"), Participle clauses ("connecting", "reflecting"), Purpose clause ("to redirect").
+**Not... But Rather (Contrastive):**
+*   **Standard:** "The problem is not technology itself. The problem is how we use it."
+*   **Band 9:** "The problem is **not** technology itself **but rather** patterns of compulsive, passive consumption that fragment attention."
+
+**廣東話:** Correlative constructions = 成對嘅連接詞，create balanced parallel structures。非常適合用嚟 create emphasis 同 contrast。
+
+---
+
+## 10. PARENTHETICAL INSERTIONS (插入語)
+
+### What Are Parenthetical Insertions?
+*   **Definition:** Words/phrases inserted into a sentence to add nuance, qualification, or aside.
+*   **Punctuation:** Em-dashes (—), commas, or parentheses.
+
+**Type 1: Qualifying Insertions**
+*   **Standard:** "Credential inflation is a concern. However, it does not invalidate the education-inequality link."
+*   **Band 9:** "Credential inflation**—though a legitimate concern—**does not invalidate the education-inequality link."
+
+**Type 2: Adding Evidence**
+*   **Band 9:** "Longitudinal studies**—most notably the Nurses' Health Study spanning 30 years—**demonstrate that exercise extends healthspan."
+
+**Type 3: Acknowledging Counterpoints**
+*   **Band 9:** "AI will automate routine tasks**—a point contested by some economists, admittedly—**but preponderant evidence suggests..."
+
+**Type 4: Adding Emphasis**
+*   **Band 9:** "The causal arrow**—and this is crucial—**remains contested."
+
+**廣東話:** Parenthetical insertions = 插入語，用 em-dashes, commas 隔開。用嚟 add nuance, qualification, evidence, 或 counterpoints。令句子更 sophisticated。
+
+---
+
+## 11. NOMINALIZATION CHAINS (名詞化串聯)
+
+### What Are Nominalization Chains?
+*   **Definition:** Converting multiple verbs/adjectives into abstract nouns and chaining them together.
+*   **Effect:** Creates dense, academic register.
+
+**Example: From Verbs to Nouns**
+*   **Verb-Heavy (Band 7):** "When governments **fail to regulate** markets adequately, corporations **exploit workers**, and inequality **increases**."
+*   **Nominalization (Band 9):** "**Governmental regulatory failure** precipitates **corporate labor exploitation** and consequent **inequality intensification**."
+
+**Task 2 Example:**
+*   **Verb-Heavy:** "Educational institutions have expanded access. This expansion has not reduced inequality because credentials have inflated."
+*   **Nominalization:** "**Educational access expansion** has not yielded **inequality reduction** due to **credential inflation**."
+
+**âš ï¸ WARNING:** Don't overuse.
+*   **Balanced:** "Credential inflation—the erosion of degrees' signaling power when attainment becomes ubiquitous—undermines educational expansion's potential to reduce inequality."
+
+**廣東話:** Nominalization chains = 將多個動詞/形容詞變做抽象名詞然後串埋。好 academic，但唔好 overuse，會太難明。
+
+---
+
+## 12. PROGRESSIVE ASPECT FOR ONGOING TRENDS (進行體描述趨勢)
+
+### What Is Progressive Aspect?
+*   **Definition:** Using "be + verb-ing" to emphasize that something is ongoing, evolving, dynamic.
+
+**Task 1 Usage:**
+*   **Simple (Band 7):** "The data show that inequality increases."
+*   **Progressive (Band 9):** "The data reveal that inequality **is increasing**, with gaps **widening** year-on-year and **showing** no signs of stabilization."
+
+**Task 2 Usage:**
+*   **Simple:** "Digital connectivity transforms social interaction."
+*   **Progressive:** "Digital connectivity **is transforming** social interaction in ways we **are only beginning** to understand..."
+
+**廣東話:** Progressive aspect (進行體) = 用 "be + verb-ing" 強調某 trend 係 ongoing, dynamic。令描述更 vivid 同 nuanced。
 `
       },
       {
-        id: "chap-32",
-        title: "Quick Reference & Cheat Sheets",
+        id: "grammar-summary",
+        title: "Summary & Practice",
         content: `
-## SECTION C: QUICK REFERENCE CHEAT SHEETS
+# ADVANCED GRAMMAR SUMMARY & PRACTICE
 
-### FLOW CHART ESSENTIAL GRAMMAR CHECKLIST
-*   âœ… **Passive voice** (minimum 80% of process description)
-*   âœ… **Sequencing language** (6+ different types)
-*   âœ… **Purpose clauses** (2-3 instances)
-*   âœ… **Result clauses** (2-3 instances)
-*   âœ… **Relative clauses** (wherein, whereby, which - 3-4 instances)
-*   âœ… **Participle clauses** (2-3 instances)
-*   âŒ **Must-Avoid:** Active voice ("Workers harvest"), Personal pronouns ("we"), Mechanical listing ("First, Second").
+## ADVANCED GRAMMAR SUMMARY TABLE
 
-### MAP ESSENTIAL GRAMMAR CHECKLIST
-*   âœ… **Correct tense selection** (Past for before, Present for after, Present Perfect for change)
-*   âœ… **Location prepositions** (10+ different types)
-*   âœ… **Transformation verbs** (6+ different verbs)
-*   âœ… **Relative clauses** (2-3 instances)
-*   âœ… **Participle clauses** (3-4 instances)
-*   âŒ **Must-Avoid:** Tense errors, Repetitive location phrases, Random organization.
+| Structure | Primary Function | Task 1 | Task 2 | Formality |
+| :--- | :--- | :---: | :---: | :---: |
+| **Absolute Phrases** | Add detail without subordination | ✅ | ✅ | High |
+| **Fronted Adverbials** | Emphasize, create variety | ✅ | ✅ | Med-High |
+| **Inversion** | Dramatic emphasis, formality | ✅ | ✅ | Very High |
+| **Apposition** | Elegant compression | ✅ | ✅ | High |
+| **Participial Adjectives** | Concise description | ✅ | ✅ | High |
+| **Sentence Fragments** | Rhetorical emphasis | ⚠ | ⚠ | Medium |
+| **Mandative Subjunctive** | Formal recommendations | ❌ | ✅ | Very High |
+| **Fronted Conditionals** | Formal hypotheticals | ❌ | ✅ | Very High |
+| **Correlative Constructions** | Balanced rhetoric | ✅ | ✅ | High |
+| **Parenthetical Insertions** | Nuanced qualification | ✅ | ✅ | High |
+| **Nominalization Chains** | Dense academic register | ⚠ | ⚠ | Very High |
+| **Progressive Aspect** | Emphasize ongoing trends | ✅ | ✅ | Medium |
 
-### PRACTICE PROTOCOL é ‹ç¿’æ–¹æ¡ˆ
-*   **Week 1: Grammar Drills.** Passive voice, Sequencing, Tense selection for maps.
-*   **Week 2: Sentence Pattern Practice.** Write 50 sentences for each type.
-*   **Week 3: Timed Application.** Process Diagrams x4, Maps x4 (20 min each).
-*   **Week 4: Refinement.** Mock tests under exam conditions.
+**廣東話:** 呢個表顯示每種 structure 幾時用、用喺邊個 task、formality level 有幾高。
 
-**å»£æ±è©±ç¸½çµ:**
-å®Œæˆå’Ÿï¼ä½ å·²ç¶“æŽŒæ¡å’Ÿ:
-1.  **Flow Charts:** Passive Voice, Sequencing, Advanced Clauses.
-2.  **Maps:** Tense Control, Location Prepositions, Transformation Verbs.
-3.  **Template System:** Advanced patterns for instant Band 9 sentences.
-åŠ æ²¹ï¼ðŸ’ªðŸš€
+---
+
+## PRACTICE EXERCISES
+
+### Exercise Set 1: Rewrite Using Advanced Structures
+
+1.  **Absolute Phrases:**
+    *   *Original:* "Exports increased by 40%. This increase was driven by demand."
+    *   *Rewrite:* "Exports increased by 40%, the increase driven by demand."
+2.  **Inversion:**
+    *   *Original:* "The income gap has rarely been wider."
+    *   *Rewrite:* "Rarely has the income gap been wider."
+3.  **Fronted Conditional:**
+    *   *Original:* "If governments were to eliminate subsidies, renewables would become competitive."
+    *   *Rewrite:* "Were governments to eliminate subsidies, renewables would become competitive."
+4.  **Correlative Construction:**
+    *   *Original:* "Education is not necessary for success. It is not sufficient either."
+    *   *Rewrite:* "Education is neither necessary nor sufficient for success."
+5.  **Apposition:**
+    *   *Original:* "Country A is the regional leader. Its GDP exceeds $3 trillion."
+    *   *Rewrite:* "Country A, the regional leader with GDP exceeding $3 trillion, exhibited robust growth."
+
+### Exercise Set 2: Identify the Structures
+
+1.  "Never before had unemployment fallen below 4%." -> **Negative Inversion**
+2.  "Country A surging while Country B stagnated, its trajectory suggesting structural impediments." -> **Absolute Phrase**
+3.  "It is imperative that governments invest in renewable energy." -> **Mandative Subjunctive**
+4.  "The more pervasive digital connectivity becomes, the more imperative digital literacy education becomes." -> **Correlative Construction**
+5.  "Educational access expansion has not yielded inequality reduction." -> **Nominalization Chain**
+
+---
+
+## FINAL TIPS: How to Memorize & Deploy
+
+### 1. Deliberate Practice Protocol
+*   **Week 1:** Focus on 2–3 structures. Read examples aloud 5 times. Rewrite 10 sentences.
+*   **Week 2:** Integrate into timed writing. Use at least 2 structures per essay.
+*   **Week 3:** Refine placement. Ensure natural integration.
+
+### 2. Natural Integration Checklist
+*   Did I use at least 3 different advanced structures?
+*   Are they naturally integrated (not forced)?
+*   Did I avoid overusing any single structure? (Max 1-2 inversions)
+
+### 3. Warning: Common Mistakes
+*   ❌ **Overuse:** Using 5 inversions in one essay -> sounds unnatural.
+*   ❌ **Forced fit:** "Never has the pie chart shown such data." (Awkward)
+*   ❌ **Excessive nominalization:** "The implementation of the facilitation of..." (Unreadable)
+
+## CONCLUSION
+**You now know 12 advanced grammatical structures.**
+Remember: Advanced grammar is not about complexity but **precision, emphasis, and elegance**. Use these structures to make your writing clearer and more sophisticated—not to show off.
+
+**廣東話總結:** 你而家識咗 12 種 advanced grammar structures。記住：advanced grammar 唔係「複雜」，而係「精確、強調、優雅」。祝你掌握 C2-level grammar，達到 Band 9！🎓✍
 `
       }
     ]
   }
+,
+  {
+    id: "part-i",
+    title: "Part I: Task 2 Mastery & Complete System",
+    description: "Complete Task 2 Systematic Teaching: Foundations, Criteria, Structure, Argumentation, and Models.",
+    sections: [
+      {
+        id: "chap-33",
+        title: "Chapter 10: Task 2 Foundations",
+        content: `
+# CHAPTER 10: Task 2 Foundations 任務二基礎
+
+## 10.1 Understanding Task 2
+
+**What Is Task 2?**
+*   **Time:** 40 minutes
+*   **Word count:** 250+ words (aim for 280–320)
+*   **Task type:** Argumentative/discursive essay
+*   **Weight:** 67% of Writing score (Task 1 is 33%)
+
+**Your Job:**
+1.  Present a clear position (your view)
+2.  Develop ideas fully with explanations, examples, evidence
+3.  Address all parts of the question
+4.  Organize logically with clear paragraphing
+5.  Use sophisticated language and grammar
+
+**廣東話:** Task 2 = 議論文。40分鐘、250字以上。佔 Writing 67%，所以更重要。你要 present clear position、fully develop ideas、address all parts of question。
+
+## 10.2 Band 9 Task Response Criteria (Task 2)
+
+**Official Descriptor:**
+"The prompt is appropriately addressed and explored in depth. A clear and fully developed position is presented which directly answers the questions. Ideas are relevant, fully extended and well supported. Any lapses in content or support are extremely rare."
+
+**What This Means:**
+*   ✅ **"Explored in depth":** Unpacking hidden assumptions, addressing counterarguments (steel man, not straw man), providing theoretical grounding, offering nuanced synthesis (not binary agree/disagree).
+*   ✅ **"Clear and fully developed position":** Precise thesis (not vague "I partly agree"), qualified/conditional position (under what conditions?), consistent throughout essay.
+*   ✅ **"Fully extended":** Every idea has: Claim + Explanation + Evidence + Analysis + Link.
+*   ✅ **"Well supported":** Evidence (data, research, examples) and logical reasoning (no fallacies).
+
+**廣東話:** "Explored in depth" = 唔係表面處理，要 unpack assumptions、address counterarguments。"Clear position" = 唔係 "I partly agree"，要 precise conditional thesis。"Fully extended" = 每個 idea 都要 5-element structure。
+
+## 10.3 Task 2 Question Types (6 Main Types)
+
+**Type 1: Opinion (Agree/Disagree)**
+*   "Some people think X. To what extent do you agree or disagree?"
+*   **What to do:** State your position clearly and develop 2–3 supporting arguments.
+*   **廣東話:** 直接講你同唔同意，然後 develop 2–3 個論點支持你嘅立場。
+
+**Type 2: Discussion + Opinion**
+*   "Some people think X. Others think Y. Discuss both views and give your own opinion."
+*   **What to do:**
+    *   Body 1: Present View X (steel man)
+    *   Body 2: Present View Y (steel man) OR Present your view + counter both
+    *   Body 3 (optional): Your synthesis/nuanced position
+*   **廣東話:** Body 1 講 View X (要用 steel man)，Body 2 講 View Y，然後 give your opinion（可以喺 Body 3 或 conclusion）。
+
+**Type 3: Advantages & Disadvantages**
+*   "X is becoming increasingly common. Do the advantages outweigh the disadvantages?"
+*   **What to do:** Body 1: Advantages (with evidence). Body 2: Disadvantages (with evidence). Your position: Which outweighs? (can be in conclusion or separate body paragraph).
+*   **廣東話:** Body 1 講 advantages，Body 2 講 disadvantages。你嘅立場（which outweighs）可以喺 conclusion 或者獨立一段。
+
+**Type 4: Problem-Solution**
+*   "X is a problem. What are the causes? What solutions can you suggest?"
+*   **What to do:** Body 1: Causes (with evidence + analysis). Body 2: Solutions (realistic, specific, linked to causes).
+*   **廣東話:** Body 1 講 causes（要 analyze），Body 2 講 solutions（要 realistic 同 specific）。
+
+**Type 5: Two-Part Question**
+*   "Why is X happening? Is this a positive or negative development?"
+*   **What to do:** Answer BOTH questions fully. Body 1: Answer question 1. Body 2: Answer question 2.
+*   **廣東話:** 兩條問題都要答足。Body 1 答第一條，Body 2 答第二條。
+
+**Type 6: Direct Question**
+*   "To what extent do you think X is true?"
+*   **What to do:** Similar to Opinion type—state your position and develop arguments.
+*   **廣東話:** 類似 Opinion type，講你嘅 position 然後 develop arguments。
+
+## 10.4 Task 2 Structure (Standard 5-Paragraph Format)
+
+1.  **Paragraph 1:** Introduction (50–60 words)
+2.  **Paragraph 2:** Body 1 (100–120 words)
+3.  **Paragraph 3:** Body 2 (100–120 words)
+4.  **Paragraph 4:** Body 3 (80–100 words, OPTIONAL)
+5.  **Paragraph 5:** Conclusion (40–50 words)
+
+**廣東話:** 5段式：Introduction (50–60字) → Body 1 (100–120字) → Body 2 (100–120字) → Body 3 (optional, 80–100字) → Conclusion (40–50字)。
+`
+      },
+      {
+        id: "chap-34",
+        title: "Chapter 11: Introduction & Thesis",
+        content: `
+# CHAPTER 11: Task 2 Introduction & Thesis Statements
+
+## 11.1 The Hook (Optional but Effective)
+
+**Structure:**
+1.  **Hook (optional, 1 sentence):** Interesting opening
+2.  **Background (1–2 sentences):** Context/paraphrase prompt
+3.  **Thesis statement (1–2 sentences):** Your clear, nuanced position
+
+**What Is a Hook?**
+A 1-sentence opening that captures attention—NOT mandatory, but Band 9 writers often use them.
+
+**Types of Hooks:**
+*   **Type 1: Striking fact/statistic** ("Over 70% of university graduates now express regret...")
+*   **Type 2: Provocative statement** ("In an era of ubiquitous information access, the traditional university model appears increasingly anachronistic.")
+*   **Type 3: Rhetorical question** ("Can meritocracy coexist with structural inequality...?")
+*   **Type 4: Historical reference** ("Since the Industrial Revolution, each wave of automation has prompted fears...")
+
+**廣東話:** Hook = 第一句吸引注意。可以用 striking fact、provocative statement、rhetorical question、或 historical reference。唔係必須，但 Band 9 通常有。
+
+## 11.2 Background (Context/Paraphrase)
+
+**What to do:** Paraphrase the prompt to show you understand it.
+
+**Example:**
+*   **Original Prompt:** "In some cultures, children are often told that they can achieve anything if they try hard enough. What are the advantages and disadvantages of giving children this message?"
+*   **Band 7 Paraphrase (Too similar):** "In many cultures, children are told they can achieve anything if they work hard. This essay will discuss the advantages and disadvantages."
+*   **Band 9 Paraphrase (Sophisticated):** "**The adage that 'hard work guarantees success' pervades many cultural contexts, particularly in meritocratic societies that valorize individual effort.**"
+    *   *Key Changes:* "Are often told" → "The adage pervades"; "Achieve anything" → "guarantees success"; Added context: "meritocratic societies that valorize".
+
+**廣東話:** Background = paraphrase 題目。唔好照抄，要用 synonyms 同 different structures。Band 9 會 add context。
+
+## 11.3 Thesis Statement (Most Important Sentence)
+
+**What Is a Thesis?**
+Your clear position that directly answers the question.
+
+**Example:**
+*   **Band 7 Error (Vague):** "I partly agree with this statement because there are advantages and disadvantages." (Problem: "Partly agree" says nothing.)
+*   **Band 9 Thesis (Precise, Nuanced):** "**This essay contends that effort-based messaging yields conditional benefits—contingent upon whether it is paired with structural awareness and acknowledgment that effort, while necessary, is rarely sufficient for success.**"
+
+**What Makes This Band 9:**
+*   ✅ **Precise position:** "conditional benefits"
+*   ✅ **Qualification:** "contingent upon"
+*   ✅ **Logical distinction:** "necessary but not sufficient"
+*   ✅ **Specific conditions:** "paired with structural awareness"
+
+**Formula for Band 9 Thesis:**
+"[Position] is true under conditions X, Y, Z but not under conditions A, B, C."
+
+**More Examples:**
+*   **Arts Funding:** "Government arts funding is justified **when markets fail to provide culturally valuable but unprofitable works**, but **not when such funding displaces private patronage**..."
+*   **Technology & Isolation:** "While digital communication can fragment face-to-face interaction, **its net social effect is contingent on usage patterns**: moderate, intentional use enhances connectivity, whereas compulsive, passive consumption exacerbates isolation."
+
+**廣東話:** Thesis 係最重要嘅一句。唔好 vague（"I partly agree"），要 precise 同 conditional："X is true under conditions Y and Z"。
+`
+      },
+      {
+        id: "chap-35",
+        title: "Chapter 12: Body Paragraphs (Toulmin Model)",
+        content: `
+# CHAPTER 12: Task 2 Body Paragraphs (Toulmin Model)
+
+## 12.1 The 5-Element Structure
+
+Every Band 9 body paragraph should contain:
+1.  **Claim (Topic Sentence):** Your main point
+2.  **Explanation:** Why this claim matters / How it works
+3.  **Evidence:** Data, examples, research
+4.  **Analysis:** Interpret the evidence / Address implications
+5.  **Link:** Connect back to thesis
+
+**廣東話:** 每個 body paragraph 都要有 5 個 elements：Claim (topic sentence) → Explanation (點解重要) → Evidence (證據) → Analysis (分析證據) → Link (連返 thesis)。
+
+## 12.2 Example: Education & Inequality
+
+*   **Claim:** Expanding access to higher education can mitigate income inequality, but only under specific institutional conditions.
+*   **Explanation:** This potential arises because tertiary credentials serve dual functions: they enhance human capital (skills, knowledge) while simultaneously signaling to employers that graduates possess trainability and cognitive capacity.
+*   **Evidence:** OECD longitudinal data demonstrate that tertiary-educated individuals earn, on average, 65% more than secondary-educated counterparts, with this premium remaining stable across two decades—suggesting persistent labor-market valuation of credentials.
+*   **Analysis:** However, this does not imply that education suffices to eliminate inequality. Rather, it increases the probability of upward mobility provided labor markets reward credentials and educational quality is maintained. Critically, when degree attainment becomes ubiquitous—as in South Korea, where 70% of young adults hold tertiary credentials—credential inflation erodes signaling power, and the income premium diminishes.
+*   **Link:** Thus, while education is a powerful anti-poverty tool, its efficacy is contingent on avoiding saturation and maintaining alignment between curricula and labor-market demands.
+
+**Analysis of This Paragraph:**
+*   ✅ **Claim:** Clear position ("can mitigate... but only under specific conditions")
+*   ✅ **Explanation:** Mechanism explained (human capital + signaling)
+*   ✅ **Evidence:** Specific data (65% premium, OECD)
+*   ✅ **Analysis:** Qualifies the claim, addresses counterexample (South Korea), explains credential inflation
+*   ✅ **Link:** Connects to conditions for efficacy
+
+**廣東話:** 呢段示範咗完整嘅 5-element structure。
+
+## 12.3 Toulmin Model (6-Element Advanced Version)
+
+For even more sophisticated argumentation, add:
+1.  **Claim:** Your main point
+2.  **Data (Evidence):** Facts, statistics, examples
+3.  **Warrant:** Why the data supports the claim (the reasoning bridge)
+4.  **Backing:** Support for the warrant (theory, research)
+5.  **Qualifier:** Conditions, scope, strength ("To what extent is the claim true?")
+6.  **Rebuttal:** Counterargument + response
+
+**Example: Education & Inequality (Toulmin Full)**
+*   **Backing:** "This logic reflects human capital theory... confirmed by difference-in-differences analyses..."
+*   **Qualifier:** "However, these effects are contingent on: (1) avoiding credential inflation..."
+*   **Rebuttal:** "Critics argue that ubiquitous degrees erode signaling power... Yet this does not invalidate the education-inequality link; rather, it suggests that quality assurance and vocational alternatives are necessary complements..."
+
+**廣東話:** Toulmin model 係最完整嘅論證架構。包括 Claim, Data, Warrant (點解 data support claim), Backing (support warrant 嘅理論), Qualifier (conditions), Rebuttal (address 反對意見)。
+`
+      },
+      {
+        id: "chap-36",
+        title: "Chapter 13: Advanced Argumentation",
+        content: `
+# CHAPTER 13: Advanced Argumentation Techniques
+
+## 13.1 Steel Man (Not Straw Man)
+
+*   **Straw Man (Band 6-7):** Distort opposing view, attack weakest version, easy to refute. ("Some people say technology is bad because they don't like phones.")
+*   **Steel Man (Band 9):** Present strongest version of opposing view, acknowledge merits, then counter with nuance.
+
+**Example: Technology & Social Isolation**
+*   **Steel Man:** "Critics of pervasive digital connectivity advance a sophisticated concern: that constant smartphone use fragments sustained attention... These concerns are empirically grounded—longitudinal studies demonstrate correlations..."
+*   **Counter:** "Nevertheless, this critique overlooks countervailing evidence... Crucially, the causal arrow remains contested: it may be that anxious individuals self-select into heavy social media use..."
+
+**廣東話:** Steel man = present 對方論點嘅最強版本，acknowledge 佢嘅 merits，然後用 nuanced response counter 佢。唔好攻擊 straw man（扭曲對方論點）。
+
+## 13.2 Necessary vs Sufficient Conditions
+
+**Common Error:** Confusing correlation with necessity/sufficiency.
+*   **Band 7:** "University education is necessary for success." (Counterexample: Bill Gates)
+*   **Band 9:** "University education is **neither necessary nor sufficient** for career success... Rather, tertiary education is **facilitative**: it **increases the probability** of favorable outcomes without guaranteeing them."
+
+**Key Language:**
+*   "Neither necessary nor sufficient"
+*   "Increases the probability" (not "causes" or "guarantees")
+*   "One probabilistic factor among multiple determinants"
+
+**廣東話:** Necessary vs sufficient 係 Band 9 必須區分。大部分嘢都係 "neither necessary nor sufficient"，只係 "increase probability"。
+
+## 13.3 Inference to the Best Explanation (IBE)
+
+**What Is IBE?**
+Present multiple possible explanations for a phenomenon, then evaluate them against criteria:
+1.  **Explanatory power:** Accounts for more data
+2.  **Parsimony:** Simpler (Occam's Razor)
+3.  **Consistency:** Aligns with established knowledge
+4.  **Testability:** Generates falsifiable predictions
+
+**Example: Digital Divide**
+"The digital divide is best explained by **structural barriers** rather than individual deficits... While device access is a necessary condition, it is insufficient... This multi-causal model demonstrates superior explanatory power compared to monocausal accounts..."
+
+**廣東話:** IBE = 提出多個解釋，用 criteria evaluate（explanatory power, parsimony, consistency, testability），然後 select best explanation。
+
+## 13.4 Causal Reasoning: Avoiding Oversimplification
+
+**Common Error:** X correlates with Y, therefore X causes Y.
+**Reality:** Possible relationships: X→Y, Y→X (reverse), Z→X+Y (confounding), Coincidence.
+
+**Example: Exercise & Longevity**
+"While exercise **correlates robustly** with longevity (r = 0.4), **establishing causation requires ruling out confounding variables**. Randomized controlled trials... demonstrate that exercise independently extends healthspan, but **effect sizes are more modest**... indicating that **selection effects** (healthier people choosing to exercise) account for much of the observed correlation."
+
+**廣東話:** Causal reasoning 要小心。Correlation ≠ causation。要考慮 confounders, reverse causation, selection effects。用 RCTs 先可以 establish causation。
+`
+      },
+      {
+        id: "chap-37",
+        title: "Chapter 14: Complete Model Answers",
+        content: `
+# CHAPTER 14: Task 2 Complete Model Answers
+
+## Model Answer 1: "Hard Work Guarantees Success"
+
+**Prompt:** "In some cultures, children are often told that they can achieve anything if they try hard enough. What are the advantages and disadvantages of giving children this message?"
+
+**Band 9 Model Answer (342 words)**
+
+**[INTRODUCTION]**
+The adage that "hard work guarantees success" pervades many cultural contexts, particularly in meritocratic societies that valorize individual effort. While this message can cultivate resilience and intrinsic motivation, it risks obscuring structural barriers and fostering self-blame when success remains elusive. This essay contends that the advantages of this messaging are conditional—contingent upon whether it is accompanied by realistic assessments of external constraints and an acknowledgment that effort, though necessary, is rarely sufficient.
+
+**[BODY 1: ADVANTAGES]**
+The primary advantage of instilling a belief in effort-based achievement lies in its capacity to foster intrinsic motivation and psychological resilience. Research in developmental psychology demonstrates that children who attribute success to controllable factors—such as effort rather than innate talent—exhibit greater persistence in the face of setbacks. This orientation, often termed a "growth mindset", correlates with improved academic performance and reduced helplessness when confronted with challenges. If children believe that outcomes are contingent upon their own actions, they are more likely to invest sustained effort, viewing failure as informative feedback rather than a terminal verdict on their abilities. However, this benefit presupposes that effort genuinely translates into outcomes—an assumption that does not uniformly hold across socioeconomic contexts.
+
+**[BODY 2: DISADVANTAGES]**
+Conversely, this messaging harbors significant risks, particularly when it elides structural inequalities. Framing achievement purely as a function of effort individualizes systemic failures, implying that those who do not succeed have simply not tried hard enough. For children from disadvantaged backgrounds—who face resource deficits, discrimination, and limited social capital—such messaging can engender corrosive self-blame. A working-class child who studies diligently yet fails to access elite universities due to inadequate school funding may internalize this as personal inadequacy rather than recognizing the institutional barriers at play. Moreover, the "effort equals success" narrative can foster intolerance of failure, wherein children equate setbacks with insufficient willpower, a cognitive distortion linked to anxiety and burnout in psychological literature.
+
+**[BODY 3: SYNTHESIS]**
+A more defensible position recognizes effort as a necessary but not sufficient condition for success. The message should be recalibrated to emphasize that hard work increases the probability of achieving one's goals while simultaneously equipping children to identify and challenge structural obstacles. Educational systems that pair effort-based messaging with critical consciousness—teaching students to analyze how race, class, and geography shape opportunity—mitigate the psychological harms of the meritocratic myth without abandoning the motivational benefits of agency beliefs. This dual approach fosters both personal resilience and awareness of the need for systemic reform.
+
+**[CONCLUSION]**
+In summation, the advantages of effort-based messaging—enhanced motivation and resilience—are not intrinsic but contingent upon contextual factors. When divorced from structural awareness, such messages risk perpetuating inequality by misattributing systemic failures to individual shortcomings. A sophisticated approach pairs the psychological empowerment of agency beliefs with critical literacy about societal constraints, thereby fostering both personal agency and collective action.
+
+**Why This Is Band 9:**
+*   ✅ **Task Response:** Unpacks assumptions, theoretical grounding (growth mindset), clear conditional thesis ("conditional benefits"), 5-element paragraphs.
+*   ✅ **Coherence:** Theme-Rheme links ("this message" → "Such messaging"), natural connectors.
+*   ✅ **Lexis:** "Valorize, elides, engender, corrosive, recalibrated", "intrinsic motivation, cognitive distortion".
+*   ✅ **Grammar:** Perfect structures, complex sentences.
+
+**廣東話總結:** 呢篇 Band 9 因為：(1) 深入探討，(2) clear and nuanced position，(3) 每個 idea fully extended，(4) 詞彙精確，(5) 語法範圍廣且準確。
+`
+      },
+      {
+        id: "chap-38",
+        title: "Chapter 15: Strategies & Checklist",
+        content: `
+# CHAPTER 15: Task 2 Question-Type Specific Strategies
+
+## 15.1 Opinion Essays (Agree/Disagree)
+*   **Structure:** Intro (Thesis) → Body 1 (Arg 1) → Body 2 (Arg 2) → Body 3 (Optional Counter/Arg 3) → Conclusion.
+*   **Key:** Position must be clear.
+*   **Positions:** Strongly agree/disagree (with qualifications), or Agree under certain conditions.
+*   **Avoid:** "I partly agree" without conditions.
+
+## 15.2 Discussion + Opinion Essays
+*   **Structure:** Intro (Thesis) → Body 1 (Steel man View A) → Body 2 (Steel man View B + Critique) → Body 3 (Synthesis/Opinion) → Conclusion.
+*   **Key:** Fairly present both views before giving opinion.
+
+## 15.3 Advantages & Disadvantages Essays
+*   **Structure:** Intro (Thesis: which outweighs?) → Body 1 (Advantages) → Body 2 (Disadvantages) → Body 3 (Comparative Analysis - optional) → Conclusion (Restate position).
+*   **Key:** Must evaluate which outweighs.
+
+## 15.4 Problem-Solution Essays
+*   **Structure:** Intro (Thesis) → Body 1 (Root Causes) → Body 2 (Linked Solutions) → Conclusion.
+*   **Key:** Causes must be root causes (e.g., "Economic factors" not just "Junk food cheap"). Solutions must address identified causes.
+
+---
+
+# CHAPTER 16: Self-Editing Checklist (Complete)
+
+## TASK 1 CHECKLIST
+*   [ ] Analytical overview (no data listing)
+*   [ ] All categories covered
+*   [ ] Key features selected (trends, outliers)
+*   [ ] Relevant comparisons made
+*   [ ] Theme-Rheme linkage
+*   [ ] Precise trend verbs (surge, plateau)
+
+## TASK 2 CHECKLIST
+*   [ ] **Clear, nuanced position** (not vague "partly agree")
+*   [ ] **All parts addressed**
+*   [ ] **Ideas fully extended** (5-element structure: Claim-Explanation-Evidence-Analysis-Link)
+*   [ ] **Explored in depth** (unpacks assumptions, steel mans counterarguments)
+*   [ ] **Evidence provided** (data, examples, research)
+*   [ ] **Logical reasoning** (no fallacies, distinguishing necessary/sufficient)
+*   [ ] **Cohesion** (Theme-Rheme, natural connectors)
+*   [ ] **Lexis** (Academic, precise, collocations)
+*   [ ] **Grammar** (Sentence variety, accuracy)
+
+---
+
+# CHAPTER 17: Common Pitfalls & How to Avoid Them
+
+## Pitfall 1: Semantic Drift
+*   **Problem:** Same word used with different meanings. ("Technology" = automation vs "Technology" = phones).
+*   **Solution:** Specify each time ("Enterprise technology" vs "Consumer devices").
+
+## Pitfall 2: Dangling Modifiers
+*   **Problem:** "Having finished the report, the computer was shut down." (Subject mismatch).
+*   **Solution:** "Having finished the report, she shut down the computer."
+
+## Pitfall 3: Illogical Comparisons
+*   **Problem:** "Country A's GDP is higher than Country B." (Comparing GDP to a Country).
+*   **Solution:** "Country A's GDP is higher than **that of** Country B."
+
+## Pitfall 4: False Parallelism
+*   **Problem:** "To reduce poverty, increasing employment, and education improvement." (Mixed forms).
+*   **Solution:** "To reduce poverty, increase employment, and improve education."
+
+---
+
+# CONCLUSION: Your Path to Band 9
+
+**What You've Learned:**
+1.  **Foundation:** Logic, discourse architecture, syntax, lexis.
+2.  **Task 1:** Analytical overview, trend verbs, proportional reasoning.
+3.  **Task 2:** Nuanced thesis, 5-element paragraphs, Toulmin model, steel man.
+
+**How to Practice:**
+1.  Analyze model answers.
+2.  Write full essays under timed conditions.
+3.  Self-edit using the checklist.
+4.  Get feedback.
+5.  Iterate.
+
+**廣東話總結:** 呢個完整課程教咗你：Logic, discourse, syntax, lexis。Task 1 講 analytical overview。Task 2 講 nuanced thesis, Toulmin model, steel man。Band 9 = logical precision + discourse sophistication + lexical range + grammatical sophistication + intellectual depth。祝你 IELTS Writing 考試成功，達到 Band 9 同 C2 水平！🎯📚 (End of Complete Course)
+`
+      }
+    ]
+  }
+
+,
+  {
+    id: "part-j",
+    title: "Part J: Band 9 Mastery & Separation System",
+    description: "Complete Separation for Task 1 & Task 2 • Cambridge-Oxford Linguistics PhD Level • For English Literature Majors & C2 Learners",
+    sections: [
+      {
+        id: "chap-39",
+        title: "Course Structure & Band 9 Criteria",
+        content: `
+# IELTS Band 9 Mastery Course: Complete Separation for Task 1 & Task 2
+
+**Cambridge-Oxford Linguistics PhD Level • For English Literature Majors & C2 Learners**
+
+## Course Structure 課程結構
+
+*   **PART A: TASK 1 (Academic: Visual Data Description)**
+    *   → Band 9 Criteria: Task Achievement, Coherence & Cohesion, Lexical Resource, Grammatical Range & Accuracy
+*   **PART B: TASK 2 (Argumentative Essay)**
+    *   → Band 9 Criteria: Task Response, Coherence & Cohesion, Lexical Resource, Grammatical Range & Accuracy
+*   **PART C: Shared Advanced Foundations**
+    *   → Logical reasoning, discourse architecture, syntactic sophistication (applicable to both tasks)
+
+---
+
+## PART A: TASK 1 MASTERY (Visual Data Description)
+
+### Official Band 9 Descriptors for Task 1 官方 Band 9 標準
+
+| Criterion | Official Descriptor | 廣東話解讀 |
+| :--- | :--- | :--- |
+| **Task Achievement** | "All the requirements of the task are fully and appropriately satisfied. There may be extremely rare lapses in content." | 完全滿足所有要求（150 字以上、所有 key features 覆蓋、有 overview）。極罕有內容疏漏。 |
+| **Coherence & Cohesion** | "The message can be followed effortlessly. Cohesion is used in such a way that it very rarely attracts attention... Paragraphing is skilfully managed." | 讀者可以「毫不費力」跟隨你嘅論述。Cohesive devices「幾乎唔引人注意」。分段「巧妙」。 |
+| **Lexical Resource** | "Full flexibility and precise use are evident... A wide range of vocabulary is used accurately and appropriately with very natural and sophisticated control..." | 「完全靈活」同「精確使用」。詞彙範圍廣、準確、自然、sophisticated。 |
+| **Grammatical Range & Accuracy** | "A wide range of structures... used with full flexibility and control. Punctuation and grammar are used appropriately throughout. Minor errors are extremely rare..." | 句式範圍廣、靈活、準確。標點同語法「全程適當」。幾乎冇錯誤。 |
+`
+      },
+      {
+        id: "chap-40",
+        title: "Module A1: Task 1 Task Achievement",
+        content: `
+# MODULE A1: Task Achievement for Task 1 任務完成度
+
+## A1.1 The Analytical Overview (Not Descriptive Summary) 分析性概覽
+
+**Band 7 Overview (Descriptive, list-like):**
+"The chart shows data for five countries from 2010 to 2020. Country A had the highest value in both years. Country E had the lowest. All countries increased except Country D."
+*   *Problems:* Lists data points (not analysis), no interpretation of patterns, reads like mechanical summary.
+
+**Band 9 Overview (Analytical, pattern-focused):**
+"The data reveal **divergent trajectories** across five economies, with advanced nations (A, B) exhibiting **decelerating growth consistent with diminishing marginal returns**, while emerging economies (C, D, E) demonstrate **accelerated expansion characteristic of convergence dynamics**. Notably, **absolute gaps widened despite proportional convergence**, suggesting **scale effects** in economic development."
+
+**廣東話分析:**
+*   用 "**divergent trajectories**" 而唔係 "different changes"
+*   引入經濟理論："diminishing marginal returns"、"convergence dynamics"
+*   指出 paradox："absolute gaps widened" vs "proportional convergence"
+*   提供 interpretation："scale effects"
+*   冇具體數字（overview 唔應該有數字）
+
+## A1.2 Comprehensive Coverage of Key Features 全面覆蓋關鍵特徵
+
+**Band 7 Error (Incomplete coverage):**
+"Countries A, B, and C all increased. Country D decreased." (Country E not mentioned → max Band 7)
+
+**Band 9 Correction:**
+"Countries A, B, and C exhibited upward trajectories, while Country D contracted and Country E stagnated, maintaining near-constant levels throughout the period."
+
+**Key Principles:**
+1.  Identify 2–3 dominant patterns (groups).
+2.  Every category/country/time period MUST be addressed.
+3.  Exceptions/outliers acknowledged.
+
+## A1.3 Proportional + Absolute Reasoning 比例與絕對值雙重分析
+
+**Band 7 (Absolute only):**
+"Country A grew more than Country B ($1 trillion vs $100 billion)."
+
+**Band 9 (Dual analysis):**
+"In **absolute terms**, Country A's GDP expansion ($1 trillion) **dwarfed** Country B's ($100 billion) tenfold. **However, proportionally**, Country B exhibited a 100% growth rate—double that of Country A's 50%—indicating more dynamic economic expansion relative to baseline. This **proportional-absolute divergence likely reflects conditional convergence**: lower-income economies grow faster than affluent ones due to technology transfer..."
+
+**廣東話分析:**
+*   同時講 absolute ("dwarfed tenfold") 同 proportional ("double")
+*   解釋 divergence："conditional convergence"
+
+## A1.4 Strategic Data Selection (Not Exhaustive Listing)
+
+**Band 9 Strategy:**
+"Country A maintained **consistently elevated levels** (80→95), while Countries C and D—**starting from lower baselines** (50 and 45 respectively)—experienced **steeper proportional gains**, with C **more than doubling** to 110. Country E, by contrast, **inched up marginally** (30→35), suggesting structural impediments to growth."
+*   *Select meaningful comparisons, don't list all numbers.*
+`
+      },
+      {
+        id: "chap-41",
+        title: "Module A2 & A3: Coherence & Lexis (Task 1)",
+        content: `
+# MODULE A2: Coherence & Cohesion for Task 1
+
+## A2.1 Theme-Rheme Progression (Linear Flow)
+
+**Principle:** Each sentence's Theme (starting point) should link to the previous sentence's Rheme (end point).
+
+**Band 9 Example:**
+"Country A's GDP surged 40% over the decade. **This surge** positioned it as the regional leader by 2020. **Such leadership**, however, was challenged by Country B's accelerating growth trajectory, which narrowed the gap... **This convergence** suggests that..."
+*   *Linkage:* "surged" → "This surge"; "leader" → "Such leadership"; "narrowed gap" → "This convergence".
+
+## A2.3 Skilful Paragraphing (Conceptual)
+
+**Band 9 Structure:**
+*   **Paragraph 1:** Analytical overview
+*   **Paragraph 2:** High performers (Countries A, B) + patterns
+*   **Paragraph 3:** Emerging economies (Countries C, D) + catch-up dynamics
+*   **Paragraph 4:** Outliers (Country E) + structural impediments
+*   *Group by concept, not by year.*
+
+---
+
+# MODULE A3: Lexical Resource for Task 1
+
+## A3.1 Precise Trend Verbs
+
+| Intensity | Upward | Downward |
+| :--- | :--- | :--- |
+| **Dramatic** | surge, soar, skyrocket, rocket | plummet, plunge, collapse, nosedive |
+| **Strong** | climb, rise sharply, jump, accelerate | decline sharply, fall steeply, contract |
+| **Moderate** | advance, expand, edge up (minimal) | dip, ease, slide slightly (minimal) |
+
+**Band 9 Sentence:**
+"Export volumes **surged** 40%... then **plateaued**... before **edging down modestly**—a trajectory suggesting initial expansion, subsequent saturation, and mild contraction."
+
+## A3.2 Academic Noun Phrases
+
+*   **Fast growth:** "sustained expansion", "rapid acceleration"
+*   **Difference:** "divergence", "disparity", "differential"
+*   **Similarity:** "convergence", "alignment", "parity"
+*   **Highest/Lowest:** "apex", "zenith" / "nadir", "trough"
+
+## A3.3 Hedged Causal Language
+
+**Principle:** Task 1 唔可以 100% 肯定因果，要用 hedged speculation.
+*   ✅ "may be partially attributable to"
+*   ✅ "likely reflects"
+*   ✅ "suggests"
+*   ✅ "is consistent with"
+`
+      },
+      {
+        id: "chap-42",
+        title: "Module A4: Grammar & A5: Model Answer (Task 1)",
+        content: `
+# MODULE A4: Grammatical Range & Accuracy for Task 1
+
+## A4.1 Variety in Sentence Openings
+1.  **Prepositional:** "Over the decade, Country A..."
+2.  **Adverbial:** "Notably, Country B outpaced..."
+3.  **Participial:** "Starting from a low base, Country C..."
+4.  **Subordinate:** "While Country D stagnated..."
+5.  **Nominalization:** "The most striking feature is..."
+
+## A4.2 Relative Clauses for Data Integration
+*   "Country A, **which had the highest GDP**, grew by 50%."
+*   "Country C, **which started from a base of $50 billion**, more than tripled its GDP."
+
+## A4.3 Comparative Structures
+*   "Country A's GDP is **three times that of** Country B."
+*   "Country C grew at **twice the rate of** Country D."
+*   "Country G registered the steepest decline... **far exceeding** the average."
+
+---
+
+# MODULE A5: Task 1 Complete Model Answer
+
+**Data:** Mixed Chart (Anthropology graduates destinations & earnings)
+
+**Band 9 Model Answer (193 words)**
+
+**[Overview Paragraph]**
+The data illustrate the occupational trajectories and earnings profiles of anthropology graduates from one institution. Overall, the majority transitioned directly into full-time employment (52%), while postgraduate study—whether full-time or combined with work—remained relatively uncommon (16% combined). Salary outcomes after five years reveal substantial sectoral variation, with freelance consultants and government employees disproportionately represented in higher income brackets, whereas private-sector anthropologists exhibited more dispersed earnings.
+
+**[Body Paragraph 1: Pie Chart]**
+Regarding initial destinations, over half secured full-time employment (52%), suggesting relatively robust labour-market demand for anthropological skills. In contrast, part-time work accounted for 15%, with an additional 8% combining part-time roles with postgraduate study—a pattern potentially reflecting portfolio career strategies. Notably, full-time postgraduate study attracted only 8%, indicating that advanced training was not the default pathway. Unemployment stood at 12%, while 5% had unknown destinations, likely due to non-response in tracking surveys.
+
+**[Body Paragraph 2: Table]**
+Salary data reveal pronounced earnings hierarchies contingent upon sector. Freelance consultants and government-sector anthropologists clustered heavily in upper brackets: 80% of freelancers and 80% of government workers earned above $75,000, with half of government employees surpassing $100,000. By contrast, private-company anthropologists exhibited a more graduated distribution, with only 55% earning above $75,000. This sectoral divergence likely reflects differential valuation of anthropological expertise, with government and consulting roles commanding premiums due to specialized applications.
+
+**Why This Is Band 9:**
+*   ✅ **Lexis:** "Occupational trajectories", "transitions", "disproportionately represented", "dispersed earnings", "portfolio career strategies".
+*   ✅ **Grammar:** Relative clauses ("whether full-time or combined"), Comparisons ("80% vs 55%").
+*   ✅ **Coherence:** "Regarding initial destinations", "In contrast", "Notably", "By contrast".
+`
+      },
+      {
+        id: "chap-43",
+        title: "Part B: Task 2 Mastery",
+        content: `
+# PART B: TASK 2 MASTERY (Argumentative Essay)
+
+## Official Band 9 Descriptors for Task 2
+
+| Criterion | Key Requirements |
+| :--- | :--- |
+| **Task Response** | "Explored in depth", "Clear and fully developed position", "Ideas fully extended". |
+| **Coherence & Cohesion** | "Effortless" flow, "Skilful paragraphing", cohesion "rarely attracts attention". |
+| **Lexical Resource** | "Sophisticated control", "Precise use". |
+| **Grammar** | "Wide range of structures", "Full flexibility", "Minor errors extremely rare". |
+
+---
+
+# MODULE B1: Task Response for Task 2
+
+## B1.1 "Appropriately Addressed and Explored in Depth"
+
+**Band 9 (In-depth):**
+"While educational attainment correlates robustly with employment outcomes... the inference that governments should universally expand access requires **unpacking three assumptions**: (1) that labor markets reward credentials, (2) quality maintained, (3) inflation avoided. **Human capital theory** supports (1), but **credential saturation** complicates (3). Thus, the optimal policy is not wholesale expansion but targeted investment..."
+*   *Key:* Unpack assumptions, theoretical grounding, counterarguments, nuanced synthesis.
+
+## B1.2 "Clear and Fully Developed Position"
+
+**Band 9 Thesis:**
+"This essay contends that effort-based messaging yields **conditional benefits—contingent upon whether it is paired with structural awareness** and acknowledgment that effort, while necessary, is rarely sufficient for success."
+*   *Key:* Conditional, qualified position.
+
+## B1.3 "Fully Extended" Ideas (5-Element Structure)
+
+1.  **Claim:** Topic sentence.
+2.  **Explanation:** Mechanism/How it works.
+3.  **Evidence:** Data/Examples (OECD data).
+4.  **Analysis:** Interpretation (does not imply sufficiency, addresses inflation).
+5.  **Link:** Back to thesis.
+
+---
+
+# MODULE B2 & B3: Coherence & Lexis (Task 2)
+
+## B2.1 Effortless Message Flow
+"Remote work offers benefits... **This elimination** enhances balance... However, **such gains** must be weighed against costs... **These psychological risks** suggest..." (Theme-Rheme chains).
+
+## B3.1 Academic Verb Precision
+*   **make/cause** → "precipitate", "engender", "catalyze"
+*   **reduce** → "mitigate", "attenuate", "curtail"
+*   **increase** → "augment", "amplify", "bolster"
+*   **support** → "facilitate", "enable", "promote"
+
+## B3.2 Nominalization
+"**Governmental regulatory failure** precipitates **corporate labor exploitation** and consequent **inequality intensification**."
+
+## B3.3 Collocations
+"implements policies", "tackles the issue", "marshals evidence", "exerts an effect".
+
+---
+
+# MODULE B4 & B5: Grammar & Argumentation (Task 2)
+
+## B4.1 Mandative Subjunctive
+"I propose that governments **implement** carbon pricing..." (Base form verb).
+
+## B4.2 Cleft Sentences
+"**It is** systemic inequality, not individual deficits, **that** explains persistent poverty."
+
+## B5.1 Toulmin Model (Six-Element Argument)
+*   **Claim** (Main point)
+*   **Data** (Evidence)
+*   **Warrant** (Reasoning bridge)
+*   **Backing** (Theory support)
+*   **Qualifier** (Conditions)
+*   **Rebuttal** (Counterargument + response)
+
+## B5.2 Inference to the Best Explanation (IBE)
+Compare explanations for a phenomenon (e.g., Digital Divide) and select the best based on **Explanatory power, Parsimony, Consistency, Testability**.
+
+## B5.3 Steel Man (Not Straw Man)
+Strengthen the opposing view ("sophisticated concern", "empirically grounded") before countering it with nuance.
+
+---
+
+# MODULE B6: Complete Task 2 Model Answer
+
+(Refer to Chapter 14 in Part I for the full "Hard Work Guarantees Success" model answer, which is fully aligned with these B-Module principles.)
+
+---
+
+# PART C: SHARED ADVANCED FOUNDATIONS
+
+## MODULE C1: Logical Fallacies to Avoid
+
+**C1.1 Affirming the Consequent**
+*"Countries with high literacy are prosperous. Finland is prosperous. Therefore, Finland has high literacy."* (False - could be oil, etc.)
+
+**Band 9 Correction:**
+"While high literacy correlates with prosperity... the causal arrow may run oppositely or involve confounding variables."
+`
+      }
+    ]
+  }
+
+,
+  {
+    id: "part-k",
+    title: "Part K: Band 8.5–9 Advanced Logic & Linguistics",
+    description: "Advanced Logical & Linguistic Mastery (Task 1 & Task 2) • Postgraduate Level • Bilingual (English + Cantonese)",
+    sections: [
+      {
+        id: "chap-44",
+        title: "Module 0: Orientation 導論",
+        content: `
+# Module 0 – Orientation 導論：用 IELTS 練邏輯同語言，而唔係背模板
+
+**Course Format 課程形式**
+*   **Medium:** English + Cantonese (粵英雙語)
+*   **Level:** Postgraduate / Upper-division undergraduate
+*   **Focus:** IELTS Task 1 & Task 2 as vehicles to train formal logic, discourse analysis, and advanced grammar
+
+**English**
+This course treats IELTS Writing not as an exam to “hack” but as a constrained environment in which you practice real academic reasoning. Band 8.5–9 essays are mini research papers: they exhibit precise logical structure, theoretically informed argumentation, and syntactically sophisticated yet readable prose.
+
+**Cantonese 廣東話**
+呢個課程唔當 IELTS 係一個「搵捷徑」嘅考試；反而將佢當成一個細版 academic essay 寫作訓練場。Band 8.5–9 唔係靠背 template，而係靠 清晰邏輯結構、有理論支撐嘅論證、同埋高階但易讀嘅句式。
+
+**Learning outcomes 學習目標**
+1.  Construct deductively valid and inductively strong arguments under time and word constraints.
+2.  Use advanced grammatical resources (subjunctive, clefts, complex subordination) with control.
+3.  Perform analytic description and theory-driven commentary on visual data (Task 1).
+4.  Develop a personal “academic voice” that is both precise and flexible.
+`
+      },
+      {
+        id: "chap-45",
+        title: "Module 1: Formal Logic Foundations (Task 2)",
+        content: `
+# Module 1 – Formal Logic Foundations for IELTS Task 2
+
+## 1.1 Deductive Validity & Counterexamples 演繹有效性同反例
+
+**English explanation**
+A deductively valid argument is one in which it is impossible for the premises to be true and the conclusion false. For IELTS, you rarely have full formal proofs, but you can approximate validity by:
+1.  Making all crucial premises explicit.
+2.  Checking whether a plausible counterexample can make the premises true while falsifying the conclusion.
+
+**Cantonese explanation 廣東話解釋**
+所謂「演繹有效」，即係：冇可能出現「前提全部真，但結論假」嘅情況。喺 IELTS 入面你唔會寫完整邏輯證明，但可以做到接近：
+將重要假設（premises）講明白，而唔係收喺肚入面。
+試下諗：有冇可能有一個例子，令你啲前提都成立，但結論唔成立？如果有，就知你個 argument 有漏洞。
+
+### Example 1 – Weak typical answer vs strengthened version
+
+**Weak Band-7-style argument**
+"Many people are obese nowadays because fast food is very common. Therefore, governments should ban fast food restaurants."
+*   *Premise 1:* Fast food is common.
+*   *Premise 2:* Many people are obese.
+*   *Hidden premise:* If something contributes to obesity, governments should ban it.
+
+**Counterexample 反例**
+Exercise laziness also contributes to obesity, but it would be absurd to say the government should “ban laziness”. So the hidden premise is false.
+(The conclusion no longer rests on the extreme premise “anything harmful should be banned”.)
+
+**Band 8.5–9 style revision 高分重寫**
+"While the proliferation of fast-food outlets is one factor in rising obesity rates, it is neither the sole nor a sufficient cause. Consequently, a blanket ban would be disproportionate and arguably ineffective. A more logically coherent response is to internalise the health costs of fast food through targeted taxation and transparent nutritional labelling, thereby modifying incentives rather than eliminating consumer choice."
+
+**What changed? 有咩進步？**
+*   The writer introduces proportionality and alternative policies → more realistic, logically defensible.
+
+### Practice Exercise 練習
+Write two opposite arguments about government surveillance:
+1.  One that appears strong but collapses under a clear counterexample.
+2.  A revised version that survives the counterexample by making premises more precise.
+
+## 1.2 Modus Ponens & Modus Tollens in Counterargument
+
+**English**
+Use modus ponens and modus tollens to structure core claims and refutations.
+*   **Modus ponens:** If P, then Q. P. Therefore Q. (Used to support your position)
+*   **Modus tollens:** If P, then Q. Not Q. Therefore Not P. (Used to refute opponent's assumption)
+
+**Cantonese**
+IELTS 入面，modus ponens 多數用嚟 support 你自己個立場；modus tollens 多數用嚟拆穿對方假設。
+You can then challenge either the conditional or the observation.
+
+### Task 2 example – Refuting an extreme claim
+**Prompt 題目:** "Some argue that if prisons really reduced crime, crime rates would have fallen by now. Since they have not, prisons are pointless."
+
+**Use modus tollens structure:**
+If prisons were the only factor influencing crime rates (P), we would expect crime to fall significantly (Q). Crime has not fallen as expected (¬Q). Therefore, it is false that prisons are the only factor (¬P), not that prisons are pointless.
+
+**Then you add:**
+"Crime statistics are shaped by a constellation of variables—economic cycles, policing strategies, social inequality—so it is logically unsound to infer the inefficacy of prisons from the mere absence of dramatic declines in crime."
+
+## 1.3 Quantifiers: All / Most / Some and IELTS Generalisations
+
+**English**
+Overusing “all, always, never” leads to fragile universal claims. Band-9 writing typically:
+*   Reserves *all / every* for definitional truths.
+*   Uses *most, many, a significant proportion, a majority* for empirical claims.
+*   Uses *some, a minority* with care when highlighting exceptions.
+
+**Cantonese**
+Band 6–7 常犯錯：動不動就 "all young people", "everyone nowadays", "people always"。呢啲 universal generalisations 一被考官捉到一個例外，就覺得你唔精確。Band 9 會改用：「大多數」、「相當一部分」、「不少」、「一小撮」咁嘅量化詞，再加數據。
+
+### Example 對比
+❌ **Universal, fragile:** "All young people are addicted to social media nowadays."
+✅ **Statistical, robust:** "A large majority of adolescents—around 70–80% in recent surveys—report checking social media multiple times per day, suggesting widespread, though not universal, dependence."
+
+### Mini-exercise
+Rewrite the following sentence at three precision levels:
+*   Level 1 (exam cliché): "Nowadays people are busy."
+*   Level 2 (better): mention a group + reason.
+*   Level 3 (Band 9): add a quantifier, an approximate statistic, and at least one causal factor.
+`
+      },
+      {
+        id: "chap-46",
+        title: "Module 2: Argument Architecture",
+        content: `
+# Module 2 – Argument Architecture: From IELTS Paragraphs to Academic Papers
+
+## 2.1 Toulmin Model as a Paragraph Blueprint
+
+**English**
+Treat each body paragraph as one Toulmin argument.
+*   **Claim:** The main point (Topic sentence).
+*   **Data:** Evidence, examples, or statistics.
+*   **Warrant:** The underlying principle connecting data to claim.
+*   **Backing:** Theory or additional data supporting the warrant.
+*   **Qualifier:** Limits of your claim (e.g. "in most cases").
+*   **Rebuttal:** A possible objection and your response.
+
+**Cantonese**
+每一個 Task 2 body paragraph，可以設計成一個完整 Toulmin 結構：
+*   **Claim:** 段落核心 assertion
+*   **Data:** 解釋 + 例子
+*   **Warrant:** 「所以呢啲數據證明咩？」嗰句
+*   **Backing:** 引用理論 / 研究
+*   **Qualifier:** 用 "often, in many cases" 等詞
+*   **Rebuttal:** 最後 acknowledge 一個 objection 再拆解
+
+### Worked example – Education & inequality paragraph
+*   **Claim:** Expanding access to higher education can mitigate income inequality, but only under specific conditions.
+*   **Data:** Longitudinal data from the OECD indicate that individuals with tertiary qualifications earn, on average, 60% more than those with only secondary schooling.
+*   **Warrant:** If income differentials align with educational attainment, then broadening access to university should enable individuals from low-income backgrounds to move into higher-paying occupations.
+*   **Backing:** This logic reflects human capital theory, which conceptualises education as an investment that enhances productivity and thus wages.
+*   **Qualifier:** However, this effect is contingent on labour markets actually rewarding qualifications, and on universities avoiding credential inflation.
+*   **Rebuttal:** Critics argue that when degrees become ubiquitous, their signalling power declines. While this concern is valid, evidence from countries with high participation rates—such as South Korea—suggests that quality assurance and alignment with labour-market needs can preserve the returns to education.
+
+**IELTS paragraph version (shortened)**
+*(You would compress the above into ~120 words while preserving the structure.)*
+
+## 2.2 Inference to the Best Explanation (IBE) for Balanced Essays
+
+**English**
+When a question asks for causes, solutions, or opinions, you can structure the essay as a competition between explanations or policy options, then argue which is best by criteria: **explanatory power, simplicity, consistency, testability**.
+
+**Cantonese**
+好多題目問：「點解 X 會發生？有咩解決方法？」你可以唔係簡單列出三點，而係：
+1.  提出幾個可能解釋 / 政策選項 (E1, E2, E3...)。
+2.  明講比較準則：邊個解釋 最有解釋力、最簡潔、同現有證據 最一致、最 可檢驗。
+3.  最後話："Therefore, Explanation B is more convincing than A and C." 呢種寫法好 academic。
+
+### Example – Causes of declining physical activity
+**Explanations:**
+*   E1: Personal laziness / lack of willpower.
+*   E2: Technological change (sedentary jobs, cars, screens).
+*   E3: Urban design & policy (unsafe streets, lack of parks).
+
+**Band 9 approach**
+"While individual choices undoubtedly play a role, attributing declining physical activity primarily to **personal laziness (E1)** has limited explanatory power: it fails to account for why inactivity has surged across entire populations within a few decades. A more compelling explanation combines **technological change (E2)** and **hostile urban design (E3)**. Automation and screen-based work have systematically reduced the need for physical labour, while car-centred urban planning has rendered active transport inconvenient or even dangerous. This **dual-structural account** better explains the timing, scale, and distribution of the trend, and generates testable predictions about policy interventions (e.g. redesigning cities to favour walking and cycling)."
+*Then you propose solutions aligned with the best explanation.*
+
+## 2.3 Consistency, Revision, and Intellectual Honesty
+
+**English**
+Band-9 writers monitor their own arguments for internal consistency. When they detect tension—e.g., a universal claim contradicted by a later concession—they revise the earlier claim into a probabilistic or conditional form.
+
+**Cantonese**
+高分考生會好敏感咁 check 自己篇文：前後有冇講嘢自打嘴巴？如果一開始寫 "online learning is always inferior to classroom learning"，後面又承認「好多 adult learners online 反而學得好啲」，咁就係 contradiction。做法係：
+改前面做："in most cases"、"for younger learners"、"in the absence of strong self-discipline"。
+
+### Micro-revision exercise 小修改練習
+**Original sentence:** "Public transport is always better than private cars."
+**Revised, consistent version:** "In densely populated cities, public transport is generally superior to private cars in terms of efficiency and environmental impact, although in rural areas, limited coverage can make car ownership practically indispensable."
+*Note the built-in nuance and prevention of easy counterexamples.*
+`
+      },
+      {
+        id: "chap-47",
+        title: "Module 3: Advanced Grammar as Logical Tools",
+        content: `
+# Module 3 – Advanced Grammar as Logical Tools
+
+## 3.1 Mandative Subjunctive for Strong, Formal Recommendations
+
+**English**
+Mandative subjunctive is ideal for Task 2 recommendation sentences and formal conclusions.
+**Form:** Verb + that + subject + base verb
+**Verbs:** recommend, insist, demand, propose, suggest, require, decree, mandate
+
+**Cantonese**
+Mandative subjunctive 係高階 grammar item，好多 native speaker 都用得唔穩。但寫 formal essay 好好用：
+結構：動詞 + that + 主語 + **動詞原形 (Base form)**。唔好加 "-s"：唔係 "suggests that the government invests"，而係 "suggests that the government **invest**"。
+
+**Examples:**
+*   I recommend that the government **invest** in early childhood education.
+*   It is essential that universities **adopt** transparent admissions criteria.
+
+**Task 2 template (non-mechanical)**
+"Given the weight of empirical evidence, I propose that policymakers prioritise three measures: that they **subsidise** renewable energy, **phase out** fossil-fuel subsidies, and **integrate** climate literacy into school curricula."
+
+## 3.2 Cleft Sentences & Information Structure
+
+**English**
+Use clefts sparingly to highlight contrast or redefine priorities. In IELTS, use 1–2 clefts per essay to avoid sounding over-stylised.
+
+**Cantonese**
+Cleft sentence 主要用嚟強調：
+*   **It-cleft:** It is X that Y ("真正重要嘅係......")
+    *   *Example:* "It is **long-term investment in teacher quality** that most reliably improves educational outcomes, not headline-grabbing infrastructure projects."
+*   **Wh-cleft:** What X does is Y ("X 所做到嘅其實係......")
+    *   *Example:* "What these schemes often achieve is **not genuine upskilling but the temporary inflation of employment statistics**."
+
+## 3.3 Epistemic Modals & Hedging for Academic Tone
+
+**English**
+Map your confidence level to appropriate modals:
+*   **Near-certain:** must, will, cannot (Use with strong evidence)
+*   **Strong but not absolute:** should, would (Reasonable prediction)
+*   **Moderate / speculative:** may, might, could (Possibility / suggestion)
+
+**Cantonese**
+唔好成篇都 "will", "must"；學術語氣要識 "收力"：
+*   **Cautious:** "AI **may alter** employment patterns in ways that are not yet fully understood."
+*   **Moderate:** "AI **is likely to automate** routine tasks while creating demand for new skill sets."
+*   **Strong:** "AI **will fundamentally transform** labour markets within the next two decades."
+
+## 3.4 Nominalisation: When to Use, When to Avoid
+
+**English**
+Nominalisation raises formality but can obscure agency.
+*   **Good:** "Widening educational inequality undermines social cohesion." (Emphasise the phenomenon)
+*   **Bad:** "The implementation of the policy led to an improvement in outcomes." (Who implemented? What improved?)
+
+**Cantonese**
+名詞化好似加 filter：可以令句子 academic，但有時會遮住「邊個做緊咩」。
+*   **Clearer version:** "Since 2015, many manufacturing firms have relocated, leading to a sharp rise in youth unemployment." (Instead of "There has been a rise...")
+`
+      },
+      {
+        id: "chap-48",
+        title: "Module 4: Task 1 as Data Commentary",
+        content: `
+# Module 4 – Task 1 as Data Commentary, Not Description
+
+## 4.1 Analytical Overview Statements
+
+**English**
+A Band-9 overview:
+1.  Identifies dominant patterns (highest/lowest, fastest growth, convergence/divergence).
+2.  Hints at interpretation (e.g. maturity of markets, inequality).
+3.  Avoids raw detail or numbers.
+
+**Cantonese**
+Overview 唔係抄數字總結，而係：
+1.  指出最重要 pattern：邊個最高 / 增⻑最快 / 收斂定擴散；
+2.  可以輕微解讀（"反映市場接近飽和"、"顯示持續差距"）；
+3.  唔好一開始就塞滿年份同百分比。
+
+**Example – Line graph of urban vs rural internet access**
+"Overall, urban households **consistently outpaced** rural ones in internet adoption, but the **gap narrowed substantially** over the period, indicating a **gradual reduction—though not the elimination—of the digital divide**."
+
+## 4.2 Paragraphing by Ideas, Not by Years
+
+**English**
+Structure:
+*   Paragraph 1: Overview (1–3 sentences).
+*   Paragraph 2: Group 1 – high-income / high values / similar patterns.
+*   Paragraph 3: Group 2 – low-income / outliers / contrasting patterns.
+
+**Cantonese**
+唔好逐年硬背 "in 1990..., in 2000..., in 2010..."。應該以「類型」分段：發達國家一組、發展中國家一組；或者以「pattern」分段：穩定高位一組、急升一組、跌一組。
+
+**Mini-sample**
+"In 2010, internet penetration in Country A and B was already high (around 80%), and both climbed to over 95% by 2020, reflecting **near-saturation in advanced economies**. By contrast, Countries C and D started from much lower baselines (below 30%) but experienced rapid expansion, with their figures more than doubling, a pattern characteristic of **late adopters catching up**."
+
+## 4.3 Language for Relationships and Hypotheses
+
+**English**
+Use cautious causal language: "This pattern may reflect...", "The divergence is likely to be associated with...", "One plausible explanation is that...".
+
+**Cantonese**
+Task 1 唔鼓勵亂下因果結論，但你可以用 hedged explanations：「呢個趨勢 可能反映 政府加大投資」、「差距擴大 好大機會同 收入不均有關」。
+
+**Example**
+"The much steeper rise in car ownership in Country X **may be attributable to** rapid income growth combined with limited public transport infrastructure, whereas the slower increase in Country Y **suggests that** existing mass transit options partly substitute for private vehicles."
+`
+      },
+      {
+        id: "chap-49",
+        title: "Module 5: Task 2 Academic Genres",
+        content: `
+# Module 5 – Task 2: From Exam Essay to Mini-Journal Article
+
+## 5.1 Mapping IELTS Prompts to Academic Genres
+
+**English / Cantonese**
+Once you see the genre, you can import relevant structures from academic writing.
+*   "To what extent do you agree or disagree?" → **Theoretical Argument / Position Paper**
+*   "Discuss both views and give your own opinion." → **Literature Review + Stance** (先做一個 mini literature review 整理立場，再表態)
+*   "What are the causes and solutions?" → **Explanatory + Policy Analysis** (政策分析)
+*   "Advantages and disadvantages" → **Cost–Benefit Analysis** (成本效益評估)
+
+## 5.2 Steelmanning and Synthesis
+
+**English**
+Instead of knocking down a caricature of the opposing view (**Straw Man**), reconstruct the strongest plausible version, acknowledge its force, then explain its limits (**Steel Man**).
+
+**Cantonese**
+唔好整稻草人（"有啲人居然話教育唔重要"——其實冇人咁講）。要：
+1.  將對方論點用最好、最合理嘅方式講出嚟；
+2.  認真承認佢有幾多道理；
+3.  之後再指出佢嘅盲點，最後提出一個整合方案（synthesis）。
+
+**Example – Technology and social isolation**
+"Critics of pervasive smartphone use argue—plausibly—that constant connectivity fragments attention and displaces face-to-face interaction, thereby eroding social capital. Longitudinal studies correlating heavy social media use with higher levels of anxiety and loneliness lend partial support to this concern. **Nevertheless, the inference that technology necessarily undermines relationships is too strong.** For migrants and diasporic communities, digital platforms enable relationships that would otherwise be impossible. The problem, therefore, is not connectivity per se but its unreflective, compulsive use. A more defensible position is to regulate design practices that intentionally exploit psychological vulnerabilities while simultaneously teaching digital self-regulation."
+*(This structure produces a sophisticated “middle” position rather than simplistic agreement or disagreement.)*
+
+## 5.3 Policy Evaluation with Necessary/Sufficient Conditions
+
+**English**
+When evaluating solutions, explicitly state whether they are **necessary**, **sufficient**, or **merely contributory**.
+
+**Cantonese**
+寫 solution 時，可以講得好 academic：呢個措施係咪「必須」（冇佢就唔得）？係咪「足夠」（有咗佢就一定搞掂）？定只係「有幫助」？
+
+**Example – Climate policy paragraph**
+"Carbon taxation is **neither a sufficient nor a dispensable** component of climate policy. It is **not sufficient because**, on its own, it cannot deliver the scale and speed of decarbonisation required; complementary measures—such as direct investment in green infrastructure—are indispensable. Yet it is **not dispensable either**, since without some mechanism that prices emissions, firms and consumers lack systematic incentives to change behaviour. The most rational conclusion is that carbon taxes are a **necessary but not sufficient** element within a broader policy mix."
+`
+      },
+      {
+        id: "chap-50",
+        title: "Module 6: Practice Frameworks",
+        content: `
+# Module 6 – Putting It Together: Practice Frameworks
+
+## 6.1 Task 1 Planning Template (5 minutes)
+1.  **Identify** axes, units, and time.
+2.  **Spot global patterns:** highest/lowest, convergence/divergence, dramatic vs modest changes.
+3.  **Group items** into 2–3 clusters (rich vs poor, high vs low, similar vs different).
+4.  **Draft an overview** that states patterns + 1–2 interpretive comments.
+5.  **Body 1:** Cluster A (with 2–3 key comparisons).
+6.  **Body 2:** Cluster B / exceptions / interesting contrasts.
+
+## 6.2 Task 2 Planning Template (10 minutes)
+1.  **Rephrase the question** → identify genre (argument / cause–solution / etc.).
+2.  **Brainstorm** three strongest arguments and two strongest counterarguments.
+3.  **Select** one main thesis and one secondary concession.
+4.  **Map 2–3 body paragraphs** using **Toulmin model**.
+5.  **Decide where to place:**
+    *   A **steelmanned** opposing view.
+    *   At least one explicit **qualifier** (“in most urban contexts”, “for younger learners”).
+    *   One paragraph with a clear **necessary vs sufficient analysis**.
+`
+      },
+      {
+        id: "chap-51",
+        title: "Module 7: Self-Editing & Final Note",
+        content: `
+# Module 7 – Self-Editing at a Band-9 Level
+
+**Checklist**
+
+**Logic 邏輯**
+*   [ ] Any universal claims that could be destroyed by an obvious counterexample?
+*   [ ] Have I accidentally contradicted myself?
+*   [ ] Is each paragraph built around one main claim supported by explicit reasoning?
+
+**Language 語言**
+*   [ ] Did I overuse any single connector ("however", "therefore")?
+*   [ ] Is there a good balance of simple and complex sentences?
+*   [ ] Have I used at least one **mandative subjunctive**, one **cleft**, and several **epistemic modals** naturally?
+
+**Task achievement 完成題目**
+*   [ ] **Task 1:** Did I write a clear analytical overview and group data logically?
+*   [ ] **Task 2:** Did I address all parts of the question, not just the one I like?
+
+---
+
+# Final Note 結語
+
+**English**
+If you work through these modules—not as exam tricks, but as a mini university course in logic and academic English—IELTS Writing becomes much more than a score. It becomes evidence that you can think with rigour, express yourself with precision, and engage with complex issues at a genuinely academic level.
+
+**Cantonese**
+如果你真係用課程方式消化晒以上 modules，唔係當佢係考試「秘笈」，你會發現：Band 8.5–9 只係副產品，真正收穫係：你可以用英語做 **高層次思考同寫作**，無論喺大學、研究、定之後工作，都會受用。
+`
+      }
+    ]
+  }
+
 ];
