@@ -1563,7 +1563,7 @@ Don't overuse. Balance with verbs for clarity.
     id: "part-f",
     title: "Part F: Rhetoric & Philosophy - Beyond Grammar",
     description: "Master PhD-level rhetorical devices, metadiscourse, and advanced syntactic techniques to move beyond Band 9.",
-    chapters: [
+    sections: [
       {
         id: "chap-21",
         title: "Rhetorical Devices (Elite Structures)",
@@ -2104,7 +2104,7 @@ Don't overuse. Balance with verbs for clarity.
     id: "part-g",
     title: "Part G: The System - Generative Templates",
     description: "Master 50+ plug-and-play sentence templates for every IELTS Task 1 function to guarantee Band 9 consistency.",
-    chapters: [
+    sections: [
       {
         id: "chap-25",
         title: "Philosophy & Overview Templates",
@@ -2576,7 +2576,7 @@ You'll learn 50+ sentence templates organized by function:
     id: "part-h",
     title: "Part H: Task 1 - Flow Charts & Maps Mastery",
     description: "Complete grammar system, advanced patterns, and line-by-line generation for Process Diagrams and Maps.",
-    chapters: [
+    sections: [
       {
         id: "chap-29",
         title: "Flow Charts: Grammar Foundations",
