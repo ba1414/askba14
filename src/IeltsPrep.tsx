@@ -417,7 +417,7 @@ const IeltsPrep: React.FC<IeltsPrepProps> = ({ lang }) => {
           <AppleEmoji emoji="🌏" className="w-10 h-10" />
         </div>
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
-          IELTS Preparation
+          IELTS Course (Updated)
         </h1>
         <p className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
           {isEn ? "Master Task 1 and Task 2 with detailed breakdowns." : "深入分析 Task 1 及 Task 2，掌握高分技巧。"}
