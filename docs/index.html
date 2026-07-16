@@ -1,20 +1,2983 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>BA14 Grid</title>
-    <script type="module" crossorigin src="/askba14/assets/index-BfE4tlB0.js"></script>
-    <link rel="stylesheet" crossorigin href="/askba14/assets/index-Dyd1EgWD.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+﻿<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>BA14 — 由副學士到八大 · 一條清晰的路</title>
+<meta name="description" content="BA14 — DSE 14分，無Full Cert，一年後入讀港大。將副學士升讀大學的完整流程，拆解成清晰可複製的決策路徑。"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Manrope:wght@400;500;600;700&family=Marck+Script&display=swap" rel="stylesheet"/>
+<style>
+/* ============ TOKENS ============ */
+:root{
+ --paper:#f3efe7;--paper-2:#e9e3d6;--ink:#1c1916;--ink-soft:#48433b;
+ --ink-faint:#756e63;--line:#dad3c4;--line-soft:#e6e0d2;
+ --accent:#a4142a;--accent-soft:#bb1b33;--accent-wash:#f7ebe7;
+ --card:#fbf8f2;--card-2:#efe9dd;
+ --green:#1a7a3a;--green-bg:#eef7ee;
+ --shadow:0 2px 10px rgba(40,30,20,.05),0 1px 2px rgba(40,30,20,.04);
+ --shadow-card:0 6px 28px rgba(40,30,20,.07),0 1px 3px rgba(40,30,20,.05);
+ --shadow-lg:0 18px 60px rgba(40,30,20,.11),0 3px 10px rgba(40,30,20,.06);
+ --shadow-accent:0 10px 36px -10px rgba(164,20,42,.28);
+ --mono:'Courier Prime',ui-monospace,Menlo,monospace;
+ --serif:'Fraunces',Georgia,'Times New Roman',serif;
+ --han:'PingFang TC','PingFang SC','Noto Serif TC','Microsoft JhengHei',sans-serif;
+ --r:2px;--r-sm:1px;--maxw:1180px;
+}
+html[data-theme="dark"]{
+ --paper:#181513;--paper-2:#221d19;--ink:#f1ebe0;--ink-soft:#a8a094;
+ --ink-faint:#7a7268;--line:#34302b;--line-soft:#262220;
+ --accent:#d23146;--accent-soft:#e0455a;--accent-wash:#1e0a0a;
+ --card:#221d19;--card-2:#2c2621;
+ --green:#4dbb75;--green-bg:#0d1a0d;
+ --shadow:0 2px 8px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.25);
+ --shadow-card:0 4px 20px rgba(0,0,0,.4),0 1px 4px rgba(0,0,0,.3);
+ --shadow-lg:0 12px 48px rgba(0,0,0,.6),0 2px 8px rgba(0,0,0,.4);
+ --shadow-accent:0 8px 32px -8px rgba(227,20,20,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+ background:var(--paper);color:var(--ink);font-family:var(--han);
+ line-height:1.75;font-size:16.5px;letter-spacing:.005em;
+ -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+ text-rendering:optimizeLegibility;overflow-x:hidden;
+ transition:background .4s,color .4s;
+}
+/* paper grain — the single most de-AI-ifying detail */
+body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;mix-blend-mode:multiply;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+html[data-theme="dark"] body::before{mix-blend-mode:screen;opacity:.05}
+::selection{background:var(--accent);color:#fff}
+.em{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-style:normal;display:inline-block;line-height:1.3;vertical-align:-.06em}
+a{color:inherit;text-decoration:none}
+.mono{font-family:var(--mono)}
+.serif{font-family:var(--serif);font-optical-sizing:auto}
+.serif-display{font-variation-settings:"opsz" 144}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;position:relative;z-index:2}
+.eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'//';font-size:8px;letter-spacing:.05em;opacity:.7}
+.eyebrow.muted{color:var(--ink-faint)}
+
+/* ============ PROGRESS BAR ============ */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:200;transition:width .06s linear}
+
+/* ============ NAV ============ */
+nav{position:fixed;top:0;left:0;right:0;z-index:120;transition:transform .4s ease}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;
+ border-bottom:1px solid transparent;transition:all .3s}
+nav.scrolled .nav-inner{padding:12px 32px;background:rgba(245,245,247,.88);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom-color:rgba(0,0,0,.07)}
+html[data-theme="dark"] nav.scrolled .nav-inner{background:rgba(28,28,30,.88)}
+.logo{display:flex;align-items:baseline;gap:2px;font-family:var(--mono);font-weight:700;font-size:22px;letter-spacing:.02em;cursor:pointer}
+.logo .ba{color:var(--ink)}.logo .num{color:var(--accent)}
+.logo .tag{font-family:var(--han);font-weight:400;font-size:10px;letter-spacing:.22em;color:var(--ink-faint);
+ margin-left:10px;padding-left:10px;border-left:1px solid var(--line)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink-soft);padding:8px 11px;position:relative;transition:color .2s}
+.nav-links a span{font-size:10px;color:var(--accent);margin-right:4px}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a::after{content:"";position:absolute;left:11px;right:11px;bottom:2px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-tools{display:flex;align-items:center;gap:8px;margin-left:8px}
+.tbtn{width:36px;height:36px;border:1px solid var(--line);background:transparent;cursor:pointer;
+ display:grid;place-items:center;color:var(--ink-soft);transition:all .2s;border-radius:0}
+.tbtn:hover{color:var(--accent);border-color:var(--accent)}
+.tbtn svg{width:16px;height:16px}
+.burger{display:none}
+
+/* ============ HERO ============ */
+header.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-ghost{position:absolute;font-family:var(--serif);font-weight:300;font-size:min(46vw,640px);line-height:.8;
+ color:var(--ink);opacity:.055;right:-3%;top:46%;transform:translateY(-50%);pointer-events:none;user-select:none;
+ animation:ghostDrift 20s ease-in-out infinite alternate}
+@keyframes ghostDrift{from{transform:translateY(-50%)}to{transform:translateY(-52%) scale(1.02)}}
+html[data-theme="dark"] .hero-ghost{opacity:.04}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;width:100%;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg)}
+.hero-left{padding:60px 56px;border-right:1px solid var(--line)}
+.hero-right{display:flex;flex-direction:column}
+.hero-kicker{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.hero-kicker .rule{height:1px;width:40px;background:var(--accent)}
+.hero h1{font-family:var(--serif);font-optical-sizing:auto;font-variation-settings:"opsz" 144;font-weight:360;font-size:clamp(52px,8.5vw,116px);line-height:.90;letter-spacing:-.046em;margin-bottom:6px}
+.hero h1 em{font-style:italic;font-weight:420;color:var(--accent)}
+.hero h1 .lead{display:block;font-size:.34em;letter-spacing:.24em;color:var(--ink-faint);font-weight:400;margin-bottom:18px;font-family:var(--mono)}
+.hero-sub{font-size:16px;color:var(--ink-soft);max-width:44ch;margin:22px 0 32px;line-height:1.82}
+.hero-sub b{color:var(--ink);font-weight:600}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+/* ── BUTTONS: fill-from-left, zero-round ── */
+.btn{
+ font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+ padding:14px 28px;cursor:pointer;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);
+ display:inline-flex;align-items:center;gap:10px;border-radius:0;
+ position:relative;overflow:hidden;z-index:0;
+ transition:color .38s cubic-bezier(.16,1,.3,1),border-color .24s,background .01s 0s,transform .4s cubic-bezier(.16,1,.3,1)!important;
+}
+.btn::before{
+ content:'';position:absolute;inset:0;background:var(--accent);
+ transform:scaleX(0);transform-origin:left center;
+ transition:transform .48s cubic-bezier(.16,1,.3,1);z-index:-1;
+}
+.btn:hover::before{transform:scaleX(1)}
+.btn:hover{border-color:var(--accent);color:#fff;background:transparent}
+.btn svg{width:14px;height:14px;flex-shrink:0;transition:transform .38s cubic-bezier(.16,1,.3,1)}.btn:hover svg{transform:translateX(4px)}
+/* ghost */
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost::before{background:var(--ink)}
+.btn.ghost:hover{border-color:var(--ink);color:var(--paper);background:transparent}
+/* red */
+.btn.red{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.red::before{background:#fff}
+.btn.red:hover{border-color:var(--accent);color:var(--accent);background:transparent}
+.hero-meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.hero-meta .m{padding:28px 32px;border-right:1px solid var(--line)}
+.hero-meta .m:last-child{border-right:none}
+.hero-meta .m .n{font-family:var(--serif);font-optical-sizing:auto;font-variation-settings:"opsz" 96;font-size:clamp(48px,6.5vw,88px);line-height:.82;color:var(--accent);letter-spacing:-.055em;font-weight:200}
+.hero-meta .m .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-top:14px;display:block;padding-left:20px;position:relative;white-space:nowrap}
+.hero-meta .m .l::before{content:'';position:absolute;left:0;top:50%;width:13px;height:1px;background:var(--accent);transform:translateY(-50%);flex-shrink:0}
+.hero-meta.in .m .n{animation:statIn .5s cubic-bezier(.2,.7,.2,1) both}
+.hero-meta.in .m:nth-child(1) .n{animation-delay:.15s}
+.hero-meta.in .m:nth-child(2) .n{animation-delay:.3s}
+.hero-meta.in .m:nth-child(3) .n{animation-delay:.45s}
+@keyframes statIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero-photo-cell{flex:1;display:grid;place-items:center;padding:40px;background:var(--card-2);border-bottom:1px solid var(--line)}
+.portrait-v2{}
+.pframe-v2{aspect-ratio:3/4;width:220px;background:var(--card-2);border:1px solid var(--line);overflow:hidden;display:grid;place-items:center}
+.pframe-v2 img.me-photo{width:100%;height:100%;object-fit:cover;display:block}
+.pframe-v2.no-photo::after{content:"ME";font-family:var(--mono);font-size:18px;letter-spacing:.3em;color:var(--ink-faint)}
+.p-label{margin-top:14px;display:flex;justify-content:space-between;align-items:center}
+.p-label .ph{font-family:var(--serif);font-size:20px}
+.p-label .ps{font-family:var(--mono);font-size:10px;color:var(--ink-faint);letter-spacing:.05em}
+.hero-tag-cell{padding:26px 32px;background:#111111;color:#fff}
+.hero-tag-cell p{font-family:var(--mono);font-size:12px;letter-spacing:.06em;line-height:1.72}
+.hero-tag-cell strong{font-size:13px;letter-spacing:.04em;color:var(--accent)}
+.scrollcue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;
+ letter-spacing:.24em;color:var(--ink-faint);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:9px}
+.scrollcue .ln{width:1px;height:32px;background:linear-gradient(var(--ink-faint),transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ============ SECTION SHELL ============ */
+section{padding:96px 0;position:relative}
+.sec-head{margin-bottom:52px;max-width:760px}
+.sec-head .eyebrow{display:block;margin-bottom:14px}
+.sec-head h2{font-family:var(--serif);font-optical-sizing:auto;font-variation-settings:"opsz" 144;font-weight:400;font-size:clamp(36px,5.8vw,72px);line-height:.97;letter-spacing:-.036em}
+.sec-head h2 em{font-style:italic;color:var(--accent)}
+.sec-head p{margin-top:16px;color:var(--ink-soft);font-size:16px;max-width:60ch}
+.divider{height:1px;background:var(--line);max-width:var(--maxw);margin:0 auto}
+
+/* ============ BENTO GRID ============ */
+.bento{display:grid;gap:16px;background:transparent}
+.bento > *{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow-card)}
+.bento-5{grid-template-columns:repeat(5,1fr)}
+.bento-2{grid-template-columns:1fr 1fr}
+.bento-3{grid-template-columns:repeat(3,1fr)}
+.bento-wide-right{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+.bento-feat-left{grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto}
+.span-2{grid-column:span 2}
+.span-3{grid-column:span 3}
+.span-r2{grid-row:span 2}
+
+.bento-cell{padding:28px 30px;position:relative;transition:background .18s}
+.bento-cell:hover{background:var(--card-2)}
+.bc-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:block}
+.bc-title{font-family:var(--serif);font-optical-sizing:auto;font-size:22px;line-height:1.14;margin-bottom:10px;letter-spacing:-.014em}
+.bc-body{font-size:13.5px;color:var(--ink-soft);line-height:1.72}
+.bc-body b{color:var(--ink);font-weight:600}
+.bc-list{list-style:none;margin-top:12px}
+.bc-list li{font-size:13px;color:var(--ink-soft);padding:7px 0 7px 18px;position:relative;border-top:1px solid var(--line-soft);line-height:1.55}
+.bc-list li:first-child{border-top:none}
+.bc-list li::before{content:"—";position:absolute;left:0;color:var(--accent);font-family:var(--mono)}
+.bc-rule{width:100%;height:1px;background:var(--accent);margin:14px 0}
+.bc-step-num{font-family:var(--mono);font-size:9.5px;letter-spacing:.28em;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.bc-step-num::before{content:"";display:block;width:32px;height:2px;background:var(--accent)}
+/* accent cell */
+.bc-accent{background:var(--accent)!important}
+.bc-accent .bc-tag{color:rgba(255,255,255,.7)}
+.bc-accent .bc-body,.bc-accent .bc-list li{color:rgba(255,255,255,.85)}
+.bc-accent .bc-title{color:#fff}
+.bc-accent b{color:#fff}
+.bc-accent .bc-list li::before{color:rgba(255,255,255,.6)}
+.bc-accent:hover{background:var(--accent-soft)!important}
+/* dark cell — hardcoded so it stays dark in both light and dark themes */
+.bc-dark{background:#111111!important}
+.bc-dark .bc-tag{color:var(--accent)}
+.bc-dark .bc-body,.bc-dark .bc-list li{color:rgba(255,255,255,.7)}
+.bc-dark .bc-title{color:#fff!important}
+.bc-dark b{color:#fff!important}
+.bc-dark .bc-list li::before{color:var(--accent)}
+.bc-dark:hover{background:#181818!important}
+/* insight tag */
+.insight{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+ background:var(--accent);color:#fff;padding:3px 10px;margin-bottom:12px;border-radius:0}
+/* map step cells */
+.map-step{padding:26px 22px 20px!important;display:flex;flex-direction:column;position:relative;text-decoration:none;color:inherit}
+.map-step .ms-n{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--accent);margin-bottom:10px}
+.map-step .ms-t{font-family:var(--serif);font-size:19px;margin-bottom:8px;line-height:1.15}
+.map-step .ms-d{font-size:12.5px;color:var(--ink-faint);line-height:1.6;flex:1}
+.map-step .ms-arr{font-family:var(--mono);font-size:10px;color:var(--line);margin-top:14px;align-self:flex-end;transition:color .2s}
+.map-step:hover .ms-t{color:var(--accent)}
+.map-step:hover .ms-arr{color:var(--accent)}
+.map-step:hover{background:var(--accent-wash)!important}
+
+/* ============ CHAPTERS ============ */
+.chapter{display:grid;grid-template-columns:80px 1fr;gap:0;position:relative}
+.ch-rail{position:relative}
+.ch-num{position:sticky;top:130px;font-family:var(--mono);font-size:9.5px;color:var(--accent);writing-mode:vertical-rl;
+ letter-spacing:.4em;text-transform:uppercase;display:flex;align-items:center;gap:16px}
+.ch-num .ring{width:38px;height:38px;border:1.5px solid var(--accent);display:grid;place-items:center;
+ writing-mode:horizontal-tb;font-family:var(--serif);font-size:17px;font-style:italic;transition:transform .36s cubic-bezier(.16,1,.3,1),background .3s,color .3s;border-radius:0}
+.chapter:hover .ch-num .ring{background:var(--accent);color:#fff;transform:rotate(5deg) scale(1.08)}
+.ch-body{padding-bottom:24px;border-left:1px solid var(--line);padding-left:48px}
+.ch-title{font-family:var(--serif);font-optical-sizing:auto;font-variation-settings:"opsz" 144;font-weight:400;font-size:clamp(32px,4.8vw,62px);line-height:1.0;letter-spacing:-.03em;margin-bottom:14px}
+.ch-title em{font-style:italic;color:var(--accent)}
+.ch-lede{font-size:16.5px;color:var(--ink-soft);max-width:62ch;margin-bottom:36px;line-height:1.82}
+.ch-lede b{color:var(--ink);font-weight:600}
+
+/* note */
+.note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);padding:22px 26px;margin:20px 0;border-radius:var(--r-sm);box-shadow:var(--shadow)}
+.note h4{font-family:var(--serif);font-size:19px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.note h4 .k{font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid var(--accent);padding:2px 6px;letter-spacing:.06em}
+.note p{color:var(--ink-soft);font-size:14.5px}.note p+p{margin-top:9px}
+.note.accent{background:var(--accent-wash)}
+.note.dark{background:#111111;color:#fff;border-left-color:var(--accent)}
+.note.dark h4{color:#fff}.note.dark p{color:rgba(255,255,255,.75)}
+.note.dark .k{color:var(--accent);border-color:var(--accent)}
+
+/* steps */
+.steps{counter-reset:s;margin:22px 0;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow-card);overflow:hidden}
+.steps .s{display:grid;grid-template-columns:48px 1fr;gap:18px;padding:20px 24px;border-bottom:1px solid var(--line)}
+.steps .s:last-child{border-bottom:none}
+.steps .s .sn{counter-increment:s;font-family:var(--serif);font-size:28px;color:var(--accent);line-height:1}
+.steps .s .sn::before{content:counter(s,decimal-leading-zero)}
+.steps .s h5{font-family:var(--serif);font-size:20px;margin-bottom:7px}
+.steps .s p{font-size:14px;color:var(--ink-soft);line-height:1.72}
+.steps .s .tip{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:8px;padding-left:12px;border-left:2px solid var(--accent)}
+
+/* timeline */
+.tl{position:relative;margin-top:28px}
+.tl .axis{position:absolute;left:118px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.tl .axis .fill{position:absolute;left:0;top:0;width:100%;height:0;background:var(--accent);transition:height 1.4s cubic-bezier(.4,0,.2,1)}
+.tl .ph{display:grid;grid-template-columns:106px 1fr;gap:28px;padding:14px 0;position:relative}
+.tl .ph .when{font-family:var(--mono);font-size:11.5px;color:var(--accent);text-align:right;letter-spacing:.03em;padding-top:2px}
+.tl .ph .when .sub{display:block;color:var(--ink-faint);font-size:10px;margin-top:3px;letter-spacing:.08em}
+.tl .ph .dot{position:absolute;left:112px;top:20px;width:10px;height:10px;background:var(--paper);border:2px solid var(--accent);z-index:3;transition:transform .36s cubic-bezier(.16,1,.3,1),background .3s;transform:rotate(45deg)}
+.tl .ph:hover .dot{background:var(--accent);transform:rotate(45deg) scale(1.5)}
+.tl .ph .content{padding:12px 16px;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--shadow)}
+.tl .ph h5{font-family:var(--serif);font-size:19px;margin-bottom:4px}
+.tl .ph .goal{font-size:11px;color:var(--accent);font-family:var(--mono);letter-spacing:.1em;margin-bottom:9px;text-transform:uppercase}
+.tl .ph ul{list-style:none}
+.tl .ph ul li{font-size:13.5px;color:var(--ink-soft);padding-left:16px;position:relative;margin-bottom:5px;line-height:1.6}
+.tl .ph ul li::before{content:"›";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+/* do-dont */
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:transparent}
+.dd .panel{padding:24px;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--shadow-card)}
+.dd .panel h5{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+.dd .do h5{color:var(--green)}
+.dd .dont h5{color:var(--accent)}
+.dd li{list-style:none;font-size:13.5px;color:var(--ink-soft);padding:8px 0 8px 24px;position:relative;border-top:1px solid var(--line-soft);line-height:1.55}
+.dd li:first-of-type{border-top:none}
+.dd .do li::before{content:"";position:absolute;left:0;color:var(--green);font-weight:700}
+.dd .dont li::before{content:"";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+/* GPA bench */
+.gpa-bench{border:1px solid var(--line);padding:22px 26px;margin:20px 0;background:var(--card);border-radius:var(--r-sm);box-shadow:var(--shadow)}
+.bench-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+.bench-rows{display:flex;flex-direction:column;gap:10px}
+.bench-row{display:grid;grid-template-columns:64px 1fr 64px;gap:12px;align-items:center}
+.bench-row .blbl{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.bench-bar{height:5px;background:var(--line);overflow:hidden;border-radius:0}
+.bench-bar .bfill{height:100%;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+.bench-row .bval{font-family:var(--serif);font-size:14px;color:var(--accent);text-align:right}
+
+/* ============ DECISION TREE ============ */
+#decision{background:var(--paper-2)}
+.dt-shell{background:var(--card);border:1px solid var(--line);max-width:840px;margin:0 auto;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg)}
+.dt-top{padding:20px 28px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:var(--card-2)}
+.dt-top .t{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase}
+.dt-prog{display:flex;gap:5px}
+.dt-prog i{width:24px;height:3px;background:var(--line);transition:background .3s,width .3s}
+.dt-prog i.on{background:var(--accent);width:36px}
+.dt-stage{padding:40px 36px;min-height:320px}
+.dt-q{font-family:var(--serif);font-size:clamp(21px,3vw,29px);line-height:1.2;margin-bottom:8px;letter-spacing:-.01em}
+.dt-hint{font-size:14px;color:var(--ink-faint);margin-bottom:28px;line-height:1.6}
+.dt-opts{display:grid;gap:10px}
+.dt-opt{text-align:left;background:var(--card-2);border:1px solid var(--line);padding:16px 20px;cursor:pointer;
+ transition:all .18s;display:flex;align-items:center;gap:14px;font-family:inherit;color:inherit;border-radius:0}
+.dt-opt:hover{border-color:var(--accent);background:var(--accent-wash)}
+.dt-opt .ok{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--accent);border:1.5px solid var(--accent);width:28px;height:28px;
+ display:grid;place-items:center;flex-shrink:0;transition:all .22s cubic-bezier(.16,1,.3,1);border-radius:0}
+.dt-opt:hover .ok{background:var(--accent);color:#fff;transform:scale(1.08)}
+.dt-opt .ot{font-size:15px}.dt-opt .ot small{display:block;color:var(--ink-faint);font-size:12px;margin-top:2px}
+.dt-back{margin-top:22px;font-family:var(--mono);font-size:12px;color:var(--ink-faint);cursor:pointer;background:none;border:none;display:inline-flex;align-items:center;gap:6px;letter-spacing:.04em}
+.dt-back:hover{color:var(--accent)}
+.dt-result .badge{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+ color:#fff;background:var(--accent);padding:4px 14px;margin-bottom:18px;border-radius:0}
+.dt-result h3{font-family:var(--serif);font-size:clamp(22px,3.2vw,32px);line-height:1.16;margin-bottom:14px}
+.dt-result h3 em{font-style:italic;color:var(--accent)}
+.dt-result .rp{font-size:15px;color:var(--ink-soft);line-height:1.8;margin-bottom:14px}
+.dt-result .rlist{list-style:none;margin:16px 0}
+.dt-result .rlist li{padding:10px 0 10px 26px;border-top:1px solid var(--line);position:relative;font-size:14px;color:var(--ink-soft)}
+.dt-result .rlist li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+.dt-stage.fade{animation:dtfade .3s ease}
+@keyframes dtfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ============ GPA CALC ============ */
+#gpa{background:var(--paper-2)}
+.gpa-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-card)}
+.gpa-panel{background:var(--card);padding:28px}
+.gpa-panel .ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.gpa-panel .ph .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.scale-toggle{display:flex;border:1px solid var(--line);border-radius:0;overflow:hidden}
+.scale-toggle button{font-family:var(--mono);font-size:11px;padding:7px 13px;background:transparent;border:none;cursor:pointer;color:var(--ink-faint);transition:all .18s}
+.scale-toggle button.on{background:var(--accent);color:#fff}
+.grow{display:grid;grid-template-columns:1fr 104px 80px 30px;gap:8px;align-items:center;margin-bottom:8px}
+.grow input,.grow select{font-family:var(--mono);font-size:13px;padding:10px 11px;border:1px solid var(--line);
+ background:var(--card-2);color:var(--ink);width:100%;transition:border-color .18s;border-radius:0}
+.grow input:focus,.grow select:focus{outline:none;border-color:var(--accent)}
+.grow .rm{width:28px;height:28px;border:1px solid var(--line);background:transparent;cursor:pointer;color:var(--ink-faint);
+ display:grid;place-items:center;transition:all .18s;font-size:16px;border-radius:0}
+.grow .rm:hover{color:var(--accent);border-color:var(--accent)}
+.addrow{width:100%;font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:12px;border:1.5px dashed var(--line);
+ background:transparent;color:var(--ink-soft);cursor:pointer;margin-top:8px;transition:all .18s;border-radius:0}
+.addrow:hover{border-color:var(--accent);color:var(--accent);border-style:solid}
+.gpa-out{background:var(--card);padding:28px;text-align:center;position:sticky;top:120px}
+.ring-wrap{position:relative;width:190px;height:190px;margin:6px auto 18px}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--line);stroke-width:10}
+.ring-fg{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:butt;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1),stroke .3s}
+.ring-c{position:absolute;inset:0;display:grid;place-content:center}
+.ring-c .v{font-family:var(--serif);font-size:48px;line-height:1}
+.ring-c .vl{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-top:5px}
+.gpa-meta{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:16px;margin-top:4px}
+.gpa-meta .gm .n{font-family:var(--serif);font-size:22px;color:var(--ink)}
+.gpa-meta .gm .l{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:3px}
+.gpa-verdict{margin-top:16px;font-size:12px;font-family:var(--mono);letter-spacing:.02em;padding:10px 12px;border:1px solid var(--line);background:var(--card-2);color:var(--ink-soft);border-radius:0}
+
+/* ============ ABOUT ============ */
+#about .ab-bento{display:grid;grid-template-columns:1fr 1.3fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.ab-photo-cell{background:var(--card-2);padding:40px;display:grid;place-items:center}
+.ab-photo-inner{text-align:center}
+.ab-pframe{width:220px;aspect-ratio:3/4;background:var(--card-2);border:1px solid var(--line);overflow:hidden;display:grid;place-items:center;margin:0 auto}
+.ab-pframe img.me-photo{width:100%;height:100%;object-fit:cover;display:block}
+.ab-pframe.no-photo::after{content:"PHOTO";font-family:var(--mono);font-size:14px;letter-spacing:.2em;color:var(--ink-faint)}
+.ab-text-cell{background:var(--card);padding:48px 44px}
+.ab-text-cell h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,40px);line-height:1.1;margin:14px 0 20px;letter-spacing:-.015em}
+.ab-text-cell h2 em{font-style:italic;color:var(--accent)}
+.creds{margin:22px 0}
+.cred{display:grid;grid-template-columns:72px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+.cred:last-child{border-bottom:1px solid var(--line)}
+.cred .cl{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding-top:3px}
+.cred .cv{font-size:14px;line-height:1.5}
+.cred .cv .csub{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:2px}
+.ab-quote{font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.4;
+ padding:16px 0 16px 22px;border-left:2px solid var(--accent);margin:22px 0;color:var(--ink)}
+
+/* ============ FOOTER ============ */
+footer{background:var(--ink);color:var(--paper);padding:72px 0 36px}
+html[data-theme="dark"] footer{background:#050505}
+.foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.1)}
+.foot-brand .logo{color:var(--paper);font-size:24px}
+.foot-brand .logo .ba{color:var(--paper)}.foot-brand .logo .tag{color:rgba(255,255,255,.4);border-left-color:rgba(255,255,255,.15)}
+.foot-brand p{margin-top:16px;color:rgba(255,255,255,.5);font-size:13.5px;max-width:34ch;line-height:1.72}
+.foot-col h6{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px}
+.foot-col a{display:block;color:rgba(255,255,255,.7);font-size:13.5px;padding:5px 0;transition:color .18s,padding .18s}
+.foot-col a:hover{color:var(--accent);padding-left:5px}
+.disclaimer{margin-top:28px;padding-top:24px;font-size:11px;color:rgba(255,255,255,.32);line-height:1.9;max-width:80ch;border-top:1px solid rgba(255,255,255,.07)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:22px;flex-wrap:wrap;gap:12px}
+.foot-bottom .c{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+.foot-bottom .c a{color:var(--accent)}
+.foot-social{display:flex;gap:8px}
+.foot-social a{width:34px;height:34px;border:1px solid rgba(255,255,255,.15);display:grid;place-items:center;color:rgba(255,255,255,.6);transition:all .18s;border-radius:0}
+.foot-social a:hover{border-color:var(--accent);color:var(--accent)}
+.foot-social svg{width:15px;height:15px}
+
+/* ============ ACCESSIBILITY ============ */
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+section[id]{scroll-margin-top:80px}
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(68px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal-d1{transition-delay:.12s}.reveal-d2{transition-delay:.22s}.reveal-d3{transition-delay:.32s}.reveal-d4{transition-delay:.42s}.reveal-d5{transition-delay:.52s}
+.clip{clip-path:inset(0 100% 0 0);transition:clip-path .9s cubic-bezier(.16,1,.3,1)}
+.clip.in{clip-path:inset(0 0 0 0)}
+
+/* ============ MOBILE MENU ============ */
+.mobile-menu{position:fixed;inset:0;background:var(--paper);z-index:130;display:flex;flex-direction:column;justify-content:center;
+ padding:0 32px;transform:translateY(-100%);transition:transform .45s cubic-bezier(.7,0,.2,1);visibility:hidden}
+.mobile-menu.open{transform:none;visibility:visible}
+.mobile-menu a{font-family:var(--serif);font-size:28px;padding:12px 0;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:12px}
+.mobile-menu a span{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.mm-close{position:absolute;top:20px;right:30px;width:42px;height:42px;border:1px solid var(--line);background:transparent;cursor:pointer;display:grid;place-items:center;color:var(--ink);border-radius:0}
+
+/* ============ RESPONSIVE ============ */
+/* large tablet / small desktop */
+@media(max-width:1100px){
+ .hero-left{padding:44px 36px}
+ .bento-feat-left{grid-template-columns:1fr 1fr}.bento-feat-left .feat{grid-row:auto}
+}
+/* iPad landscape + desktop squeeze */
+@media(max-width:1024px){
+ .hero-grid{grid-template-columns:1fr}.hero-right{border-top:1px solid var(--line)}
+ .hero-left{padding:38px 30px}
+ #about .ab-bento{grid-template-columns:1fr}
+ .gpa-grid{grid-template-columns:1fr}.gpa-out{position:static}
+ .bento-5{grid-template-columns:repeat(3,1fr)}
+ .bento-feat-left{grid-template-columns:1fr 1fr}.bento-feat-left .feat{grid-row:auto}
+ .ch-title{font-size:clamp(26px,4vw,50px)}
+ .sec-head h2{font-size:clamp(30px,5vw,58px)}
+}
+/* iPad portrait — fully addressed (768-1023px) */
+@media(min-width:768px) and (max-width:1023px){
+ .wrap{padding:0 28px}
+ section{padding:70px 0}
+ .bento-3{grid-template-columns:1fr 1fr}
+ .bento-5{grid-template-columns:1fr 1fr 1fr}
+ .dd{grid-template-columns:1fr}
+ .gpa-target-grid{grid-template-columns:1fr}
+ .gpa-grid{grid-template-columns:1fr}.gpa-out{position:static}
+ .hero-meta{grid-template-columns:repeat(3,1fr)}
+ .hero-meta .m{padding:18px 16px}
+ .hero-meta .m .n{font-size:clamp(38px,7vw,64px)}
+ .hero-left{padding:32px 28px}
+ .tl .axis{left:88px}.tl .ph{grid-template-columns:78px 1fr;gap:20px}.tl .ph .dot{left:82px}
+ .foot-top{grid-template-columns:1fr 1fr;gap:28px}
+ .foot-top>*:first-child{grid-column:1/-1}
+ .ab-text-cell{padding:34px 30px}
+ .hero h1{font-size:clamp(42px,7vw,76px)}
+ .ch-title{font-size:clamp(22px,4.2vw,42px)}
+ .sec-head h2{font-size:clamp(26px,5vw,50px)}
+ .chapter{grid-template-columns:60px 1fr}
+ .dt-stage{padding:30px 24px}
+}
+/* Mobile */
+@media(max-width:767px){
+ .wrap{padding:0 18px}
+ .nav-links{display:none}.burger{display:grid}
+ header.hero{padding:70px 0 36px;min-height:auto}
+ section{padding:52px 0}
+ .sec-head{margin-bottom:28px}
+ .sec-head h2{font-size:clamp(26px,7vw,44px)}
+ .chapter{grid-template-columns:1fr}.ch-rail{margin-bottom:14px}
+ .ch-num{position:static;writing-mode:horizontal-tb;flex-direction:row;gap:10px}
+ .ch-num .ring{width:30px;height:30px;font-size:13px}
+ .ch-body{border-left:none;padding-left:0}
+ .ch-title{font-size:clamp(22px,6.5vw,38px)}
+ .bento-2,.bento-3,.bento-wide-right,.dd{grid-template-columns:1fr}
+ .bento-5{grid-template-columns:1fr 1fr}
+ .span-2,.span-3{grid-column:auto}
+ .bento-cell{padding:18px 16px}
+ .map-step{padding:16px 14px 12px!important}
+ .bc-title{font-size:17px}
+ .bc-body{font-size:12.5px}
+ .tl .axis{left:56px}.tl .ph{grid-template-columns:46px 1fr;gap:12px}.tl .ph .dot{left:50px}
+ .foot-top{grid-template-columns:1fr;gap:20px}
+ .dt-stage{padding:20px 16px;min-height:auto}.gpa-panel,.gpa-out{padding:16px}
+ .grow{grid-template-columns:1fr 70px 52px 26px;gap:4px}
+ .cred{grid-template-columns:46px 1fr;gap:8px}
+ .hero-meta{grid-template-columns:repeat(3,1fr)}
+ .hero-meta .m{padding:12px 8px}
+ .hero-meta .m .n{font-size:clamp(30px,8vw,50px);letter-spacing:-.04em}
+ .hero-meta .m .l{font-size:7.5px;letter-spacing:.08em;white-space:normal;padding-left:14px}
+ .hero-left{padding:22px 18px 14px}
+ .hero h1{font-size:clamp(36px,9vw,62px);line-height:.87}
+ .hero h1 .lead{font-size:.28em;letter-spacing:.18em;margin-bottom:12px}
+ .hero-sub{font-size:14px;margin:12px 0 18px;max-width:none}
+ .hero-cta{gap:8px}
+ .hero-cta .btn{padding:10px 16px;font-size:10.5px;letter-spacing:.07em}
+ .hero-tag-cell{padding:14px 16px}
+ .hero-tag-cell p{font-size:11px}
+ .steps .s{grid-template-columns:34px 1fr;gap:10px;padding:14px 14px}
+ .steps .s .sn{font-size:20px}
+ .steps .s h5{font-size:16px}
+ .gpa-target-grid{grid-template-columns:1fr}
+ .gpt-result-inner{min-height:160px;padding:20px}
+ .ab-text-cell{padding:24px 18px}
+ .scrollcue{display:none}
+ .sec-head::after{display:none}
+}
+/* Small phones */
+@media(max-width:479px){
+ .wrap{padding:0 14px}
+ .bento-5{grid-template-columns:1fr}
+ .bento-feat-left{grid-template-columns:1fr}
+ .hero-meta{grid-template-columns:1fr 1fr}
+ .hero-meta .m:last-child{grid-column:1/-1;border-right:none;border-top:1px solid var(--line)}
+ .hero-meta .m .n{font-size:clamp(38px,10.5vw,56px)}
+ .hero h1{font-size:clamp(32px,9.5vw,52px)}
+ .dt-prog i{width:14px}.dt-prog i.on{width:22px}
+ .gpt-row{grid-template-columns:1fr 1fr}
+ .grow{grid-template-columns:1fr 58px 46px 24px}
+ .bento-cell{padding:16px 14px}
+}
+/* ============ YEAR EXIT MAP ============ */
+.yr-exit-map{margin:24px 0 28px;overflow:visible}
+.yem-label{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.yem-track{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);position:relative;margin-bottom:44px;border-radius:var(--r-sm);overflow:hidden}
+.yem-seg{padding:14px 10px 12px;text-align:center;position:relative}
+.yem-seg-y1{background:var(--accent-wash)}
+.yem-seg-y2{background:var(--card-2)}
+html[data-theme="dark"] .yem-seg-y1{background:#1f0508}
+html[data-theme="dark"] .yem-seg-y2{background:var(--card-2)}
+.yem-seg-name{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink-faint);display:block;text-transform:uppercase}
+.yem-seg-sub{font-size:10px;color:var(--ink-soft);display:block;margin-top:4px;line-height:1.4}
+.yem-exits{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px}
+.yem-exit{display:flex;flex-direction:column;align-items:center;gap:0}
+.yem-exit-line{width:1px;height:14px}
+.yem-exit-tag{font-family:var(--mono);font-size:9px;padding:3px 9px;letter-spacing:.07em;white-space:nowrap}
+.yem-exit-a .yem-exit-line{background:var(--accent)}
+.yem-exit-a .yem-exit-tag{background:var(--accent);color:#fff}
+.yem-exit-b .yem-exit-line{background:#444}
+.yem-exit-b .yem-exit-tag{background:#111;color:#fff}
+.yem-exit-sub-label{font-family:var(--mono);font-size:8.5px;color:var(--ink-faint);margin-top:4px;text-align:center;line-height:1.55}
+.yem-year-bar{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:22px;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+.yem-yr{padding:7px 0;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.yem-yr-1{background:var(--accent);color:#fff}
+.yem-yr-2{background:#111;color:#fff}
+@media(max-width:600px){.yem-track{grid-template-columns:1fr 1fr}.yem-exits{grid-template-columns:1fr 1fr}}
+
+/* ============ LANG CHECK DIAGRAM ============ */
+.lang-check{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow-card);overflow:hidden;margin:28px 0}
+.lc-head{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);padding:11px 20px;background:var(--card-2);border-bottom:1px solid var(--line)}
+.lc-body{display:grid;grid-template-columns:1fr 1px 1fr}
+.lc-sep{background:var(--line)}
+.lc-col{padding:20px 22px}
+.lc-subj{font-family:var(--serif);font-size:19px;margin-bottom:3px}
+.lc-req{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+.lc-pass{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--green-bg);border:1px solid rgba(26,122,58,.18);border-radius:0;margin-bottom:8px;flex-wrap:wrap}
+.lc-fail{padding:10px 12px;background:var(--accent-wash);border:1px solid rgba(181,22,43,.18);border-radius:0}
+.lc-icon{font-family:var(--mono);font-size:13px;flex-shrink:0;font-weight:700}
+.lc-icon.pass{color:var(--green)}.lc-icon.fail{color:var(--accent)}
+.lc-pass>span:nth-child(2){font-size:13px;color:var(--ink-soft)}
+.lc-status{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto}
+.lc-status.pass{color:var(--green)}.lc-status.fail{color:var(--accent)}
+.lc-fail-line{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.lc-fail-line>span:first-child{font-size:13px;color:var(--ink-soft)}
+.lc-fix-list{display:flex;flex-direction:column;gap:6px}
+.lc-fix{display:flex;gap:10px;align-items:flex-start;padding:8px 11px;background:var(--card);border-radius:0;border:1px solid var(--line)}
+.lc-fix-rec{border-color:var(--accent)}
+.lc-fix-label{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:2px 6px;border-radius:0;flex-shrink:0;margin-top:2px;white-space:nowrap}
+.lc-fix-rec .lc-fix-label{background:var(--accent);color:#fff}
+.lc-fix:not(.lc-fix-rec) .lc-fix-label{background:var(--card-2);color:var(--ink-faint);border:1px solid var(--line)}
+.lc-fix-name{font-family:var(--serif);font-size:13px;margin-bottom:2px}
+.lc-fix-desc{font-size:11.5px;color:var(--ink-faint);line-height:1.55}
+.lc-fix-or{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--ink-faint);text-align:center;padding:3px 0}
+.lc-foot{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);padding:10px 20px;background:var(--card-2);border-top:1px solid var(--line);text-align:center}
+@media(max-width:760px){.lc-body{grid-template-columns:1fr}.lc-sep{height:1px;width:100%}}
+
+/* ============ EVAL LAYERS ============ */
+.eval-stack{margin:0 0 28px;border:1px solid var(--line);overflow:hidden;border-radius:var(--r-sm);box-shadow:var(--shadow-card)}
+.eval-layer{display:grid;grid-template-columns:52px 110px 1fr;align-items:stretch;border-bottom:1px solid var(--line);transition:background .18s}
+.eval-layer:last-child{border-bottom:none;background:#111111}
+.eval-layer:nth-child(2){background:var(--card-2)}
+.eval-layer:first-child{background:var(--card)}
+.eval-layer:hover{background:var(--accent-wash)}
+.eval-layer:last-child:hover{background:#181818}
+.el-tier{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--accent);padding:0;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);writing-mode:vertical-rl;text-align:center;min-height:64px}
+.eval-layer:last-child .el-tier{border-color:rgba(255,255,255,.1)}
+.el-name{font-family:var(--serif);font-size:15px;display:flex;align-items:center;padding:0 14px;border-right:1px solid var(--line)}
+.eval-layer:last-child .el-name{color:#fff;border-color:rgba(255,255,255,.1)}
+.el-detail{font-size:12.5px;color:var(--ink-soft);padding:14px 16px;line-height:1.65}
+.eval-layer:last-child .el-detail{color:rgba(255,255,255,.6)}
+@media(max-width:600px){.eval-layer{grid-template-columns:40px 1fr}.el-name{display:none}}
+
+/* ============ CHAPTER BRIDGES ============ */
+.ch-bridge{display:flex;align-items:center;gap:14px;margin-top:40px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r-sm);box-shadow:var(--shadow)}
+.ch-bridge-pre{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);flex-shrink:0}
+.ch-bridge-text{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.ch-bridge-arr{margin-left:auto;color:var(--accent);font-family:var(--mono);font-size:14px;flex-shrink:0}
+a.ch-bridge{transition:border-color .18s,background .18s}
+a.ch-bridge:hover{background:var(--accent-wash);border-left-color:var(--accent-soft)}
+
+/* ============ PATH FLOW DIAGRAM ============ */
+.hero-diagram-cell{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 28px;background:var(--card-2);border-bottom:1px solid var(--line);overflow:hidden}
+.path-flow{width:100%;max-width:256px;display:flex;flex-direction:column;align-items:center}
+.pf-start,.pf-end{display:flex;flex-direction:column;align-items:center;width:100%}
+.pf-tag{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px;display:block;font-family:var(--mono)}
+.pf-node{font-size:14px;padding:13px 16px;text-align:center;width:100%;line-height:1.3;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--serif)}
+.pf-node-dark{background:#111111;color:#fff}
+.pf-node-red{background:var(--accent);color:#fff}
+@keyframes pf-pulse{0%,100%{box-shadow:0 0 0 0 transparent}60%{box-shadow:0 0 0 6px var(--accent-wash)}}
+.pf-node-red{animation:pf-pulse 2.8s ease-in-out infinite}
+.pf-tag-small{font-size:8px;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-top:3px;font-family:var(--mono)}
+.pf-vline{width:1px;height:20px;background:var(--line);transform:scaleY(0);transform-origin:top;transition:transform .36s ease}
+.pf-vline.vis{transform:scaleY(1)}
+.pf-vline-sm{width:1px;height:14px;background:var(--line)}
+.pf-hline{width:100%;height:1px;background:var(--line);transform:scaleX(0);transform-origin:center;transition:transform .36s ease}
+.pf-hline.vis{transform:scaleX(1)}
+.pf-cols{width:100%;display:grid;grid-template-columns:1fr 1px 1fr;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.pf-cols.vis{opacity:1;transform:none}
+.pf-colsep{background:var(--line)}
+.pf-col{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 8px}
+.pf-ctag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-family:var(--mono)}
+.pf-ctag-red{color:var(--accent)}
+.pf-cnode{font-size:12.5px;padding:9px 8px;border:1px solid var(--line);background:var(--card);text-align:center;width:100%;line-height:1.3;display:flex;flex-direction:column;align-items:center;font-family:var(--serif)}
+.pf-cnode-red{background:var(--accent)!important;color:#fff;border-color:var(--accent)!important}
+.pf-cspec{display:block;font-size:9px;color:var(--ink-faint);margin-top:4px;line-height:1.55;font-family:var(--mono)}
+.pf-cnode-red .pf-cspec{color:rgba(255,255,255,.72)}
+/* ============ GPA TARGET CALC ============ */
+.gpa-target-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-card)}
+.gpt-fields{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+.gpt-row{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center}
+.gpt-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+.gpt-input{font-family:var(--mono);font-size:14px;padding:10px 12px;border:1px solid var(--line);background:var(--card-2);color:var(--ink);width:100%;transition:border-color .18s;border-radius:0}
+.gpt-input:focus{outline:none;border-color:var(--accent)}
+.gpt-result-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:240px;gap:5px;padding:28px}
+.gpt-needed-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+.gpt-needed-val{font-family:var(--serif);font-size:64px;line-height:1;color:var(--accent);transition:color .3s;margin:4px 0}
+.gpt-scale-max{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint)}
+.gpt-breakdown{font-size:11px;font-family:var(--mono);color:var(--ink-faint);text-align:center;line-height:1.8;margin-top:5px}
+@media(max-width:760px){.gpa-target-grid{grid-template-columns:1fr}.gpt-row{grid-template-columns:1fr 1fr}}
+/* ============ VISUAL POLISH ============ */
+/* Card hover lift — sharper shadow, no border-radius interference */
+.bento-cell{transition:box-shadow .28s cubic-bezier(.16,1,.3,1),transform .28s cubic-bezier(.16,1,.3,1),background .18s}
+.bento-cell:not(.map-step):hover{transform:translateY(-4px)}
+.bc-dark.bento-cell:not(.map-step):hover{box-shadow:0 24px 72px rgba(0,0,0,.65)!important;transform:translateY(-4px)}
+.bc-dark.bento-cell{border-top:2px solid var(--accent)}
+/* Note: stronger left border */
+.note{border-left-width:3px}
+.note.dark{border-top:2px solid var(--accent);border-left-color:transparent}
+/* Map step bottom accent line on hover */
+.map-step{overflow:hidden}
+.map-step::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .38s cubic-bezier(.16,1,.3,1)}
+.map-step:hover::after{transform:scaleX(1)}
+/* Steps per-row hover */
+.steps .s{transition:background .16s;border-left:2px solid transparent}
+.steps .s:hover{background:var(--accent-wash);border-left-color:var(--accent)}
+/* DT option — accent fill from left on hover */
+.dt-opt{border-left:2px solid transparent;transition:all .24s cubic-bezier(.16,1,.3,1);padding-left:16px;overflow:hidden;position:relative}
+.dt-opt::before{content:'';position:absolute;inset:0;background:var(--accent-wash);transform:scaleX(0);transform-origin:left;transition:transform .38s cubic-bezier(.16,1,.3,1);z-index:0}
+.dt-opt:hover{border-left-color:var(--accent)}
+.dt-opt:hover::before{transform:scaleX(1)}
+.dt-opt>*{position:relative;z-index:1}
+/* Chapter ring — keep overrides consistent */
+.ch-num .ring{border-width:1.5px;transition:transform .38s cubic-bezier(.16,1,.3,1),background .3s,color .3s}
+.chapter:hover .ch-num .ring{background:var(--accent);color:#fff;transform:rotate(5deg) scale(1.08)}
+/* Timeline dot diamond pulse */
+@keyframes dotPulse{0%{box-shadow:0 0 0 0 rgba(181,22,43,.5)}70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.tl .ph:hover .dot{animation:dotPulse .9s ease-out;background:var(--accent)}
+/* Eval-stack left tier stripe */
+.eval-layer:nth-child(1){border-left:3px solid rgba(181,22,43,.18)}
+.eval-layer:nth-child(2){border-left:3px solid var(--accent)}
+.eval-layer:last-child{border-left:3px solid var(--accent)}
+/* ch-bridge hover lift */
+a.ch-bridge{transition:border-color .18s,background .18s,transform .2s,box-shadow .2s}
+a.ch-bridge:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+/* Hero stat hover */
+.hero-meta .m{transition:background .18s}
+.hero-meta .m:hover{background:var(--accent-wash)}
+/* Divider gradient fade */
+.divider{background:linear-gradient(90deg,transparent,var(--line) 15%,var(--line) 85%,transparent)}
+/* Sec-head eyebrow accent rule */
+.sec-head .eyebrow{display:inline-flex;align-items:center;gap:10px}
+.sec-head .eyebrow::after{content:'';display:inline-block;width:28px;height:1.5px;background:var(--accent);flex-shrink:0;margin-bottom:1px}
+/* Section ghost numeral */
+.sec-ghost{position:absolute;right:-8px;top:-20px;font-family:var(--serif);font-optical-sizing:auto;font-variation-settings:"opsz" 144;font-size:clamp(120px,20vw,260px);font-weight:200;line-height:.8;color:var(--ink);opacity:.045;pointer-events:none;user-select:none;z-index:0;letter-spacing:-.07em;font-style:italic}
+html[data-theme="dark"] .sec-ghost{opacity:.028}
+/* GPA ring smooth cap */
+.ring-fg{stroke-linecap:round}
+/* Insight tag */
+.insight{letter-spacing:.18em}
+/* Scale toggle */
+.scale-toggle{border-radius:0}
+/* Hero kicker rule hover */
+.hero-kicker .rule{transition:width .55s cubic-bezier(.2,.7,.2,1)}
+header.hero:hover .hero-kicker .rule{width:60px}
+/* DT result badge */
+.dt-result .badge{border-radius:0}
+/* Lang check column hover */
+.lc-col{transition:background .18s}
+/* BC-accent inner highlight */
+.bc-accent.bento-cell::after{content:'';position:absolute;inset:0;border-radius:var(--r);box-shadow:inset 0 2px 0 rgba(255,255,255,.1);pointer-events:none}
+
+/* ══════════ MOTION SYSTEM ══════════ */
+@media(pointer:fine){body,a,button,input,select,.tbtn,.dt-opt,.map-step,.bento-cell,.btn,.addrow,.rm,.scale-toggle button{cursor:none!important}}
+.crsr-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;z-index:99999;pointer-events:none;will-change:transform;transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),opacity .3s}
+.crsr-ring{width:38px;height:38px;border:1.5px solid var(--accent);border-radius:50%;position:fixed;top:0;left:0;z-index:99998;pointer-events:none;opacity:.34;will-change:transform;transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),opacity .25s}
+.crsr-dot.hov{width:12px;height:12px}.crsr-ring.hov{width:60px;height:60px;opacity:.11}
+.crsr-dot.dn{width:4px;height:4px}.crsr-ring.dn{opacity:.75}
+
+.ticker-strip{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0;user-select:none}
+.ticker-inner{display:inline-flex;white-space:nowrap;animation:tkr 36s linear infinite}
+.ticker-inner:hover{animation-play-state:paused}
+@keyframes tkr{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tk-w{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);padding:0 30px;display:inline-block}
+.tk-s{color:var(--accent);font-size:13px;display:inline-block;vertical-align:middle}
+
+.sw{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:inherit}
+.swi{display:inline-block;transform:translateY(112%);transition:transform .92s cubic-bezier(.16,1,.3,1)}
+.split-vis .swi{transform:none}
+
+@keyframes navIn{from{opacity:0;transform:translateY(-9px)}to{opacity:1;transform:none}}
+.nav-links a{animation:navIn .5s cubic-bezier(.16,1,.3,1) both}
+.nav-links a:nth-child(1){animation-delay:.15s}.nav-links a:nth-child(2){animation-delay:.21s}
+.nav-links a:nth-child(3){animation-delay:.27s}.nav-links a:nth-child(4){animation-delay:.33s}
+.nav-links a:nth-child(5){animation-delay:.39s}.nav-links a:nth-child(6){animation-delay:.45s}
+.nav-links a:nth-child(7){animation-delay:.51s}
+.logo{animation:navIn .5s cubic-bezier(.16,1,.3,1) .08s both}
+
+.nav-links{position:relative}
+.nav-ind{position:absolute;bottom:0;left:0;height:1.5px;background:var(--accent);pointer-events:none;opacity:0;width:0;transition:left .4s cubic-bezier(.16,1,.3,1),width .4s cubic-bezier(.16,1,.3,1),opacity .3s}
+.nav-ind.on{opacity:1}
+
+.bento>*{border:1px solid var(--line-soft);box-shadow:none!important}
+.bento-cell:not(.bc-accent):not(.bc-dark):not(.map-step):hover{box-shadow:0 24px 72px rgba(40,30,20,.14),0 2px 6px rgba(40,30,20,.07)!important;border-color:transparent!important}
+.bc-dark.bento-cell:not(.map-step):hover{box-shadow:0 24px 72px rgba(0,0,0,.65)!important;border-color:transparent!important}
+.bc-accent.bento-cell:not(.map-step):hover{box-shadow:0 24px 72px rgba(164,20,42,.35)!important;border-color:transparent!important}
+
+@keyframes cellRise{from{opacity:0;transform:translateY(38px)}to{opacity:1;transform:none}}
+.bento.sv>*{animation:cellRise .92s cubic-bezier(.16,1,.3,1) both}
+.bento.sv>*:nth-child(1){animation-delay:.03s}.bento.sv>*:nth-child(2){animation-delay:.10s}
+.bento.sv>*:nth-child(3){animation-delay:.17s}.bento.sv>*:nth-child(4){animation-delay:.24s}
+.bento.sv>*:nth-child(5){animation-delay:.31s}.bento.sv>*:nth-child(6){animation-delay:.38s}
+
+.tl .ph{opacity:0;transform:translateX(-24px);transition:opacity .78s cubic-bezier(.16,1,.3,1),transform .78s cubic-bezier(.16,1,.3,1)}
+.tl.sv .ph{opacity:1;transform:none}
+.tl.sv .ph:nth-child(2){transition-delay:.07s}.tl.sv .ph:nth-child(3){transition-delay:.14s}
+.tl.sv .ph:nth-child(4){transition-delay:.21s}.tl.sv .ph:nth-child(5){transition-delay:.28s}
+.tl.sv .ph:nth-child(6){transition-delay:.35s}.tl.sv .ph:nth-child(7){transition-delay:.42s}
+.tl.sv .ph:nth-child(8){transition-delay:.49s}.tl.sv .ph:nth-child(9){transition-delay:.56s}
+
+.btn{transition:color .38s cubic-bezier(.16,1,.3,1),border-color .24s,transform .4s cubic-bezier(.16,1,.3,1)!important}
+.btn:hover{transform:none!important}
+
+@keyframes stepIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+.steps.sv .s{animation:stepIn .72s cubic-bezier(.16,1,.3,1) both}
+.steps.sv .s:nth-child(1){animation-delay:.04s}.steps.sv .s:nth-child(2){animation-delay:.10s}
+.steps.sv .s:nth-child(3){animation-delay:.17s}.steps.sv .s:nth-child(4){animation-delay:.23s}
+.steps.sv .s:nth-child(5){animation-delay:.29s}
+
+.hero-ghost{opacity:.09!important;font-variation-settings:"opsz" 144}
+html[data-theme="dark"] .hero-ghost{opacity:.06!important}
+.eval-layer{transition:padding-left .24s cubic-bezier(.16,1,.3,1),background .18s}
+.eval-layer:not(:last-child):hover{padding-left:24px}
+.dt-result .badge{border-radius:0}
+.scrollcue{letter-spacing:.3em;opacity:.5}
+
+/* Editorial: sec-head has a right-extending rule */
+.sec-head{overflow:visible}
+.sec-head::after{content:'';display:block;width:100%;height:1px;background:linear-gradient(90deg,var(--accent) 60px,var(--line) 60px,var(--line));margin-top:22px;opacity:.6}
+
+/* Ticker: slightly larger separators */
+.tk-s{font-size:16px;color:var(--accent);opacity:.7;padding:0 4px}
+
+/* Logo: accent dot between BA and 14 */
+.logo .ba{font-style:italic}
+
+/* Steps number — bolder */
+.steps .s .sn{font-size:32px;font-optical-sizing:auto;font-variation-settings:"opsz" 36}
+
+/* Bento bc-tag — thinner tracking */
+.bc-tag{letter-spacing:.14em;font-size:9.5px}
+
+/* Section padding tighter */
+section{padding:88px 0}
+
+/* Hero meta more room */
+.hero-meta .m{padding:30px 36px}
+
+/* Eyebrow after rule from sec-head should not show on muted eyebrows */
+.eyebrow.muted::before{content:'//';opacity:.4}
+
+
+/* ═══ EDITORIAL STYLISTIC UPGRADES ═══ */
+/* Ticker: edge fade */
+.ticker-strip{padding:12px 0;background:var(--paper-2);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.tk-w{color:var(--ink-soft);font-size:10px;letter-spacing:.2em;padding:0 22px}
+.tk-s{font-size:18px;opacity:.4;padding:0 2px}
+/* Overview steps: italic serif number */
+.map-step .ms-n{font-family:var(--serif);font-size:26px;font-style:italic;letter-spacing:-.03em;line-height:1;opacity:.4;transition:opacity .3s cubic-bezier(.16,1,.3,1);font-weight:300}
+.map-step:hover .ms-n{opacity:1}
+.map-step .ms-t{font-size:19px}
+/* Mobile menu ghost */
+.mobile-menu{overflow:hidden}
+.mobile-menu::before{content:'BA14';position:absolute;bottom:-4%;right:-4%;font-family:var(--serif);font-size:min(32vw,200px);font-weight:200;color:var(--ink);opacity:.04;pointer-events:none;user-select:none;letter-spacing:-.05em;line-height:1;z-index:0}
+.mobile-menu a{font-size:clamp(20px,5.5vw,32px);font-variation-settings:"opsz" 72;position:relative;z-index:1;padding:13px 0}
+/* Footer social: fill on hover */
+.foot-social a:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+/* ch-body border weight */
+.ch-body{border-left-width:2px}
+/* Steps room */
+.steps .s{padding:20px 24px}
+/* About quote */
+.ab-quote{font-size:clamp(16px,2.2vw,22px);border-left-width:3px;padding-left:24px}
+/* GPA ring cap */
+.ring-fg{stroke-linecap:square}
+/* Nav indicator height */
+.nav-ind{height:2px}
+/* Bento-5 joined grid on desktop */
+@media(min-width:1024px){
+ .bento-5.bento{gap:1px;background:var(--line-soft)}
+ .bento-5.bento .map-step,.bento-5.bento .bento-cell{border-radius:0!important}
+}
+/* Hero kicker rule */
+.hero-kicker .rule{width:44px}
+/* Overview section tighter */
+#overview{padding-top:56px;padding-bottom:56px}
+/* bc-dark top accent */
+.bc-dark.bento-cell{border-top:2px solid var(--accent)!important}
+/* Sec ghost more visible */
+.sec-ghost{opacity:.055!important}
+html[data-theme=dark] .sec-ghost{opacity:.032!important}
+
+
+/* ═══════════════ ROUTE SVG DIAGRAM ═══════════════ */
+.route-svg-wrap{width:100%;max-width:280px;margin:0 auto}
+.rsv-header{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.rsv-header::before{content:'';display:block;width:20px;height:1px;background:var(--accent)}
+#routeSvg{width:100%;height:auto;overflow:visible}
+.rsv-band-y1{fill:rgba(164,20,42,.06)}
+html[data-theme=dark] .rsv-band-y1{fill:rgba(164,20,42,.14)}
+.rsv-band-y2{fill:rgba(0,0,0,.04)}
+html[data-theme=dark] .rsv-band-y2{fill:rgba(255,255,255,.04)}
+.rsv-year-lbl{font-family:'Courier Prime',monospace;font-size:7.5px;letter-spacing:.2em;fill:var(--ink-faint)}
+.rsv-node-start{fill:#111111}
+html[data-theme=dark] .rsv-node-start{fill:#050505}
+.rsv-start-sm{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:.2em;text-anchor:middle;fill:rgba(255,255,255,.45)}
+.rsv-start-lg{font-family:'Fraunces',serif;font-size:16px;text-anchor:middle;fill:white;font-style:italic}
+.rsv-spine{stroke:var(--line);stroke-width:1.5;fill:none}
+.rsv-spine-dash{stroke:var(--line);stroke-width:1.5;fill:none;stroke-dasharray:5 3}
+.rsv-sem-ring{fill:var(--paper);stroke:var(--line);stroke-width:1.5}
+html[data-theme=dark] .rsv-sem-ring{fill:var(--paper)}
+.rsv-sem-lbl{font-family:'Courier Prime',monospace;font-size:8px;fill:var(--ink-faint)}
+.rsv-dot-a{fill:var(--accent)}
+.rsv-dot-b{fill:#1c1916}
+html[data-theme=dark] .rsv-dot-b{fill:#f1ebe0}
+.rsv-lbl-a{font-family:'Courier Prime',monospace;font-size:8px;fill:var(--accent);font-weight:700}
+.rsv-lbl-b{font-family:'Courier Prime',monospace;font-size:8px;fill:var(--ink-soft)}
+.rsv-path-a{stroke:var(--accent);stroke-width:1.5;fill:none}
+.rsv-path-b{stroke:var(--ink-soft);stroke-width:1.5;fill:none}
+.rsv-box-a-bg{fill:var(--accent-wash);stroke:var(--accent);stroke-width:1.5}
+html[data-theme=dark] .rsv-box-a-bg{fill:rgba(164,20,42,.18)}
+.rsv-box-b-bg{fill:#111111}
+html[data-theme=dark] .rsv-box-b-bg{fill:#080604}
+.rsv-box-tag-a{font-family:'Courier Prime',monospace;font-size:7.5px;letter-spacing:.14em;text-anchor:middle;fill:var(--accent)}
+.rsv-box-tag-b{font-family:'Courier Prime',monospace;font-size:7.5px;letter-spacing:.14em;text-anchor:middle;fill:rgba(255,255,255,.4)}
+.rsv-box-title-a{font-family:'Fraunces',serif;font-size:13.5px;text-anchor:middle;fill:var(--ink);font-style:italic}
+.rsv-box-title-b{font-family:'Fraunces',serif;font-size:13.5px;text-anchor:middle;fill:white;font-style:italic}
+.rsv-box-sub-a{font-family:'Courier Prime',monospace;font-size:8.5px;text-anchor:middle;fill:var(--ink-faint)}
+.rsv-box-sub-b{font-family:'Courier Prime',monospace;font-size:8.5px;text-anchor:middle;fill:rgba(255,255,255,.45)}
+.rsv-box-gpa-a{font-family:'Courier Prime',monospace;font-size:11px;text-anchor:middle;fill:var(--accent);font-weight:700}
+.rsv-box-gpa-b{font-family:'Courier Prime',monospace;font-size:11px;text-anchor:middle;fill:var(--accent);font-weight:700}
+.rsv-conv{stroke-width:1;fill:none;stroke-dasharray:3 5;opacity:.35}
+.rsv-conv-a{stroke:var(--accent)}
+.rsv-conv-b{stroke:var(--ink-soft)}
+.rsv-goal-bg{fill:var(--accent)}
+.rsv-goal-sm{font-family:'Courier Prime',monospace;font-size:8.5px;letter-spacing:.18em;text-anchor:middle;fill:rgba(255,255,255,.55)}
+.rsv-goal-lg{font-family:'Fraunces',serif;font-size:18px;text-anchor:middle;fill:white;font-style:italic}
+/* Sequential draw animation */
+.rsv-el{opacity:0;transition:opacity .35s ease}
+#routeSvg.rsv-animated .rsv-el{opacity:1}
+#routeSvg.rsv-animated .rsv-el:nth-child(1){transition-delay:.05s}
+#routeSvg.rsv-animated .rsv-el:nth-child(2){transition-delay:.1s}
+#routeSvg.rsv-animated .rsv-el:nth-child(3){transition-delay:.15s}
+#routeSvg.rsv-animated .rsv-el:nth-child(4){transition-delay:.2s}
+#routeSvg.rsv-animated .rsv-el:nth-child(5){transition-delay:.28s}
+#routeSvg.rsv-animated .rsv-el:nth-child(6){transition-delay:.36s}
+#routeSvg.rsv-animated .rsv-el:nth-child(7){transition-delay:.44s}
+#routeSvg.rsv-animated .rsv-el:nth-child(8){transition-delay:.52s}
+#routeSvg.rsv-animated .rsv-el:nth-child(9){transition-delay:.60s}
+#routeSvg.rsv-animated .rsv-el:nth-child(10){transition-delay:.68s}
+#routeSvg.rsv-animated .rsv-el:nth-child(11){transition-delay:.76s}
+#routeSvg.rsv-animated .rsv-el:nth-child(12){transition-delay:.84s}
+#routeSvg.rsv-animated .rsv-el:nth-child(13){transition-delay:.92s}
+#routeSvg.rsv-animated .rsv-el:nth-child(14){transition-delay:1.00s}
+#routeSvg.rsv-animated .rsv-el:nth-child(15){transition-delay:1.08s}
+#routeSvg.rsv-animated .rsv-el:nth-child(16){transition-delay:1.16s}
+#routeSvg.rsv-animated .rsv-el:nth-child(17){transition-delay:1.24s}
+#routeSvg.rsv-animated .rsv-el:nth-child(18){transition-delay:1.32s}
+#routeSvg.rsv-animated .rsv-el:nth-child(19){transition-delay:1.40s}
+#routeSvg.rsv-animated .rsv-el:nth-child(20){transition-delay:1.48s}
+/* Path draw lines */
+.rsv-line{stroke-dasharray:800;stroke-dashoffset:800;transition:stroke-dashoffset .9s cubic-bezier(.16,1,.3,1),opacity .1s}
+#routeSvg.rsv-animated .rsv-line{stroke-dashoffset:0;opacity:1}
+#routeSvg.rsv-animated .rsv-el.rsv-line{opacity:1}
+
+/* ═══════════════ UNIVERSITY GPA CHART ═══════════════ */
+.uni-chart{margin:24px 0 28px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.uni-chart-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--card-2)}
+.uni-chart-title{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint)}
+.uni-tab-group{display:flex;border:1px solid var(--line)}
+.uni-tab{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.06em;padding:5px 12px;background:transparent;border:none;cursor:pointer;color:var(--ink-faint);transition:all .18s}
+.uni-tab.on{background:var(--accent);color:#fff}
+.uni-chart-body{padding:16px 20px 18px}
+.uni-row{display:grid;grid-template-columns:52px 1fr 70px;gap:10px;align-items:center;margin-bottom:10px}
+.uni-row:last-child{margin-bottom:0}
+.uni-name{font-family:'Courier Prime',monospace;font-size:10.5px;color:var(--ink-soft);letter-spacing:.02em}
+.uni-bar-track{height:7px;background:var(--line-soft);position:relative;overflow:visible}
+.uni-bar-fill{height:100%;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);position:relative}
+.uni-bar-fill::after{content:attr(data-range);position:absolute;right:0;top:-16px;font-family:'Courier Prime',monospace;font-size:9px;color:var(--ink-faint);white-space:nowrap;opacity:0;transition:opacity .3s}
+.uni-row:hover .uni-bar-fill::after{opacity:1}
+.uni-gpa-val{font-family:'Fraunces',serif;font-size:13px;color:var(--accent);text-align:right;font-style:italic}
+.uni-chart-foot{font-family:'Courier Prime',monospace;font-size:8.5px;letter-spacing:.06em;color:var(--ink-faint);padding:10px 20px;border-top:1px solid var(--line);background:var(--card-2)}
+.uni-your-line{position:absolute;top:-4px;bottom:-4px;width:1.5px;background:var(--accent);z-index:2;pointer-events:none}
+.uni-your-label{position:absolute;top:-18px;font-family:'Courier Prime',monospace;font-size:8px;color:var(--accent);white-space:nowrap;transform:translateX(-50%)}
+
+/* ═══════════════ ELIGIBILITY CHECKER ═══════════════ */
+.elig-check{margin:28px 0;border:1px solid var(--line);overflow:hidden;background:var(--card)}
+.ec-head{padding:14px 20px;border-bottom:1px solid var(--line);background:var(--card-2);display:flex;align-items:center;gap:10px}
+.ec-head-tag{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.ec-head-title{font-family:'Fraunces',serif;font-size:17px;font-style:italic}
+.ec-body{padding:20px}
+.ec-q{margin-bottom:16px}
+.ec-q-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;display:block}
+.ec-opts{display:flex;gap:6px;flex-wrap:wrap}
+.ec-btn{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.06em;padding:7px 14px;border:1.5px solid var(--line);background:transparent;color:var(--ink-soft);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.ec-btn::before{content:'';position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.16,1,.3,1);z-index:0}
+.ec-btn.on::before{transform:scaleX(1)}
+.ec-btn span{position:relative;z-index:1}
+.ec-btn.on{border-color:var(--accent);color:#fff}
+.ec-result{margin-top:20px;padding:18px;border:1.5px solid var(--line);display:none;animation:ecIn .4s cubic-bezier(.16,1,.3,1)}
+@keyframes ecIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.ec-result.show{display:block}
+.ec-result-badge{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#fff;background:var(--accent);padding:3px 12px;display:inline-block;margin-bottom:12px}
+.ec-result-title{font-family:'Fraunces',serif;font-size:20px;font-style:italic;margin-bottom:8px}
+.ec-result-body{font-size:13.5px;color:var(--ink-soft);line-height:1.7}
+.ec-result.ec-good{border-color:var(--accent)}
+.ec-result.ec-ok{border-color:var(--accent)}
+.ec-result.ec-warn{border-color:var(--line)}
+.ec-result.ec-warn .ec-result-badge{background:var(--ink-soft)}
+
+/* ═══════════════ SECTION PULL-QUOTE NUMBERS ═══════════════ */
+.pull-num{font-family:'Fraunces',serif;font-optical-sizing:auto;font-variation-settings:"opsz" 144;font-size:clamp(72px,14vw,160px);line-height:.8;color:var(--accent);letter-spacing:-.06em;font-weight:200;font-style:italic;display:block;margin-bottom:8px}
+.pull-num-wrap{padding:32px 0 24px;border-top:1px solid var(--line);margin:40px 0 0}
+.pull-num-label{font-family:'Courier Prime',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:8px;margin-top:12px}
+.pull-num-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+
+
+/* ═══════════════ HERO PANEL (replaces SVG diagram) ═══════════════ */
+.hero-panel{background:var(--card);border:1px solid var(--line);padding:24px 28px;display:flex;flex-direction:column}
+.hp-row{display:flex;align-items:baseline;gap:18px;padding:18px 0;border-bottom:1px solid var(--line-soft)}
+.hp-row:first-child{padding-top:6px}
+.hp-row-end{border-bottom:none;padding-bottom:6px}
+.hp-k{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);min-width:62px;flex-shrink:0}
+.hp-v{font-size:22px;line-height:1.15;font-style:italic;color:var(--ink);display:flex;flex-direction:column;gap:6px}
+.hp-v-accent{color:var(--accent);font-size:26px}
+.hp-meta{font-size:10px;letter-spacing:.1em;color:var(--ink-faint);font-style:normal}
+/* hero-tag-cell — editorial caption block */
+.hero-tag-cell{padding:22px 28px;background:#111111;color:#fff;display:flex;flex-direction:column;gap:6px}
+.htc-num{font-size:9px;letter-spacing:.28em;color:rgba(255,255,255,.4);margin-bottom:6px}
+.htc-line1{font-family:var(--mono);font-size:13.5px;letter-spacing:.04em;color:var(--accent);line-height:1.4;font-weight:400}
+.htc-line2{font-family:'Fraunces',serif;font-style:italic;font-size:20px;line-height:1.25;color:#fff;letter-spacing:-.01em}
+@media(max-width:767px){
+ .hero-panel{padding:18px 20px}
+ .hp-row{padding:14px 0;gap:14px}
+ .hp-v{font-size:18px}
+ .hp-v-accent{font-size:22px}
+ .hero-tag-cell{padding:18px 20px}
+ .htc-line2{font-size:17px}
+}
+
+/* ============ RED AESTHETIC OVERRIDES ============ */
+:root{
+ --paper:#0B0B0F;
+ --paper-2:#111218;
+ --ink:#FFFFFF;
+ --ink-soft:rgba(255,255,255,.92);
+ --ink-faint:rgba(255,255,255,.72);
+ --line:rgba(255,255,255,.26);
+ --line-soft:rgba(255,255,255,.16);
+ --accent:#FFFFFF;
+ --accent-soft:#d7d9e0;
+ --accent-wash:rgba(255,255,255,.11);
+ --card:rgba(255,255,255,.08);
+ --card-2:rgba(255,255,255,.06);
+ --green:#FFFFFF;
+ --green-bg:rgba(255,255,255,.12);
+ --shadow:0 2px 14px rgba(120,0,0,.16),0 1px 2px rgba(120,0,0,.14);
+ --shadow-card:0 10px 32px rgba(110,0,0,.22),0 2px 6px rgba(110,0,0,.18);
+ --shadow-lg:0 18px 56px rgba(90,0,0,.28),0 3px 10px rgba(90,0,0,.22);
+ --shadow-accent:0 10px 36px -10px rgba(255,255,255,.45);
+ --mono:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+ --serif:'Italiana',Georgia,'Times New Roman',serif;
+ --han:'Manrope','PingFang TC','PingFang SC','Noto Sans TC','Microsoft JhengHei',sans-serif;
+ --r:0;
+ --r-sm:0;
+}
+html[data-theme="dark"]{
+ --paper:#0B0B0F;
+ --paper-2:#111218;
+ --ink:#FFFFFF;
+ --ink-soft:rgba(255,255,255,.92);
+ --ink-faint:rgba(255,255,255,.72);
+ --line:rgba(255,255,255,.26);
+ --line-soft:rgba(255,255,255,.16);
+ --accent:#FFFFFF;
+ --accent-soft:#d7d9e0;
+ --accent-wash:rgba(255,255,255,.11);
+ --card:rgba(255,255,255,.08);
+ --card-2:rgba(255,255,255,.06);
+ --green:#FFFFFF;
+ --green-bg:rgba(255,255,255,.12);
+}
+
+body{
+ background:#0B0B0F;
+ color:#fff;
+ font-family:var(--han);
+ font-size:16px;
+ letter-spacing:.01em;
+}
+body::before{
+ opacity:.08;
+ mix-blend-mode:screen;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:#fff;color:#0B0B0F}
+
+#progress{background:#fff;height:3px}
+
+nav.scrolled .nav-inner,
+html[data-theme="dark"] nav.scrolled .nav-inner{
+ background:rgba(11,11,15,.88);
+ border-bottom-color:rgba(255,255,255,.25);
+ backdrop-filter:blur(16px) saturate(130%);
+ -webkit-backdrop-filter:blur(16px) saturate(130%);
+}
+.logo,
+.logo .ba,
+.logo .num,
+.logo .tag,
+.nav-links a,
+.nav-links a span,
+.tbtn{color:#fff}
+.logo{font-family:var(--mono);font-size:21px;letter-spacing:.08em}
+.logo .tag{border-left-color:rgba(255,255,255,.34)}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.nav-links a::after,
+.nav-ind,
+.eyebrow::after,
+.sec-head::after,
+.hero-kicker .rule,
+.pull-num-label::before,
+.map-step::after,
+.divider{background:rgba(255,255,255,.6)}
+.tbtn{border-color:rgba(255,255,255,.34)}
+.tbtn:hover{border-color:#fff;color:#fff}
+
+header.hero{
+ min-height:100vh;
+ border-bottom:1px solid rgba(255,255,255,.24);
+ background:#FF0000;
+}
+.hero-ghost{color:#fff;opacity:.06}
+.hero-grid{
+ border:1px solid rgba(255,255,255,.28);
+ box-shadow:none;
+ background:rgba(255,255,255,.03);
+}
+.hero-left{padding:72px 62px}
+.hero h1{font-family:var(--serif);font-weight:400;letter-spacing:-.02em;line-height:.9}
+.hero h1 .lead{font-family:var(--mono);color:rgba(255,255,255,.72)}
+.hero h1 em{
+ font-family:'Marck Script',cursive;
+ font-style:normal;
+ color:#fff;
+ font-weight:400;
+ letter-spacing:.03em;
+}
+.hero-sub{font-family:var(--mono);font-size:14px;max-width:50ch;text-transform:uppercase;color:rgba(255,255,255,.88)}
+.hero-sub b{color:#fff}
+
+.btn{
+ border-color:rgba(255,255,255,.56);
+ color:#fff;
+ font-family:var(--mono);
+ font-size:11px;
+ letter-spacing:.14em;
+ text-transform:uppercase;
+ background:transparent;
+}
+.btn::before{background:#fff}
+.btn:hover{color:#0B0B0F;border-color:#fff}
+.btn.red{background:transparent;border-color:#fff;color:#fff}
+.btn.red::before{background:#fff}
+.btn.red:hover{color:#0B0B0F}
+.btn.ghost{color:#fff;border-color:rgba(255,255,255,.56)}
+.btn.ghost::before{background:#fff}
+.btn.ghost:hover{color:#0B0B0F;border-color:#fff}
+
+.hero-meta{border-top-color:rgba(255,255,255,.24)}
+.hero-meta .m{border-right-color:rgba(255,255,255,.2)}
+.hero-meta .m .n{color:#fff;font-family:var(--serif);font-weight:400}
+.hero-meta .m .l{color:rgba(255,255,255,.72);font-family:var(--mono)}
+.hero-meta .m:hover{background:rgba(255,255,255,.06)}
+
+.hero-panel,
+.hero-tag-cell,
+.mobile-menu,
+.gpa-grid,
+.gpa-target-grid,
+.dt-shell,
+.lang-check,
+.eval-stack,
+.steps,
+.gpa-bench,
+.note,
+.dt-opt,
+.dt-top,
+.gpa-panel,
+.gpa-out,
+.ch-bridge,
+.bento > *,
+.tl .ph .content,
+.lc-fix,
+.foot-social a,
+.addrow,
+.grow input,
+.grow select,
+.gpt-input,
+.scale-toggle,
+.scale-toggle button,
+.dt-result .badge,
+.gpa-verdict,
+.disclaimer,
+.foot-top,
+.yem-track,
+.yem-year-bar,
+.yem-exit-tag,
+.ec-card,
+.ec-btn,
+.ec-result,
+.uni-chart,
+.uni-table{
+ border-color:rgba(255,255,255,.24)!important;
+ box-shadow:none!important;
+}
+
+.hero-panel,
+.gpa-panel,
+.gpa-out,
+.dt-stage,
+.dt-top,
+.lang-check,
+.eval-layer,
+.steps .s,
+.note,
+.ch-bridge,
+.tl .ph .content,
+.gpa-bench,
+.lc-head,
+.lc-foot,
+.lc-fix,
+.gpt-result-inner,
+.foot-col a,
+.foot-social a,
+.addrow,
+.grow input,
+.grow select,
+.gpt-input,
+.scale-toggle button,
+.uni-row,
+.ec-card,
+.ec-btn,
+.ec-result{
+ background:rgba(255,255,255,.07)!important;
+}
+
+.bc-dark,
+.note.dark,
+.eval-layer:last-child,
+.hero-tag-cell,
+.yem-yr-2{
+ background:rgba(0,0,0,.18)!important;
+}
+.bc-accent,
+.dt-result .badge,
+.yem-yr-1,
+.yem-exit-a .yem-exit-tag,
+.lc-fix-rec .lc-fix-label,
+.insight{
+ background:#fff!important;
+ color:#0B0B0F!important;
+}
+
+section,
+#decision,
+#gpa,
+#gpa-target,
+footer,
+.ticker-strip,
+.hero-photo-cell,
+.hero-diagram-cell,
+.ab-photo-cell,
+.ab-text-cell,
+.bento-cell:hover,
+.bento-cell,
+.map-step:hover,
+.dt-opt:hover,
+.steps .s:hover,
+.ch-bridge:hover{
+ background:transparent!important;
+}
+
+.eyebrow,
+.bc-tag,
+.mono,
+.sec-head .eyebrow,
+.pull-num-label,
+.hero-kicker .rule,
+.yem-label,
+.bench-label,
+.dt-top .t,
+.dt-result .badge,
+.gpa-panel .ph .lbl,
+.lc-head,
+.lc-req,
+.lc-status,
+.foot-col h6,
+.foot-bottom .c,
+.disclaimer,
+.tk-w,
+.tk-s,
+.mm-close,
+.lc-fix-label,
+.ch-bridge-pre,
+.ms-n,
+.bc-step-num,
+.gpt-lbl,
+.gpt-needed-label,
+.gpt-scale-max,
+.gpt-breakdown,
+.ec-title,
+.ec-label,
+.ec-badge{
+ font-family:var(--mono)!important;
+ letter-spacing:.14em;
+ text-transform:uppercase;
+ color:rgba(255,255,255,.78)!important;
+}
+
+.sec-head h2,
+.ch-title,
+.bc-title,
+.dt-q,
+.dt-result h3,
+.note h4,
+.steps .s h5,
+.tl .ph h5,
+.lc-subj,
+.hero h1,
+.ring-c .v,
+.pull-num,
+.ab-text-cell h2,
+.hero-meta .m .n,
+.uni-row .uni-name,
+.ec-result-title,
+.ec-card h4,
+.map-step .ms-t,
+.ch-num .ring,
+.htc-line2,
+.p-label .ph{
+ font-family:var(--serif)!important;
+ font-weight:400;
+ color:#fff!important;
+}
+
+.ch-title em,
+.sec-head h2 em,
+.dt-result h3 em,
+.ab-text-cell h2 em,
+.hero h1 em,
+.pull-num,
+.ch-num .ring,
+.ec-result-badge{
+ font-family:'Marck Script',cursive!important;
+ font-style:normal;
+ letter-spacing:.02em;
+ color:#fff!important;
+}
+
+.hero-sub,
+.ch-lede,
+.bc-body,
+.note p,
+.steps .s p,
+.tl .ph ul li,
+.lc-pass > span:nth-child(2),
+.lc-fail-line > span:first-child,
+.lc-fix-desc,
+.dt-hint,
+.dt-result .rp,
+.dt-result .rlist li,
+.gpa-verdict,
+.ab-text-cell .cv,
+.foot-col a,
+.disclaimer,
+.hero-tag-cell p,
+.ms-d,
+.gpt-breakdown,
+.ec-result-body,
+.ec-note{
+ color:rgba(255,255,255,.92)!important;
+}
+
+.lc-fail-line > span:first-child{color:rgba(255,255,255,.92)!important}
+
+.sec-ghost{opacity:.09;color:#fff}
+.chapter:hover .ch-num .ring{background:#fff;color:#FF0000;transform:rotate(3deg) scale(1.05)}
+.ch-body{border-left-color:rgba(255,255,255,.24)}
+
+.bc-list li,
+.dd li,
+.dt-result .rlist li,
+.foot-col a,
+.steps .s,
+.cred,
+.tl .ph .content,
+.lc-pass,
+.lc-fail,
+.lc-fix,
+.grow,
+.gpa-meta,
+.gpa-verdict,
+.dt-opt,
+.eval-layer,
+.bench-row,
+.uni-row,
+.ec-result,
+.ec-card,
+.ec-btn{
+ border-top-color:rgba(255,255,255,.18)!important;
+ border-bottom-color:rgba(255,255,255,.18)!important;
+}
+
+.tl .axis,
+.yem-exit-line,
+.pf-vline,
+.pf-hline,
+.pf-colsep,
+.bench-bar,
+.ring-bg,
+.lc-sep,
+.eval-layer .el-tier,
+.nav-inner,
+.hero-left,
+.hero-meta,
+.hero-meta .m,
+.foot-top,
+.divider{border-color:rgba(255,255,255,.22)!important}
+
+.ring-fg,
+.yem-exit-b .yem-exit-tag,
+.yem-yr-2,
+.pf-cnode-red,
+.dt-opt .ok,
+.lc-icon,
+.lc-status.pass,
+.lc-status.fail,
+.gpa-meta .gm .n,
+.gpt-needed-val,
+.tk-s,
+.bc-list li::before,
+.dt-result .rlist li::before,
+.hero-meta .m .l::before,
+.pull-num-label::before,
+.foot-col a:hover,
+.nav-links a:hover,
+.logo .tag,
+.yem-exit-a .yem-exit-line{
+ color:#fff!important;
+ stroke:#fff!important;
+ background-color:rgba(255,255,255,.62)!important;
+}
+
+.ring-fg{background-color:transparent!important;stroke:#fff!important}
+
+.dt-opt .ok{
+ border-color:#fff!important;
+ color:#fff!important;
+ background:transparent!important;
+}
+.dt-opt:hover .ok{background:#fff!important;color:#FF0000!important}
+
+.scale-toggle button.on,
+.ec-btn.on,
+.addrow:hover,
+.grow .rm:hover,
+.tbtn:hover,
+.foot-social a:hover,
+.dt-prog i.on{
+ background:#fff!important;
+ color:#0B0B0F!important;
+ border-color:#fff!important;
+}
+
+.foot-col a:hover,
+.nav-links a:hover,
+.dt-back:hover,
+.map-step:hover .ms-t,
+.map-step:hover .ms-arr,
+.btn:hover svg,
+.ch-bridge-arr{
+ color:#fff!important;
+}
+
+.scrollcue,
+.scrollcue .ln,
+.hero-ghost,
+.ticker-strip,
+.mobile-menu,
+.hero-grid,
+.dt-shell,
+.gpa-grid,
+.gpa-target-grid,
+.lang-check,
+.eval-stack,
+.steps,
+.gpa-bench,
+.sec-head::after,
+.divider,
+.nav-links a::after,
+.map-step::after,
+.ch-bridge{
+ opacity:.98;
+}
+
+@media(max-width:1023px){
+ .hero-grid{grid-template-columns:1fr}
+ .hero-left{padding:50px 34px;border-right:none;border-bottom:1px solid rgba(255,255,255,.2)}
+ .hero-sub{text-transform:none;letter-spacing:.04em}
+ .hero-meta .m{padding:22px 20px}
+ .hero-meta .m .l{letter-spacing:.12em}
+ .wrap{padding:0 20px}
+}
+
+@media(max-width:767px){
+ body{font-size:15px}
+ .hero h1{font-size:clamp(52px,18vw,90px)}
+ .hero-sub{font-size:12.5px;line-height:1.7}
+ .sec-head h2{font-size:clamp(34px,12vw,56px)}
+ .ch-title{font-size:clamp(30px,11vw,54px)}
+ .bc-title{font-size:20px}
+ .sec-ghost{font-size:clamp(86px,28vw,150px)}
+ .mobile-menu a{font-family:var(--serif);color:#fff}
+}
+
+@media(prefers-reduced-motion:reduce){
+ *{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+ .reveal{opacity:1;transform:none}.clip{clip-path:none}
+ .crsr-dot,.crsr-ring{display:none!important}
+ .swi{transform:none!important}
+ .tl .ph,.steps .s{opacity:1;transform:none!important}
+ .bento.sv>*{animation:none!important;opacity:1!important}
+ .nav-links a,.logo{animation:none!important;opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="crsr-dot" id="cDot"></div>
+<div class="crsr-ring" id="cRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+ <div class="nav-inner">
+ <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+ <span class="ba">BA</span><span class="num">14</span>
+ <span class="tag">個人網站</span>
+</div>
+ <div class="nav-links">
+ <a href="#understand"><span>01</span>認識制度</a>
+ <a href="#qualify"><span>02</span>資格</a>
+ <a href="#plan"><span>03</span>兩年規劃</a>
+ <a href="#interview"><span>04</span>面試</a>
+ <a href="#enrol"><span>05</span>入學</a>
+ <a href="#gpa"><span></span>工具</a>
+ <a href="#about"><span>·</span>關於</a>
+ <div class="nav-ind" id="navInd"></div>
+</div>
+ <div class="nav-tools">
+ <button class="tbtn" id="theme" aria-label="切換主題">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" id="theme-ic"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+</button>
+ <button class="tbtn burger" id="burger" aria-label="選單">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+</button>
+</div>
+</div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+ <button class="mm-close" id="mmClose"><svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+ <a href="#understand"><span>01</span>認識制度</a>
+ <a href="#qualify"><span>02</span>資格</a>
+ <a href="#plan"><span>03</span>兩年規劃</a>
+ <a href="#interview"><span>04</span>面試</a>
+ <a href="#enrol"><span>05</span>取錄入學</a>
+ <a href="#gpa"><span></span>GPA 工具</a>
+ <a href="#about"><span>·</span>關於 BA14</a>
+</div>
+
+<!-- OVERVIEW MAP -->
+<section id="overview" style="padding-top:64px;padding-bottom:64px">
+ <div class="wrap">
+ <div class="sec-head reveal">
+ <span class="eyebrow">先看全局 · The Map</span>
+ <h2 class="serif">整段路，<em>五步</em>走完。</h2>
+ <p>升學最怕資訊碎亂。先記住這條主線——後面每一章，只是把其中一步講深、講清楚。</p>
+</div>
+ <div class="bento bento-5 reveal reveal-d1">
+ <a class="bento-cell map-step" href="#understand">
+ <div class="ms-n mono">STEP 01</div>
+ <div class="ms-t serif">認識制度</div>
+ <div class="ms-d">Asso 還是 HD？Year 1 還是 Year 2 出口？先搞清楚這兩道問題，後面所有策略才能落地。</div>
+ <span class="ms-arr mono">→</span>
+</a>
+ <a class="bento-cell map-step" href="#qualify">
+ <div class="ms-n mono">STEP 02</div>
+ <div class="ms-t serif">盤點資格</div>
+ <div class="ms-d">Full Cert 達標嗎？語文門檻差哪科？GPA 現在在哪個水平？三道問題逐一對號。</div>
+ <span class="ms-arr mono">→</span>
+</a>
+ <a class="bento-cell map-step" href="#plan">
+ <div class="ms-n mono">STEP 03</div>
+ <div class="ms-t serif">兩年規劃</div>
+ <div class="ms-d">開學第一天到正式入學，八個階段逐一對應任務。跟著執行，不至紊亂。</div>
+ <span class="ms-arr mono">→</span>
+</a>
+ <a class="bento-cell map-step" href="#interview">
+ <div class="ms-n mono">STEP 04</div>
+ <div class="ms-t serif">面試</div>
+ <div class="ms-d">三個評核層次、可驗證例子的構建方法、面對追問的應對框架。</div>
+ <span class="ms-arr mono">→</span>
+</a>
+ <a class="bento-cell map-step" href="#enrol">
+ <div class="ms-n mono">STEP 05</div>
+ <div class="ms-t serif">取錄入學</div>
+ <div class="ms-d">Conditional vs Direct Offer、留位費、宣誓文件、正式入學程序。</div>
+</a>
+</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- CH01 UNDERSTAND -->
+<section id="understand">
+ <div class="wrap">
+ <div class="chapter">
+ <div class="ch-rail"><div class="ch-num mono reveal"><span class="ring serif">01</span>認識制度</div></div>
+ <div class="ch-body">
+ <h3 class="ch-title serif reveal">先釐清：你<em>正在走</em>哪一條路</h3>
+ <p class="ch-lede reveal reveal-d1">
+ 副學士（Associate Degree）與高級文憑（Higher Diploma）均為<b>兩年制的副學位課程</b>，
+ 完成後以 Non-JUPAS 申請八大。整條路的分岔點只有一個：你打算在哪一年離開。
+</p>
+
+ <!-- YEAR EXIT MAP DIAGRAM -->
+ <div class="yr-exit-map reveal reveal-d1">
+ <div class="yem-label">出口示意 · 兩條路徑</div>
+ <div class="yem-track">
+ <div class="yem-seg yem-seg-y1">
+ <span class="yem-seg-name">Y1 Sem 1</span>
+ <span class="yem-seg-sub">9–12 月<br>GPA 建立期</span>
+</div>
+ <div class="yem-seg yem-seg-y1" style="position:relative">
+ <span class="yem-seg-name">Y1 Sem 2</span>
+ <span class="yem-seg-sub">1–5 月<br>早輪申請</span>
+</div>
+ <div class="yem-seg yem-seg-y2">
+ <span class="yem-seg-name">Y2 Sem 1</span>
+ <span class="yem-seg-sub">9–12 月<br>主申請期</span>
+</div>
+ <div class="yem-seg yem-seg-y2">
+ <span class="yem-seg-name">Y2 Sem 2</span>
+ <span class="yem-seg-sub">1–5 月<br>衝線期</span>
+</div>
+</div>
+ <div class="yem-exits">
+ <div></div>
+ <div class="yem-exit yem-exit-a">
+ <div class="yem-exit-line"></div>
+ <div class="yem-exit-tag">Year 1 Entry</div>
+ <div class="yem-exit-sub-label">DSE Best 5 主<br>GPA ≥ 3.7</div>
+</div>
+ <div></div>
+ <div class="yem-exit yem-exit-b">
+ <div class="yem-exit-line"></div>
+ <div class="yem-exit-tag">Year 2 Entry</div>
+ <div class="yem-exit-sub-label">CGPA 主<br>GPA ≥ 3.3</div>
+</div>
+</div>
+ <div class="yem-year-bar">
+ <div class="yem-yr yem-yr-1">副學位 Year 1</div>
+ <div class="yem-yr yem-yr-2">副學位 Year 2</div>
+</div>
+</div>
+
+ <div class="bento bento-2 reveal reveal-d1" style="margin-bottom:28px">
+ <div class="bento-cell">
+ <span class="bc-tag">EXIT A · 提早轉出</span>
+ <div class="bc-title serif">Year 1 Entry</div>
+ <div class="bc-rule"></div>
+ <div class="bc-body">讀完副學位<b>第一年</b>，以一年級新生身份入讀大學。</div>
+ <ul class="bc-list">
+ <li>主要成績依據：<b>DSE Best 5</b>，副學位 GPA 作輔</li>
+ <li>幾乎必須有 <b>Full Cert</b>——語文是第一道篩選門</li>
+ <li>GPA 要求：<b>3.7–4.0</b>（理想 3.9+）</li>
+ <li>等於用額外一年，把 DSE 成績換成大學學位</li>
+ <li>最早輪申請：Y1 Sem 2 期間（約 1–3 月）</li>
+</ul>
+</div>
+ <div class="bento-cell bc-dark">
+ <span class="bc-tag">EXIT B · 完成全程</span>
+ <div class="bc-title serif">Year 2 Entry</div>
+ <div class="bc-rule" style="background:var(--accent)"></div>
+ <div class="bc-body">完成<b>整個兩年</b>副學位，以高年級身份銜接大學。</div>
+ <ul class="bc-list">
+ <li>主要成績依據：<b>副學位 CGPA</b>，DSE 比重大幅下降</li>
+ <li>語文最低要求仍建議達到，以免申請受阻</li>
+ <li>GPA 要求：<b>3.3+</b>，熱門學科更高</li>
+ <li>「Year 2 Entry」不保證升讀 Year 3——學分豁免按課程而異</li>
+ <li>主要申請期：Y2 Sem 1（約 10–12 月）</li>
+</ul>
+</div>
+</div>
+
+ <div class="bento bento-3 reveal reveal-d2">
+ <div class="bento-cell">
+ <span class="insight">常見誤解</span>
+ <div class="bc-title serif" style="font-size:17px;margin-bottom:8px">Senior Entry ≠ 直升 Year 3</div>
+ <div class="bc-body">取決於各課程的<b>學分豁免</b>安排。部分課程只豁免部分學分，甚至由 Year 1 起讀。<b>報名前必須向課程查清銜接安排。</b></div>
+</div>
+ <div class="bento-cell">
+ <span class="insight">GPA 起點</span>
+ <div class="bc-title serif" style="font-size:17px;margin-bottom:8px">第一份作業起計算</div>
+ <div class="bc-body">課程評核採「持續評估＋考試」混合模式。<b>CGPA 自第一份作業起算</b>——開局跌分，整條曲線就難拉回。第一學期沒有容錯空間。</div>
+</div>
+ <div class="bento-cell bc-accent">
+ <span class="insight" style="background:rgba(255,255,255,.25);color:#fff">核心問題</span>
+ <div class="bc-title serif" style="font-size:17px;margin-bottom:8px">你的 DSE 還是 GPA 更強？</div>
+ <div class="bc-body">答這一題，後面所有策略才有依據。DSE 強 → 考慮 Year 1 Entry；GPA 可控 → 考慮 Year 2 Entry。用下方決策樹確認方向。</div>
+</div>
+</div>
+
+ <h4 class="serif reveal" style="font-size:22px;margin:52px 0 0">選課程：先搞清楚你入的是哪一種學校</h4>
+ <p style="color:var(--ink-soft);font-size:15px;margin-top:12px;margin-bottom:20px;max-width:62ch;line-height:1.82" class="reveal reveal-d1">副學位不只是「一個類型」——課程性質、院校背景、銜接方式各有差異。選錯課程，整個升學策略可能要重設。</p>
+ <div class="bento bento-2 reveal reveal-d1" style="margin-bottom:28px">
+ <div class="bento-cell">
+ <span class="bc-tag">課程類型</span>
+ <div class="bc-title serif" style="font-size:19px">AD vs HD：核心分別</div>
+ <div class="bc-body"><b>副學士（AD）</b>以學術通識為主，培養閱讀、分析與批判思維，與大學學術氛圍更接近；<b>高級文憑（HD）</b>偏應用與職業導向，由 IVE / 職訓局提供。兩者均可 Non-JUPAS 申請，但評核方式與大學銜接慣例不同。</div>
+ <ul class="bc-list">
+ <li>AD：八大各系均接受，Year 1 / Year 2 Entry 皆有先例</li>
+ <li>HD：部分課程有指定銜接安排，以 Year 2 Entry 為主流</li>
+ <li>AD 的 CGPA 換算方式與大學相近，申請時成績溝通更直觀</li>
+</ul>
+</div>
+ <div class="bento-cell bc-dark">
+ <span class="bc-tag">入學前必問</span>
+ <div class="bc-title serif" style="font-size:19px">三條不問後悔的問題</div>
+ <div class="bc-body" style="color:rgba(255,255,255,.75)">選定課程前，向學院確認這三點——不問清楚，後悔期是整整兩年。</div>
+ <ul class="bc-list">
+ <li>此課程是否有保證升讀安排，還是需公開競爭？</li>
+ <li>Year 2 Entry 後是否直入 Year 3，還是需重讀 Year 2？</li>
+ <li>GPA 以 4.0 制還是 4.3 制計算？所有科目是否全計入 CGPA？</li>
+</ul>
+</div>
+</div>
+
+ <a href="#qualify" class="ch-bridge reveal">
+ <span class="ch-bridge-pre">下一章</span>
+ <span class="ch-bridge-text">方向確定了？前往 <strong>02 盤點資格</strong>——逐一核對三道門檻：Full Cert、GPA 基準、語文補足。</span>
+ <span class="ch-bridge-arr">→</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- CH02 QUALIFY -->
+<section id="qualify">
+ <div class="wrap">
+ <div class="chapter">
+ <div class="ch-rail"><div class="ch-num mono reveal"><span class="ring serif">02</span>盤點資格</div></div>
+ <div class="ch-body">
+ <h3 class="ch-title serif reveal">三道門檻：<em>你達標了嗎</em>？</h3>
+ <p class="ch-lede reveal reveal-d1">
+ 升學能否成功，主要取決於三項條件：<b>Full Cert（語文門檻）</b>、<b>GPA</b>、<b>出口時機</b>。
+ 逐一對號入座，再用決策樹確定方向。
+</p>
+
+ <!-- LANG CHECK DIAGRAM -->
+ <div class="lang-check reveal reveal-d1">
+ <div class="lc-head">語文門檻核查 · Full Cert Check — 兩科均需達標</div>
+ <div class="lc-body">
+
+ <!-- Chinese -->
+ <div class="lc-col">
+ <div class="lc-subj serif">中文 Chinese</div>
+ <div class="lc-req">最低要求 DSE Level 3+</div>
+ <div class="lc-pass">
+ <span class="lc-icon pass"></span>
+ <span>Level 3 或以上</span>
+ <span class="lc-status pass">已達標 — 繼續</span>
+</div>
+ <div class="lc-fail">
+ <div class="lc-fail-line">
+ <span class="lc-icon fail"></span>
+ <span>Level 1 或 2</span>
+ <span class="lc-status fail">未達標 — 須補足</span>
+</div>
+ <div class="lc-fix-list">
+ <div class="lc-fix lc-fix-rec">
+ <span class="lc-fix-label">推薦</span>
+ <div>
+ <div class="lc-fix-name serif">IGCSE 中文（Edexcel）</div>
+ <div class="lc-fix-desc">母語者相對易掌握；Edexcel 難度低於 Cambridge；考期靈活；A / A* 可被大部分院校接受替代 DSE L3+</div>
+</div>
+</div>
+ <div class="lc-fix-or">— 或 —</div>
+ <div class="lc-fix">
+ <span class="lc-fix-label">備選</span>
+ <div>
+ <div class="lc-fix-name serif">重考 DSE 中文</div>
+ <div class="lc-fix-desc">成績 7 月才公布，可能錯過大部分院校早輪申請窗口</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+ <div class="lc-sep"></div>
+
+ <!-- English -->
+ <div class="lc-col">
+ <div class="lc-subj serif">英文 English</div>
+ <div class="lc-req">最低要求 DSE Level 3+</div>
+ <div class="lc-pass">
+ <span class="lc-icon pass"></span>
+ <span>Level 3 或以上</span>
+ <span class="lc-status pass">已達標 — 繼續</span>
+</div>
+ <div class="lc-fail">
+ <div class="lc-fail-line">
+ <span class="lc-icon fail"></span>
+ <span>Level 1 或 2</span>
+ <span class="lc-status fail">未達標 — 須補足</span>
+</div>
+ <div class="lc-fix-list">
+ <div class="lc-fix lc-fix-rec">
+ <span class="lc-fix-label">推薦</span>
+ <div>
+ <div class="lc-fix-name serif">IELTS Academic</div>
+ <div class="lc-fix-desc">Overall 6.0（各部分 ≥ 5.5）；商科 / 英語授課課程通常需 6.5；考期最靈活，最直接高效</div>
+</div>
+</div>
+ <div class="lc-fix-or">— 或 —</div>
+ <div class="lc-fix">
+ <span class="lc-fix-label">備選</span>
+ <div>
+ <div class="lc-fix-name serif">重考 DSE 英文</div>
+ <div class="lc-fix-desc">同樣 7 月出成績，影響早輪申請時序；競爭激烈，風險較高</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+ <div class="lc-foot">兩科均達標（或已補足）後 → 進行 GPA 核查</div>
+</div>
+
+ <div class="bento bento-wide-right reveal">
+ <div class="bento-cell span-2">
+ <span class="bc-tag">門檻 A · Full Cert</span>
+ <div class="bc-title serif">最常被忽略，卻最先出局</div>
+ <div class="bc-body">Full Cert 指 DSE Best 5／Best 6 已達學士課程最低入學門檻。<b>語文（中、英）往往是第一道篩選</b>——總分再高，中文 Level 2，直接在首輪出局。</div>
+</div>
+ <div class="bento-cell" style="background:var(--accent-wash)">
+ <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:10px">同學 A · 有 Full Cert</div>
+ <div style="font-family:var(--serif);font-size:36px;color:var(--accent);line-height:1">15<span style="font-size:15px;font-family:var(--mono);color:var(--ink-faint)"> 分</span></div>
+ <div style="font-size:13px;color:var(--ink-soft);margin-top:10px">中英數全達標。<b>Year 1 Entry 有優勢。</b></div>
+</div>
+ <div class="bento-cell">
+ <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:10px">同學 B · 欠語文門檻</div>
+ <div style="font-family:var(--serif);font-size:36px;color:var(--ink-faint);line-height:1">19<span style="font-size:15px;font-family:var(--mono);color:var(--ink-faint)"> 分</span></div>
+ <div style="font-size:13px;color:var(--ink-soft);margin-top:10px">中文 Level 2。總分高，<b>首輪被篩走。</b></div>
+</div>
+</div>
+
+ <div class="bento bento-3 reveal reveal-d1" style="margin-top:1px">
+ <div class="bento-cell">
+ <span class="bc-tag">補足 · 英文</span>
+ <div class="bc-title serif" style="font-size:18px">考 IELTS</div>
+ <div class="bc-body">最常見要求 <b>Overall 6.0</b>；商科／英語授課課程常見 6.5。各部分通常設最低分（如各科 ≥ 5.5）。考期選擇靈活，對「只差英文一科」者最為精準穩妥。</div>
+</div>
+ <div class="bento-cell">
+ <span class="bc-tag">補足 · 中文</span>
+ <div class="bc-title serif" style="font-size:18px">考 IGCSE 中文</div>
+ <div class="bc-body">Pearson Edexcel 難度相對 Cambridge 低，A* 為最高、A 次之。以中文為母語者相對易掌握。或選擇重考 DSE 中文——但成績公布較遲，可能錯過早輪申請。</div>
+</div>
+ <div class="bento-cell bc-accent">
+ <span class="insight" style="background:rgba(255,255,255,.25);color:#fff">時機建議</span>
+ <div class="bc-title serif" style="font-size:18px">最好 2 月前補齊</div>
+ <div class="bc-body">即使未補齊，GPA 穩定仍可能先收 <b>Conditional Offer</b>，要求限期前補交語文證明。核心邏輯：先遞交申請，補足手續並行處理。</div>
+</div>
+</div>
+
+ <div class="pull-num-wrap reveal">
+ <span class="pull-num serif">3.7</span>
+ <span class="pull-num-label mono">Year 1 Entry · 一般 GPA 目標</span>
+</div>
+
+ <div class="note accent reveal" style="margin-top:28px">
+ <h4 class="serif"><span class="k mono">門檻 B</span>GPA 基準線——寫清楚數字</h4>
+ <p><b>Year 1 Entry</b>：一般要求 3.7–4.0，理想 3.9+；<b>Year 2 Entry</b>：一般要求 3.3+，熱門科系（法律、醫療、社工）競爭更激烈。藝術、設計、媒體類以作品集為主，GPA 比重相對低。<b>第一學期跌穿 3.3，之後極難回升——沒有緩衝空間。</b></p>
+</div>
+
+ <div class="note reveal" style="margin-top:20px">
+ <h4 class="serif"><span class="k mono">選科</span>「揀易科」不是最優解</h4>
+ <p>許多人以為「揀最易的科目」等於高 GPA——但評核難度低的科目，往往全班分數集中在高分段，Grade Inflation 反而消失，競爭更激烈。<b>更有效的策略：</b>選擇你有相對優勢的科目，同時留意 Continuous Assessment 比重——持續評估高的科目可以用每份作業鋪墊 GPA；純考試科目則受一次失手影響更大。</p>
+ <p>另一個常被忽視的點：<b>高學分科目的影響力更大。</b>一門 6 學分核心科的成績，對 CGPA 的影響遠大於一門 2 學分選修科。同樣的努力，先投入高學分科，才是最高效的 GPA 管理方式。</p>
+</div>
+
+ <a href="#decision" class="ch-bridge reveal">
+ <span class="ch-bridge-pre">下一步</span>
+ <span class="ch-bridge-text">資格盤點完了？用下方的<strong>升學方向分析</strong>三問確認出口，再前往 03 兩年規劃。</span>
+ <span class="ch-bridge-arr">→</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- DECISION TREE -->
+<section id="decision">
+ <div class="wrap">
+ <div class="sec-head reveal" style="text-align:center;margin:0 auto 44px">
+ <span class="eyebrow">升學方向分析</span>
+ <h2 class="serif">我，<em>應該何時走</em>？</h2>
+ <p style="margin-left:auto;margin-right:auto;max-width:52ch">答三條問題，得出一個清晰的方向建議。記住：這是整理式參考，最終以各課程最新公布為準。</p>
+</div>
+ <div class="dt-shell reveal reveal-d1">
+ <div class="dt-top">
+ <span class="t mono">BA14 · 升學方向判斷</span>
+ <div class="dt-prog"><i id="p0" class="on"></i><i id="p1"></i><i id="p2"></i></div>
+</div>
+ <div class="dt-stage" id="dtStage"></div>
+</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- CH03 PLAN -->
+<section id="plan">
+ <div class="wrap">
+ <div class="chapter">
+ <div class="ch-rail"><div class="ch-num mono reveal"><span class="ring serif">03</span>兩年規劃</div></div>
+ <div class="ch-body">
+ <h3 class="ch-title serif reveal">兩年，<em>一條時間線</em></h3>
+ <p class="ch-lede reveal reveal-d1">
+ 由開學第一天到正式入學，整段路有清楚的節奏。
+ 每個階段都有對應的具體任務——<b>依序執行，便不至紊亂。</b>
+</p>
+
+ <div class="tl reveal reveal-d1">
+ <div class="axis"><div class="fill" id="tlFill"></div></div>
+
+ <div class="ph"><div class="when mono">Y1 · Sem 1<span class="sub">9–12 月</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">開學與適應</h5>
+ <div class="goal mono">目標 — GPA 不跌穿 3.5，建立習慣</div>
+ <ul>
+ <li>開學第一周：細閱所有 Course Outline，記下每科評核比重與所有 Deadline</li>
+ <li>建立一兩個可信賴的學習夥伴——Group Project 需要可靠的人，不是更多人</li>
+ <li>設定每周固定節奏：上課 → 當天整理筆記 → 每周日回顧一次</li>
+ <li>不要等考試前才溫習；持續評估往往佔 40–60%，每份作業都在算 GPA</li>
+</ul>
+</div></div>
+
+ <div class="ph"><div class="when mono">Sem 1 尾<span class="sub">12–1 月</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">期末考 + 學期假</h5>
+ <div class="goal mono">目標 — 鞏固 Sem 1 GPA，冷靜分析失分</div>
+ <ul>
+ <li>考前：整理濃縮筆記，做計時練習（不是反覆看 slides）</li>
+ <li>考後估算 GPA 範圍，對照 Year 1／Year 2 基準線</li>
+ <li>假期任務一：回顧失分原因（時間管理？理解深度？作業質素？）</li>
+ <li>假期任務二：安排 IELTS 或 IGCSE 考期（若需要補足語文）</li>
+</ul>
+</div></div>
+
+ <div class="ph"><div class="when mono">Y1 · Sem 2<span class="sub">1–5 月</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">選科、合作、早輪申請</h5>
+ <div class="goal mono">目標 — 穩住或提升 GPA；Year 1 申請者此時遞交</div>
+ <ul>
+ <li>選科依據：學習目標優先，而非只看難易度或「邊科多人選」</li>
+ <li>Year 1 Entry 申請者：把握早輪，<b>先遞交再補文件</b>，不要等齊所有成績才交</li>
+ <li>Personal Statement：每段都要對應一個可追問的具體例子，而非口號式表述</li>
+ <li>語文補足若仍未完成，現在是最後窗口</li>
+</ul>
+</div></div>
+
+ <div class="ph"><div class="when mono">暑假<span class="sub">Y1 → Y2</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">補充經歷、處理語文</h5>
+ <div class="goal mono">目標 — 補強資格，累積申請材料</div>
+ <ul>
+ <li>短暫休息後，考慮短期工作、義工或與主修相關的實習</li>
+ <li>如需要，暑期修讀補回失分科目（部分學院有暑期課程）</li>
+ <li>處理 IELTS／IGCSE 的最後考試機會</li>
+ <li>開始草擬 Personal Statement 的核心敘述框架</li>
+</ul>
+</div></div>
+
+ <div class="ph"><div class="when mono">Y2 · Sem 1<span class="sub">9–12 月</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">申請文件並行推進</h5>
+ <div class="goal mono">目標 — 遞交申請，同時維持 GPA</div>
+ <ul>
+ <li>準備清單：成績紀錄 + 個人陳述 + 推薦信 + 獎項／活動證明</li>
+ <li>建立一致的申請敘述：<b>動機 → 能力佐證 → 銜接計劃</b>，三段邏輯要連貫</li>
+ <li>先提交可即時上載的版本，新成績出爐後補交——不要等齊</li>
+ <li>同時報主要方向及一兩個後備，分散風險</li>
+</ul>
+</div></div>
+
+ <div class="ph"><div class="when mono">面試期<span class="sub">約 10–3 月</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">面試直接影響取錄</h5>
+ <div class="goal mono">目標 — 課程理解 + 學術能力佐證 + 銜接計劃</div>
+ <ul>
+ <li>面試官評核三點：你了解課程的訓練方式嗎？你有具體作品能佐證嗎？你能承受課程節奏嗎？</li>
+ <li>準備至少三個「可驗證的例子」，分別對應學術能力、學習態度、合作溝通</li>
+ <li>詳見第 04 章面試完整框架</li>
+</ul>
+</div></div>
+
+ <div class="ph"><div class="when mono">Y2 · Sem 2<span class="sub">1–5 月</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">有條件取錄，最後衝刺</h5>
+ <div class="goal mono">目標 — 達到 Conditional 條件，GPA 不失速</div>
+ <ul>
+ <li>Conditional Offer 條件通常為：最終 CGPA 達某水平（如 ≥ 3.3），或語文達標</li>
+ <li>同期最重要：維持 GPA，臨收尾失速是最常見的悲劇</li>
+ <li>接受 offer 前評估：達標可能性、財務狀況、是否仍認同升讀方向</li>
+</ul>
+</div></div>
+
+ <div class="ph"><div class="when mono">畢業 → 入學<span class="sub">5 月起</span></div><div class="dot"></div><div class="content">
+ <h5 class="serif">完成手續，正式入學</h5>
+ <div class="goal mono">目標 — 完成所有程序，迎接新階段</div>
+ <ul>
+ <li>即使至暑假仍可能有新 offer，未到最後不宜放棄</li>
+ <li>繳交留位費（約 HK$5,000）、完成文件宣誓、郵寄實體文件</li>
+ <li>收到正式確認電郵 → 入學程序完成（詳見第 05 章）</li>
+</ul>
+</div></div>
+</div>
+
+ <div class="bento bento-2 reveal reveal-d1" style="margin-top:36px">
+ <div class="bento-cell">
+ <span class="bc-step-num">CGPA 的決定性習慣</span>
+ <div class="bc-title serif" style="font-size:19px;margin-bottom:8px">每次失分都要問：為什麼</div>
+ <div class="bc-body">GPA 3.3 和 3.7 的分別，通常是兩份作業的差距。每次失分後，強迫自己問三條：這份評核比重是多少？失分的根本是哪一步？下一份作業可以改哪一點？<b>執行「分析 → 調整 → 再試」的循環，才是 CGPA 的實際分水嶺——不是天份，不是努力時數。</b></div>
+</div>
+ <div class="bento-cell bc-dark">
+ <span class="bc-step-num" style="color:var(--accent)">Group Project</span>
+ <div class="bc-title serif" style="font-size:19px;margin-bottom:8px">第一次組會，確認分工</div>
+ <div class="bc-body" style="color:rgba(255,255,255,.7)">不要靠默契。第一次組會必須確認：<b style="color:#fff">誰負責哪部分、草稿截止日、誰整合最終版。</b>Free-rider 問題不是態度問題，是從來沒有書面分工——有了分工，問題自然浮現，也有據可依。</div>
+</div>
+</div>
+
+ <div class="note dark reveal" style="margin-top:36px">
+ <h4 class="serif"><span class="k">過來人</span>那些沒人提醒你的事</h4>
+ <p>開學第一周：拿到 Course Outline，第一件事不是看內容，是看<b style="color:#fff">評核比重和所有 Deadline</b>。一份漏交的作業可以把 GPA 從 3.8 拉到 3.4——不是因為不懂，是因為忘了。</p>
+ <p>GPA 失速最常見的時機：<b style="color:#fff">Year 2 Sem 2</b>。收到 Conditional Offer 之後，很多人以為「大局已定」，鬆懈下來——結果 CGPA 收尾下跌，offer 被撤回。臨門一腳，是最常見的悲劇場景。</p>
+ <p>選同學合作：<b style="color:#fff">兩個可信賴的人</b>，遠好過六個熱情的陌生人。Group Project 分工要在第一次會面時確認，不要靠默契。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- CH04 INTERVIEW -->
+<section id="interview">
+ <div class="wrap">
+ <div class="chapter">
+ <div class="ch-rail"><div class="ch-num mono reveal"><span class="ring serif">04</span>面試</div></div>
+ <div class="ch-body">
+ <h3 class="ch-title serif reveal">面試官，<em>究竟在評量什麼</em></h3>
+ <p class="ch-lede reveal reveal-d1">
+ 高分的關鍵只有三點：<b>對課程訓練方式有清楚認知</b>（不是只談興趣）、
+ <b>每項主張均有佐證</b>、<b>面對追問時前後一致</b>（靠邏輯架構，不是背稿）。
+</p>
+
+ <!-- EVAL LAYERS DIAGRAM -->
+ <div class="eval-stack reveal reveal-d1">
+ <div class="eval-layer">
+ <span class="el-tier">L01</span>
+ <span class="el-name serif">可信度</span>
+ <span class="el-detail">動機、興趣、目標，有<b>具體行動</b>支持嗎？「我對語言學有興趣」——你讀過什麼？做過什麼？說不出，便是空話。</span>
+</div>
+ <div class="eval-layer">
+ <span class="el-tier">L02</span>
+ <span class="el-name serif">銜接度</span>
+ <span class="el-detail">你了解課程的<b>訓練方式</b>嗎？閱讀量、寫作密度、研究方法。課程網頁寫著，面試前三十分鐘把它看完，比背答案有用。</span>
+</div>
+ <div class="eval-layer">
+ <span class="el-tier">L03</span>
+ <span class="el-name serif">可塑性</span>
+ <span class="el-detail">面對追問、陌生題目、被質疑時，你能<b>冷靜推理</b>嗎？能承認不足並提出改善方向嗎？這才是大學最想看到的——不是一個只知答案的人。</span>
+</div>
+</div>
+
+ <div class="note dark reveal" style="margin-top:24px">
+ <h4 class="serif"><span class="k">核心</span>準備任何回答前，先問自己這一句</h4>
+ <p>「我能提供什麼<b style="color:#fff">佐證</b>，令對方相信我所說的話？」——這一句，貫穿整場面試。</p>
+</div>
+
+ <div class="steps reveal" style="margin-top:32px">
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">「為何選擇此課程」——答到課程訓練機制</h5>
+ <p>失分點：只說「有興趣」或「前景好」。較有說服力的答法：課程的核心訓練重點是什麼 → 你為何願意接受這類訓練 → 你過往有什麼行動支持你做得到。三段邏輯，不是一句話。</p>
+</div></div>
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">準備至少三個「可驗證的例子」</h5>
+ <p>分別對應：<b>學術能力</b>（一份閱讀報告、一個分析作業、一次 presentation）、<b>學習態度</b>（如何面對一次失誤、怎樣修正方法）、<b>合作溝通</b>（小組分工、整合不同意見的具體情況）。比起聲稱「我很努力」，一件具體的事更難被質疑。</p>
+</div></div>
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">學科題、案例題：重點在「思考步驟」</h5>
+ <p>穩健框架：<b>先界定核心問題</b> → 提出兩個方向及取捨 → 指出資料不足之處 → 說明如何驗證或補充。不是考你答案對不對，是看你怎樣思考。</p>
+</div></div>
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">遇到不熟悉的問題：說清楚你的推理</h5>
+ <p>承認未能確定（避免亂作）→ 以現有理解作出合理推論 → 說明你會如何查證。</p>
+ <div class="tip mono">"I'm not entirely certain, but based on my understanding…" / "To verify this, I would look into…"</div>
+</div></div>
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">反問——問到課程運作層面</h5>
+ <p>例如：「新生最常遇到的適應困難是什麼？我可以如何預先準備？」或「此課程最重視學生哪幾項能力？建議如何在首個學期建立？」一條夠，但要有實質內容。</p>
+</div></div>
+</div>
+
+ <div class="bento bento-2 reveal" style="margin-top:28px">
+ <div class="bento-cell">
+ <span class="bc-tag" style="color:var(--green)">最影響觀感的細節</span>
+ <ul class="bc-list">
+ <li>先說重點，再補充理由——避免繞圈</li>
+ <li>「我理解……」比「我一定會……」更可信</li>
+ <li>面對追問：可承認不足，但必須提得出改善方向</li>
+ <li>停頓是允許的——想清楚再說，比說錯再改好</li>
+</ul>
+</div>
+ <div class="bento-cell">
+ <span class="bc-tag">被追問時的框架</span>
+ <ul class="bc-list">
+ <li><b>停頓 2 秒</b>——想清楚論點才開口，比說錯再改好</li>
+ <li><b>承認邊界</b>："I'm not fully certain, but based on…" 比亂作更可信</li>
+ <li><b>說出推理步驟</b>——評核的是你的思考過程，不是答案正確與否</li>
+ <li><b>主動反問一條</b>：問課程運作，例如「新生最常見的適應困難是什麼」</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- CH05 ENROL -->
+<section id="enrol">
+ <div class="wrap">
+ <div class="chapter">
+ <div class="ch-rail"><div class="ch-num mono reveal"><span class="ring serif">05</span>取錄入學</div></div>
+ <div class="ch-body">
+ <h3 class="ch-title serif reveal">收到 Offer 之後，<em>仍有幾步</em></h3>
+ <p class="ch-lede reveal reveal-d1">
+ 收到取錄通知代表努力有回報——但<b>任何一步遺漏，均可前功盡廢</b>。
+ 依序完成以下程序。
+</p>
+
+ <div class="bento bento-2 reveal reveal-d1">
+ <div class="bento-cell">
+ <span class="bc-tag">類型 A</span>
+ <div class="bc-title serif" style="font-size:20px;margin-bottom:8px">Conditional Offer</div>
+ <div class="bc-body">多在學期較早期發出。尚未符合所有要求——在限期前達到信中條件，學位保留。</div>
+ <ul class="bc-list">
+ <li>常見條件：CGPA ≥ 3.xx，或語文達指定等級</li>
+ <li>條件寫在 offer 信內，逐一達到即可</li>
+ <li>若條件未能達到，需按院校指示處理</li>
+</ul>
+</div>
+ <div class="bento-cell bc-dark">
+ <span class="bc-tag">類型 B</span>
+ <div class="bc-title serif" style="font-size:20px;margin-bottom:8px">Direct Offer</div>
+ <div class="bc-body">多在學期尾發出。已符合所有條件，無需補充成績，直接繳費確認學位。</div>
+ <ul class="bc-list" style="margin-top:12px">
+ <li>動作：繳交留位費 + 提交文件即可</li>
+ <li>不要拖延——截止日期前未繳 = 視為放棄</li>
+</ul>
+</div>
+</div>
+
+ <div class="steps reveal" style="margin-top:32px">
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">繳交留位費（Deposit）</h5>
+ <p>一般約 <b>HK$5,000</b>（以 offer 信為準），正常情況<b>不獲退還</b>。若因技術或銀行問題無法準時繳費，立即聯絡收生部門說明——截止前主動溝通永遠比截止後申訴好處理。</p>
+ <div class="tip mono">同時持有多個 offer 需繳費確認者：最終選擇後，其餘留位費一般不退。例外：最終未能達到 Conditional 條件，持相關證明可按院校指示申請退回。</div>
+</div></div>
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">文件宣誓（核實真副本）</h5>
+ <p>上載所需文件後，前往<b>民政事務處</b>完成文件宣誓。攜帶文件副本（建議彩色影印）及正本以供核對；一般毋須預約，預留 30 分鐘，按官方辦公時間前往。宣誓以英語進行，確認文件屬實。</p>
+</div></div>
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">郵寄實體文件</h5>
+ <p>宣誓後等院校 email 通知提交方式及地址，按指示郵寄已宣誓副本。建議以掛號或特快專遞寄出，留存寄件收據。<b>一般不建議親身上門</b>——前線服務台未必即時處理，甚至要求改為郵寄。</p>
+</div></div>
+ <div class="s"><div class="sn serif"></div><div>
+ <h5 class="serif">等待正式確認</h5>
+ <p>完成留位費繳交、文件宣誓及郵寄後，等待院校發出正式確認電郵。<b>收到確認，入學程序完成。</b>即使至暑假仍可能有新 offer 發出，未到最後不宜放棄等待。</p>
+</div></div>
+</div>
+
+ <div class="note accent reveal" style="margin-top:36px">
+ <h4 class="serif"><span class="k mono">入學前</span>先學定引用格式（Referencing）</h4>
+ <p>大學寫作的核心規則：<b>任何主張都需要佐證，並正確標明出處。</b>抄襲（plagiarism）在大學是極嚴重的學術違規，輕則該科 0 分，重則停學或除名。連自己過往的作業重複使用也算違規（self-plagiarism）。一上來就把引用學會，等於提前避開了最大的地雷區。</p>
+
+ <p><b>三大引用格式（按學科選擇）：</b></p>
+ <ul>
+ <li><b>APA</b>（American Psychological Association）—— 心理、教育、社會科學、商科、護理、傳理。最常見，先學這個。</li>
+ <li><b>MLA</b>（Modern Language Association）—— 人文、文學、語言、文化研究。</li>
+ <li><b>Chicago / Turabian</b> —— 歷史、藝術、神學。分 Notes-Bibliography 和 Author-Date 兩種。</li>
+</ul>
+ <p class="hint mono">交功課前先問 tutor 用哪一套，每科可能不同。</p>
+
+ <p><b>APA 第 7 版速記：</b></p>
+ <ul>
+ <li>單一作者：（Smith, 2020）</li>
+ <li>兩位作者：（Smith &amp; Lee, 2021）</li>
+ <li>三位或以上：（Smith et al., 2019）</li>
+ <li>直接引用（quote）：必須加頁碼（Smith, 2020, p. 15）</li>
+ <li>同一作者多篇同年：用 a / b 區分（Smith, 2020a; Smith, 2020b）</li>
+ <li>機構或團體作者：第一次寫全名（World Health Organization [WHO], 2022），之後可用縮寫（WHO, 2022）</li>
+ <li>無作者：用標題前幾字（"COVID-19 update," 2021）</li>
+ <li>網頁：（作者, 年份）；如無作者，用網站名稱</li>
+</ul>
+
+ <p><b>In-text 與 Reference List 必須一對一：</b>正文內出現過的每一條引用，後面 Reference List 都要有完整對應條目；反之亦然——只在書目寫出但正文沒引過的，等於沒寫。這個一致性是 tutor 第一個會檢查的位置。</p>
+
+ <p><b>Paraphrase（改寫）也要 cite：</b>這是最常被誤解的一點。即使把原文用自己的話重新寫過，<b>仍然要標明來源</b>。「不引用 = 把別人的觀點冒充自己」就是抄襲，與是否一字不差無關。安全做法：寫每一句來自外部資料的內容時，立刻在句末放（作者, 年份）。</p>
+
+ <p><b>常見扣分位：</b></p>
+ <ul>
+ <li>把網址貼進正文當「引用」—— 應該寫（作者, 年份），URL 放 Reference List</li>
+ <li>引用 Wikipedia 或不可考的部落格 —— 大學接受度極低，盡量用學術資料庫</li>
+ <li>引用日期錯亂（書本初版 vs 你手上的版本）</li>
+ <li>Reference List 沒按字母順序、缺斜體、漏出版社</li>
+ <li>用 AI（ChatGPT 等）生成的「引用」—— 經常虛構不存在的論文，必須親自核對</li>
+</ul>
+
+ <p><b>推薦工具：</b></p>
+ <ul>
+ <li><b>Zotero</b>（免費，跨平台）—— 一鍵抓取書目資料、自動插入 Word/Google Docs、自動生成 Reference List。所有院校都用得到，先學它。</li>
+ <li><b>EndNote</b>（多數院校提供免費授權）—— 功能強大，學科文獻多時更穩定。</li>
+ <li><b>Mendeley</b>（免費）—— 同時是 PDF 管理工具，適合做研究時邊讀邊註。</li>
+</ul>
+ <p class="hint mono">線上引用生成器（Cite This For Me 等）可作參考，但<b>必須對著官方 APA / MLA 手冊核對</b>，常有細節錯誤（標點、斜體、縮寫格式）。</p>
+
+ <p><b>學術資料庫，比 Google 更可靠：</b>院校圖書館訂閱了 JSTOR、ProQuest、ScienceDirect、Google Scholar、EBSCOhost 等。學生帳戶登入後可免費下載大量學術文章，這才是引用的主要來源。第一週進圖書館花一小時學如何用，整個大學生涯都受益。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- GPA CALCULATOR -->
+<section id="gpa">
+ <div class="wrap">
+ <div class="sec-head reveal">
+ <span class="eyebrow">工具 · GPA Calculator</span>
+ <h2 class="serif">即時試算你的 <em>GPA</em></h2>
+</div>
+ <div class="gpa-grid reveal reveal-d1">
+ <div class="gpa-panel">
+ <div class="ph">
+ <span class="lbl mono">本學期成績</span>
+ <div class="scale-toggle" id="scaleToggle">
+ <button data-scale="4.0" class="on">4.0 制</button>
+ <button data-scale="4.3">4.3 制</button>
+</div>
+</div>
+ <div id="rows"></div>
+ <button class="addrow mono" id="addRow">＋ 加一科</button>
+</div>
+ <div class="gpa-out">
+ <div class="ring-wrap">
+ <svg width="190" height="190" viewBox="0 0 190 190">
+ <circle class="ring-bg" cx="95" cy="95" r="80"/>
+ <circle class="ring-fg" id="ring" cx="95" cy="95" r="80"/>
+</svg>
+ <div class="ring-c"><div class="v serif" id="gpaVal">0.00</div><div class="vl mono">GPA</div></div>
+</div>
+ <div class="gpa-meta">
+ <div class="gm"><div class="n serif" id="credSum">0</div><div class="l mono">總學分</div></div>
+</div>
+ <div class="gpa-verdict mono" id="verdict">輸入成績以查看升學門檻對照</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- GPA TARGET CALCULATOR -->
+<section id="gpa-target" style="padding-top:0;background:var(--paper-2)">
+ <div class="wrap" style="padding-top:56px;padding-bottom:80px">
+ <div class="sec-head reveal" style="margin-bottom:32px">
+ <span class="eyebrow">工具 · 逆算 GPA</span>
+ <h2 class="serif">要達標，<em>還需要幾分</em>？</h2>
+ <p>輸入現有 GPA 及學分、目標 CGPA 及總學分，即時計算剩餘學期所需 GPA。</p>
+</div>
+ <div class="gpa-target-grid reveal reveal-d1">
+ <div class="gpa-panel">
+ <div class="ph"><span class="lbl mono">輸入你的情況</span></div>
+ <div class="gpt-fields">
+ <div class="gpt-row">
+ <label class="gpt-lbl">現有 CGPA</label>
+ <input type="number" id="gptCurGpa" min="0" max="4.3" step=".01" value="3.20" class="gpt-input"/>
+</div>
+ <div class="gpt-row">
+ <label class="gpt-lbl">現有已修學分</label>
+ <input type="number" id="gptCurCr" min="0" max="300" step="1" value="30" class="gpt-input"/>
+</div>
+ <div class="gpt-row">
+ <label class="gpt-lbl">目標 CGPA</label>
+ <input type="number" id="gptTargetGpa" min="0" max="4.3" step=".01" value="3.50" class="gpt-input"/>
+</div>
+ <div class="gpt-row">
+ <label class="gpt-lbl">課程預計總學分</label>
+ <input type="number" id="gptTotalCr" min="1" max="300" step="1" value="60" class="gpt-input"/>
+</div>
+</div>
+</div>
+ <div class="gpa-out" id="gptResultPanel">
+ <div class="gpt-result-inner">
+ <div class="gpt-needed-label">剩餘學分所需 GPA</div>
+ <div class="gpt-needed-val" id="gptNeeded">—</div>
+ <div class="gpt-scale-max" id="gptScaleMax"></div>
+ <div class="gpa-verdict" id="gptVerdict" style="margin-top:10px;width:100%">輸入資料以計算</div>
+ <div class="gpt-breakdown" id="gptBreakdown"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+ <div class="wrap">
+ <div class="sec-head reveal" style="margin-bottom:32px">
+ <span class="eyebrow">關於 BA14</span>
+ <h2 class="serif">由 <em>14 分</em>到港大。</h2>
+</div>
+ <div class="bento reveal reveal-d1">
+ <div class="bento-cell" style="padding:36px 40px">
+ <div class="creds">
+ <div class="cred">
+ <span class="cl">學歷</span>
+ <span class="cv">香港大學 The University of Hong Kong
+ <span class="csub mono">Bachelor of Arts: English Studies, General Linguistics<br>(Minor: Urban Studies)</span>
+</span>
+</div>
+ <div class="cred">
+ <span class="cl">交換生</span>
+ <span class="cv">新加坡國立大學 National University of Singapore (NUS)
+ <span class="csub mono">Non-Graduate Programme · 2025–26 Semester 1</span>
+</span>
+</div>
+ <div class="cred">
+ <span class="cl">出發點</span>
+ <span class="cv" style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--accent)">DSE 14 分，無 Full Cert，一年後入讀港大。</span>
+</div>
+</div>
+ <div class="ab-quote serif">「有人說這條路走不通。<br>我走過了。」</div>
+ <div class="hero-cta" style="margin-top:16px">
+ <a href="https://instagram.com/baaa.14_" target="_blank" rel="noopener" class="btn red">Instagram @baaa.14_
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a>
+ <a href="#overview" class="btn ghost">重溫整條路</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+ <div class="wrap">
+ <div class="foot-top">
+ <div class="foot-brand">
+ <div class="logo"><span class="ba">BA</span><span class="num" style="color:var(--accent)">14</span><span class="tag">個人網站</span></div>
+</div>
+ <div class="foot-col">
+ <h6 class="mono">攻略章節</h6>
+ <a href="#understand">01 · 認識制度</a>
+ <a href="#qualify">02 · 盤點資格</a>
+ <a href="#plan">03 · 兩年規劃</a>
+ <a href="#interview">04 · 面試</a>
+ <a href="#enrol">05 · 取錄入學</a>
+</div>
+ <div class="foot-col">
+ <h6 class="mono">工具與聯絡</h6>
+ <a href="#decision">升學方向分析</a>
+ <a href="#gpa">GPA 計算機</a>
+ <a href="#gpa-target">逆算 GPA</a>
+ <a href="#about">關於 BA14</a>
+ <a href="https://instagram.com/baaa.14_" target="_blank" rel="noopener">Instagram @baaa.14_</a>
+</div>
+</div>
+ <div class="disclaimer mono">
+ 免責聲明：本網站由個人整理及維護，內容僅作一般參考及自學之用，與任何院校、機構或公司並無合作或隸屬關係，亦不構成其官方立場。有關課程收生、入學要求、時間表及最新政策，如與本網站有所出入，概以相關機構或院校之官方網站及正式公告資料為準，建議使用者自行查證。
+</div>
+ <div class="foot-bottom">
+ <div class="c mono">© <span id="yr"></span> BA14 — 由 14 分出發。 · <a href="https://instagram.com/baaa.14_" target="_blank" rel="noopener">@baaa.14_</a></div>
+ <div class="foot-social">
+ <a href="https://instagram.com/baaa.14_" target="_blank" rel="noopener" aria-label="Instagram">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+</a>
+ <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" aria-label="回到頂部">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+(function(){
+ var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+ document.getElementById('yr').textContent=new Date().getFullYear();
+
+ var root=document.documentElement,tIc=document.getElementById('theme-ic');
+ function setTheme(t){
+ root.setAttribute('data-theme',t);
+ tIc.innerHTML=t==='dark'
+ ?'<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>'
+ :'<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>';
+ }
+ document.getElementById('theme').addEventListener('click',function(){
+ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
+ });
+
+ var nav=document.getElementById('nav'),prog=document.getElementById('progress'),lastY=0;
+ function onScroll(){
+ var y=window.scrollY||document.documentElement.scrollTop;
+ nav.classList.toggle('scrolled',y>40);
+ var h=document.documentElement.scrollHeight-window.innerHeight;
+ prog.style.width=(h>0?(y/h*100):0)+'%';
+ if(y>lastY&&y>500)nav.style.transform='translateY(-100%)';else nav.style.transform='translateY(0)';
+ lastY=y;
+ }
+ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+ var mm=document.getElementById('mobileMenu');
+ document.getElementById('burger').addEventListener('click',function(){mm.classList.add('open')});
+ document.getElementById('mmClose').addEventListener('click',function(){mm.classList.remove('open')});
+ mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mm.classList.remove('open')})});
+
+ if(!reduce){
+ var io=new IntersectionObserver(function(es){
+ es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+ },{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+ } else {
+ document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+ }
+
+ var tlFill=document.getElementById('tlFill');
+ if(tlFill){
+ var tio=new IntersectionObserver(function(es){
+ es.forEach(function(e){if(e.isIntersecting){tlFill.style.height='100%';tio.disconnect();}});
+ },{threshold:.1});
+ tio.observe(document.getElementById('plan'));
+ }
+
+ var bf1=document.getElementById('bf1'),bf2=document.getElementById('bf2'),bf3=document.getElementById('bf3');
+ if(bf1){
+ var bio=new IntersectionObserver(function(es){
+ es.forEach(function(e){
+ if(e.isIntersecting){
+ setTimeout(function(){bf1.style.width='92.5%';},100);
+ setTimeout(function(){bf2.style.width='82.5%';},250);
+ setTimeout(function(){bf3.style.width='75%';},400);
+ bio.disconnect();
+ }
+ });
+ },{threshold:.3});
+ bio.observe(bf1.closest('.gpa-bench'));
+ }
+
+ /* DECISION TREE */
+ var stage=document.getElementById('dtStage');
+ var pdots=[document.getElementById('p0'),document.getElementById('p1'),document.getElementById('p2')];
+ var st={};
+ function setProg(n){pdots.forEach(function(d,i){d.classList.toggle('on',i<=n);});}
+ function render(html,step){setProg(step);stage.innerHTML=html;stage.classList.remove('fade');void stage.offsetWidth;stage.classList.add('fade');}
+
+ function q1(){
+ st={};
+ render(
+ '<div class="dt-q serif">你打算以哪種成績作為主要升學依據？</div>'+
+ '<div class="dt-hint">這決定你走 Year 1 還是 Year 2 出口。</div>'+
+ '<div class="dt-opts">'+
+ '<button class="dt-opt" data-v="dse"><span class="ok mono">A</span><span class="ot">主要以 DSE 成績（Best 5 較強）<small>希望盡快，以一年時間升上大學 Year 1</small></span></button>'+
+ '<button class="dt-opt" data-v="gpa"><span class="ok mono">B</span><span class="ot">主要以副學位 GPA<small>DSE 成績一般，希望讀完兩年後以高年級銜接</small></span></button>'+
+ '<button class="dt-opt" data-v="art"><span class="ok mono">C</span><span class="ot">藝術／設計／媒體／音樂方向<small>有作品集，分數並非唯一考量</small></span></button>'+
+ '</div>',0);
+ bind(function(v){st.path=v;v==='art'?rArt():q2();});
+ }
+
+ function q2(){
+ render(
+ '<div class="dt-q serif">你的 DSE 語文（中、英）已達大學最低門檻嗎？</div>'+
+ '<div class="dt-hint">即是否已有 Full Cert——這往往是第一道篩選門檻。</div>'+
+ '<div class="dt-opts">'+
+ '<button class="dt-opt" data-v="full"><span class="ok mono"></span><span class="ot">已達標：中英數核心全部符合要求<small>已具備 Full Cert</small></span></button>'+
+ '<button class="dt-opt" data-v="lang"><span class="ok mono">!</span><span class="ot">差語文一科（中文或英文 Lv.2）<small>其他科目尚可</small></span></button>'+
+ '<button class="dt-opt" data-v="no"><span class="ok mono"></span><span class="ot">未達標／成績較低<small>多科未達門檻</small></span></button>'+
+ '</div>'+
+ '<button class="dt-back mono" data-back="1">‹ 上一步</button>',1);
+ bind(function(v){st.cert=v;q3();},q1);
+ }
+
+ function q3(){
+ render(
+ '<div class="dt-q serif">你目前的副學位 GPA 大約在哪個範圍？</div>'+
+ '<div class="dt-hint">Year 1 出口一般要 3.7+；Year 2 出口一般要 3.3+。</div>'+
+ '<div class="dt-opts">'+
+ '<button class="dt-opt" data-v="high"><span class="ok mono">↑</span><span class="ot">3.7 或以上<small>成績優秀</small></span></button>'+
+ '<button class="dt-opt" data-v="mid"><span class="ok mono">→</span><span class="ot">3.3 – 3.7<small>穩定中上</small></span></button>'+
+ '<button class="dt-opt" data-v="low"><span class="ok mono">↓</span><span class="ot">3.3 以下／暫無成績<small>剛入學或需提升</small></span></button>'+
+ '</div>'+
+ '<button class="dt-back mono" data-back="1">‹ 上一步</button>',2);
+ bind(function(v){st.gpa=v;result();},q2);
+ }
+
+ function bind(onPick,back){
+ stage.querySelectorAll('.dt-opt').forEach(function(b){b.addEventListener('click',function(){onPick(b.getAttribute('data-v'));});});
+ var bk=stage.querySelector('[data-back]');if(bk&&back)bk.addEventListener('click',back);
+ }
+
+ function res(badge,title,paras,items){
+ render(
+ '<div class="dt-result">'+
+ '<span class="badge mono">'+badge+'</span>'+
+ '<h3 class="serif">'+title+'</h3>'+
+ paras.map(function(p){return '<p class="rp">'+p+'</p>';}).join('')+
+ '<ul class="rlist">'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>'+
+ '<button class="dt-back mono" id="dtRestart">↺ 再試一次</button>'+
+ '</div>',2);
+ document.getElementById('dtRestart').addEventListener('click',q1);
+ }
+
+ function rArt(){
+ res('方向 · 作品集主導','你的<em>作品集</em>，比分數更會說話。',
+ ['藝術、設計、媒體、音樂類課程以 portfolio 與面試為主要評核。GPA 比重相對較低，但語文最低要求仍建議達到，以免申請受阻。'],
+ ['集中打磨作品集：質素與創作思路同樣重要，「為什麼做」比「做了什麼」更關鍵','語文若差一科，仍建議用 IGCSE／IELTS 補足','面試準備：能清楚說明創作思路，及課程訓練如何契合你的方向','兩個出口皆可，視乎課程是否設 Year 1／Year 2 入學']);
+ }
+
+ function result(){
+ var cert=st.cert,gpa=st.gpa,path=st.path;
+ if(path==='dse'&&cert==='full'&&gpa==='high'){
+ return res('建議 · Year 1 Entry（提早轉出）','你非常適合<em>爭取 Year 1 Entry</em>。',
+ ['你有 Full Cert、GPA 亮眼，DSE 亦是強項——這正是 Year 1 Entry 最看重的組合。'],
+ ['把握各校 Early Round，先遞交再補文件——等齊成績才交是最常見的失誤','Personal Statement：拆成 6–10 個可追問的具體論點，不是口號式陳述','GPA 不能失速：部分課程發 Conditional Offer 仍附 GPA 條件','同時報主要方向及一兩個後備，分散風險']);
+ }
+ if(path==='dse'&&cert==='lang'){
+ return res('建議 · 先補足語文，再衝 Year 1','先補返<em>語文那道門檻</em>，路就通了。',
+ ['你只差語文門檻——這是最關鍵、也最可解決的一步。只差英文，IELTS 最精準；只差中文，IGCSE 或重考 DSE。最好在 2 月前補齊。'],
+ ['英文：IELTS Overall 6.0，各部分 ≥ 5.5；商科／英語授課可能要求 6.5','中文：IGCSE 中文（Pearson Edexcel 難度較低）或重考 DSE 中文','即使未補齊，GPA 穩定仍可能先收 Conditional Offer——照樣先遞交申請','補足期間照常把握早輪，不要等語文成績出了才開始申請']);
+ }
+ if(path==='dse'&&(cert==='no'||gpa==='low')){
+ return res('建議 · 轉以 Year 2 為主軸','把重心放回<em>副學位 GPA</em>。',
+ ['DSE 與語文門檻暫時較弱時，硬碰 Year 1 風險較高。最穩妥的策略是讀完兩年、以 Year 2 高年級銜接——GPA 由你親手掌控。'],
+ ['第一學期務必穩住 GPA，跌穿 3.3 後極難回升，不是危言聳聽','同步處理語文補足——Year 2 Entry 仍建議達最低門檻','Y2 Sem 1 開始準備申請文件：成績、PS、推薦信','LingU 等部分課程設 Year 2 直入，可留意各校收生安排']);
+ }
+ if(path==='gpa'&&gpa==='high'){
+ return res('建議 · Year 2 Entry（高 GPA 優勢）','你的 GPA，就是<em>最大本錢</em>。',
+ ['以副學位 GPA 為主軸的 Year 2 銜接非常適合你。3.7+ 在 Senior Entry 競爭力強，DSE 比重大幅下降。'],
+ ['維持 GPA，最後一學期切忌失速——這是最多人在這一步失手的地方','Y2 Sem 1：成績單、PS、推薦信、獎項證明逐一準備','建立一致的申請敘述：動機 → 能力佐證 → 銜接計劃','留意各課程的學分豁免安排——未必從 Year 3 起讀']);
+ }
+ if(path==='gpa'&&gpa==='mid'){
+ return res('建議 · Year 2 Entry，穩紮穩打','維持 GPA，<em>Year 2 出口完全可行</em>。',
+ ['3.3–3.7 在 Year 2 Senior Entry 屬可競爭範圍。GPA 穩定，加上完整的申請文件，勝算不低。最後一學期若能再提升，可進一步擴大選擇範圍。'],
+ ['最後一學期：任何評核都不能輕視，維持動力到最後','Y2 Sem 1 及早遞交：成績、PS、推薦信不要等齊才交','選校策略：主要方向 ＋ 後備，至少兩個選擇保底','語文若未達最低要求，現在補足仍來得及']);
+ }
+ if(path==='gpa'&&gpa==='low'){
+ return res('建議 · 優先提升 GPA','<em>GPA 是現在最值得投資的時間</em>。',
+ ['目前 3.3 以下，Year 2 Entry 競爭難度較高。最有效的策略是集中提升 GPA——每提升 0.1 都有意義。'],
+ ['分析每科失分原因，針對性改善下一份評核','考慮暑期修讀補回失分科目（部分學院有暑期課程）','同步處理語文補足（IELTS／IGCSE），現在開始不算遲','保持申請可能性：即使 GPA 未夠，提交申請並無損失']);
+ }
+ res('方向建議','根據你的情況，<em>有多條路可走</em>。',
+ ['你的情況需要個別考量。建議先明確「主要出口」方向，再對照本站各章節深入了解。'],
+ ['先從第 01 章開始，釐清兩個出口的差異','用第 02 章核對自己的語文門檻狀態','以 GPA 計算機試算目前水平','再回到這裡重新作答']);
+ }
+
+ q1();
+
+ /* GPA CALCULATOR */
+ var SCALES={
+ '4.0':{'A+':4.0,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'F':0},
+ '4.3':{'A+':4.3,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'F':0}
+ };
+ var curScale='4.0';
+ var CIRC=2*Math.PI*80;
+ var seeds=[{n:'學術英文',g:'A+',c:3},{n:'社會學導論',g:'A-',c:3},{n:'統計學',g:'B+',c:3}];
+
+ function gradeOpts(sel){
+ return Object.keys(SCALES['4.3']).map(function(g){
+ return '<option'+(g===sel?' selected':'')+'>'+g+'</option>';
+ }).join('');
+ }
+
+ function addRow(seed){
+ var r=document.createElement('div');r.className='grow';
+ r.innerHTML='<input placeholder="科目名稱" value="'+(seed?seed.n:'')+'" /><select>'+gradeOpts(seed?seed.g:'A')+'</select><input type="number" min="1" max="12" value="'+(seed?seed.c:3)+'" /><button class="rm mono">×</button>';
+ r.querySelector('.rm').addEventListener('click',function(){r.remove();compute();});
+ r.querySelectorAll('input,select').forEach(function(el){el.addEventListener('input',compute);});
+ document.getElementById('rows').appendChild(r);
+ compute();
+ }
+
+ function compute(){
+ var rows=document.querySelectorAll('#rows .grow');
+ var scale=SCALES[curScale];
+ var pts=0,cr=0;
+ rows.forEach(function(r){
+ var g=r.querySelector('select').value;
+ var c=parseFloat(r.querySelectorAll('input')[1].value)||0;
+ var gv=scale[g]||0;
+ pts+=gv*c;cr+=c;
+ });
+ var gpa=cr>0?pts/cr:0;
+ document.getElementById('gpaVal').textContent=gpa.toFixed(2);
+ document.getElementById('credSum').textContent=cr;
+ document.getElementById('ptsSum').textContent=pts.toFixed(1);
+ var max=parseFloat(curScale);
+ var pct=Math.min(gpa/max,1);
+ var offset=CIRC*(1-pct);
+ var ring=document.getElementById('ring');
+ ring.style.strokeDasharray=CIRC;
+ ring.style.strokeDashoffset=offset;
+ ring.style.stroke=gpa>=3.7?'var(--accent)':gpa>=3.3?'#d44':'var(--ink-faint)';
+ var v=document.getElementById('verdict');
+ if(cr===0){v.textContent='輸入成績以查看升學門檻對照';v.style.color='';return;}
+ if(gpa>=3.7){v.textContent='達 Year 1 Entry 水平（3.7+）— 維持並準備申請';v.style.color='var(--accent)';}
+ else if(gpa>=3.3){v.textContent='達 Year 2 Entry 水平（3.3+）— 繼續推高';v.style.color='#d44';}
+ else{v.textContent='低於 3.3 — 需提升，Year 2 Entry 競爭難度較高';v.style.color='var(--ink-faint)';}
+ }
+
+ seeds.forEach(addRow);
+ document.getElementById('addRow').addEventListener('click',function(){addRow(null);});
+ document.getElementById('scaleToggle').querySelectorAll('button').forEach(function(b){
+ b.addEventListener('click',function(){
+ document.querySelector('.scale-toggle button.on').classList.remove('on');
+ b.classList.add('on');curScale=b.getAttribute('data-scale');
+ document.querySelectorAll('#rows .grow select').forEach(function(s){
+ var cur=s.value;s.innerHTML=gradeOpts(cur);
+ });
+ compute();
+ });
+ });
+
+ /* COUNT-UP hero stats */
+ if(!reduce){
+ setTimeout(function(){
+ document.querySelectorAll('.hero-meta .n').forEach(function(n){
+ var val=parseInt(n.textContent);
+ if(isNaN(val))return;
+ n.textContent='0';
+ var s=0,step=Math.max(1,val/44);
+ var t=setInterval(function(){s+=step;if(s>=val){s=val;clearInterval(t);}n.textContent=Math.round(s);},16);
+ });
+ },700);
+ }
+
+ /* PATH FLOW ANIMATION */
+ var pf=document.getElementById('pathFlow');
+ if(pf){
+ function triggerPath(){
+ var seq=[
+ function(){var e=document.getElementById('pv1');if(e)e.classList.add('vis');},
+ function(){var e=document.getElementById('ph1');if(e)e.classList.add('vis');},
+ function(){var e=document.getElementById('pfCols');if(e)e.classList.add('vis');},
+ function(){var e=document.getElementById('ph2');if(e)e.classList.add('vis');},
+ function(){var e=document.getElementById('pv2');if(e)e.classList.add('vis');}
+ ];
+ if(reduce){seq.forEach(function(fn){fn();});return;}
+ seq.forEach(function(fn,i){setTimeout(fn,i*240);});
+ }
+ if(reduce){triggerPath();}
+ else{
+ var pfio=new IntersectionObserver(function(es){
+ es.forEach(function(e){if(e.isIntersecting){triggerPath();pfio.disconnect();}});
+ },{threshold:.3});
+ pfio.observe(pf);
+ }
+ }
+
+ /* GPA REVERSE / TARGET CALCULATOR */
+ function computeTarget(){
+ var curGpa=parseFloat(document.getElementById('gptCurGpa').value)||0;
+ var curCr=parseFloat(document.getElementById('gptCurCr').value)||0;
+ var targetGpa=parseFloat(document.getElementById('gptTargetGpa').value)||0;
+ var totalCr=parseFloat(document.getElementById('gptTotalCr').value)||1;
+ var remCr=totalCr-curCr;
+ var neededEl=document.getElementById('gptNeeded');
+ var verdictEl=document.getElementById('gptVerdict');
+ var breakdownEl=document.getElementById('gptBreakdown');
+ var scaleEl=document.getElementById('gptScaleMax');
+ if(!neededEl)return;
+ if(remCr<=0){
+ neededEl.textContent='—';neededEl.style.color='';
+ if(verdictEl){verdictEl.textContent='無剩餘學分';verdictEl.style.color='';}
+ if(breakdownEl)breakdownEl.innerHTML='';if(scaleEl)scaleEl.textContent='';return;
+ }
+ var needed=(targetGpa*totalCr-curGpa*curCr)/remCr;
+ if(needed<0){
+ neededEl.textContent='已達標';neededEl.style.color='var(--green)';
+ if(verdictEl){verdictEl.textContent='現有 GPA 已超過目標';verdictEl.style.color='var(--green)';}
+ if(scaleEl)scaleEl.textContent='';
+ if(breakdownEl)breakdownEl.innerHTML='現有 CGPA ('+curGpa.toFixed(2)+') 已高於目標 ('+targetGpa.toFixed(2)+')';
+ return;
+ }
+ neededEl.textContent=needed.toFixed(2);
+ if(scaleEl)scaleEl.textContent='剩餘 '+remCr+' 學分';
+ var tpts=(targetGpa*totalCr).toFixed(1),cpts=(curGpa*curCr).toFixed(1),diff=(targetGpa*totalCr-curGpa*curCr).toFixed(1);
+ if(breakdownEl)breakdownEl.innerHTML='目標總分 '+tpts+' — 現有 '+cpts+' — 尚差 '+diff;
+ if(needed>4.3){
+ neededEl.style.color='var(--ink-faint)';
+ if(verdictEl){verdictEl.textContent='目標超出 4.3 制上限，數學上不可達';verdictEl.style.color='var(--accent)';}
+ } else if(needed>4.0){
+ neededEl.style.color='var(--accent)';
+ if(verdictEl){verdictEl.textContent='需要全部 A+（4.3 制方可能）';verdictEl.style.color='var(--accent)';}
+ } else if(needed>=3.7){
+ neededEl.style.color='var(--accent)';
+ if(verdictEl){verdictEl.textContent='可達，但每科均需 A 水平';verdictEl.style.color='var(--accent)';}
+ } else if(needed>=3.3){
+ neededEl.style.color='#c44';
+ if(verdictEl){verdictEl.textContent='可達，維持 B+ 至 A- 水平';verdictEl.style.color='#c44';}
+ } else {
+ neededEl.style.color='var(--ink)';
+ if(verdictEl){verdictEl.textContent='可達，即使部分科目偏弱亦有空間';verdictEl.style.color='var(--green)';}
+ }
+ }
+ ['gptCurGpa','gptCurCr','gptTargetGpa','gptTotalCr'].forEach(function(id){
+ var el=document.getElementById(id);
+ if(el)el.addEventListener('input',computeTarget);
+ });
+ /* Section ghost numerals */
+ var _sn={understand:'01',qualify:'02',plan:'03',interview:'04',enrol:'05'};
+ Object.keys(_sn).forEach(function(id){
+ var w=document.querySelector('#'+id+' > .wrap');
+ if(!w)return;
+ w.style.position='relative';
+ var g=document.createElement('span');g.className='sec-ghost';g.textContent=_sn[id];
+ w.appendChild(g);
+ });
+
+ /* ── CUSTOM CURSOR ── */
+ var cDot=document.getElementById('cDot'),cRing=document.getElementById('cRing');
+ if(cDot&&cRing&&window.matchMedia('(pointer:fine)').matches&&!reduce){
+ var mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
+ document.addEventListener('mousemove',function(e){
+ mx=e.clientX;my=e.clientY;
+ cDot.style.transform='translate(calc('+mx+'px - 50%),calc('+my+'px - 50%))';
+ },{passive:true});
+ (function raf(){
+ rx+=(mx-rx)*.09;ry+=(my-ry)*.09;
+ cRing.style.transform='translate(calc('+rx+'px - 50%),calc('+ry+'px - 50%))';
+ requestAnimationFrame(raf);
+ })();
+ var hovTargets='a,button,.btn,.dt-opt,.map-step,.bento-cell,.tbtn,.scale-toggle button,.addrow,.rm,.nav-ind';
+ document.querySelectorAll(hovTargets).forEach(function(el){
+ el.addEventListener('mouseenter',function(){cDot.classList.add('hov');cRing.classList.add('hov');});
+ el.addEventListener('mouseleave',function(){cDot.classList.remove('hov');cRing.classList.remove('hov');});
+ });
+ document.addEventListener('mousedown',function(){cDot.classList.add('dn');cRing.classList.add('dn');});
+ document.addEventListener('mouseup',function(){cDot.classList.remove('dn');cRing.classList.remove('dn');});
+ document.addEventListener('mouseleave',function(){cDot.style.opacity='0';cRing.style.opacity='0';});
+ document.addEventListener('mouseenter',function(){cDot.style.opacity='';cRing.style.opacity='';});
+ }
+
+ /* ── SPLIT TEXT — hero h1 ── */
+ var h1el=document.querySelector('.hero h1');
+ if(h1el&&!reduce){
+ function wrapWords(node){
+ if(node.nodeType===3){
+ var t=node.textContent;if(!t.trim())return null;
+ var frag=document.createDocumentFragment();
+ t.split(/(\s+)/).forEach(function(part){
+ if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));}
+ else if(part){
+ var sw=document.createElement('span');sw.className='sw';
+ var swi=document.createElement('span');swi.className='swi';swi.textContent=part;
+ sw.appendChild(swi);frag.appendChild(sw);
+ }
+ });
+ return frag;
+ }
+ if(node.nodeType===1&&!node.classList.contains('lead')&&!node.classList.contains('tag')){
+ Array.from(node.childNodes).forEach(function(c){var r=wrapWords(c);if(r)node.replaceChild(r,c);});
+ }
+ return null;
+ }
+ Array.from(h1el.childNodes).forEach(function(c){var r=wrapWords(c);if(r)h1el.replaceChild(r,c);});
+ h1el.querySelectorAll('.swi').forEach(function(s,i){s.style.transitionDelay=(i*.08+.28)+'s';});
+ setTimeout(function(){h1el.classList.add('split-vis');},80);
+ }
+
+ /* ── NAV ACTIVE INDICATOR ── */
+ var navInd=document.getElementById('navInd');
+ var _navAs=Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+ var _navSecs=_navAs.map(function(a){return{a:a,s:document.getElementById(a.getAttribute('href').slice(1))};}).filter(function(x){return x.s;});
+ function _moveInd(el){
+ if(!navInd||!el)return;
+ var lr=el.getBoundingClientRect(),pr=el.closest('.nav-links').getBoundingClientRect();
+ navInd.style.left=(lr.left-pr.left)+'px';navInd.style.width=lr.width+'px';navInd.classList.add('on');
+ }
+ function _updateInd(){
+ if(!_navSecs.length)return;
+ var best=_navSecs[0],bDist=Infinity;
+ _navSecs.forEach(function(x){var d=Math.abs(x.s.getBoundingClientRect().top-110);if(d<bDist){bDist=d;best=x;}});
+ _moveInd(best.a);
+ }
+ window.addEventListener('scroll',_updateInd,{passive:true});
+ setTimeout(_updateInd,300);
+
+ /* ── BENTO STAGGER (via IntersectionObserver) ── */
+ if(!reduce&&'IntersectionObserver' in window){
+ var bentoObs=new IntersectionObserver(function(es){
+ es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('sv');bentoObs.unobserve(e.target);}});
+ },{threshold:.06});
+ document.querySelectorAll('.bento').forEach(function(b){bentoObs.observe(b);});
+ }
+
+ /* ── TIMELINE STAGGER ── */
+ if(!reduce&&'IntersectionObserver' in window){
+ var tlEl=document.querySelector('.tl');
+ if(tlEl){
+ new IntersectionObserver(function(es,obs){
+ es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('sv');obs.disconnect();}});
+ },{threshold:.04}).observe(tlEl);
+ }
+ }
+
+ /* ── STEPS STAGGER ── */
+ if(!reduce&&'IntersectionObserver' in window){
+ var stepsObs=new IntersectionObserver(function(es){
+ es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('sv');stepsObs.unobserve(e.target);}});
+ },{threshold:.08});
+ document.querySelectorAll('.steps').forEach(function(s){stepsObs.observe(s);});
+ }
+
+ /* ── MAGNETIC BUTTONS ── */
+ if(!reduce){
+ document.querySelectorAll('.btn').forEach(function(b){
+ b.addEventListener('mousemove',function(e){
+ var r=b.getBoundingClientRect();
+ var x=(e.clientX-r.left-r.width/2)*.28;
+ var y=(e.clientY-r.top-r.height/2)*.28;
+ b.style.transform='translate('+x+'px,'+y+'px)';
+ });
+ b.addEventListener('mouseleave',function(){b.style.transform='';});
+ });
+ }
+
+ /* ── HERO STAT COUNT-UP ── */
+ var hmEl=document.querySelector('.hero-meta');
+ if(hmEl){
+ var hmDone=false;
+ var hmObs=new IntersectionObserver(function(es){
+ if(hmDone)return;
+ if(es[0].isIntersecting){
+ hmDone=true;hmObs.disconnect();
+ document.querySelectorAll('.hero-meta .m .n').forEach(function(el){
+ var target=parseInt(el.textContent.trim(),10);
+ if(isNaN(target))return;
+ var dur=900,start=null;
+ function step(ts){
+ if(!start)start=ts;
+ var p=Math.min((ts-start)/dur,1);
+ var ease=1-Math.pow(1-p,4);
+ el.textContent=Math.round(ease*target);
+ if(p<1)requestAnimationFrame(step);else el.textContent=target;
+ }
+ requestAnimationFrame(step);
+ });
+ hmEl.classList.add('in');
+ }
+ },{threshold:.3});
+ hmObs.observe(hmEl);
+ }
+
+ /* ── EYEBROW SCRAMBLE ── */
+ var CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·/';
+ function scramble(el){
+ if(el.dataset.scrambling)return;
+ el.dataset.scrambling='1';
+ var orig=el.dataset.orig||(el.dataset.orig=el.textContent);
+ var len=orig.length,iter=0,dur=28,maxIter=len*3;
+ var id=setInterval(function(){
+ el.textContent=orig.split('').map(function(c,i){
+ if(c===' ')return ' ';
+ if(i<iter/3)return orig[i];
+ return CHARS[Math.floor(Math.random()*CHARS.length)];
+ }).join('');
+ iter++;
+ if(iter>maxIter){clearInterval(id);el.textContent=orig;delete el.dataset.scrambling;}
+ },dur);
+ }
+ if(!reduce&&'IntersectionObserver' in window){
+ var scrObs=new IntersectionObserver(function(es){
+ es.forEach(function(e){
+ if(e.isIntersecting){
+ var ey=e.target.querySelector('.eyebrow');
+ if(ey)scramble(ey);
+ scrObs.unobserve(e.target);
+ }
+ });
+ },{threshold:.2});
+ document.querySelectorAll('section,.chapter').forEach(function(s){scrObs.observe(s);});
+ }
+
+ /* ── HERO KICKER RULE EXPAND ── */
+ var heroRule=document.querySelector('.hero-kicker .rule');
+ if(heroRule&&!reduce){
+ setTimeout(function(){heroRule.style.transition='width .9s cubic-bezier(.16,1,.3,1)';heroRule.style.width='72px';},500);
+ }
+
+ /* ── ROUTE SVG ANIMATION ── */
+ var rsvg = document.getElementById('routeSvg');
+ if(rsvg && !reduce) {
+ var rObs = new IntersectionObserver(function(es) {
+ if(es[0].isIntersecting) { rsvg.classList.add('rsv-animated'); rObs.disconnect(); }
+ }, {threshold: 0.2});
+ rObs.observe(rsvg);
+ } else if(rsvg) {
+ rsvg.classList.add('rsv-animated');
+ }
+
+ /* ── UNIVERSITY CHART ── */
+ var uniData = {
+ y1: [
+ {n:'HKU', lo:3.8, hi:4.0, label:'3.8 – 4.0'},
+ {n:'CUHK', lo:3.6, hi:3.9, label:'3.6 – 3.9'},
+ {n:'HKUST', lo:3.7, hi:4.0, label:'3.7 – 4.0'},
+ {n:'PolyU', lo:3.4, hi:3.7, label:'3.4 – 3.7'},
+ {n:'CityU', lo:3.3, hi:3.7, label:'3.3 – 3.7'},
+ {n:'HKBU', lo:3.0, hi:3.5, label:'3.0 – 3.5'},
+ {n:'EdUHK', lo:3.0, hi:3.3, label:'3.0 – 3.3'}
+ ],
+ y2: [
+ {n:'HKU', lo:3.7, hi:4.0, label:'3.7 – 4.0'},
+ {n:'CUHK', lo:3.5, hi:3.8, label:'3.5 – 3.8'},
+ {n:'HKUST', lo:3.6, hi:4.0, label:'3.6 – 4.0'},
+ {n:'PolyU', lo:3.3, hi:3.6, label:'3.3 – 3.6'},
+ {n:'CityU', lo:3.3, hi:3.6, label:'3.3 – 3.6'},
+ {n:'HKBU', lo:3.0, hi:3.4, label:'3.0 – 3.4'},
+ {n:'EdUHK', lo:3.0, hi:3.3, label:'3.0 – 3.3'}
+ ]
+ };
+ var uniMode = 'y1';
+ function uniSwitch(mode) {
+ uniMode = mode;
+ document.getElementById('utY1').classList.toggle('on', mode==='y1');
+ document.getElementById('utY2').classList.toggle('on', mode==='y2');
+ uniRender(true);
+ }
+ function uniRender(animate) {
+ var rows = document.getElementById('uniRows');
+ if(!rows) return;
+ var data = uniData[uniMode];
+ rows.innerHTML = '';
+ var gpaRange = 4.0 - 2.5; /* scale: 2.5 to 4.0 */
+ data.forEach(function(d) {
+ var loW = Math.round(((d.lo - 2.5) / gpaRange) * 100);
+ var hiW = Math.round(((d.hi - 2.5) / gpaRange) * 100);
+ var fill = hiW - loW;
+ var isTop = d.lo >= 3.7;
+ var isMid = d.lo >= 3.3 && d.lo < 3.7;
+ var barColor = isTop ? 'var(--accent)' : isMid ? '#c44a5a' : 'var(--ink-soft)';
+ var row = document.createElement('div');
+ row.className = 'uni-row';
+ row.innerHTML =
+ '<span class="uni-name">' + d.n + '</span>' +
+ '<div class="uni-bar-track">' +
+ '<div class="uni-bar-fill" data-range="' + d.label + '" data-w="' + fill + '" style="margin-left:' + loW + '%;width:0;background:' + barColor + '"></div>' +
+ '</div>' +
+ '<span class="uni-gpa-val">' + d.lo.toFixed(1) + '</span>';
+ rows.appendChild(row);
+ });
+ if(animate) {
+ setTimeout(function() {
+ rows.querySelectorAll('.uni-bar-fill').forEach(function(b) {
+ b.style.width = b.dataset.w + '%';
+ });
+ }, 30);
+ }
+ }
+ uniRender(false);
+ var ucEl = document.getElementById('uniChart');
+ if(ucEl) {
+ var ucObs = new IntersectionObserver(function(es) {
+ if(es[0].isIntersecting) {
+ ucEl.querySelectorAll('.uni-bar-fill').forEach(function(b) {
+ b.style.width = b.dataset.w + '%';
+ });
+ ucObs.disconnect();
+ }
+ }, {threshold: 0.2});
+ ucObs.observe(ucEl);
+ }
+
+ /* ── ELIGIBILITY CHECKER ── */
+ var ecState = {};
+ function ecPick(btn) {
+ var q = btn.dataset.q;
+ var v = btn.dataset.v;
+ ecState[q] = v;
+ btn.closest('.ec-opts').querySelectorAll('.ec-btn').forEach(function(b) { b.classList.remove('on'); });
+ btn.classList.add('on');
+ if(ecState.cert && ecState.gpa && ecState.dse) ecShow();
+ }
+ window.ecPick = ecPick;
+ window.uniSwitch = uniSwitch;
+ function ecShow() {
+ var result = document.getElementById('ecResult');
+ var badge = document.getElementById('ecBadge');
+ var title = document.getElementById('ecTitle');
+ var body = document.getElementById('ecBody');
+ if(!result) return;
+ result.className = 'ec-result show';
+ var cert = ecState.cert, gpa = ecState.gpa, dse = ecState.dse;
+ if(cert === 'yes' && (gpa === '3.8+' || gpa === '3.6') && (dse === '21+' || dse === '17')) {
+ result.classList.add('ec-good');
+ badge.textContent = 'Year 1 Entry 候選人';
+ title.textContent = '條件符合，可考慮提早出口';
+ body.textContent = 'Full Cert 達標、DSE 成績及 GPA 均符合 Year 1 Entry 主要要求。建議以 HKU、CUHK、HKUST 為目標，並在 Y1 Sem 2（1–3月）留意申請窗口。';
+ } else if(cert !== 'no' && (gpa === '3.8+' || gpa === '3.6' || gpa === '3.3')) {
+ result.classList.add('ec-ok');
+ badge.textContent = 'Year 2 Entry 路線';
+ title.textContent = '以 CGPA 為主要武器';
+ body.textContent = '以副學位 CGPA 為主要申請依據。目標維持在 3.5+ 以爭取較多選擇。Full Cert 尚未達標者，兩年間需完成補足。DSE 成績在 Year 2 Entry 比重大幅降低。';
+ } else if(cert === 'no' && gpa === '3.0') {
+ result.classList.add('ec-warn');
+ badge.textContent = '需要重新規劃';
+ title.textContent = '語文與 GPA 均需補強';
+ body.textContent = '目前 Full Cert 未達標且 GPA 偏低，升學挑戰較大。建議先確認 Full Cert 補足方案（IELTS 或 DSE 重考），同時以提升 GPA 為首要任務——第一學期不能鬆懈。';
+ } else {
+ result.classList.add('ec-ok');
+ badge.textContent = '可行，需持續跟進';
+ title.textContent = '繼續累積，留意時間節點';
+ body.textContent = '條件基本可行，但需要在副學位學習期間持續維持 GPA 並補足語文要求。建議每學期後重新評估，按進度調整申請策略。';
+ }
+ }
+
+ computeTarget();
+
+})();
+</script>
+</body>
 </html>
